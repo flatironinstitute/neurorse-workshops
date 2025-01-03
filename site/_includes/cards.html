@@ -1,0 +1,63 @@
+<!-- this tortured string is to make sure that cookiecutter only interacts
+     with push_target_dir part here, the rest gets left for jekyll -->
+{% assign card_targets = site.workshops %}
+<div class="grid cards">
+<ul>
+    {% for card in card_targets %}
+    <li>
+        <h3>
+            {%- if card.main_url.size > 0 -%}
+            <a href="{{ card.main_url }}">{{ card.name }}</a>
+            {%- else -%}
+            {{ card.name }}
+            {%- endif -%}
+            <a href="{{ card.gh_repo }}">
+                <img alt="GitHub Repo" src="https://img.shields.io/badge/GitHub-gray?logo=github">
+            </a>
+        </h3>
+        {% assign branches = card.branches | where_exp: "item", "item != 'main'" %}
+        {%- if card.releases.size > 0 or card.pulls.size > 0 or branches.size > 0 -%}
+        <hr>
+        {% tabs links %}
+        {%- if card.releases.size > 0 -%}
+        {% tab links releases %}
+<!-- these have to be unindented all the way, or the tab gets confused -->
+<ul class='lists'>
+    {% for rls in card.releases %}
+    <li>
+        <a href="{{ card.base_url }}/tags/{{ rls }}">{{ rls }}</a>
+    </li>
+    {% endfor %}
+</ul>
+        {% endtab %}
+        {%- endif -%}
+        {% if card.pulls.size > 0 %}
+        {% tab links pull requests %}
+<!-- these have to be unindented all the way, or the tab gets confused -->
+<ul class='lists'>
+    {% for pull in card.pulls %}
+    <li>
+        <a href="{{ card.base_url }}/pulls/{{ pull }}">{{ pull }}</a>
+    </li>
+    {% endfor %}
+</ul>
+        {% endtab %}
+        {% endif %}
+        {% if branches.size > 0 %}
+        {% tab links branches %}
+<!-- these have to be unindented all the way, or the tab gets confused -->
+<ul class='lists'>
+    {% for branch in branches %}
+    <li>
+        <a href="{{ card.base_url }}/branch/{{ branch }}">{{ branch }}</a>
+    </li>
+    {% endfor %}
+</ul>
+        {% endtab %}
+        {% endif %}
+        {% endtabs %}
+        {%- endif -%}
+    </li>
+    {% endfor %}
+</ul>
+</div>
