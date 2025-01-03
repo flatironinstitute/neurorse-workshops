@@ -1,14 +1,12 @@
 ---
 layout: default
-title: neurorse workshops
+title: NeuroRSE workshops
 ---
 
-# neurorse workshops
+# NeuroRSE workshops
 
 [![Github Repo](https://img.shields.io/badge/GitHub-gray?logo=github)](https://github.com/flatironinstitute/neurorse-workshops)
 
-This site has links to tutorials and examples used during in-person workshops for teaching how to use plenoptic, a python library for model-based synthesis of perceptual stimuli. Unless otherwise noted, these materials are independent of each other, and are intended as an introduction to the package.
-
-For more details about what plenoptic is, go to our [home page](https://plenoptic.org).
+This site has links to tutorials and examples used during in-person workshops for teaching how to use software created by the [NeuroRSE group](https://neurorse.flatironinstitute.org) at the [Flatiron Institute Center for Computational Neuroscience](https://www.simonsfoundation.org/flatiron/center-for-computational-neuroscience/). Unless otherwise noted, these materials are independent of each other, and are intended as an introduction to the packages.
 
 {% include cards.html %}
