@@ -450,7 +450,7 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-01-29 17:45:59,264:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-01-29 19:30:05,421:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/nemos/_documentation_utils/plotting.py:38: UserWarning: plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation. Feel free to use them, but they will probably not work as intended with other datasets / in other contexts.
@@ -509,21 +509,21 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ----------
-0.0         -0.278368
-1.0         -1.17648
-2.0         -0.0779902
-3.0          0.345756
-4.0          0.461219
-5.0         -1.42384
-6.0          1.77659
+0.0         -1.26523
+1.0         -0.642048
+2.0         -0.120575
+3.0         -0.167023
+4.0         -0.0289235
+5.0          0.789428
+6.0         -0.988182
 ...
-93.0         0.664873
-94.0        -0.163765
-95.0        -0.147627
-96.0        -1.68226
-97.0        -1.20821
-98.0         0.642489
-99.0         0.439445
+93.0        -1.24968
+94.0         0.711312
+95.0         0.366836
+96.0        -0.37262
+97.0         1.62285
+98.0         1.00248
+99.0        -0.084108
 dtype: float64, shape: (100,)
 </pre></div>
 </div>
@@ -540,21 +540,21 @@ dtype: float64, shape: (100,)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    pineapple    banana    tomato
 ----------  -----------  --------  --------
-0.0         0.45315      0.90996   0.26347
-1.0         -0.6568      -0.86144  -0.65301
-2.0         0.26108      2.38947   0.34358
-3.0         0.34074      1.18985   0.70999
-4.0         -0.4971      0.83742   1.37813
-5.0         0.50018      1.59741   -0.68391
-6.0         -0.20867     0.07475   -0.09202
+0.0         0.85146      -0.88991  -0.04859
+1.0         -0.50277     1.62008   1.80293
+2.0         0.25027      -2.16524  -1.62022
+3.0         1.10021      -1.21791  -0.24691
+4.0         0.9235       0.52054   -0.6674
+5.0         -1.18037     -0.03257  -1.08524
+6.0         0.36673      0.38465   0.99534
 ...         ...          ...       ...
-93.0        0.89021      0.36408   -2.051
-94.0        -0.44889     -0.38447  -0.38494
-95.0        -0.30128     -0.22086  -0.06688
-96.0        -0.49095     1.26176   0.5679
-97.0        -1.10221     -0.59843  -0.53105
-98.0        0.04284      -0.75052  0.17709
-99.0        -0.10229     0.17398   -0.27455
+93.0        0.22187      -0.65523  0.47506
+94.0        0.84554      1.97642   -0.12205
+95.0        -0.43391     0.88748   0.77529
+96.0        1.90788      0.4312    0.91001
+97.0        -0.54808     2.34148   -0.04459
+98.0        0.49574      -1.00732  -0.98353
+99.0        0.57086      -0.06487  -0.32166
 dtype: float64, shape: (100, 3)
 </pre></div>
 </div>
@@ -571,21 +571,21 @@ dtype: float64, shape: (100, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  -------------------------------
-0.0         [[0.077456 ... 1.196823] ...]
-0.1         [[-1.869279 ... -0.134796] ...]
-0.2         [[0.422551 ... 1.692817] ...]
-0.3         [[-1.059422 ... -0.485405] ...]
-0.4         [[0.038052 ... 0.516733] ...]
-0.5         [[-1.798033 ...  1.853282] ...]
-0.6         [[0.858393 ... 0.19444 ] ...]
+0.0         [[-0.192864 ... -1.747027] ...]
+0.1         [[0.416449 ... 0.111471] ...]
+0.2         [[ 0.669294 ... -2.050704] ...]
+0.3         [[ 0.043685 ... -1.271679] ...]
+0.4         [[-2.782444 ...  0.375026] ...]
+0.5         [[-0.673374 ...  0.066262] ...]
+0.6         [[-0.209491 ... -0.066492] ...]
 ...
-99.3        [[1.12737  ... 1.961454] ...]
-99.4        [[ 2.171094 ... -0.015165] ...]
-99.5        [[-0.243386 ...  1.143001] ...]
-99.6        [[ 0.127164 ... -0.686735] ...]
-99.7        [[-0.761333 ...  0.684415] ...]
-99.8        [[ 0.987789 ... -0.748384] ...]
-99.9        [[ 0.753267 ... -0.518627] ...]
+99.3        [[0.846076 ... 0.619616] ...]
+99.4        [[-0.542283 ...  0.304488] ...]
+99.5        [[0.190274 ... 0.168479] ...]
+99.6        [[ 0.43361 ... -0.62412] ...]
+99.7        [[ 0.290129 ... -1.288154] ...]
+99.8        [[ 0.914138 ... -1.63733 ] ...]
+99.9        [[ 0.195319 ... -0.908797] ...]
 dtype: float64, shape: (1000, 4, 5)
 </pre></div>
 </div>
@@ -643,9 +643,9 @@ shape: (3, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate
 -------  -------
-      0  0.03904
-      1  0.05205
-      2  1.30135
+      0  0.0396
+      1  0.0528
+      2  1.31994
 </pre></div>
 </div>
 </div>
@@ -663,8 +663,8 @@ shape: (3, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start     end
-      0     3.14  79.983
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
+      0     3.14  78.9011
 shape: (1, 2), time unit: sec.
 </pre></div>
 </div>
@@ -726,21 +726,21 @@ You can also check the `time_support` of `tsd1` to see that it has been updated.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ---------
-10.0         0.130363
-11.0        -0.437124
-12.0        -0.286259
-13.0         0.48733
-14.0        -0.451587
-15.0        -0.172092
-16.0         0.165679
+10.0         1.73721
+11.0        -0.745626
+12.0         1.09141
+13.0         0.957303
+14.0         1.16353
+15.0         0.477898
+16.0         1.17903
 ...
-93.0         0.664873
-94.0        -0.163765
-95.0        -0.147627
-96.0        -1.68226
-97.0        -1.20821
-98.0         0.642489
-99.0         0.439445
+93.0        -1.24968
+94.0         0.711312
+95.0         0.366836
+96.0        -0.37262
+97.0         1.62285
+98.0         1.00248
+99.0        -0.084108
 dtype: float64, shape: (71,)
   index    start    end
       0       10     30
@@ -759,16 +759,16 @@ shape: (2, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start       end
-      0   2.43552   2.66239
-      1  19.2541   20.4095
-      2  21.3985   25.191
-      3  28.2747   29.258
-      4  32.7241   37.271
-      5  39.0166   51.5122
-      6  62.6704   64.5718
-      7  72.1599   74.9187
-      8  83.36     95.578
-      9  95.6677   95.7213
+      0   5.19558   5.78259
+      1   7.66716  10.7115
+      2  15.2792   26.485
+      3  37.1797   41.6371
+      4  43.8231   54.6216
+      5  54.701    60.6939
+      6  64.1785   68.4195
+      7  68.4653   76.4611
+      8  79.7216   82.5449
+      9  92.8905   99.016
 shape: (10, 2), time unit: sec.
 </pre></div>
 </div>
@@ -784,14 +784,14 @@ shape: (10, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
-      0  19.2541  20.4095
-      1  21.3985  25.191
-      2  28.2747  29.258
-      3  50       51.5122
-      4  62.6704  64.5718
-      5  72.1599  74.9187
-      6  83.36    95.578
-      7  95.6677  95.7213
+      0  10       10.7115
+      1  15.2792  26.485
+      2  50       54.6216
+      3  54.701   60.6939
+      4  64.1785  68.4195
+      5  68.4653  76.4611
+      6  79.7216  82.5449
+      7  92.8905  99.016
 shape: (8, 2), time unit: sec.
 </pre></div>
 </div>
@@ -806,7 +806,7 @@ You can visualize IntervalSet using the function `workshop_utils.visualize_inter
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/938dae5a951db8f68aac1b8e4d55ac320cc064c9eb821f9a2c52ee2f2c29b801.png" src="../../_images/938dae5a951db8f68aac1b8e4d55ac320cc064c9eb821f9a2c52ee2f2c29b801.png" />
+<img alt="../../_images/748849a41e787674ef54960e525e3c3837b05ea0ea411eefa211f62189f3a6b9.png" src="../../_images/748849a41e787674ef54960e525e3c3837b05ea0ea411eefa211f62189f3a6b9.png" />
 </div>
 </div>
 <div class="render-all">
@@ -819,10 +819,10 @@ You can visualize IntervalSet using the function `workshop_utils.visualize_inter
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start        end
-      0   2.43552    2.66239
-      1  10         30
-      2  32.7241    37.271
-      3  39.0166   100
+      0   5.19558    5.78259
+      1   7.66716   30
+      2  37.1797    41.6371
+      3  43.8231   100
 shape: (4, 2), time unit: sec.
 </pre></div>
 </div>
@@ -837,7 +837,7 @@ shape: (4, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f10ee720a2ec2ed876b15bf88da807e97088f5d339d47eb42cdb129547e4c89e.png" src="../../_images/f10ee720a2ec2ed876b15bf88da807e97088f5d339d47eb42cdb129547e4c89e.png" />
+<img alt="../../_images/5203bb6d4b7a647a75ab1fd969ce6c7ffaba6583c910456c2d64dd4231e04118.png" src="../../_images/5203bb6d4b7a647a75ab1fd969ce6c7ffaba6583c910456c2d64dd4231e04118.png" />
 </div>
 </div>
 <div class="render-all">
@@ -850,16 +850,15 @@ shape: (4, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start       end
-      0  10        19.2541
-      1  20.4095   21.3985
-      2  25.191    28.2747
-      3  29.258    30
-      4  51.5122   62.6704
-      5  64.5718   72.1599
-      6  74.9187   83.36
-      7  95.578    95.6677
-      8  95.7213  100
-shape: (9, 2), time unit: sec.
+      0  10.7115   15.2792
+      1  26.485    30
+      2  54.6216   54.701
+      3  60.6939   64.1785
+      4  68.4195   68.4653
+      5  76.4611   79.7216
+      6  82.5449   92.8905
+      7  99.016   100
+shape: (8, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -873,7 +872,7 @@ shape: (9, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/68e674683e3084046afc0e290a081b307e0c5b7b044f22569e6189e59e0560a8.png" src="../../_images/68e674683e3084046afc0e290a081b307e0c5b7b044f22569e6189e59e0560a8.png" />
+<img alt="../../_images/f04f8a8ad17a2de277413b46dbad539162d44c950b0b0d8a441530dd3be9b4c0.png" src="../../_images/f04f8a8ad17a2de277413b46dbad539162d44c950b0b0d8a441530dd3be9b4c0.png" />
 </div>
 </div>
 </section>
@@ -893,10 +892,10 @@ shape: (9, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.03506517 -0.01809315 -0.01585581  0.02757718 -0.01968449]
- [-0.00293547 -0.04535187 -0.00744898 -0.02382576 -0.00528656]
- [-0.00579167  0.01710476 -0.04467753  0.03471469  0.02200371]
- [-0.0247281  -0.0412539   0.03843844 -0.00577862 -0.00877616]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.07081577  0.01351466 -0.00420545 -0.02061136  0.06467415]
+ [-0.04153547  0.02918158 -0.01220044  0.04003004  0.05180543]
+ [ 0.07950092 -0.00905854  0.0409201  -0.01547767 -0.03254138]
+ [-0.01495139  0.05180995 -0.05732639 -0.01427071  0.00605852]]
 </pre></div>
 </div>
 </div>
@@ -912,21 +911,21 @@ shape: (9, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ----------
-0.0          0.542197
-1.0         -0.723753
-2.0          0.998044
-3.0          0.746863
-4.0          0.572813
-5.0          0.47123
-6.0         -0.0753135
+0.0         -0.0290119
+1.0          0.973411
+2.0         -1.1784
+3.0         -0.121537
+4.0          0.258878
+5.0         -0.766062
+6.0          0.582239
 ...
-93.0        -0.265572
-94.0        -0.406102
-95.0        -0.196339
-96.0         0.446236
-97.0        -0.743897
-98.0        -0.176863
-99.0        -0.0676218
+93.0         0.0138997
+94.0         0.899971
+95.0         0.409619
+96.0         1.08303
+97.0         0.582939
+98.0        -0.498369
+99.0         0.0614433
 dtype: float64, shape: (100,)
 </pre></div>
 </div>
@@ -966,10 +965,10 @@ shape: (2, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.86610369 -1.27649753 -1.12329041  1.64072261  1.09829582]
- [-0.19801067  1.71366818 -0.46748955  1.71085271 -0.05496939]
- [ 0.22263172 -0.80874734 -0.30224324  1.02323938  0.88177543]
- [ 0.77017828  0.87709365  0.28388386 -0.76322802 -0.50839358]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1.07448559 -0.75736006 -1.92099702 -1.2601352  -0.3632014 ]
+ [-0.32139968 -0.2214963   0.68850994  0.00552193  1.03032465]
+ [ 0.459757    0.80927339 -0.97049088  0.48722416 -0.51805347]
+ [-0.25683518  1.34941156 -0.00576967 -1.66224065 -0.151705  ]]
 </pre></div>
 </div>
 </div>
@@ -1043,21 +1042,21 @@ shape: (3, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    pineapple    banana         tomato
 ----------  -----------  -------------  ---------------
-0.0         0.45315      0.90996        0.26347
-1.0         -0.6568      -0.86144       -0.65301
-2.0         0.26108      2.38947        0.34358
-3.0         0.34074      1.18985        0.70999
-4.0         -0.4971      0.83742        1.37813
-5.0         0.50018      1.59741        -0.68391
-6.0         -0.20867     0.07475        -0.09202
+0.0         0.85146      -0.88991       -0.04859
+1.0         -0.50277     1.62008        1.80293
+2.0         0.25027      -2.16524       -1.62022
+3.0         1.10021      -1.21791       -0.24691
+4.0         0.9235       0.52054        -0.6674
+5.0         -1.18037     -0.03257       -1.08524
+6.0         0.36673      0.38465        0.99534
 ...         ...          ...            ...
-93.0        0.89021      0.36408        -2.051
-94.0        -0.44889     -0.38447       -0.38494
-95.0        -0.30128     -0.22086       -0.06688
-96.0        -0.49095     1.26176        0.5679
-97.0        -1.10221     -0.59843       -0.53105
-98.0        0.04284      -0.75052       0.17709
-99.0        -0.10229     0.17398        -0.27455
+93.0        0.22187      -0.65523       0.47506
+94.0        0.84554      1.97642        -0.12205
+95.0        -0.43391     0.88748        0.77529
+96.0        1.90788      0.4312         0.91001
+97.0        -0.54808     2.34148        -0.04459
+98.0        0.49574      -1.00732       -0.98353
+99.0        0.57086      -0.06487       -0.32166
 Metadata
 --------    --------     --------       --------
 colors      (0, 0, 1)    (0.5, 0.5, 1)  (0.1, 0.2, 0.3)
@@ -1080,9 +1079,9 @@ dtype: float64, shape: (100, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
 -------  -------  --------
-      0  0.03904  mars
-      1  0.05205  venus
-      2  1.30135  saturn
+      0  0.0396   mars
+      1  0.0528   venus
+      2  1.31994  saturn
 </pre></div>
 </div>
 </div>
@@ -1102,18 +1101,18 @@ dtype: float64, shape: (100, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
--------  -------  --------
-      0  0.03904  mars
-      1  0.05205  venus
-  Index     rate  planet
--------  -------  --------
-      0  0.03904  mars
-      1  0.05205  venus
-  Index     rate  planet
--------  -------  --------
-      0  0.03904  mars
-      1  0.05205  venus
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index    rate  planet
+-------  ------  --------
+      0  0.0396  mars
+      1  0.0528  venus
+  Index    rate  planet
+-------  ------  --------
+      0  0.0396  mars
+      1  0.0528  venus
+  Index    rate  planet
+-------  ------  --------
+      0  0.0396  mars
+      1  0.0528  venus
 </pre></div>
 </div>
 </div>
@@ -1149,10 +1148,10 @@ shape: (2, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12        0         1
 ----------  --------  --------  --------
-0.0         0.41483   0.2487    0.49607
-1.0         0.20598   -0.19843  -1.23215
-2.0         1.87364   0.32732   0.43347
-3.0         -0.82363  0.57523   -0.57451
+0.0         0.867     1.19843   -0.26896
+1.0         0.16598   -0.64573  0.79369
+2.0         -0.51331  -0.97857  0.11993
+3.0         -1.05199  -0.47818  -1.07541
 Metadata
 --------    --------  --------  --------
 alpha       2         1         0
@@ -1171,7 +1170,7 @@ dtype: float64, shape: (4, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.41483367 0.24869918 0.49606867]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.8670036   1.19842912 -0.26896381]
 </pre></div>
 </div>
 </div>
@@ -1188,17 +1187,17 @@ dtype: float64, shape: (4, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ---------
-0            0.248699
-1           -0.198429
-2            0.327322
-3            0.575232
+0            1.19843
+1           -0.645729
+2           -0.978571
+3           -0.478183
 dtype: float64, shape: (4,)
 Time (s)    0         1
 ----------  --------  --------
-0.0         0.2487    0.49607
-1.0         -0.19843  -1.23215
-2.0         0.32732   0.43347
-3.0         0.57523   -0.57451
+0.0         1.19843   -0.26896
+1.0         -0.64573  0.79369
+2.0         -0.97857  0.11993
+3.0         -0.47818  -1.07541
 Metadata
 --------    --------  --------
 alpha       1         0
@@ -1219,10 +1218,10 @@ dtype: float64, shape: (4, 2)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12
 ----------  --------
-0.0         0.41483
-1.0         0.20598
-2.0         1.87364
-3.0         -0.82363
+0.0         0.867
+1.0         0.16598
+2.0         -0.51331
+3.0         -1.05199
 Metadata
 --------    --------
 alpha       2
@@ -1249,13 +1248,13 @@ dtype: float64, shape: (4, 1)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    0    1    2
 ----------  ---  ---  ---
-10.5        0.0  1.0  0.0
-11.5        0.0  0.0  2.0
+10.5        0.0  1.0  2.0
+11.5        0.0  0.0  1.0
 12.5        0.0  0.0  0.0
-13.5        0.0  0.0  2.0
-14.5        0.0  0.0  5.0
-15.5        0.0  0.0  1.0
-16.5        0.0  0.0  0.0
+13.5        0.0  0.0  1.0
+14.5        0.0  0.0  0.0
+15.5        0.0  0.0  0.0
+16.5        0.0  0.0  1.0
 ...         ...  ...  ...
 93.5        0.0  0.0  0.0
 94.5        0.0  0.0  0.0
@@ -1282,10 +1281,10 @@ dtype: float64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff2cc58b690&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb86028ee90&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/3b24de087367abd0631739a5fd2c92c2b773f1dda7c844b1e957d8be63aad73b.png" src="../../_images/3b24de087367abd0631739a5fd2c92c2b773f1dda7c844b1e957d8be63aad73b.png" />
+<img alt="../../_images/63cc408608a88f6686239971c81f2dfad76b3855fe80f89cbbb4ead8397924e1.png" src="../../_images/63cc408608a88f6686239971c81f2dfad76b3855fe80f89cbbb4ead8397924e1.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1310,10 +1309,10 @@ dtype: float64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff2887476d0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb81c644ad0&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/8a5ed91b474e76f6533708b21566be2267923d6efd67b3367014ca30eba97369.png" src="../../_images/8a5ed91b474e76f6533708b21566be2267923d6efd67b3367014ca30eba97369.png" />
+<img alt="../../_images/5fe9d5ae3e5c443f13a4b6831b8267e7f7f8031a23c3a54b27a0d4f2c5cadd79.png" src="../../_images/5fe9d5ae3e5c443f13a4b6831b8267e7f7f8031a23c3a54b27a0d4f2c5cadd79.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1337,10 +1336,10 @@ dtype: float64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7ff2cc4c8e50&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fb860345910&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/f82005bd5f32ba54a9aeb9b16a07b969a3cf79ce0cfe1375fabae01d90727ad4.png" src="../../_images/f82005bd5f32ba54a9aeb9b16a07b969a3cf79ce0cfe1375fabae01d90727ad4.png" />
+<img alt="../../_images/01f3d89bbe67c42c7508e9d3d4c27226957ef30a1cbec82f53f7baa7a5b150a5.png" src="../../_images/01f3d89bbe67c42c7508e9d3d4c27226957ef30a1cbec82f53f7baa7a5b150a5.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1357,21 +1356,21 @@ dtype: float64, shape: (70, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>index    start    end
 0        10.0     10.5
-1        12.5     13.5
-2        15.5     18.5
-3        21.5     24.5
-4        25.5     26.5
-5        27.5     30.0
-6        52.5     56.5
+1        11.5     20.5
+2        21.5     26.5
+3        27.5     30.0
+4        50.0     51.5
+5        52.5     53.5
+6        54.5     55.5
 ...      ...      ...
-11       10.0     10.5
-12       12.5     13.5
-13       15.5     18.5
-14       21.5     24.5
-15       25.5     26.5
+13       10.0     10.5
+14       11.5     20.5
+15       21.5     26.5
 16       27.5     30.0
-17       52.5     56.5
-shape: (18, 2), time unit: sec.
+17       50.0     51.5
+18       52.5     53.5
+19       54.5     55.5
+shape: (20, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -1388,27 +1387,29 @@ shape: (18, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.patches.Rectangle at 0x7ff2bc5ba790&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2bc7c3010&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc540210&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc540f10&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc541850&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2bc7e2650&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc542fd0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc543a50&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff258654310&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2bc7c2710&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff258655210&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2cc541050&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2586561d0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2586569d0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2586571d0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2586578d0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff2bc58efd0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7ff25865c690&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.patches.Rectangle at 0x7fb7fc589610&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb834787d90&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59a490&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59aed0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59bb50&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59c9d0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59d5d0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59e550&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59e990&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc59fb90&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a0450&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a1050&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a1250&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a1d10&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a2e50&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5a2fd0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb8341f0bd0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5aca90&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5acf10&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fb7fc5adf10&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/05c5f24afeace6e08b9e2781102fc43c3100b87fdf0df6d158b75406bcd566d7.png" src="../../_images/05c5f24afeace6e08b9e2781102fc43c3100b87fdf0df6d158b75406bcd566d7.png" />
+<img alt="../../_images/d35c31fcd6c5b6e5faa0ec0d209195446af421ee1cc93a427b21fafd7116cb51.png" src="../../_images/d35c31fcd6c5b6e5faa0ec0d209195446af421ee1cc93a427b21fafd7116cb51.png" />
 </div>
 </div>
 </section>
