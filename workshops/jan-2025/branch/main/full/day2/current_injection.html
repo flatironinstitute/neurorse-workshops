@@ -1,0 +1,2119 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introduction to GLM &#8212; CCN software workshop, January 2025  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'full/day2/current_injection';</script>
+    <link rel="icon" href="../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Fit head-direction population" href="head_direction.html" />
+    <link rel="prev" title="Signal processing and decoding in pynapple" href="../day1/phase_precession.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <img src="../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark pst-js-only" alt="Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-jan-2025" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/jan2025?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day1/head_direction.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="head_direction.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="place_cells.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/head_direction-users.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/head_direction-presenters.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-jan-2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/full/day2/current_injection.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to GLM</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-and-preparation">Data structures and preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-analyses">Basic analyses</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data">Preparing data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-model-to-use-injection-history">Extending the model to use injection history</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing up</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-citation">Data citation</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="hide above-input">
+<summary aria-label="Toggle hidden content">
+<span class="collapsed">Show code cell source</span>
+<span class="expanded">Hide code cell source</span>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Ignoring cached namespace &#39;core&#39;&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;invalid value encountered in div &quot;</span>
+    <span class="p">),</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/082f3b43e0841ea8895403140d85e91e/current_injection.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">current_injection.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-glm">
+<h1>Introduction to GLM<a class="headerlink" href="#introduction-to-glm" title="Link to this heading">#</a></h1>
+<p>For our first example, we will look at a very simple dataset: patch-clamp
+recordings from a single neuron in layer 4 of mouse primary visual cortex. This
+data is from the <a class="reference external" href="https://celltypes.brain-map.org/experiment/electrophysiology/478498617">Allen Brain
+Atlas</a>,
+and experimenters injected current directly into the cell, while recording the
+neuron’s membrane potential and spiking behavior. The experiments varied the
+shape of the current across many sweeps, mapping the neuron’s behavior in
+response to a wide range of potential inputs.</p>
+<p>For our purposes, we will examine only one of these sweeps, “Noise 1”, in which
+the experimentalists injected three pulses of current. The current is a square
+pulse multiplied by a sinusoid of a fixed frequency, with some random noise
+riding on top.</p>
+<div class="render-user render-presenter">
+Data for this notebook is a patch clamp experiment with a mouse V1 neuron, from the [Allen Brain Atlas](https://celltypes.brain-map.org/experiment/electrophysiology/478498617)
+</div>
+<div class="render-all">
+<p><img alt="Allen Brain Atlas view of the data we will analyze." src="../../_images/allen_data.png" /></p>
+</div>
+<p>In the figure above (from the Allen Brain Atlas website), we see the
+approximately 22 second sweep, with the input current plotted in the first row,
+the intracellular voltage in the second, and the recorded spikes in the third.
+(The grey lines and dots in the second and third rows comes from other sweeps
+with the same stimulus, which we’ll ignore in this exercise.) When fitting the
+Generalized Linear Model, we are attempting to model the spiking behavior, and
+we generally do not have access to the intracellular voltage, so for the rest
+of this notebook, we’ll use only the input current and the recorded spikes
+displayed in the first and third rows.</p>
+<p>First, let us see how to load in the data and reproduce the above figure, which
+we’ll do using <a class="reference external" href="https://pynapple.org">pynapple</a>. This will largely be a
+review of what we went through yesterday. After we’ve explored the data some, we’ll
+introduce the Generalized Linear Model and how to fit it with NeMoS.</p>
+<div class="render-all">
+<section id="learning-objectives">
+<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Learn how to explore spiking data and do basic analyses using pynapple</p></li>
+<li><p>Learn how to structure data for NeMoS</p></li>
+<li><p>Learn how to fit a basic Generalized Linear Model using NeMoS</p></li>
+<li><p>Learn how to retrieve the parameters and predictions from a fit GLM for
+intrepetation.</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import everything</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+
+<span class="c1"># some helper plotting functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+
+<span class="c1"># configure plots some</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-01-29 17:47:22,108:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="data-streaming">
+<h2>Data Streaming<a class="headerlink" href="#data-streaming" title="Link to this heading">#</a></h2>
+<p>While you can download the data directly from the Allen Brain Atlas and
+interact with it using their
+<a class="reference external" href="https://allensdk.readthedocs.io/en/latest/visual_behavior_neuropixels.html">AllenSDK</a>,
+we prefer the burgeoning <a class="reference external" href="https://nwb-overview.readthedocs.io/en/latest/">Neurodata Without Borders (NWB)
+standard</a>. We have converted
+this single dataset to NWB and uploaded it to the <a class="reference external" href="https://osf.io/5crqj/">Open Science
+Framework</a>. This allows us to easily load the data
+using pynapple, and it will immediately be in a format that pynapple understands!</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Pynapple can stream any NWB-formatted dataset! See <a class="reference external" href="https://pynapple.org/examples/tutorial_pynapple_dandi.html">their
+documentation</a>
+for more details, and see the <a class="reference external" href="https://dandiarchive.org/">DANDI Archive</a>
+for a repository of compliant datasets.</p>
+</div>
+<p>The first time the following cell is run, it will take a little bit of time
+to download the data, and a progress bar will show the download’s progress.
+On subsequent runs, the cell gets skipped: we do not need to redownload the
+data.</p>
+<div class="render-user render-presenter">
+- Stream the data. Format is [Neurodata Without Borders (NWB) standard](https://nwb-overview.readthedocs.io/en/latest/)
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;allen_478498617.nwb&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;allen_478498617.nwb&#39; from &#39;https://osf.io/vf2nj/download&#39; to &#39;/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/data&#39;.
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pynapple">
+<h2>Pynapple<a class="headerlink" href="#pynapple" title="Link to this heading">#</a></h2>
+<section id="data-structures-and-preparation">
+<h3>Data structures and preparation<a class="headerlink" href="#data-structures-and-preparation" title="Link to this heading">#</a></h3>
+<p>Now that we’ve downloaded the data, let’s open it with pynapple and examine
+its contents.</p>
+<div class="render-user render-presenter">
+- Open the NWB file with [pynapple](https://pynapple.org)
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/hdmf/spec/namespace.py:535: UserWarning: Ignoring cached namespace &#39;hdmf-common&#39; version 1.7.0 because version 1.8.0 is already loaded.
+  warn(&quot;Ignoring cached namespace &#39;%s&#39; version %s because version %s is already loaded.&quot;
+/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/hdmf/spec/namespace.py:535: UserWarning: Ignoring cached namespace &#39;hdmf-experimental&#39; version 0.4.0 because version 0.5.0 is already loaded.
+  warn(&quot;Ignoring cached namespace &#39;%s&#39; version %s because version %s is already loaded.&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>allen_478498617
+┍━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│ Keys     │ Type        │
+┝━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ units    │ TsGroup     │
+│ epochs   │ IntervalSet │
+│ stimulus │ Tsd         │
+│ response │ Tsd         │
+┕━━━━━━━━━━┷━━━━━━━━━━━━━┙
+</pre></div>
+</div>
+</div>
+</div>
+<p>The dataset contains several different pynapple objects, which we will
+explore throughout this demo. The following illustrates how these fields relate to the data
+we visualized above:</p>
+<div class="render-all">
+<p><img alt="Annotated view of the data we will analyze." src="../../_images/allen_data_annotated.gif" /></p>
+<!-- this gif created with the following imagemagick command: convert -layers OptimizePlus -delay 100 allen_data_annotated-units.svg allen_data_annotated-epochs.svg allen_data_annotated-stimulus.svg allen_data_annotated-response.svg -loop 0 allen_data_annotated.gif -->
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">stimulus</span></code>: injected current, in Amperes, sampled at 20k Hz.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">response</span></code>: the neuron’s intracellular voltage, sampled at 20k Hz. We will not use this info in this example.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">units</span></code>: dictionary of neurons, holding each neuron’s spike timestamps.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code>: start and end times of different intervals, defining the experimental structure, specifying when each stimulation protocol began and ended.</p></li>
+</ul>
+</div>
+<p>Now let’s go through the relevant variables in some more detail:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trial_interval_set</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span>
+
+<span class="n">current</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;stimulus&quot;</span><span class="p">]</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>First, let’s examine <code class="docutils literal notranslate"><span class="pre">trial_interval_set</span></code>:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trial_interval_set</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>index    start    end      tags
+0        0.0      34.02    [&#39;Ramp&#39;]
+1        39.02    73.04    [&#39;Ramp&#39;]
+2        78.04    112.06   [&#39;Ramp&#39;]
+3        117.06   119.083  [&#39;Short Square&#39;]
+4        124.083  126.106  [&#39;Short Square&#39;]
+5        131.106  133.129  [&#39;Short Square&#39;]
+6        138.129  140.152  [&#39;Short Square&#39;]
+...      ...      ...      ...
+60       0.0      34.02    [&#39;Short Square - Triple&#39;]
+61       39.02    73.04    [&#39;Short Square - Triple&#39;]
+62       78.04    112.06   [&#39;Short Square - Triple&#39;]
+63       117.06   119.083  [&#39;Short Square - Triple&#39;]
+64       124.083  126.106  [&#39;Short Square - Triple&#39;]
+65       131.106  133.129  [&#39;Short Square - Triple&#39;]
+66       138.129  140.152  [&#39;Test&#39;]
+shape: (67, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">trial_interval_set</span></code> is an
+<a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html"><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code></a>,
+with a metadata columns (<code class="docutils literal notranslate"><span class="pre">tags</span></code>) defining the stimulus protocol.</p>
+<div class="render-user render-presenter">"
+- `Noise 1`: epochs of random noise
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noise_interval</span> <span class="o">=</span> <span class="n">trial_interval_set</span><span class="p">[</span><span class="n">trial_interval_set</span><span class="o">.</span><span class="n">tags</span> <span class="o">==</span> <span class="s2">&quot;Noise 1&quot;</span><span class="p">]</span>
+<span class="n">noise_interval</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end  tags
+      0  460.768  488.788  [&#39;Noise 1&#39;]
+      1  526.808  554.828  [&#39;Noise 1&#39;]
+      2  592.848  620.868  [&#39;Noise 1&#39;]
+shape: (3, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<p>As described above, we will be examining “Noise 1”. We can see it contains
+three rows, each defining a separate sweep. We’ll just grab the first sweep
+(shown in blue in the pictures above) and ignore the other two (shown in
+gray).</p>
+<div class="render-user render-presenter">"
+- Let's focus on the first epoch.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">noise_interval</span> <span class="o">=</span> <span class="n">noise_interval</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">noise_interval</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end  tags
+      0  460.768  488.788  Noise 1
+shape: (1, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now let’s examine <code class="docutils literal notranslate"><span class="pre">current</span></code>:</p>
+<div class="render-user render-presenter">"
+- `current` : Tsd (TimeSeriesData) : time index + data
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+-------------  --
+0.0             0
+5e-05           0
+0.0001          0
+0.00015         0
+0.0002          0
+0.00025         0
+0.0003          0
+...
+897.420649999   0
+897.420699999   0
+897.420749999   0
+897.420799999   0
+897.420849999   0
+897.420899999   0
+897.420949999   0
+dtype: float64, shape: (11348420,)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">current</span></code> is a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code>
+(<a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.html">TimeSeriesData</a>)
+object with 2 columns. Like all <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> objects, the first column contains the
+time index and the second column contains the data; in this case, the current
+in Ampere (A).</p>
+<p>Currently, <code class="docutils literal notranslate"><span class="pre">current</span></code> contains the entire ~900 second experiment but, as
+discussed above, we only want one of the “Noise 1” sweeps. Fortunately,
+<code class="docutils literal notranslate"><span class="pre">pynapple</span></code> makes it easy to grab out the relevant time points by making use
+of the <code class="docutils literal notranslate"><span class="pre">noise_interval</span></code> we defined above:</p>
+<div class="render-user render-presenter">"
+- `restrict` : restricts a time series object to a set of time intervals delimited by an IntervalSet object
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">noise_interval</span><span class="p">)</span>
+<span class="c1"># convert current from Ampere to pico-amperes, to match the above visualization</span>
+<span class="c1"># and move the values to a more reasonable range.</span>
+<span class="n">current</span> <span class="o">=</span> <span class="n">current</span> <span class="o">*</span> <span class="mf">1e12</span>
+<span class="n">current</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+-------------  --
+460.768         0
+460.76805       0
+460.7681        0
+460.76815       0
+460.7682        0
+460.76825       0
+460.7683        0
+...
+488.787649993   0
+488.787699993   0
+488.787749993   0
+488.787799993   0
+488.787849993   0
+488.787899993   0
+488.787949993   0
+dtype: float64, shape: (560400,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice that the timestamps have changed and our shape is much smaller.</p>
+<p>Finally, let’s examine the spike times. <code class="docutils literal notranslate"><span class="pre">spikes</span></code> is a
+<a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.html"><code class="docutils literal notranslate"><span class="pre">TsGroup</span></code></a>,
+a dictionary-like object that holds multiple <code class="docutils literal notranslate"><span class="pre">Ts</span></code> (timeseries) objects with
+potentially different time indices:</p>
+<div class="render-user render-presenter">"
+- `TsGroup` : a dictionary-like object holding multiple `Ts` (timeseries) objects with potentially different time indices.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  location      group
+-------  -------  ----------  -------
+      0  0.87805  v1                0
+</pre></div>
+</div>
+</div>
+</div>
+<p>Typically, this is used to hold onto the spike times for a population of
+neurons. In this experiment, we only have recordings from a single neuron, so
+there’s only one row.</p>
+<p>We can index into the <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> to see the timestamps for this neuron’s
+spikes:</p>
+<div class="render-user render-presenter">"
+We can index into the `TsGroup` to see the timestamps for this neuron's spikes:
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+1.85082
+2.06869
+2.20292
+2.325815
+2.42342
+2.521415
+2.604795
+...
+869.461695
+878.08481
+878.09765
+878.110865
+886.75375
+886.761465
+886.76995
+shape: 777
+</pre></div>
+</div>
+</div>
+</div>
+<p>Similar to <code class="docutils literal notranslate"><span class="pre">current</span></code>, this object originally contains data from the entire
+experiment. To get only the data we need, we again use
+<code class="docutils literal notranslate"><span class="pre">restrict(noise_interval)</span></code>:</p>
+<div class="render-user render-presenter">"
+Let's restrict to the same epoch `noise_interval`:
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">noise_interval</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span>
+<span class="n">spikes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  location      group
+-------  -------  ----------  -------
+      0  1.42755  v1                0
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+470.81754
+470.85842
+470.907235
+470.954925
+471.0074
+471.107175
+471.25083
+...
+480.67927
+480.81817
+480.90529
+480.94921
+481.002715
+481.60008
+481.67727
+shape: 40
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s visualize the data from this trial, replicating rows 1 and 3
+from the Allen Brain Atlas figure at the beginning of this notebook:</p>
+<div class="render-user render-presenter">"
+Let's visualize the data from this trial:
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="s2">&quot;grey&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">]),</span> <span class="s2">&quot;|&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">ms</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Current (pA)&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 0, &#39;Time (s)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/2a498c7cec3d0eea4f07518fdc216da66c7e42735705478fa71470d369bb4400.png" src="../../_images/2a498c7cec3d0eea4f07518fdc216da66c7e42735705478fa71470d369bb4400.png" />
+</div>
+</div>
+</section>
+<section id="basic-analyses">
+<h3>Basic analyses<a class="headerlink" href="#basic-analyses" title="Link to this heading">#</a></h3>
+<p>Before using the Generalized Linear Model, or any model, it’s worth taking
+some time to examine our data and think about what features are interesting
+and worth capturing. As Edoardo explained earlier today,
+the GLM is a model of the neuronal firing rate. However, in our experiments,
+we do not observe the firing rate, only the spikes! Moreover, neural
+responses are typically noisy—even in this highly controlled experiment
+where the same current was injected over multiple trials, the spike times
+were slightly different from trial-to-trial. No model can perfectly predict
+spike times on an individual trial, so how do we tell if our model is doing a
+good job?</p>
+<p>Our objective function is the log-likelihood of the observed spikes given the
+predicted firing rate. That is, we’re trying to find the firing rate, as a
+function of time, for which the observed spikes are likely. Intuitively, this
+makes sense: the firing rate should be high where there are many spikes, and
+vice versa. However, it can be difficult to figure out if your model is doing
+a good job by squinting at the observed spikes and the predicted firing rates
+plotted together.</p>
+<p>One common way to visualize a rough estimate of firing rate is to smooth
+the spikes by convolving them with a Gaussian filter.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a heuristic for getting the firing rate, and shouldn’t be taken
+as the literal truth (to see why, pass a firing rate through a Poisson
+process to generate spikes and then smooth the output to approximate the
+generating firing rate). A model should not be expected to match this
+approximate firing rate exactly, but visualizing the two firing rates
+together can help you reason about which phenomena in your data the model
+is able to adequately capture, and which it is missing.</p>
+<p>For more information, see section 1.2 of <a class="reference external" href="https://boulderschool.yale.edu/sites/default/files/files/DayanAbbott.pdf"><em>Theoretical
+Neuroscience</em></a>,
+by Dayan and Abbott.</p>
+</div>
+<p>Pynapple can easily compute this approximate firing rate, and plotting this
+information will help us pull out some phenomena that we think are
+interesting and would like a model to capture.</p>
+<p>First, we must convert from our spike times to binned spikes:</p>
+<div class="render-user render-presenter">"
+The Generalized Linear Model gives a predicted firing rate. First we can use pynapple to visualize this firing rate for a single trial.
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code> : count the number of events within <code class="docutils literal notranslate"><span class="pre">bin_size</span></code></p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bin size in seconds</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">0.001</span>
+<span class="c1"># Get spikes for neuron 0</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">)</span>
+<span class="n">count</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  --
+460.7685     0
+460.7695     0
+460.7705     0
+460.7715     0
+460.7725     0
+460.7735     0
+460.7745     0
+...
+488.7815     0
+488.7825     0
+488.7835     0
+488.7845     0
+488.7855     0
+488.7865     0
+488.7875     0
+dtype: int64, shape: (28020,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, let’s convert the binned spikes into the firing rate, by smoothing them
+with a gaussian kernel. Pynapple again provides a convenience function for
+this:</p>
+<div class="render-user render-presenter">"
+Let's convert the spike counts to firing rate :
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">smooth</span></code> : convolve with a Gaussian kernel</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the inputs to this function are the standard deviation of the gaussian in seconds and</span>
+<span class="c1"># the full width of the window, in standard deviations. So std=.05 and size_factor=20</span>
+<span class="c1"># gives a total filter size of 0.05 sec * 20 = 1 sec.</span>
+<span class="n">firing_rate</span> <span class="o">=</span> <span class="n">count</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">size_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="c1"># convert from spikes per bin to spikes per second (Hz)</span>
+<span class="n">firing_rate</span> <span class="o">=</span> <span class="n">firing_rate</span> <span class="o">/</span> <span class="n">bin_size</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that firing_rate is a <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.html"><code class="docutils literal notranslate"><span class="pre">Tsd</span></code></a>!</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">firing_rate</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pynapple.core.time_series.Tsd&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve done all this preparation, let’s make a plot to more easily
+visualize the data.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We’re hiding the details of the plotting function for the purposes of this tutorial, but you can find it in <a class="reference external" href="https://github.com/flatironinstitute/nemos/blob/development/src/nemos/_documentation_utils/plotting.py">the source
+code</a>
+if you are interested.</p>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc_plots</span><span class="o">.</span><span class="n">current_injection_plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">firing_rate</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/950670a9e21fe1901875b13fbca210925be64e5283668968feba1f064c522d6a.png" src="../../_images/950670a9e21fe1901875b13fbca210925be64e5283668968feba1f064c522d6a.png" />
+</div>
+</div>
+<p>So now that we can view the details of our experiment a little more clearly,
+what do we see?</p>
+<ul class="simple">
+<li><p>We have three intervals of increasing current, and the firing rate
+increases as the current does.</p></li>
+<li><p>While the neuron is receiving the input, it does not fire continuously or
+at a steady rate; there appears to be some periodicity in the response. The
+neuron fires for a while, stops, and then starts again. There’s periodicity
+in the input as well, so this pattern in the response might be reflecting
+that.</p></li>
+<li><p>There’s some decay in firing rate as the input remains on: there are three or
+four “bumps” of neuronal firing in the second and third intervals and they
+decrease in amplitude, with the first being the largest.</p></li>
+</ul>
+<p>These give us some good phenomena to try and predict! But there’s something
+that’s not quite obvious from the above plot: what is the relationship
+between the input and the firing rate? As described in the first bullet point
+above, it looks to be <em>monotonically increasing</em>: as the current increases,
+so does the firing rate. But is that exactly true? What form is that
+relationship?</p>
+<p>Pynapple can compute a tuning curve to help us answer this question, by
+binning our spikes based on the instantaneous input current and computing the
+firing rate within those bins:</p>
+<div class="note admonition">
+<p class="admonition-title">Tuning curve in <code class="docutils literal notranslate"><span class="pre">pynapple</span></code></p>
+<p><a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_1d_tuning_curves"><code class="docutils literal notranslate"><span class="pre">compute_1d_tuning_curves</span></code></a> : compute the firing rate as a function of a 1-dimensional feature.</p>
+</div>
+<div class="render-user render-presenter">"
+What is the relationship between the current and the spiking activity?
+[`compute_1d_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_1d_tuning_curves) : compute the firing rate as a function of a 1-dimensional feature.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curve</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_1d_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">nb_bins</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">tuning_curve</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4.637500</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>13.912500</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>23.187501</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>32.462501</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>41.737501</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>51.012501</th>
+      <td>0.000000</td>
+    </tr>
+    <tr>
+      <th>60.287501</th>
+      <td>3.960592</td>
+    </tr>
+    <tr>
+      <th>69.562502</th>
+      <td>1.755310</td>
+    </tr>
+    <tr>
+      <th>78.837502</th>
+      <td>4.294610</td>
+    </tr>
+    <tr>
+      <th>88.112502</th>
+      <td>10.993325</td>
+    </tr>
+    <tr>
+      <th>97.387502</th>
+      <td>12.501116</td>
+    </tr>
+    <tr>
+      <th>106.662502</th>
+      <td>10.275380</td>
+    </tr>
+    <tr>
+      <th>115.937503</th>
+      <td>33.476805</td>
+    </tr>
+    <tr>
+      <th>125.212503</th>
+      <td>61.585835</td>
+    </tr>
+    <tr>
+      <th>134.487503</th>
+      <td>24.067389</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">tuning_curve</span></code> is a pandas DataFrame where each column is a neuron (one
+neuron in this case) and each row is a bin over the feature (here, the input
+current). We can easily plot the tuning curve of the neuron:</p>
+<div class="render-user render-presenter">"
+Let's plot the tuning curve of the neuron.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc_plots</span><span class="o">.</span><span class="n">tuning_curve_plot</span><span class="p">(</span><span class="n">tuning_curve</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/8abe4c6d4e15ce47b105e56889c5b09035b8bd12a4aab1fa5489413dc2639e36.png" src="../../_images/8abe4c6d4e15ce47b105e56889c5b09035b8bd12a4aab1fa5489413dc2639e36.png" />
+</div>
+</div>
+<p>We can see that, while the firing rate mostly increases with the current,
+it’s definitely not a linear relationship, and it might start decreasing as
+the current gets too large.</p>
+<p>So this gives us three interesting phenomena we’d like our model to help
+explain:</p>
+<ul class="simple">
+<li><p>the tuning curve between the firing rate and the current.</p></li>
+<li><p>the firing rate’s periodicity.</p></li>
+<li><p>the gradual reduction in firing rate while the current remains on.</p></li>
+</ul>
+</section>
+</section>
+<section id="nemos">
+<h2>NeMoS<a class="headerlink" href="#nemos" title="Link to this heading">#</a></h2>
+<section id="preparing-data">
+<h3>Preparing data<a class="headerlink" href="#preparing-data" title="Link to this heading">#</a></h3>
+<p>Now that we understand our data, we’re almost ready to put the model together.
+Before we construct it, however, we need to get the data into the right format.</p>
+<p>When fitting a single neuron, NeMoS requires that the predictors and spike
+counts it operates on have the following properties:</p>
+<ul class="simple">
+<li><p>predictors and spike counts must have the same number of time points.</p></li>
+<li><p>predictors must be two-dimensional, with shape <code class="docutils literal notranslate"><span class="pre">(n_time_bins,</span> <span class="pre">n_features)</span></code>.
+In this example, we have a single feature (the injected current).</p></li>
+<li><p>spike counts must be one-dimensional, with shape <code class="docutils literal notranslate"><span class="pre">(n_time_bins,</span> <span class="pre">)</span></code>. As
+discussed above, <code class="docutils literal notranslate"><span class="pre">n_time_bins</span></code> must be the same for both the predictors and
+spike counts.</p></li>
+<li><p>predictors and spike counts must be
+<a class="reference external" href="https://jax.readthedocs.io/en/latest/jax-101/01-jax-basics.html"><code class="docutils literal notranslate"><span class="pre">jax.numpy</span></code></a>
+arrays, <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays or <code class="docutils literal notranslate"><span class="pre">pynapple</span></code> <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code>/<code class="docutils literal notranslate"><span class="pre">Tsd</span></code>.</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">What is jax?</p>
+<p><a class="reference external" href="https://github.com/jax-ml/jax">jax</a> is a Google-supported python library
+for automatic differentiation. It has all sorts of neat features, but the
+most relevant of which for NeMoS is its GPU-compatibility and
+just-in-time compilation (both of which make code faster with little
+overhead!), as well as the collection of optimizers present in
+<a class="reference external" href="https://jaxopt.github.io/stable/">jaxopt</a>.</p>
+</div>
+<p>First, we require that our predictors and our spike counts have the same
+number of time bins. We can achieve this by down-sampling our current to the
+spike counts to the proper resolution using the
+<a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.bin_average.html"><code class="docutils literal notranslate"><span class="pre">bin_average</span></code></a>
+method from pynapple:</p>
+<div class="render-user render-presenter">
+Get data from pynapple to NeMoS-ready format:
+<ul class="simple">
+<li><p>predictors and spikes must have same number of time points</p></li>
+</ul>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binned_current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">bin_average</span><span class="p">(</span><span class="n">bin_size</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;current shape: </span><span class="si">{</span><span class="n">binned_current</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="c1"># rate is in Hz, convert to KHz</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;current sampling rate: </span><span class="si">{</span><span class="n">binned_current</span><span class="o">.</span><span class="n">rate</span><span class="o">/</span><span class="mf">1000.</span><span class="si">:</span><span class="s2">.02f</span><span class="si">}</span><span class="s2"> KHz&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">count shape: </span><span class="si">{</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;count sampling rate: </span><span class="si">{</span><span class="n">count</span><span class="o">.</span><span class="n">rate</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s2">.02f</span><span class="si">}</span><span class="s2"> KHz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>current shape: (28020,)
+current sampling rate: 1.00 KHz
+
+count shape: (28020,)
+count sampling rate: 1.00 KHz
+</pre></div>
+</div>
+</div>
+</div>
+<p>Secondly, we have to reshape our variables so that they are the proper shape:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">predictors</span></code>: <code class="docutils literal notranslate"><span class="pre">(n_time_bins,</span> <span class="pre">n_features)</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">count</span></code>: <code class="docutils literal notranslate"><span class="pre">(n_time_bins,</span> <span class="pre">)</span></code></p></li>
+</ul>
+<p>Because we only have a single predictor feature, we’ll use
+<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.expand_dims.html"><code class="docutils literal notranslate"><span class="pre">np.expand_dims</span></code></a>
+to ensure it is a 2d array.</p>
+<div class="render-user render-presenter">
+- predictors must be 2d, spikes 1d
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">expand_dims</span><span class="p">(</span><span class="n">binned_current</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># check that the dimensionality matches NeMoS expectation</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;predictor shape: </span><span class="si">{</span><span class="n">predictor</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;count shape: </span><span class="si">{</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>predictor shape: (28020, 1)
+count shape: (28020,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="info admonition">
+<p class="admonition-title">What if I have more than one neuron?</p>
+<p>In this example, we’re only fitting data for a single neuron, but you
+might wonder how the data should be shaped if you have more than one
+neuron.</p>
+<p>We will discuss this in more detail in the <a class="reference internal" href="head_direction.html"><span class="std std-doc">following
+tutorial</span></a>, but briefly: NeMoS has a separate
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> object for fitting a population of
+neurons. It operates very similarly to the <code class="docutils literal notranslate"><span class="pre">GLM</span></code> object we use here: it still
+expects a 2d input, with neurons concatenated along the second dimension. (NeMoS
+provides some helper functions for splitting the design matrix and model
+parameter arrays to make them more interpretable.)</p>
+<p>Note that, with a generalized linear model, fitting each neuron separately is
+equivalent to fitting the entire population at once. Fitting them separately can
+make your life easier by e.g., allowing you to parallelize more easily.</p>
+</div>
+</section>
+<section id="fitting-the-model">
+<h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h3>
+<p>Now we’re ready to fit our model!</p>
+<p>First, we need to define our GLM model object. We intend for users
+to interact with our models like
+<a class="reference external" href="https://scikit-learn.org/stable/getting_started.html">scikit-learn</a>
+estimators. In a nutshell, a model instance is initialized with
+hyperparameters that specify optimization and model details,
+and then the user calls the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> function to fit the model to data.
+We will walk you through the process below by example, but if you
+are interested in reading more details see the <a class="reference external" href="https://scikit-learn.org/stable/getting_started.html">Getting Started with scikit-learn</a> webpage.</p>
+<p>To initialize our model, we need to specify the solver, the regularizer, and the observation
+model. All of these are optional.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">solver_name</span></code>: this string specifies the solver algorithm. The default
+behavior depends on the regularizer, as each regularization scheme is only
+compatible with a subset of possible solvers. View the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.html#nemos.glm.GLM" title="nemos 0.2.1"><span class="xref myst">GLM
+docstring</span></a> for more details.</p></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>With a convex problem like the GLM, in theory it does not matter which
+solver algorithm you use. In practice, due to numerical issues, it
+generally does. Thus, it’s worth trying a couple to see how their
+solutions compare.</p>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">regularizer</span></code>: this string or object specifies the regularization scheme.
+Regularization modifies the objective function to reflect your prior beliefs
+about the parameters, such as sparsity. Regularization becomes more important
+as the number of input features, and thus model parameters, grows. NeMoS’s
+solvers can be found within the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/api_reference.html#regularizers" title="nemos 0.2.1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nemos.regularizer</span></code>
+module</span></a>. If you pass a string matching the name
+of one of our solvers, we initialize the solver with the default arguments. If
+you need more control, you will need to initialize and pass the object
+yourself.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">observation_model</span></code>: this object links the firing rate and the observed data
+(in this case spikes), describing the distribution of neural activity (and
+thus changing the log-likelihood). For spiking data, we use the Poisson
+observation model, but we discuss other options for continuous data in our
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/tutorials/plot_06_calcium_imaging.html#tutorial-calcium-imaging" title="nemos 0.2.1"><span class="xref myst">documentation</span></a>.</p></li>
+</ul>
+<p>For this example, we’ll use an un-regularized LBFGS solver. We’ll discuss
+regularization in a later tutorial.</p>
+<div class="info admonition">
+<p class="admonition-title">Why LBFGS?</p>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Limited-memory_BFGS">LBFGS</a> is a
+quasi-Netwon method, that is, it uses the first derivative (the gradient)
+and approximates the second derivative (the Hessian) in order to solve
+the problem. This means that LBFGS tends to find a solution faster and is
+often less sensitive to step-size. Try other solvers to see how they
+behave!</p>
+</div>
+<div class="render-user render-presenter">
+- GLM objects need regularizers and observation models
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the model, specifying the solver. we&#39;ll accept the defaults</span>
+<span class="c1"># for everything else.</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve initialized our model with the optimization parameters, we can
+fit our data! In the previous section, we prepared our model matrix
+(<code class="docutils literal notranslate"><span class="pre">predictor</span></code>) and target data (<code class="docutils literal notranslate"><span class="pre">count</span></code>), so to fit the model we just need to
+pass them to the model:</p>
+<div class="render-user render-presenter">
+- call fit and retrieve parameters
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">predictor</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLM(
+    observation_model=PoissonObservations(inverse_link_function=exp),
+    regularizer=UnRegularized(),
+    solver_name=&#39;LBFGS&#39;
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we’ve fit our data, we can retrieve the resulting parameters.
+Similar to scikit-learn, these are stored as the <code class="docutils literal notranslate"><span class="pre">coef_</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept_</span></code>
+attributes:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;firing_rate(t) = exp(</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s2"> * current(t) + </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>firing_rate(t) = exp([0.05331734] * current(t) + [-9.762487])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">model.coef_</span></code> has shape <code class="docutils literal notranslate"><span class="pre">(n_features,</span> <span class="pre">)</span></code>, while <code class="docutils literal notranslate"><span class="pre">model.intercept_</span></code> has
+shape <code class="docutils literal notranslate"><span class="pre">(n_neurons)</span></code> (for the <code class="docutils literal notranslate"><span class="pre">GLM</span></code> object, this will always be 1, but it will
+differ for the <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> object!):</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;coef_ shape: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;intercept_ shape: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>coef_ shape: (1,)
+intercept_ shape: (1,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>It’s nice to get the parameters above, but we can’t tell how well our model
+is doing by looking at them. So how should we evaluate our model?</p>
+<p>First, we can use the model to predict the firing rates and compare that to
+the smoothed spike train. By calling <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict" title="nemos 0.2.1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></span></a> we can get the model’s
+predicted firing rate for this data. Note that this is just the output of the
+model’s linear-nonlinear step, as described earlier!</p>
+<div class="render-user render-presenter">
+- generate and examine model predictions.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_fr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
+<span class="c1"># convert units from spikes/bin to spikes/sec</span>
+<span class="n">predicted_fr</span> <span class="o">=</span> <span class="n">predicted_fr</span> <span class="o">/</span> <span class="n">bin_size</span>
+
+
+<span class="c1"># and let&#39;s smooth the firing rate the same way that we smoothed the firing rate</span>
+<span class="n">smooth_predicted_fr</span> <span class="o">=</span> <span class="n">predicted_fr</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">size_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c1"># and plot!</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">current_injection_plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">firing_rate</span><span class="p">,</span>
+                                 <span class="c1"># plot the predicted firing rate that has</span>
+                                 <span class="c1"># been smoothed the same way as the</span>
+                                 <span class="c1"># smoothed spike train</span>
+                                 <span class="n">predicted_firing_rate</span><span class="o">=</span><span class="n">smooth_predicted_fr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/05adc68dd819bc9a4cca672be33e38b5f05de1d3be454fec54975e36f94734f9.png" src="../../_images/05adc68dd819bc9a4cca672be33e38b5f05de1d3be454fec54975e36f94734f9.png" />
+</div>
+</div>
+<p>What do we see above? Note that the y-axes in the final row are different for
+each subplot!</p>
+<ul class="simple">
+<li><p>Predicted firing rate increases as injected current goes up — Success! 🎉</p></li>
+<li><p>The amplitude of the predicted firing rate only matches the observed
+amplitude in the third interval: it’s too high in the first and too low in
+the second — Failure! ❌</p></li>
+<li><p>Our predicted firing rate has the periodicity we see in the smoothed spike
+train — Success! 🎉</p></li>
+<li><p>The predicted firing rate does not decay as the input remains on: the
+amplitudes are identical for each of the bumps within a given interval —
+Failure! ❌</p></li>
+</ul>
+<p>The failure described in the second point may seem particularly confusing —
+approximate amplitude feels like it should be very easy to capture, so what’s
+going on?</p>
+<p>To get a better sense, let’s look at the mean firing rate over the whole
+period:</p>
+<div class="render-user render-presenter">
+- what do we see?
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare observed mean firing rate with the model predicted one</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observed mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">bin_size</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">)</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observed mean firing rate: 1.4275517487508922 Hz
+Predicted mean firing rate: 1.4306069612503052 Hz
+</pre></div>
+</div>
+</div>
+</div>
+<p>We matched the average pretty well! So we’ve matched the average and the
+range of inputs from the third interval reasonably well, but overshot at low
+inputs and undershot in the middle.</p>
+<p>We can see this more directly by computing the tuning curve for our predicted
+firing rate and comparing that against our smoothed spike train from the
+beginning of this notebook. Pynapple can help us again with this:</p>
+<div class="render-user render-presenter">
+- examine tuning curve &mdash; what do we see?
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pynapple expects the input to this function to be 2d,</span>
+<span class="c1"># so let&#39;s add a singleton dimension</span>
+<span class="n">tuning_curve_model</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_1d_tuning_curves_continuous</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">current</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">tuning_curve_plot</span><span class="p">(</span><span class="n">tuning_curve</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curve_model</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tomato&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;glm&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f83006e09d0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/f73ddd2f027ab9cd8b16c825b0d0533f6d1731c61a1766a9077841a113dea005.png" src="../../_images/f73ddd2f027ab9cd8b16c825b0d0533f6d1731c61a1766a9077841a113dea005.png" />
+</div>
+</div>
+<p>In addition to making that mismatch discussed earlier a little more obvious,
+this tuning curve comparison also highlights that this model thinks the
+firing rate will continue to grow as the injected current increases, which is
+not reflected in the data (or in our knowledge of how neurons work!).</p>
+<p>Viewing this plot also makes it clear that the model’s tuning curve is
+approximately exponential. We already knew that! That’s what it means to be a
+LNP model of a single input. But it’s nice to see it made explicit.</p>
+</section>
+<section id="extending-the-model-to-use-injection-history">
+<h3>Extending the model to use injection history<a class="headerlink" href="#extending-the-model-to-use-injection-history" title="Link to this heading">#</a></h3>
+<p>We can try extending the model in order to improve its performance. There are many
+ways one can do this: the iterative refinement and improvement of your model is an
+important part of the scientific process! In this tutorial, we’ll discuss one such
+extension, but you’re encouraged to try others.</p>
+<p>Our model right now assumes that the neuron’s spiking behavior is only driven by the
+<em>instantaneous input current</em>. That is, we’re saying that history doesn’t matter. But
+we know that neurons integrate information over time, so why don’t we add extend our
+model to reflect that?</p>
+<p>To do so, we will change our predictors, including variables that represent the
+history of the input current as additional columns. First, we must decide the
+duration of time that we think is relevant: does current passed to the cell 10
+msec ago matter? what about 100 msec? 1 sec? To start, we should use our a
+priori knowledge about the system to determine a reasonable initial value. In
+later notebooks, we’ll learn how to use NeMoS with scikit-learn to do formal
+model comparison in order to determine how much history is necessary.</p>
+<p>For now, let’s use a duration of 200 msec:</p>
+<div class="render-user render-presenter">
+  - choose a length of time over which the neuron integrates the input current
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">current_history_duration_sec</span> <span class="o">=</span> <span class="mf">.2</span>
+<span class="c1"># convert this from sec to bins</span>
+<span class="n">current_history_duration</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">current_history_duration_sec</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To construct our new predictors, we could simply take the current and shift it
+incrementally. The value of predictor <code class="docutils literal notranslate"><span class="pre">binned_current</span></code> at time <span class="math notranslate nohighlight">\(t\)</span> is the injected
+current at time <span class="math notranslate nohighlight">\(t\)</span>; by shifting <code class="docutils literal notranslate"><span class="pre">binned_current</span></code> backwards by 1, we are modeling the
+effect of the current at time <span class="math notranslate nohighlight">\(t-1\)</span> on the firing rate at time <span class="math notranslate nohighlight">\(t\)</span>, and so on for all
+shifts <span class="math notranslate nohighlight">\(i\)</span> up to <code class="docutils literal notranslate"><span class="pre">current_history_duration</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binned_current</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">binned_current</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+<span class="c1"># etc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  --
+460.7705     0
+460.7715     0
+460.7725     0
+460.7735     0
+460.7745     0
+460.7755     0
+460.7765     0
+...
+488.7815     0
+488.7825     0
+488.7835     0
+488.7845     0
+488.7855     0
+488.7865     0
+488.7875     0
+dtype: float64, shape: (28018,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>In general, however, this is not a good way to extend the model in the way discussed.
+You will end end up with a very large number of predictive variables (one for every
+bin shift!), which will make the model more sensitive to noise in the data.</p>
+<p>A better idea is to do some dimensionality reduction on these predictors, by
+parametrizing them using <strong>basis functions</strong>. These will allow us to capture
+interesting non-linear effects with a relatively low-dimensional parametrization
+that preserves convexity. NeMoS has a whole library of basis objects available
+at <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/README.html#table-basis" title="nemos 0.2.1"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nmo.basis</span></code></span></a>, and choosing which set of basis functions and
+their parameters, like choosing the duration of the current history predictor,
+requires knowledge of your problem, but can later be examined using model
+comparison tools.</p>
+<p>For history-type inputs like we’re discussing, the raised cosine log-stretched basis
+first described in Pillow et al., 2005 <a class="footnote-reference brackets" href="#pillow" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is a good fit. This basis set has the nice
+property that their precision drops linearly with distance from event, which is a
+makes sense for many history-related inputs in neuroscience: whether an input happened
+1 or 5 msec ago matters a lot, whereas whether an input happened 51 or 55 msec ago is
+less important.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_basis</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/d5f99d724b5000220cdcd2b3fb1caad4c423454fc37ac7925699e90164174845.png" src="../../_images/d5f99d724b5000220cdcd2b3fb1caad4c423454fc37ac7925699e90164174845.png" />
+</div>
+</div>
+<p>NeMoS’s <code class="docutils literal notranslate"><span class="pre">Basis</span></code> objects handle the construction and use of these basis functions. When
+we instantiate this object, the main argument we need to specify is the number of
+functions we want: with more basis functions, we’ll be able to represent the effect of
+the corresponding input with the higher precision, at the cost of adding additional
+parameters.</p>
+<p>We also need to specify whether we want to use the convolutional (<code class="docutils literal notranslate"><span class="pre">Conv</span></code>) or
+evaluation (<code class="docutils literal notranslate"><span class="pre">Eval</span></code>) form of the basis. This is determined by the type of feature
+we wish to represent with the basis:</p>
+<ul class="simple">
+<li><p>Evaluation bases transform the input through the non-linear function defined
+by the basis. This can be used to represent features such as spatial location
+and head direction.</p></li>
+<li><p>Convolution bases apply a convolution of the input data to the bank of filters
+defined by the basis, and is particularly useful when analyzing data with
+inherent temporal dependencies, such as spike history or the history of input
+current in this example. In convolution mode, we must additionally specify the
+<code class="docutils literal notranslate"><span class="pre">window_size</span></code>, the length of the filters in bins.</p></li>
+</ul>
+<div class="render-user render-presenter">
+  - define a basis object
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">current_history_duration</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Visualizing <code class="docutils literal notranslate"><span class="pre">Basis</span></code> objects</p>
+<p>NeMoS provides some convenience functions for quickly visualizing the basis, in
+order to create plots like the type seen above.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># basis_kernels is an array of shape (current_history_duration, n_basis_funcs)</span>
+<span class="c1"># while time is an array of shape (current_history_duration, )</span>
+<span class="n">time</span><span class="p">,</span> <span class="n">basis_kernels</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">evaluate_on_grid</span><span class="p">(</span><span class="n">current_history_duration</span><span class="p">)</span>
+<span class="c1"># convert time to sec</span>
+<span class="n">time</span> <span class="o">*=</span> <span class="n">current_history_duration_sec</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">basis_kernels</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>With this basis in hand, we can compress our input features:</p>
+<div class="render-user render-presenter">
+  - create the design matrix
+  - examine the features it contains
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># under the hood, this convolves the input with the filter bank visualized above</span>
+<span class="n">current_history</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">binned_current</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">current_history</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    0    1    2    3    4    ...
+----------  ---  ---  ---  ---  ---  -----
+460.7685    nan  nan  nan  nan  nan  ...
+460.7695    nan  nan  nan  nan  nan  ...
+460.7705    nan  nan  nan  nan  nan  ...
+460.7715    nan  nan  nan  nan  nan  ...
+460.7725    nan  nan  nan  nan  nan  ...
+460.7735    nan  nan  nan  nan  nan  ...
+460.7745    nan  nan  nan  nan  nan  ...
+...         ...  ...  ...  ...  ...  ...
+488.7815    0.0  0.0  0.0  0.0  0.0  ...
+488.7825    0.0  0.0  0.0  0.0  0.0  ...
+488.7835    0.0  0.0  0.0  0.0  0.0  ...
+488.7845    0.0  0.0  0.0  0.0  0.0  ...
+488.7855    0.0  0.0  0.0  0.0  0.0  ...
+488.7865    0.0  0.0  0.0  0.0  0.0  ...
+488.7875    0.0  0.0  0.0  0.0  0.0  ...
+dtype: float32, shape: (28020, 10)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+  warnings.warn(
+/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/pynapple/core/time_series.py:300: DeprecationWarning: `newshape` keyword argument is deprecated, use `shape=...` or pass shape positionally instead. (deprecated in NumPy 2.1)
+  out = func._implementation(*new_args, **kwargs)
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can see that our design matrix is now 28020 time points by 10 features, one for
+each of our basis functions. If we had used the raw shifted data as the features, like
+we started to do above, we’d have a design matrix with 200 features, so we’ve ended up
+with more than an order of magnitude fewer features!</p>
+<p>Note that we have a bunch of NaNs at the beginning of each column. That’s because of
+boundary handling: we’re using the input of the past 200 msecs to predict the firing
+rate at time <span class="math notranslate nohighlight">\(t\)</span>, so what do we do in the first 200 msecs? The safest way is to ignore
+them, so that the model doesn’t consider them during the fitting procedure.</p>
+<p>What do these features look like?</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># in this plot, we&#39;re normalizing the amplitudes to make the comparison easier --</span>
+<span class="c1"># the amplitude of these features will be fit by the model, so their un-scaled</span>
+<span class="c1"># amplitudes is not informative</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_current_history_features</span><span class="p">(</span><span class="n">binned_current</span><span class="p">,</span> <span class="n">current_history</span><span class="p">,</span> <span class="n">basis</span><span class="p">,</span>
+                                             <span class="n">current_history_duration_sec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fbae145a684a1a4a88285103e017dffe5577b5fe80614d5da5a20865d6225f0c.png" src="../../_images/fbae145a684a1a4a88285103e017dffe5577b5fe80614d5da5a20865d6225f0c.png" />
+</div>
+</div>
+<p>On the top row, we’re visualizing the basis functions, as above. On the bottom row,
+we’re showing the input current, as a black dashed line, and corresponding features
+over a small window of time, just as the current is being turned on. These features
+are the result of a convolution between the basis function on the top row with the
+black dashed line shown below. As the basis functions get progressively wider and
+delayed from the event start, we can thus think of the features as weighted averages
+that get progressively later and smoother. Let’s step through that a bit more slowly.</p>
+<p>In the leftmost plot, we can see that the first feature almost perfectly tracks the
+input. Looking at the basis function above, that makes sense: this function’s max is
+at 0 and quickly decays. This feature is thus a very slightly smoothed version of the
+instantaneous current feature we were using before. In the middle plot, we can see
+that the last feature has a fairly long lag compared to the current, and is a good
+deal smoother. Looking at the rightmost plot, we can see that the other features vary
+between these two extremes, getting smoother and more delayed.</p>
+<p>These are the elements of our feature matrix: representations of not just the
+instantaneous current, but also the current history, with precision decreasing as the
+lag between the predictor and current increases. Let’s see what this looks like when
+we go to fit the model!</p>
+<p>We’ll initialize and create the GLM object in the same way as before, only changing
+the design matrix we pass to the model:</p>
+<div class="render-user render-presenter">
+  - create and fit the GLM
+  - examine the parameters
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">history_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">)</span>
+<span class="n">history_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">current_history</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLM(
+    observation_model=PoissonObservations(inverse_link_function=exp),
+    regularizer=UnRegularized(),
+    solver_name=&#39;LBFGS&#39;
+)
+</pre></div>
+</div>
+</div>
+</div>
+<p>As before, we can examine our parameters, <code class="docutils literal notranslate"><span class="pre">coef_</span></code> and <code class="docutils literal notranslate"><span class="pre">intercept_</span></code>:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;firing_rate(t) = exp(</span><span class="si">{</span><span class="n">history_model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s2"> * current(t) + </span><span class="si">{</span><span class="n">history_model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>firing_rate(t) = exp([-0.05510312  0.07846991 -0.05235134  0.03304495 -0.01395526  0.00363107
+ -0.00228782  0.00090754  0.00019241 -0.00039894] * current(t) + [-6.9341893])
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice the shape of these parameters:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">history_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">history_model</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10,)
+(1,)
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">coef_</span></code> has 10 values now, while <code class="docutils literal notranslate"><span class="pre">intercept_</span></code> still has one — why is that?
+Because we now have 10 features, but still only 1 neuron whose firing rate we’re
+predicting.</p>
+<p>Let’s re-examine our predicted firing rate and see how the new model does:</p>
+<div class="render-user render-presenter">
+  - compare the predicted firing rate to the data and the old model
+  - what do we see?
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># all this code is the same as above</span>
+<span class="n">history_pred_fr</span> <span class="o">=</span> <span class="n">history_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">current_history</span><span class="p">)</span>
+<span class="n">history_pred_fr</span> <span class="o">=</span> <span class="n">history_pred_fr</span> <span class="o">/</span> <span class="n">bin_size</span>
+<span class="n">smooth_history_pred_fr</span> <span class="o">=</span> <span class="n">history_pred_fr</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="mf">.05</span><span class="p">,</span> <span class="n">size_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">current_injection_plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">firing_rate</span><span class="p">,</span>
+                                      <span class="c1"># compare against the old firing rate</span>
+                                      <span class="n">smooth_history_pred_fr</span><span class="p">,</span> <span class="n">smooth_predicted_fr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+  warnings.warn(
+</pre></div>
+</div>
+<img alt="../../_images/ebb22471afb55a7a272f94d5d87a8f24e5140d6f3a84e883dd2e40c98bd1fe1d.png" src="../../_images/ebb22471afb55a7a272f94d5d87a8f24e5140d6f3a84e883dd2e40c98bd1fe1d.png" />
+</div>
+</div>
+<p>We can see that there are only some small changes here. Our new model maintains the
+two successes of the old one: firing rate increases with injected current and shows
+the observed periodicity. Our model has not improved the match between the firing rate
+in the first or second intervals, but it seems to do a better job of capturing the
+onset transience, especially in the third interval.</p>
+<p>We can similarly examine our mean firing rate:</p>
+<div class="render-user render-presenter">
+  - examine the predicted average firing rate and tuning curve
+  - what do we see?
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare observed mean firing rate with the history_model predicted one</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observed mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">bin_size</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted mean firing rate (instantaneous current): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">)</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted mean firing rate (current history): </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="n">smooth_history_pred_fr</span><span class="p">)</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observed mean firing rate: 1.4275517487508922 Hz
+Predicted mean firing rate (instantaneous current): 1.4306069612503052 Hz
+Predicted mean firing rate (current history): 2.355943602905757 Hz
+</pre></div>
+</div>
+</div>
+</div>
+<p>And our tuning curves:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Visualize tuning curve</span>
+<span class="n">tuning_curve_history_model</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_1d_tuning_curves_continuous</span><span class="p">(</span><span class="n">smooth_history_pred_fr</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">tuning_curve_plot</span><span class="p">(</span><span class="n">tuning_curve</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curve_history_model</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tomato&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;glm (current history)&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curve_model</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;tomato&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;glm (instantaneous current)&quot;</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f82b01c7110&gt;
+</pre></div>
+</div>
+<img alt="../../_images/a81245180a2ae4aee64864a03452a60cbdc00ab61060ad75f0631fefcd0ec5ae.png" src="../../_images/a81245180a2ae4aee64864a03452a60cbdc00ab61060ad75f0631fefcd0ec5ae.png" />
+</div>
+</div>
+<p>This new model is actually doing a worse job matching the mean firing rate. Looking at
+the tuning curve, it looks like this model does predict response saturation, at about
+the right level, and it seems to do a better job at the lower current levels , though
+its maximum firing is far too low.</p>
+<p>Comparing the two models by examining their predictions is important, but you may also
+want a number with which to evaluate and compare your models’ performance. As
+discussed earlier, the GLM optimizes log-likelihood to find the best-fitting
+weights, and we can calculate this number using its <code class="docutils literal notranslate"><span class="pre">score</span></code> method:</p>
+<div class="render-user render-presenter">
+  - use log-likelihood to compare models
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">log_likelihood</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">predictor</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="s2">&quot;log-likelihood&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;log-likelihood (instantaneous current): </span><span class="si">{</span><span class="n">log_likelihood</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">log_likelihood</span> <span class="o">=</span> <span class="n">history_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">current_history</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="s2">&quot;log-likelihood&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;log-likelihood (current history): </span><span class="si">{</span><span class="n">log_likelihood</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>log-likelihood (instantaneous current): -0.007939910516142845
+log-likelihood (current history): -0.008495861664414406
+</pre></div>
+</div>
+</div>
+</div>
+<p>This log-likelihood is un-normalized and thus doesn’t mean that much by
+itself, other than “higher=better”. When comparing alternative GLMs fit on
+the same dataset, whether that’s models using different regularizers and
+solvers or those using different predictors, comparing log-likelihoods is a
+reasonable thing to do.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Under the hood, NeMoS is minimizing the negative log-likelihood, as is
+typical in many optimization contexts. <code class="docutils literal notranslate"><span class="pre">score</span></code> returns the real
+log-likelihood, however, and thus higher is better.</p>
+</div>
+<p>Thus, we can see that, judging by the log-likelihood, the addition of the
+current history to the model makes the model slightly worse. Additionally,
+notice that we increased our number of parameters tenfold. Increasing the number
+of parameters makes you more susceptible to overfitting and so, while the
+difference is small here, it’s possible that including the extra parameters has
+made us more sensitive noise? To properly investigate whether that’s the case,
+one should split the dataset into test and train sets, training the model on one
+subset of the data and testing it on another to test the model’s
+generalizability. We’ll see a simple version of this in the <a class="reference internal" href="head_direction.html"><span class="std std-doc">next
+notebook</span></a>, and a more streamlined version, using
+<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s pipelining and cross-validation machinery, will be shown in the
+<a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a>.</p>
+</section>
+<section id="finishing-up">
+<h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
+<p>Note that, because the log-likelihood is un-normalized, it should not be compared
+across datasets (because e.g., it won’t account for difference in noise levels). We
+provide the ability to compute the pseudo-<span class="math notranslate nohighlight">\(R^2\)</span> for this purpose:</p>
+<div class="render-user render-presenter">
+  - what if you want to compare models across datasets?
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">r2</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">predictor</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="s1">&#39;pseudo-r2-Cohen&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pseudo-r2 (instantaneous current): </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">history_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">current_history</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="s1">&#39;pseudo-r2-Cohen&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pseudo-r2 (current history): </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pseudo-r2 (instantaneous current): 0.30376726388931274
+pseudo-r2 (current history): 0.24998965859413147
+</pre></div>
+</div>
+</div>
+</div>
+<p>Additionally, you might be wondering how to simulate spikes — the GLM is a
+LNP model, but the firing rate is just the output of <em>LN</em>, its first two steps.
+The firing rate is just the mean of a Poisson process, so we can pass it to
+<code class="docutils literal notranslate"><span class="pre">jax.random.poisson</span></code>:</p>
+<div class="render-user render-presenter">
+- what about spiking?
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">123</span><span class="p">),</span> <span class="n">predicted_fr</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Note that this is not actually that informative and, in general, it is
+recommended that you focus on firing rates when interpreting your model.</p>
+<p>Also, while including spike history is often helpful, it can sometimes make
+simulating spikes like this unstable: if your GLM includes auto-regressive
+inputs (e.g., neurons are connected to themselves or each other), simulations
+can sometimes can behave poorly because of runaway excitation <a class="footnote-reference brackets" href="#arribas" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#hocker" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+</section>
+</section>
+<section id="further-exercises">
+<h2>Further Exercises<a class="headerlink" href="#further-exercises" title="Link to this heading">#</a></h2>
+<p>Despite the simplicity of this dataset, there is still more that we can do
+here. The following sections provide some possible exercises to try yourself!</p>
+<div class="render-user render-presenter">
+- what else can we do?
+</div>
+<p><strong>Other stimulation protocols</strong></p>
+<p>We’ve only fit the model to a single stimulation protocol, but our dataset
+contains many more! How does the model perform on “Ramp”? On “Noise 2”? Based
+on the example code above, write new code that fits the model on some other
+stimulation protocol and evaluate its performance. Which stimulation does it
+perform best on? Which is the worst?</p>
+<p><strong>Train and test sets</strong></p>
+<p>In this example, we’ve used been fitting and evaluating our model on the same
+data set. That’s generally a bad idea! Try splitting the data in to train and
+test sets, fitting the model to one portion of the data and evaluating on
+another portion. You could split this stimulation protocol into train and
+test sets or use different protocols to train and test on.</p>
+<p><strong>Model extensions</strong></p>
+<p>Our model did not do a good job capturing the onset transience seen in the
+data, and we could probably improve the match between the amplitudes of the
+predicted firing rate and smoothed spike train. How would we do that?</p>
+<p>We could try adding the following inputs to the model, alone or together:</p>
+<ul class="simple">
+<li><p>Tinkering with the current history: we tried adding the current history to the
+model, but we only investigated one set of choices with the basis functions. What if
+we tried changing the duration of time we considered
+(<code class="docutils literal notranslate"><span class="pre">current_history_duration_sec</span></code>)? Different numbers of basis functions? A different
+choice for the <code class="docutils literal notranslate"><span class="pre">Basis</span></code> object altogether? What effects would these have on our model?</p></li>
+<li><p>Spiking history: we know neurons have a refactory period (they are unable to spike a
+second time immediately after spiking), so maybe making the model aware of whether
+the neuron spiked recently could help better capture the onset transience.</p></li>
+<li><p>More complicated tuning curve: as we saw with the tuning curve plots, neither
+model explored here quite accurately captures the relationship between the
+current and the firing rate. Can we improve that somehow? We saw that adding
+the current history changed this relationship, but we can also change it
+without including the history by using an <code class="docutils literal notranslate"><span class="pre">Eval</span></code> basis object. We’ll see how
+to do this in more detail in the <a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a></p></li>
+</ul>
+<div class="render-all">
+<section id="data-citation">
+<h3>Data citation<a class="headerlink" href="#data-citation" title="Link to this heading">#</a></h3>
+<p>The data used in this tutorial is from the <strong>Allen Brain Map</strong>, with the <a class="reference external" href="https://knowledge.brain-map.org/data/1HEYEW7GMUKWIQW37BO/summary">following citation</a>:</p>
+<p><strong>Contributors:</strong> Agata Budzillo, Bosiljka Tasic, Brian R. Lee, Fahimeh Baftizadeh, Gabe Murphy, Hongkui Zeng, Jim Berg, Nathan Gouwens, Rachel Dalley, Staci A. Sorensen, Tim Jarsky, Uygar Sümbül Zizhen Yao</p>
+<p><strong>Dataset:</strong> Allen Institute for Brain Science (2020). Allen Cell Types Database – Mouse Patch-seq [dataset]. Available from brain-map.org/explore/classes/multimodal-characterization.</p>
+<p><strong>Primary publication:</strong> Gouwens, N.W., Sorensen, S.A., et al. (2020). Integrated morphoelectric and transcriptomic classification of cortical GABAergic cells. Cell, 183(4), 935-953.E19. https://doi.org/10.1016/j.cell.2020.09.057</p>
+<p><strong>Patch-seq protocol:</strong> Lee, B. R., Budzillo, A., et al. (2021). Scaled, high fidelity electrophysiological, morphological, and transcriptomic cell characterization. eLife, 2021;10:e65482. https://doi.org/10.7554/eLife.65482</p>
+<p><strong>Mouse VISp L2/3 glutamatergic neurons:</strong> Berg, J., Sorensen, S. A., Miller, J., Ting, J., et al. (2021) Human neocortical expansion involves glutamatergic neuron diversification. Nature, 598(7879):151-158. doi: 10.1038/s41586-021-03813-8</p>
+</div></section>
+</section>
+</section>
+<hr class="footnotes docutils" />
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="pillow" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Pillow, J. W., Paninski, L., Uzzel, V. J., Simoncelli, E. P., &amp; J.,
+C. E. (2005). Prediction and decoding of retinal ganglion cell responses
+with a probabilistic spiking model. Journal of Neuroscience, 25(47),
+11003–11013. http://dx.doi.org/10.1523/jneurosci.3305-05.2005</p>
+</aside>
+<aside class="footnote brackets" id="arribas" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>Arribas, Diego, Yuan Zhao, and Il Memming Park. “Rescuing neural spike train models from bad MLE.” Advances in Neural Information Processing Systems 33 (2020): 2293-2303. https://arxiv.org/abs/2010.12362</p>
+</aside>
+<aside class="footnote brackets" id="hocker" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
+<p>Hocker, David, and Memming Park. “Multistep inference for generalized linear spiking models curbs runaway excitation.” International IEEE/EMBS Conference on Neural Engineering, May 2017. https://ieeexplore.ieee.org/document/8008426</p>
+</aside>
+</aside>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../day1/phase_precession.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Signal processing and decoding in pynapple</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="head_direction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Fit head-direction population</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-and-preparation">Data structures and preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-analyses">Basic analyses</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data">Preparing data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-model-to-use-injection-history">Extending the model to use injection history</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing up</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-citation">Data citation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

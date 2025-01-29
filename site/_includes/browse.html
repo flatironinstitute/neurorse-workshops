@@ -1,0 +1,62 @@
+<!-- this tortured string is to make sure that cookiecutter only interacts
+     with push_target_dir part here, the rest gets left for jekyll -->
+{% assign all_targets = site.workshops %}
+{% if include.target.size > 0 %}
+  {% assign targets = all_targets | where_exp: 'tgt', "include.target contains tgt.jekyll_id" %}
+{% else %}
+  {% assign targets = all_targets %}
+{% endif %}
+<div>
+{% for tgt in targets %}
+<h3>
+    {%- if tgt.main_url.size > 0 -%}
+    <a href="{{ site.baseurl }}/{{ tgt.main_url }}">{{ tgt.name }}</a>
+    {%- else -%}
+    {{ tgt.name }}
+    {%- endif -%}
+    <a href="{{ tgt.gh_repo }}" style="margin-left:10px"><img alt="GitHub Repo" src="https://img.shields.io/badge/GitHub-gray?logo=github"></a>
+</h3>
+<ul>
+    {% assign sublinks = "releases,pulls,branches" | split: "," %}
+    {% if include.sublinks.size > 0 %}
+      {% assign sublinks = sublinks | where_exp: 'sl', "include.sublinks contains sl" %}
+    {% endif %}
+    {% if tgt.branches.size > 0 and sublinks contains "branches" %}
+    <li>
+        Branches
+        <ul class='lists'>
+            {% for branch in tgt.branches %}
+            <li>
+                <a href="{{ site.baseurl }}/{{ tgt.base_url }}/branch/{{ branch }}">{{ branch }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endif %}
+    {%- if tgt.releases.size > 0 and sublinks contains "releases" -%}
+    <li>
+        Releases
+        <ul class='lists'>
+            {% for rls in tgt.releases %}
+            <li>
+                <a href="{{ site.baseurl }}/{{ tgt.base_url }}/tags/{{ rls }}">{{ rls }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {%- endif -%}
+    {% if tgt.pulls.size > 0 and sublinks contains "pulls" %}
+    <li>
+        Pull Requests
+        <ul class='lists'>
+            {% for pull in tgt.pulls %}
+            <li>
+                <a href="{{ site.baseurl }}/{{ tgt.base_url }}/pulls/{{ pull }}">{{ pull }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </li>
+    {% endif %}
+    {% endfor %}
+</ul>
+</div>

@@ -1,0 +1,317 @@
+@font-face {
+  font-family: "Founders Grotesk";
+  src: url("fonts/FoundersGrotesk-Regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Avenir Next";
+  src: url("fonts/Avenir-Next.ttc") format("truetype-collection");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  font-size: 110%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+h2 {
+  font-weight: 400;
+}
+
+body {
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Avenir Next", "Founders Grotesk", sans-serif;
+  font-weight: 300;
+  container-type: inline-size;
+  color: #666;
+}
+
+body-width,
+.body-width {
+  width: min(90%, 800px);
+}
+
+header,
+footer {
+  width: 100%;
+  padding-block: 3rem;
+  padding-inline: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header img {
+  height: auto;
+  max-width: 100%;
+}
+
+main {
+  margin-block: 2rem;
+  row-gap: 2rem;
+  column-gap: 4rem;
+}
+
+.emoji {
+  font-size: 1.6rem;
+  display: inline-block;
+  margin-right: 0.6ch;
+}
+
+.badges {
+  margin-top: 2rem;
+}
+
+footer {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+footer img {
+  width: min(30dvw, 300px);
+  margin: 0 auto;
+}
+
+.ccn-software-logo {
+  width: max(35dvw, 400px);
+}
+
+.flatiron-logo {
+  max-width: 200px;
+}
+
+@media (min-width: 1000px) {
+  .ccn-software-logo {
+    width: 400px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: rgb(40, 40, 40);
+    color: white;
+  }
+  header,
+  footer {
+    background-color: rgb(80 80 80);
+  }
+  :link,
+  :visited {
+    color: white;
+  }
+  .grid.cards>ol>li,
+  .grid.cards>ul>li,
+  .grid>.card {
+    border:.05rem solid rgb(80 80 80);
+  }
+  .grid.cards>ol>li:focus-within,
+  .grid.cards>ol>li:hover,
+  .grid.cards>ul>li:focus-within,
+  .grid.cards>ul>li:hover,
+  .grid>.card:focus-within,
+  .grid>.card:hover {
+    box-shadow: 0 0.2rem 0.5rem rgba(193,193,193,0.1), 0 0 0.05rem rgba(193,193,193,0.25);
+  }
+  .tab > .active > a {
+    color:#fff;
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: rgb(248, 249, 250);
+    color: black;
+  }
+  header,
+  footer {
+    background-color: rgb(234 234 234);
+  }
+  :link,
+  :visited {
+    color: black;
+  }
+  .grid.cards>ol>li,
+  .grid.cards>ul>li,
+  .grid>.card {
+    border:.05rem solid rgb(102, 102, 102);
+  }
+  .grid.cards>ol>li:focus-within,
+  .grid.cards>ol>li:hover,
+  .grid.cards>ul>li:focus-within,
+  .grid.cards>ul>li:hover,
+  .grid>.card:focus-within,
+  .grid>.card:hover {
+    box-shadow: 0 0.2rem 0.5rem rgba(0,0,0,0.1), 0 0 0.05rem rgba(0,0,0,0.25);
+  }
+  .tab > .active > a {
+    color:#222;
+  }
+}
+.grid {
+  grid-gap:.5rem;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(50%,8rem),.25fr));
+  margin:3em 0
+}
+.grid.cards>ol,
+.grid.cards>ul {
+  display:contents
+}
+.grid.cards>ol>li:last-child:nth-child(odd),
+.grid.cards>ul>li:last-child:nth-child(odd),
+.grid>.card:last-child:nth-child(odd) {
+  grid-column: 2 / span 2;
+}
+.grid.cards>ol>li,
+.grid.cards>ul>li,
+.grid>.card {
+  border-radius:1rem;
+  display:block;
+  margin:0;
+  padding:.8rem;
+  transition:border .25s,box-shadow .25s;
+  grid-column: auto / span 2;
+}
+.grid.cards>ol>li>hr,
+.grid.cards>ul>li>hr,
+.grid>.card>hr {
+  margin: 0 0;
+  flex-shrink: 0; /* Prevent the hr from shrinking */
+}
+.grid.cards>ol>li>:first-child,
+.grid.cards>ul>li>:first-child,
+.grid>.card>:first-child {
+  margin-top:0
+}
+.grid.cards>ol>li>:last-child,
+.grid.cards>ul>li>:last-child,
+.grid>.card>:last-child {
+  margin-bottom:0
+}
+.grid>.tabbed-set {
+  margin-bottom:0;
+  margin-top:0
+}
+
+/* Flexbox layout for the list items */
+.grid.cards ul > li {
+    display: flex; /* Ensure flexbox is applied */
+    flex-direction: column;
+    /* justify-content: space-between; */
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.grid.cards ul.lists > li:first-of-type {
+  margin-top: 10px;
+}
+
+.grid.cards ul.lists > li {
+  display: list-item
+}
+
+/* Center the icon and title within the first paragraph */
+.grid.cards ul > li > h3 {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    text-align: center;
+}
+.grid.cards ul > li > h3 > a {
+    display: flex;
+}
+
+/* Add spacing between the icon and the title */
+.grid.cards ul > li > p:first-of-type img {
+    margin-right: 8px;
+}
+
+.tab {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -20px;
+    padding: 0;
+    list-style: none;
+    position: relative;
+}
+
+.tab > * {
+    flex: none;
+    padding-left: 20px;
+    position: relative;
+}
+
+.tab > * > a {
+    display: block;
+    text-align: center;
+    color: #999;
+    padding: 9px 20px;
+    border-bottom: 2px solid transparent;
+    border-bottom-color: transparent;
+    font-size: 12px;
+    text-transform: uppercase;
+    transition: color .1s ease-in-out;
+    line-height: 20px;
+}
+
+.tab > .active > a {
+  border-color: #1e87f0;
+}
+
+.tab > li > a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.tab-content {
+    padding: 0;
+}
+
+.tab-content > li {
+  display: none !important;
+}
+.tab-content > li.active {
+    display: block !important;
+}
+
+/* The 2 following blocks can be removed if the script is not configured to show the toast message */
+#jekyll-tabs-copy-to-clipboard-message {
+    visibility: hidden;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 16px;
+    position: fixed;
+    z-index: 1;
+    right: 50%;
+    bottom: 30px;
+}
+
+#jekyll-tabs-copy-to-clipboard-message.show {
+    visibility: visible;
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}

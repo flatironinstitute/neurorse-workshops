@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="{{ site.baseurl }}/assets/ccn_small.png" />
+    <title>{{ page.title }}</title>
+    <link rel="stylesheet" href="{{ 'assets/style.css' | relative_url }}" />
+    </head>
+  <body>
+    <header>
+      <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+      <script src="{{ site.baseurl }}/assets/javascript/tabs.js"></script>
+      <body-width>
+        <picture>
+          <source
+            media="(prefers-color-scheme: dark)"
+            srcset="{{ site.baseurl }}/assets/images/03-FI-primary-logo-white.png"
+          />
+          <source
+            media="(prefers-color-scheme: light)"
+            srcset="{{ site.baseurl }}/assets/images/01-FI-primary-logo-color.png"
+          />
+          <img
+            alt="ccn-software logo"
+            class="ccn-software-logo"
+            srcset="{{ site.baseurl }}/assets/images/01-FI-primary-logo-color.png"
+          />
+        </picture>
+      </body-width>
+    </header>
+    <main class="body-width">{{ content }}</main>
+    <footer>
+      <body-width>
+        <picture>
+          <source
+            media="(prefers-color-scheme: dark)"
+            srcset="{{ site.baseurl }}/assets/images/03-FI-primary-logo-white.png"
+          />
+          <source
+            media="(prefers-color-scheme: light)"
+            srcset="{{ site.baseurl }}/assets/images/01-FI-primary-logo-color.png"
+          />
+          <img
+            alt="Flatiron Institute logo"
+            class="flatiron-logo"
+            src="{{ site.baseurl }}/assets/images/01-FI-primary-logo-color.png"
+          />
+        </picture>
+      </body-width>
+    </footer>
+  </body>
+</html>
