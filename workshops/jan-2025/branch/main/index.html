@@ -654,6 +654,7 @@ To avoid this problem, either make sure you only have one virtual environment ac
 </ul>
 </li>
 <li><p>If you see <code class="docutils literal notranslate"><span class="pre">sys:1:</span> <span class="pre">DeprecationWarning:</span> <span class="pre">Call</span> <span class="pre">to</span> <span class="pre">deprecated</span> <span class="pre">function</span> <span class="pre">(or</span> <span class="pre">staticmethod)</span> <span class="pre">_destroy.</span></code> when running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/setup.py</span></code>, we don’t think this is actually a problem. As long as <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> says everything looks good, you’re fine!</p></li>
+<li><p>If you see an error that mentions SSL verification and are using <code class="docutils literal notranslate"><span class="pre">conda</span></code>, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.condarc</span></code>: <code class="docutils literal notranslate"><span class="pre">ssl_verify:</span> <span class="pre">false</span></code>. Then restart your terminal and run the command again. (If you are using <code class="docutils literal notranslate"><span class="pre">uv</span></code>, I’m not sure how to set this configuration option.)</p></li>
 </ul>
 </section>
 <section id="binder">
