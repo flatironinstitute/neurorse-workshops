@@ -427,6 +427,8 @@
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
@@ -851,6 +853,18 @@ intrepetation.</p></li>
 </div>
 </div>
 <ul class="simple">
+<li><p>Visualize the current history model’s learned filter.</p></li>
+<li><p>This filter is convolved with the input current and used to predict the firing
+rate.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_basis_filter</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">history_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
 <li><p>compare the predicted firing rate to the data and the old model</p></li>
 <li><p>what do we see?</p></li>
 </ul>
@@ -905,16 +919,6 @@ intrepetation.</p></li>
 <h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>what if you want to compare models across datasets?</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>what about spiking?</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

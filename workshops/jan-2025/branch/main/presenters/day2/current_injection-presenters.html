@@ -427,6 +427,8 @@
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
@@ -865,7 +867,7 @@ intrepetation.</p></li>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
-    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">current_history_duration</span><span class="p">,</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">current_history_duration</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -918,6 +920,18 @@ intrepetation.</p></li>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">history_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">history_model</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Visualize the current history model’s learned filter.</p></li>
+<li><p>This filter is convolved with the input current and used to predict the firing
+rate.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_basis_filter</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">history_model</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -990,16 +1004,6 @@ intrepetation.</p></li>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pseudo-r2 (instantaneous current): </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="n">r2</span> <span class="o">=</span> <span class="n">history_model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">current_history</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">score_type</span><span class="o">=</span><span class="s1">&#39;pseudo-r2-Cohen&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pseudo-r2 (current history): </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>what about spiking?</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">123</span><span class="p">),</span> <span class="n">predicted_fr</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

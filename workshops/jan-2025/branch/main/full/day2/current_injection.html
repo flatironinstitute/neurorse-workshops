@@ -429,6 +429,8 @@
 </summary>
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
 
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
@@ -522,7 +524,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-02-03 19:41:57,226:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-02-03 21:34:44,902:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1480,7 +1482,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb5747e17d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f45a01a8e90&gt;
 </pre></div>
 </div>
 <img alt="../../_images/f73ddd2f027ab9cd8b16c825b0d0533f6d1731c61a1766a9077841a113dea005.png" src="../../_images/f73ddd2f027ab9cd8b16c825b0d0533f6d1731c61a1766a9077841a113dea005.png" />
@@ -1609,7 +1611,7 @@ current in this example. In convolution mode, we must additionally specify the
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
-    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">current_history_duration</span><span class="p">,</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">current_history_duration</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -1658,7 +1660,7 @@ order to create plots like the type seen above.</p>
 488.7855    0.0  0.0  0.0  0.0  0.0  ...
 488.7865    0.0  0.0  0.0  0.0  0.0  ...
 488.7875    0.0  0.0  0.0  0.0  0.0  ...
-dtype: float32, shape: (28020, 10)
+dtype: float32, shape: (28020, 8)
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-jan-2025_main/lib/python3.11/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
@@ -1669,7 +1671,7 @@ dtype: float32, shape: (28020, 10)
 </div>
 </div>
 </div>
-<p>We can see that our design matrix is now 28020 time points by 10 features, one for
+<p>We can see that our design matrix is now 28020 time points by 8 features, one for
 each of our basis functions. If we had used the raw shifted data as the features, like
 we started to do above, we’d have a design matrix with 200 features, so we’ve ended up
 with more than an order of magnitude fewer features!</p>
@@ -1689,7 +1691,7 @@ them, so that the model doesn’t consider them during the fitting procedure.</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/fbae145a684a1a4a88285103e017dffe5577b5fe80614d5da5a20865d6225f0c.png" src="../../_images/fbae145a684a1a4a88285103e017dffe5577b5fe80614d5da5a20865d6225f0c.png" />
+<img alt="../../_images/351953f5d2f9387885b99564475994bfffd80e77512f5f9ad9e8b907ced5f1a6.png" src="../../_images/351953f5d2f9387885b99564475994bfffd80e77512f5f9ad9e8b907ced5f1a6.png" />
 </div>
 </div>
 <p>On the top row, we’re visualizing the basis functions, as above. On the bottom row,
@@ -1740,8 +1742,8 @@ the design matrix we pass to the model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>firing_rate(t) = exp([-0.05510312  0.07846991 -0.05235134  0.03304495 -0.01395526  0.00363107
- -0.00228782  0.00090754  0.00019241 -0.00039894] * current(t) + [-6.9341893])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>firing_rate(t) = exp([ 0.01429164  0.00207243  0.00042043  0.00646257 -0.00618818  0.00152725
+  0.00034394 -0.00041221] * current(t) + [-9.632734])
 </pre></div>
 </div>
 </div>
@@ -1755,19 +1757,43 @@ the design matrix we pass to the model:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(10,)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(8,)
 (1,)
 </pre></div>
 </div>
 </div>
 </div>
-<p><code class="docutils literal notranslate"><span class="pre">coef_</span></code> has 10 values now, while <code class="docutils literal notranslate"><span class="pre">intercept_</span></code> still has one — why is that?
-Because we now have 10 features, but still only 1 neuron whose firing rate we’re
+<p><code class="docutils literal notranslate"><span class="pre">coef_</span></code> has 8 values now, while <code class="docutils literal notranslate"><span class="pre">intercept_</span></code> still has one — why is that?
+Because we now have 8 features, but still only 1 neuron whose firing rate we’re
 predicting.</p>
+<p>In addition to visualizing the model’s predictions (which we’ll do in a second),
+we can also examine the model’s learned filter. Our earlier model was just
+learning a simple function linking the input current and the firing rate, but
+this model learns a filter, which gets convolved with the input before having
+the intercept added and being exponentiated to give us the predicted firing
+rate.</p>
+<div class="render-user render-presenter">
+<ul class="simple">
+<li><p>Visualize the current history model’s learned filter.</p></li>
+<li><p>This filter is convolved with the input current and used to predict the firing
+rate.</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_basis_filter</span><span class="p">(</span><span class="n">basis</span><span class="p">,</span> <span class="n">history_model</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ab64f3058f4aee46cfa1d7c253603db66c8c72778b7ac52a4247e0a1558794eb.png" src="../../_images/ab64f3058f4aee46cfa1d7c253603db66c8c72778b7ac52a4247e0a1558794eb.png" />
+</div>
+</div>
 <p>Let’s re-examine our predicted firing rate and see how the new model does:</p>
 <div class="render-user render-presenter">
-  - compare the predicted firing rate to the data and the old model
-  - what do we see?
+<ul class="simple">
+<li><p>compare the predicted firing rate to the data and the old model</p></li>
+<li><p>what do we see?</p></li>
+</ul>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># all this code is the same as above</span>
@@ -1785,7 +1811,7 @@ predicting.</p>
   warnings.warn(
 </pre></div>
 </div>
-<img alt="../../_images/ebb22471afb55a7a272f94d5d87a8f24e5140d6f3a84e883dd2e40c98bd1fe1d.png" src="../../_images/ebb22471afb55a7a272f94d5d87a8f24e5140d6f3a84e883dd2e40c98bd1fe1d.png" />
+<img alt="../../_images/51d2c8631f9de5844d65ff04a7f1eec99b3f5c3749236b5e2c37c05769a8000e.png" src="../../_images/51d2c8631f9de5844d65ff04a7f1eec99b3f5c3749236b5e2c37c05769a8000e.png" />
 </div>
 </div>
 <p>We can see that there are only some small changes here. Our new model maintains the
@@ -1809,7 +1835,7 @@ onset transience, especially in the third interval.</p>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Observed mean firing rate: 1.4275517487508922 Hz
 Predicted mean firing rate (instantaneous current): 1.4306069612503052 Hz
-Predicted mean firing rate (current history): 2.355943602905757 Hz
+Predicted mean firing rate (current history): 1.4746827445286446 Hz
 </pre></div>
 </div>
 </div>
@@ -1827,16 +1853,16 @@ Predicted mean firing rate (current history): 2.355943602905757 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fb524452e50&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f458c7bfed0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/a81245180a2ae4aee64864a03452a60cbdc00ab61060ad75f0631fefcd0ec5ae.png" src="../../_images/a81245180a2ae4aee64864a03452a60cbdc00ab61060ad75f0631fefcd0ec5ae.png" />
+<img alt="../../_images/af767f6461ae10f4a8de0fc67dd69824113bc33713294efbeb09bc574f87d32f.png" src="../../_images/af767f6461ae10f4a8de0fc67dd69824113bc33713294efbeb09bc574f87d32f.png" />
 </div>
 </div>
-<p>This new model is actually doing a worse job matching the mean firing rate. Looking at
-the tuning curve, it looks like this model does predict response saturation, at about
-the right level, and it seems to do a better job at the lower current levels , though
-its maximum firing is far too low.</p>
+<p>This new model is doing a comparable job matching the mean firing rate. Looking
+at the tuning curve, it looks like this model does a better job at a lot of
+firing rate levels, but its maximum firing rate is far too low and it’s not
+clear if the tuning curve has leveled off.</p>
 <p>Comparing the two models by examining their predictions is important, but you may also
 want a number with which to evaluate and compare your models’ performance. As
 discussed earlier, the GLM optimizes log-likelihood to find the best-fitting
@@ -1854,7 +1880,7 @@ weights, and we can calculate this number using its <code class="docutils litera
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>log-likelihood (instantaneous current): -0.007939910516142845
-log-likelihood (current history): -0.008495861664414406
+log-likelihood (current history): -0.007518902886658907
 </pre></div>
 </div>
 </div>
@@ -1871,17 +1897,16 @@ typical in many optimization contexts. <code class="docutils literal notranslate
 log-likelihood, however, and thus higher is better.</p>
 </div>
 <p>Thus, we can see that, judging by the log-likelihood, the addition of the
-current history to the model makes the model slightly worse. Additionally,
-notice that we increased our number of parameters tenfold. Increasing the number
-of parameters makes you more susceptible to overfitting and so, while the
-difference is small here, it’s possible that including the extra parameters has
-made us more sensitive noise? To properly investigate whether that’s the case,
-one should split the dataset into test and train sets, training the model on one
-subset of the data and testing it on another to test the model’s
-generalizability. We’ll see a simple version of this in the <a class="reference internal" href="head_direction.html"><span class="std std-doc">next
-notebook</span></a>, and a more streamlined version, using
-<code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s pipelining and cross-validation machinery, will be shown in the
-<a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a>.</p>
+current history to the model makes the model slightly better. We have also
+increased the number of parameters, which can make you more susceptible to
+overfitting and so, while the difference is small here, it’s possible that
+including the extra parameters has made us more sensitive to noise. To properly
+investigate whether that’s the case, one should split the dataset into test and
+train sets, training the model on one subset of the data and testing it on
+another to test the model’s generalizability. We’ll see a simple version of this
+in the <a class="reference internal" href="head_direction.html"><span class="std std-doc">next notebook</span></a>, and a more streamlined version,
+using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s pipelining and cross-validation machinery, will be shown
+in the <a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a>.</p>
 </section>
 <section id="finishing-up">
 <h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
@@ -1901,30 +1926,11 @@ provide the ability to compute the pseudo-<span class="math notranslate nohighli
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pseudo-r2 (instantaneous current): 0.30376726388931274
-pseudo-r2 (current history): 0.24998965859413147
+pseudo-r2 (current history): 0.3538113534450531
 </pre></div>
 </div>
 </div>
 </div>
-<p>Additionally, you might be wondering how to simulate spikes — the GLM is a
-LNP model, but the firing rate is just the output of <em>LN</em>, its first two steps.
-The firing rate is just the mean of a Poisson process, so we can pass it to
-<code class="docutils literal notranslate"><span class="pre">jax.random.poisson</span></code>:</p>
-<div class="render-user render-presenter">
-- what about spiking?
-</div><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">123</span><span class="p">),</span> <span class="n">predicted_fr</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Note that this is not actually that informative and, in general, it is
-recommended that you focus on firing rates when interpreting your model.</p>
-<p>Also, while including spike history is often helpful, it can sometimes make
-simulating spikes like this unstable: if your GLM includes auto-regressive
-inputs (e.g., neurons are connected to themselves or each other), simulations
-can sometimes can behave poorly because of runaway excitation <a class="footnote-reference brackets" href="#arribas" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#hocker" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
 </section>
 </section>
 <section id="further-exercises">
@@ -1987,14 +1993,6 @@ to do this in more detail in the <a class="reference internal" href="place_cells
 C. E. (2005). Prediction and decoding of retinal ganglion cell responses
 with a probabilistic spiking model. Journal of Neuroscience, 25(47),
 11003–11013. http://dx.doi.org/10.1523/jneurosci.3305-05.2005</p>
-</aside>
-<aside class="footnote brackets" id="arribas" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
-<p>Arribas, Diego, Yuan Zhao, and Il Memming Park. “Rescuing neural spike train models from bad MLE.” Advances in Neural Information Processing Systems 33 (2020): 2293-2303. https://arxiv.org/abs/2010.12362</p>
-</aside>
-<aside class="footnote brackets" id="hocker" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
-<p>Hocker, David, and Memming Park. “Multistep inference for generalized linear spiking models curbs runaway excitation.” International IEEE/EMBS Conference on Neural Engineering, May 2017. https://ieeexplore.ieee.org/document/8008426</p>
 </aside>
 </aside>
 

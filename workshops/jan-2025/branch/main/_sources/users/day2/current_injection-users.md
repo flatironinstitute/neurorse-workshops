@@ -14,6 +14,8 @@ kernelspec:
 :tags: [hide-input, render-all]
 
 %matplotlib inline
+%load_ext autoreload
+%autoreload 2
 import warnings
 
 warnings.filterwarnings(
@@ -83,6 +85,7 @@ plt.style.use(nmo.styles.plot_style)
 - Stream the data. Format is [Neurodata Without Borders (NWB) standard](https://nwb-overview.readthedocs.io/en/latest/)
 ```{code-cell} ipython3
 :tags: [render-all]
+
 path = workshop_utils.fetch_data("allen_478498617.nwb")
 ```
 ## Pynapple
@@ -91,6 +94,7 @@ path = workshop_utils.fetch_data("allen_478498617.nwb")
 - Open the NWB file with [pynapple](https://pynapple.org)
 ```{code-cell} ipython3
 :tags: [render-all]
+
 data = nap.load_file(path)
 print(data)
 ```
@@ -105,6 +109,7 @@ print(data)
 - `epochs`: start and end times of different intervals, defining the experimental structure, specifying when each stimulation protocol began and ended.
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set = data["epochs"]
 
 current = data["stimulus"]
@@ -112,12 +117,14 @@ spikes = data["units"]
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set
 ```
 
 - `Noise 1`: epochs of random noise
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = trial_interval_set[trial_interval_set.tags == "Noise 1"]
 noise_interval
 ```
@@ -125,6 +132,7 @@ noise_interval
 - Let's focus on the first epoch.
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = noise_interval[0]
 noise_interval
 ```
@@ -132,12 +140,14 @@ noise_interval
 - `current` : Tsd (TimeSeriesData) : time index + data
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current
 ```
 
 - `restrict` : restricts a time series object to a set of time intervals delimited by an IntervalSet object
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current = current.restrict(noise_interval)
 # convert current from Ampere to pico-amperes, to match the above visualization
 # and move the values to a more reasonable range.
@@ -148,18 +158,21 @@ current
 - `TsGroup` : a dictionary-like object holding multiple `Ts` (timeseries) objects with potentially different time indices.
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes
 ```
 
 We can index into the `TsGroup` to see the timestamps for this neuron's spikes:
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes[0]
 ```
 
 Let's restrict to the same epoch `noise_interval`:
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes = spikes.restrict(noise_interval)
 print(spikes)
 spikes[0]
@@ -168,6 +181,7 @@ spikes[0]
 Let's visualize the data from this trial:
 ```{code-cell} ipython3
 :tags: [render-all]
+
 fig, ax = plt.subplots(1, 1, figsize=(8, 2))
 ax.plot(current, "grey")
 ax.plot(spikes.to_tsd([-5]), "|", color="k", ms = 10)
@@ -181,6 +195,7 @@ The Generalized Linear Model gives a predicted firing rate. First we can use pyn
 - `count` : count the number of events within `bin_size`
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # bin size in seconds
 bin_size = 0.001
 # Get spikes for neuron 0
@@ -193,6 +208,7 @@ Let's convert the spike counts to firing rate :
 - `smooth` : convolve with a Gaussian kernel
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # the inputs to this function are the standard deviation of the gaussian in seconds and
 # the full width of the window, in standard deviations. So std=.05 and size_factor=20
 # gives a total filter size of 0.05 sec * 20 = 1 sec.
@@ -202,10 +218,12 @@ firing_rate = firing_rate / bin_size
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 print(type(firing_rate))
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.current_injection_plot(current, spikes, firing_rate);
 ```
 
@@ -213,6 +231,7 @@ What is the relationship between the current and the spiking activity?
 [`compute_1d_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_1d_tuning_curves) : compute the firing rate as a function of a 1-dimensional feature.
 ```{code-cell} ipython3
 :tags: [render-all]
+
 tuning_curve = nap.compute_1d_tuning_curves(spikes, current, nb_bins=15)
 tuning_curve
 ```
@@ -220,6 +239,7 @@ tuning_curve
 Let's plot the tuning curve of the neuron.
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.tuning_curve_plot(tuning_curve);
 ```
 ## NeMoS 
@@ -278,6 +298,7 @@ Get data from pynapple to NeMoS-ready format:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.plot_basis();
 ```
 
@@ -314,6 +335,17 @@ workshop_utils.plot_current_history_features(binned_current, current_history, ba
 
 print(f"firing_rate(t) = exp({history_model.coef_} * current(t) + {history_model.intercept_})")
 ```
+
+
+- Visualize the current history model's learned filter.
+- This filter is convolved with the input current and used to predict the firing
+  rate.
+```{code-cell} ipython3
+:tags: [render-all]
+
+workshop_utils.plot_basis_filter(basis, history_model)
+```
+
 
   - compare the predicted firing rate to the data and the old model
   - what do we see?
@@ -354,12 +386,6 @@ fig.axes[0].legend()
 ### Finishing up
 
   - what if you want to compare models across datasets?
-```{code-cell}
-# enter code here
-```
-
-
-- what about spiking?
 ```{code-cell}
 # enter code here
 ```

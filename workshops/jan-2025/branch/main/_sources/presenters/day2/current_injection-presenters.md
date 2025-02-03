@@ -14,6 +14,8 @@ kernelspec:
 :tags: [hide-input, render-all]
 
 %matplotlib inline
+%load_ext autoreload
+%autoreload 2
 import warnings
 
 warnings.filterwarnings(
@@ -88,6 +90,7 @@ plt.style.use(nmo.styles.plot_style)
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 path = workshop_utils.fetch_data("allen_478498617.nwb")
 ```
 ## Pynapple
@@ -97,6 +100,7 @@ path = workshop_utils.fetch_data("allen_478498617.nwb")
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 data = nap.load_file(path)
 print(data)
 ```
@@ -112,6 +116,7 @@ print(data)
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set = data["epochs"]
 
 current = data["stimulus"]
@@ -119,6 +124,7 @@ spikes = data["units"]
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set
 ```
 
@@ -126,6 +132,7 @@ trial_interval_set
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = trial_interval_set[trial_interval_set.tags == "Noise 1"]
 noise_interval
 ```
@@ -134,6 +141,7 @@ noise_interval
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = noise_interval[0]
 noise_interval
 ```
@@ -142,6 +150,7 @@ noise_interval
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current
 ```
 
@@ -149,6 +158,7 @@ current
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current = current.restrict(noise_interval)
 # convert current from Ampere to pico-amperes, to match the above visualization
 # and move the values to a more reasonable range.
@@ -160,6 +170,7 @@ current
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes
 ```
 
@@ -167,6 +178,7 @@ We can index into the `TsGroup` to see the timestamps for this neuron's spikes:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes[0]
 ```
 
@@ -174,6 +186,7 @@ Let's restrict to the same epoch `noise_interval`:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes = spikes.restrict(noise_interval)
 print(spikes)
 spikes[0]
@@ -183,6 +196,7 @@ Let's visualize the data from this trial:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 fig, ax = plt.subplots(1, 1, figsize=(8, 2))
 ax.plot(current, "grey")
 ax.plot(spikes.to_tsd([-5]), "|", color="k", ms = 10)
@@ -197,6 +211,7 @@ The Generalized Linear Model gives a predicted firing rate. First we can use pyn
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # bin size in seconds
 bin_size = 0.001
 # Get spikes for neuron 0
@@ -210,6 +225,7 @@ Let's convert the spike counts to firing rate :
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # the inputs to this function are the standard deviation of the gaussian in seconds and
 # the full width of the window, in standard deviations. So std=.05 and size_factor=20
 # gives a total filter size of 0.05 sec * 20 = 1 sec.
@@ -219,10 +235,12 @@ firing_rate = firing_rate / bin_size
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 print(type(firing_rate))
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.current_injection_plot(current, spikes, firing_rate);
 ```
 
@@ -231,6 +249,7 @@ What is the relationship between the current and the spiking activity?
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 tuning_curve = nap.compute_1d_tuning_curves(spikes, current, nb_bins=15)
 tuning_curve
 ```
@@ -239,6 +258,7 @@ Let's plot the tuning curve of the neuron.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.tuning_curve_plot(tuning_curve);
 ```
 ## NeMoS 
@@ -344,6 +364,7 @@ binned_current[2:]
 ```
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.plot_basis();
 ```
 
@@ -351,7 +372,7 @@ doc_plots.plot_basis();
 
 ```{code-cell} ipython3
 basis = nmo.basis.RaisedCosineLogConv(
-    n_basis_funcs=10, window_size=current_history_duration,
+    n_basis_funcs=8, window_size=current_history_duration,
 )
 ```
 
@@ -389,6 +410,19 @@ print(f"firing_rate(t) = exp({history_model.coef_} * current(t) + {history_model
 print(history_model.coef_.shape)
 print(history_model.intercept_.shape)
 ```
+
+
+- Visualize the current history model's learned filter.
+- This filter is convolved with the input current and used to predict the firing
+  rate.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+workshop_utils.plot_basis_filter(basis, history_model)
+```
+
 
   - compare the predicted firing rate to the data and the old model
   - what do we see?
@@ -442,12 +476,6 @@ r2 = model.score(predictor, count, score_type='pseudo-r2-Cohen')
 print(f"pseudo-r2 (instantaneous current): {r2}")
 r2 = history_model.score(current_history, count, score_type='pseudo-r2-Cohen')
 print(f"pseudo-r2 (current history): {r2}")
-```
-
-- what about spiking?
-
-```{code-cell} ipython3
-spikes = jax.random.poisson(jax.random.PRNGKey(123), predicted_fr.values)
 ```
 ## Further Exercises 
 

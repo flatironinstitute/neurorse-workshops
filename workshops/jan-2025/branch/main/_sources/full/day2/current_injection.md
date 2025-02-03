@@ -15,6 +15,8 @@ kernelspec:
 :tags: [hide-input, render-all]
 
 %matplotlib inline
+%load_ext autoreload
+%autoreload 2
 import warnings
 
 warnings.filterwarnings(
@@ -145,6 +147,7 @@ data.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 path = workshop_utils.fetch_data("allen_478498617.nwb")
 ```
 
@@ -161,6 +164,7 @@ its contents.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 data = nap.load_file(path)
 print(data)
 ```
@@ -184,6 +188,7 @@ Now let's go through the relevant variables in some more detail:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set = data["epochs"]
 
 current = data["stimulus"]
@@ -194,6 +199,7 @@ First, let's examine `trial_interval_set`:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 trial_interval_set
 ```
 
@@ -207,6 +213,7 @@ with a metadata columns (`tags`) defining the stimulus protocol.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = trial_interval_set[trial_interval_set.tags == "Noise 1"]
 noise_interval
 ```
@@ -222,6 +229,7 @@ gray).
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 noise_interval = noise_interval[0]
 noise_interval
 ```
@@ -234,6 +242,7 @@ Now let's examine `current`:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current
 ```
 
@@ -254,6 +263,7 @@ of the `noise_interval` we defined above:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 current = current.restrict(noise_interval)
 # convert current from Ampere to pico-amperes, to match the above visualization
 # and move the values to a more reasonable range.
@@ -274,6 +284,7 @@ potentially different time indices:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes
 ```
 
@@ -290,6 +301,7 @@ We can index into the `TsGroup` to see the timestamps for this neuron's spikes:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes[0]
 ```
 
@@ -303,6 +315,7 @@ Let's restrict to the same epoch `noise_interval`:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 spikes = spikes.restrict(noise_interval)
 print(spikes)
 spikes[0]
@@ -317,6 +330,7 @@ Let's visualize the data from this trial:
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 fig, ax = plt.subplots(1, 1, figsize=(8, 2))
 ax.plot(current, "grey")
 ax.plot(spikes.to_tsd([-5]), "|", color="k", ms = 10)
@@ -377,6 +391,7 @@ The Generalized Linear Model gives a predicted firing rate. First we can use pyn
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # bin size in seconds
 bin_size = 0.001
 # Get spikes for neuron 0
@@ -396,6 +411,7 @@ Let's convert the spike counts to firing rate :
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 # the inputs to this function are the standard deviation of the gaussian in seconds and
 # the full width of the window, in standard deviations. So std=.05 and size_factor=20
 # gives a total filter size of 0.05 sec * 20 = 1 sec.
@@ -408,6 +424,7 @@ Note that firing_rate is a [`Tsd`](https://pynapple.org/generated/pynapple.Tsd.h
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 print(type(firing_rate))
 ```
 
@@ -423,6 +440,7 @@ if you are interested.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.current_injection_plot(current, spikes, firing_rate);
 ```
 
@@ -466,6 +484,7 @@ What is the relationship between the current and the spiking activity?
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 tuning_curve = nap.compute_1d_tuning_curves(spikes, current, nb_bins=15)
 tuning_curve
 ```
@@ -480,6 +499,7 @@ Let's plot the tuning curve of the neuron.
 
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.tuning_curve_plot(tuning_curve);
 ```
 
@@ -811,7 +831,6 @@ For now, let's use a duration of 200 msec:
   - choose a length of time over which the neuron integrates the input current
 </div>
 
-
 ```{code-cell} ipython3
 current_history_duration_sec = .2
 # convert this from sec to bins
@@ -823,7 +842,6 @@ incrementally. The value of predictor `binned_current` at time $t$ is the inject
 current at time $t$; by shifting `binned_current` backwards by 1, we are modeling the
 effect of the current at time $t-1$ on the firing rate at time $t$, and so on for all
 shifts $i$ up to `current_history_duration`:
-
 
 ```{code-cell} ipython3
 binned_current[1:]
@@ -851,9 +869,9 @@ makes sense for many history-related inputs in neuroscience: whether an input ha
 1 or 5 msec ago matters a lot, whereas whether an input happened 51 or 55 msec ago is
 less important.
 
-
 ```{code-cell} ipython3
 :tags: [render-all]
+
 doc_plots.plot_basis();
 ```
 
@@ -886,10 +904,9 @@ we wish to represent with the basis:
   - define a basis object
 </div>
 
-
 ```{code-cell} ipython3
 basis = nmo.basis.RaisedCosineLogConv(
-    n_basis_funcs=10, window_size=current_history_duration,
+    n_basis_funcs=8, window_size=current_history_duration,
 )
 ```
 
@@ -917,14 +934,13 @@ With this basis in hand, we can compress our input features:
   - examine the features it contains
 </div>
 
-
 ```{code-cell} ipython3
 # under the hood, this convolves the input with the filter bank visualized above
 current_history = basis.compute_features(binned_current)
 print(current_history)
 ```
 
-We can see that our design matrix is now 28020 time points by 10 features, one for
+We can see that our design matrix is now 28020 time points by 8 features, one for
 each of our basis functions. If we had used the raw shifted data as the features, like
 we started to do above, we'd have a design matrix with 200 features, so we've ended up
 with more than an order of magnitude fewer features!
@@ -935,7 +951,6 @@ rate at time $t$, so what do we do in the first 200 msecs? The safest way is to 
 them, so that the model doesn't consider them during the fitting procedure.
 
 What do these features look like?
-
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -976,14 +991,12 @@ the design matrix we pass to the model:
   - examine the parameters
 </div>
 
-
 ```{code-cell} ipython3
 history_model = nmo.glm.GLM(solver_name="LBFGS")
 history_model.fit(current_history, count)
 ```
 
 As before, we can examine our parameters, `coef_` and `intercept_`:
-
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -993,23 +1006,43 @@ print(f"firing_rate(t) = exp({history_model.coef_} * current(t) + {history_model
 
 Notice the shape of these parameters:
 
-
 ```{code-cell} ipython3
 print(history_model.coef_.shape)
 print(history_model.intercept_.shape)
 ```
 
-`coef_` has 10 values now, while `intercept_` still has one &mdash; why is that?
-Because we now have 10 features, but still only 1 neuron whose firing rate we're
+`coef_` has 8 values now, while `intercept_` still has one &mdash; why is that?
+Because we now have 8 features, but still only 1 neuron whose firing rate we're
 predicting.
+
+In addition to visualizing the model's predictions (which we'll do in a second),
+we can also examine the model's learned filter. Our earlier model was just
+learning a simple function linking the input current and the firing rate, but
+this model learns a filter, which gets convolved with the input before having
+the intercept added and being exponentiated to give us the predicted firing
+rate.
+
+<div class="render-user render-presenter">
+
+- Visualize the current history model's learned filter.
+- This filter is convolved with the input current and used to predict the firing
+  rate.
+
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+workshop_utils.plot_basis_filter(basis, history_model)
+```
 
 Let's re-examine our predicted firing rate and see how the new model does:
 
 <div class="render-user render-presenter">
+
   - compare the predicted firing rate to the data and the old model
   - what do we see?
 </div>
-
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -1036,7 +1069,6 @@ We can similarly examine our mean firing rate:
   - what do we see?
 </div>
 
-
 ```{code-cell} ipython3
 # compare observed mean firing rate with the history_model predicted one
 print(f"Observed mean firing rate: {np.mean(count) / bin_size} Hz")
@@ -1057,10 +1089,10 @@ fig.axes[0].plot(tuning_curve_model, color="tomato", linestyle='--', label="glm 
 fig.axes[0].legend()
 ```
 
-This new model is actually doing a worse job matching the mean firing rate. Looking at
-the tuning curve, it looks like this model does predict response saturation, at about
-the right level, and it seems to do a better job at the lower current levels , though
-its maximum firing is far too low.
+This new model is doing a comparable job matching the mean firing rate. Looking
+at the tuning curve, it looks like this model does a better job at a lot of
+firing rate levels, but its maximum firing rate is far too low and it's not
+clear if the tuning curve has leveled off.
 
 Comparing the two models by examining their predictions is important, but you may also
 want a number with which to evaluate and compare your models' performance. As
@@ -1070,7 +1102,6 @@ weights, and we can calculate this number using its `score` method:
 <div class="render-user render-presenter">
   - use log-likelihood to compare models
 </div>
-
 
 ```{code-cell} ipython3
 log_likelihood = model.score(predictor, count, score_type="log-likelihood")
@@ -1094,17 +1125,16 @@ log-likelihood, however, and thus higher is better.
 :::
 
 Thus, we can see that, judging by the log-likelihood, the addition of the
-current history to the model makes the model slightly worse. Additionally,
-notice that we increased our number of parameters tenfold. Increasing the number
-of parameters makes you more susceptible to overfitting and so, while the
-difference is small here, it's possible that including the extra parameters has
-made us more sensitive noise? To properly investigate whether that's the case,
-one should split the dataset into test and train sets, training the model on one
-subset of the data and testing it on another to test the model's
-generalizability. We'll see a simple version of this in the [next
-notebook](./head_direction.md), and a more streamlined version, using
-`scikit-learn`'s pipelining and cross-validation machinery, will be shown in the
-[final notebook](./place_cells.md).
+current history to the model makes the model slightly better. We have also
+increased the number of parameters, which can make you more susceptible to
+overfitting and so, while the difference is small here, it's possible that
+including the extra parameters has made us more sensitive to noise. To properly
+investigate whether that's the case, one should split the dataset into test and
+train sets, training the model on one subset of the data and testing it on
+another to test the model's generalizability. We'll see a simple version of this
+in the [next notebook](./head_direction.md), and a more streamlined version,
+using `scikit-learn`'s pipelining and cross-validation machinery, will be shown
+in the [final notebook](./place_cells.md).
 
 ### Finishing up
 
@@ -1122,31 +1152,6 @@ print(f"pseudo-r2 (instantaneous current): {r2}")
 r2 = history_model.score(current_history, count, score_type='pseudo-r2-Cohen')
 print(f"pseudo-r2 (current history): {r2}")
 ```
-
-Additionally, you might be wondering how to simulate spikes &mdash; the GLM is a
-LNP model, but the firing rate is just the output of *LN*, its first two steps.
-The firing rate is just the mean of a Poisson process, so we can pass it to
-`jax.random.poisson`:
-
-<div class="render-user render-presenter">
-- what about spiking?
-</div>
-
-```{code-cell} ipython3
-spikes = jax.random.poisson(jax.random.PRNGKey(123), predicted_fr.values)
-```
-
-Note that this is not actually that informative and, in general, it is
-recommended that you focus on firing rates when interpreting your model.
-
-Also, while including spike history is often helpful, it can sometimes make
-simulating spikes like this unstable: if your GLM includes auto-regressive
-inputs (e.g., neurons are connected to themselves or each other), simulations
-can sometimes can behave poorly because of runaway excitation [^arribas] [^hocker].
-
-[^arribas]: Arribas, Diego, Yuan Zhao, and Il Memming Park. "Rescuing neural spike train models from bad MLE." Advances in Neural Information Processing Systems 33 (2020): 2293-2303. https://arxiv.org/abs/2010.12362
-
-[^hocker]: Hocker, David, and Memming Park. "Multistep inference for generalized linear spiking models curbs runaway excitation." International IEEE/EMBS Conference on Neural Engineering, May 2017. https://ieeexplore.ieee.org/document/8008426
 
 ## Further Exercises 
 
