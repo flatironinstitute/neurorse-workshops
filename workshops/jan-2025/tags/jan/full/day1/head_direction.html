@@ -1,0 +1,1155 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Data analysis with pynapple &#8212; CCN software workshop, January 2025  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'full/day1/head_direction';</script>
+    <link rel="icon" href="../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Signal processing and decoding in pynapple" href="phase_precession.html" />
+    <link rel="prev" title="Learning the fundamentals of pynapple" href="fundamentals_of_pynapple.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <img src="../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark pst-js-only" alt="Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-jan-2025" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/jan2025?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day2/current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day2/head_direction.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day2/place_cells.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/head_direction-users.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/head_direction-presenters.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-jan-2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/full/day1/head_direction.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Data analysis with pynapple</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-neural-activity">Decode neural activity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-perievent">Compute perievent</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="data-analysis-with-pynapple">
+<h1>Data analysis with pynapple<a class="headerlink" href="#data-analysis-with-pynapple" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<ul class="simple">
+<li><p>Loading a NWB file</p></li>
+<li><p>Compute tuning curves</p></li>
+<li><p>Decode neural activity</p></li>
+<li><p>Compute correlograms</p></li>
+<li><p>Compute perievent</p></li>
+</ul>
+<p>The pynapple documentation can be found <a class="reference external" href="https://pynapple.org">here</a>.</p>
+<p>The API documentation is <a class="reference external" href="https://pynapple.org/api.html">here</a>.</p>
+<p>Let’s start by importing the pynapple package, matplotlib, numpy to see if everything is correctly installed.
+If an import fails, you can do <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pynapple</span> <span class="pre">matplotlib</span></code> in a cell to fix it.</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-02-03 17:41:03,009:jax._src.xla_bridge:987: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/site-packages/nemos/_documentation_utils/plotting.py:38: UserWarning: plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation. Feel free to use them, but they will probably not work as intended with other datasets / in other contexts.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-a-nwb-file">
+<h2>Loading a NWB file<a class="headerlink" href="#loading-a-nwb-file" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Pynapple commit to support NWB for data loading.
+If you have installed the repository, you can run the following cell:</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;Mouse32-140822.nwb&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/data/Mouse32-140822.nwb
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>Pynapple provides the convenience function <code class="docutils literal notranslate"><span class="pre">nap.load_file</span></code> for loading a NWB file.</p>
+<p><strong>Question:</strong> Can you open the NWB file giving the variable <code class="docutils literal notranslate"><span class="pre">path</span></code> to the function <code class="docutils literal notranslate"><span class="pre">load_file</span></code> and call the output <code class="docutils literal notranslate"><span class="pre">data</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/site-packages/hdmf/spec/namespace.py:535: UserWarning: Ignoring cached namespace &#39;hdmf-common&#39; version 1.5.0 because version 1.8.0 is already loaded.
+  warn(&quot;Ignoring cached namespace &#39;%s&#39; version %s because version %s is already loaded.&quot;
+/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/site-packages/hdmf/spec/namespace.py:535: UserWarning: Ignoring cached namespace &#39;core&#39; version 2.4.0 because version 2.7.0 is already loaded.
+  warn(&quot;Ignoring cached namespace &#39;%s&#39; version %s because version %s is already loaded.&quot;
+/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/site-packages/hdmf/spec/namespace.py:535: UserWarning: Ignoring cached namespace &#39;hdmf-experimental&#39; version 0.1.0 because version 0.5.0 is already loaded.
+  warn(&quot;Ignoring cached namespace &#39;%s&#39; version %s because version %s is already loaded.&quot;
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mouse32-140822
+┍━━━━━━━━━━━━━━━━━━━━━━━┯━━━━━━━━━━━━━┑
+│ Keys                  │ Type        │
+┝━━━━━━━━━━━━━━━━━━━━━━━┿━━━━━━━━━━━━━┥
+│ units                 │ TsGroup     │
+│ sws                   │ IntervalSet │
+│ rem                   │ IntervalSet │
+│ position_time_support │ IntervalSet │
+│ epochs                │ IntervalSet │
+│ ry                    │ Tsd         │
+┕━━━━━━━━━━━━━━━━━━━━━━━┷━━━━━━━━━━━━━┙
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The content of the NWB file is not loaded yet. The object <code class="docutils literal notranslate"><span class="pre">data</span></code> behaves like a dictionnary.</p>
+<p><strong>Question:</strong> Can you load the spike times from the NWB and call the variables <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>  <span class="c1"># Get spike timings</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> And print it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index    rate     location    group
+-------  -------  ----------  -------
+0        2.96981  thalamus    1
+1        2.42638  thalamus    1
+2        5.93417  thalamus    1
+3        5.04432  thalamus    1
+4        0.30207  adn         2
+5        0.87042  adn         2
+6        0.36154  adn         2
+...      ...      ...         ...
+42       1.02061  thalamus    5
+43       6.84913  thalamus    6
+44       0.94002  thalamus    6
+45       0.55768  thalamus    6
+46       1.15056  thalamus    6
+47       0.46084  thalamus    6
+48       0.19287  thalamus    7
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>There are a lot of neurons. The neurons that interest us are the neurons labeled <code class="docutils literal notranslate"><span class="pre">adn</span></code>.</p>
+<p><strong>Question:</strong> Using the <a class="reference external" href="https://pynapple.org/user_guide/03_metadata.html#using-metadata-to-slice-objects">slicing method</a> of your choice, can you select only the neurons in <code class="docutils literal notranslate"><span class="pre">adn</span></code> that are above 1 Hz firing rate?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="p">[(</span><span class="n">spikes</span><span class="o">.</span><span class="n">location</span><span class="o">==</span><span class="s1">&#39;adn&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">rate</span><span class="o">&gt;</span><span class="mf">1.0</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index    rate      location    group
+-------  --------  ----------  -------
+7        10.51737  adn         2
+8        2.62475   adn         2
+9        2.55818   adn         2
+10       7.06715   adn         2
+12       1.58248   adn         2
+13       4.87837   adn         2
+14       8.47337   adn         2
+...      ...       ...         ...
+26       4.0242    adn         3
+28       1.78011   adn         4
+29       4.23006   adn         4
+30       2.15215   adn         4
+32       1.12899   adn         4
+33       5.26316   adn         4
+34       1.57122   adn         4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The NWB file contains other informations about the recording. <code class="docutils literal notranslate"><span class="pre">ry</span></code> contains the value of the head-direction of the animal over time.</p>
+<p><strong>Question:</strong> Can you extract the angle of the animal in a variable called <code class="docutils literal notranslate"><span class="pre">angle</span></code> and print it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">angle</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ry&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  --------
+8812.416    0.581795
+8812.4416   0.578113
+8812.4672   0.571791
+8812.4928   0.554532
+8812.5184   0.554532
+8812.544    0.554532
+8812.5696   0.554532
+...
+10771.123   5.67668
+10771.149   5.67668
+10771.174   5.7182
+10771.2     5.74727
+10771.226   5.74727
+10771.251   5.74727
+10771.277   5.72318
+dtype: float64, shape: (71478,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>But are the data actually loaded … or not?</p>
+<p><strong>Question:</strong> Can you print the underlying data array of <code class="docutils literal notranslate"><span class="pre">angle</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">d</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;HDF5 dataset &quot;data&quot;: shape (71478,), type &quot;&lt;f8&quot;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The animal was recorded during wakefulness and sleep.</p>
+<p><strong>Question:</strong> Can you extract the behavioral intervals in a variable called <code class="docutils literal notranslate"><span class="pre">epochs</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;epochs&quot;</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end  tags
+      0      0     8812.3  [&#39;sleep&#39;]
+      1   8812.3  10771.3  [&#39;wake&#39;]
+      2  10771.3  22025    [&#39;sleep&#39;]
+shape: (3, 2), time unit: sec.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/urorse_ccn-software-jan-2025_jan/lib/python3.11/site-packages/pynapple/io/interface_nwb.py:90: UserWarning: DataFrame is not sorted by start times. Sorting it.
+  data = nap.IntervalSet(df)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>NWB file can save intervals with multiple labels. The object <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> includes the labels as a metadata object.</p>
+<p><strong>Question:</strong> Using the column <code class="docutils literal notranslate"><span class="pre">tags</span></code>, can you create one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">wake</span></code> and one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">sleep</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="n">epochs</span><span class="p">[</span><span class="n">epochs</span><span class="o">.</span><span class="n">tags</span><span class="o">==</span><span class="s2">&quot;wake&quot;</span><span class="p">]</span>
+<span class="n">sleep_ep</span> <span class="o">=</span> <span class="n">epochs</span><span class="p">[</span><span class="n">epochs</span><span class="o">.</span><span class="n">tags</span><span class="o">==</span><span class="s2">&quot;sleep&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="compute-tuning-curves">
+<h2>Compute tuning curves<a class="headerlink" href="#compute-tuning-curves" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Now that we have spikes and a behavioral feature (i.e. head-direction), we would like to compute the firing rate of neurons as a function of the variable <code class="docutils literal notranslate"><span class="pre">angle</span></code> during <code class="docutils literal notranslate"><span class="pre">wake_ep</span></code>.
+To do this in pynapple, all you need is a single line of code!</p>
+<p><strong>Question:</strong> can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_1d_tuning_curves</span><span class="p">(</span>
+    <span class="n">group</span><span class="o">=</span><span class="n">spikes</span><span class="p">,</span> 
+    <span class="n">feature</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> 
+    <span class="n">nb_bins</span><span class="o">=</span><span class="mi">61</span><span class="p">,</span> 
+    <span class="n">ep</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
+    <span class="n">minmax</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you plot some tuning curves?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f66881e1990&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/08164957d3c1323b3574e02425ad0d17803c6320ef3761f4058d4fe3a0257963.png" src="../../_images/08164957d3c1323b3574e02425ad0d17803c6320ef3761f4058d4fe3a0257963.png" />
+</div>
+</div>
+<div class="render-all">
+<p>Most of those neurons are head-directions neurons.</p>
+<p>The next cell allows us to get a quick estimate of the neurons’s preferred direction.</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pref_ang</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you add it to the metainformation of <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span><span class="p">[</span><span class="s1">&#39;pref_ang&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pref_ang</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>This index maps a neuron to a preferred direction between 0 and 360 degrees.</p>
+<p><strong>Question:</strong> Can you plot the spiking activity of the neurons based on their preferred direction as well as the head-direction of the animal?
+For the sake of visibility, you should restrict the data to the following epoch : <code class="docutils literal notranslate"><span class="pre">ex_ep</span> <span class="pre">=</span> <span class="pre">nap.IntervalSet(start=8910,</span> <span class="pre">end=8960)</span></code>.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ex_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f6664680450&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/c1ace6499ce0d928e845ba6416dcd36428875fe3399ad1e9c9776f9984896921.png" src="../../_images/c1ace6499ce0d928e845ba6416dcd36428875fe3399ad1e9c9776f9984896921.png" />
+</div>
+</div>
+</section>
+<section id="decode-neural-activity">
+<h2>Decode neural activity<a class="headerlink" href="#decode-neural-activity" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Population activity clearly codes for head-direction. Can we use the spiking activity of the neurons to infer the current heading of the animal? The process is called bayesian decoding.</p>
+<p><strong>Question:</strong> Using the right pynapple function, can you compute the decoded angle from the spiking activity during wakefulness?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoded</span><span class="p">,</span> <span class="n">proba_feature</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_1d</span><span class="p">(</span>
+    <span class="n">tuning_curves</span><span class="o">=</span><span class="n">tuning_curves</span><span class="p">,</span>
+    <span class="n">group</span><span class="o">=</span><span class="n">spikes</span><span class="p">,</span>
+    <span class="n">ep</span><span class="o">=</span><span class="n">wake_ep</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>  <span class="c1"># second</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and display the decoded angle next to the true angle?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f6664311ad0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/cc1b9efd55293eb911ca801a6ccb10cb0eea268c9d6fbb83ef42aca20b73a02e.png" src="../../_images/cc1b9efd55293eb911ca801a6ccb10cb0eea268c9d6fbb83ef42aca20b73a02e.png" />
+</div>
+</div>
+<div class="render-all">
+<p>Since the tuning curves were computed during wakefulness, it is a circular action to decode spiking activity during wakefulness.
+We can try something more interesting by trying to decode the angle during sleep.</p>
+<p><strong>Question:</strong> Can you instantiate an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object called <code class="docutils literal notranslate"><span class="pre">rem_ep</span></code> that contains the epochs of REM sleep? You can check the contents of the NWB file by doing first <code class="docutils literal notranslate"><span class="pre">print(data)</span></code></p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rem_ep</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;rem&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you compute the decoded angle from the spiking activity during REM sleep?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoded</span><span class="p">,</span> <span class="n">proba_feature</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_1d</span><span class="p">(</span>
+    <span class="n">tuning_curves</span><span class="o">=</span><span class="n">tuning_curves</span><span class="p">,</span>
+    <span class="n">group</span><span class="o">=</span><span class="n">spikes</span><span class="p">,</span>
+    <span class="n">ep</span><span class="o">=</span><span class="n">rem_ep</span><span class="p">,</span>
+    <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>  <span class="c1"># second</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and display the decoded angle next to the spiking activity?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">rem_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">rem_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f66643aad50&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/dbadd07c5abb95008b01d9ce94528f1148b536fbbc86dd29b4940338773115c6.png" src="../../_images/dbadd07c5abb95008b01d9ce94528f1148b536fbbc86dd29b4940338773115c6.png" />
+</div>
+</div>
+</section>
+<section id="compute-correlograms">
+<h2>Compute correlograms<a class="headerlink" href="#compute-correlograms" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>We see that some neurons have a correlated activity. Can we measure it?</p>
+<p><strong>Question:</strong> Can you compute cross-correlograms during wake for all pairs of neurons and call it <code class="docutils literal notranslate"><span class="pre">cc_wake</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc_wake</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">binsize</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">windowsize</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">wake_ep</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f665c7df690&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/21555f93c788200cfc694b53ff5ece35d674f4a8f818a4fb2a29bb53bfddf04b.png" src="../../_images/21555f93c788200cfc694b53ff5ece35d674f4a8f818a4fb2a29bb53bfddf04b.png" />
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> can you plot the cross-correlogram during wake of 2 neurons firing for opposite directions?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">121</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">26</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">122</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f665c62ef90&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/e6fbb37a4dc8344145d2d3c24db03a88847c4556b1a2be5b8692a28f9cdacc5b.png" src="../../_images/e6fbb37a4dc8344145d2d3c24db03a88847c4556b1a2be5b8692a28f9cdacc5b.png" />
+</div>
+</div>
+<div class="render-all">
+<p>Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.</p>
+<p><strong>Question:</strong> can you compute the cross-correlograms during sleep?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cc_sleep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">sleep_ep</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> can you display the cross-correlogram for wakefulness and sleep of the same pairs of neurons?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">20</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_sleep</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f665c573310&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/2dd4c7dc6011a3ea419aa368b28aaa0e5c225990c30e8ccf4988a65c51367234.png" src="../../_images/2dd4c7dc6011a3ea419aa368b28aaa0e5c225990c30e8ccf4988a65c51367234.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">26</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">132</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">133</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_sleep</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f665c436f90&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/56c393a6bf1943185cef6f7a1c6f7030e2f89231a1fdc11a4a9e1509ef3fc9d4.png" src="../../_images/56c393a6bf1943185cef6f7a1c6f7030e2f89231a1fdc11a4a9e1509ef3fc9d4.png" />
+</div>
+</div>
+</section>
+<section id="compute-perievent">
+<h2>Compute perievent<a class="headerlink" href="#compute-perievent" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Sometimes, some events occurs during recording such as rewards. There was no particular events during this recording but we can look for when the head-direction is close to a particular direction as an event.</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+
+<span class="n">crossing_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="mf">1.5</span><span class="p">),</span> <span class="s2">&quot;below&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">time_support</span><span class="o">.</span><span class="n">start</span>
+<span class="n">crossing_times</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">crossing_times</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c2a068507ea80e70ad015bca7c7a583472a26c06652c24899b26f98e69eb8241.png" src="../../_images/c2a068507ea80e70ad015bca7c7a583472a26c06652c24899b26f98e69eb8241.png" />
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you compute a perievent time histogram around the timestamps defined in <code class="docutils literal notranslate"><span class="pre">crossing_times</span></code> for neuron 9?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">peth</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent</span><span class="p">(</span><span class="n">spikes</span><span class="p">[</span><span class="mi">9</span><span class="p">],</span> <span class="n">crossing_times</span><span class="p">,</span> <span class="n">minmax</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> …and plot the spikes?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">peth</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f66883eebd0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/024efad0089d061e5ad0a0edd60a8c5fa821152b63125218dee30cf43a0d4bb9.png" src="../../_images/024efad0089d061e5ad0a0edd60a8c5fa821152b63125218dee30cf43a0d4bb9.png" />
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you compute the mean firing rate of the PETH around <code class="docutils literal notranslate"><span class="pre">crossing_times</span></code> in bins of 100 ms?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean_fr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">peth</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and plot it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">peth</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_fr</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f666440a890&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/e5794f6027a53207c9020415421dcca506d9af6684c26d6f6e4ab6d060f1b47d.png" src="../../_images/e5794f6027a53207c9020415421dcca506d9af6684c26d6f6e4ab6d060f1b47d.png" />
+</div>
+</div>
+<div class="render-all">
+<p>Is this a strong effect? We would like to compare this to surrogate dataset.</p>
+<p><strong>Question:</strong> Shuffling the spike trains, can you generate a mean random PETH to compare to the true mean PETH?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rand_ts</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">shuffle_ts_intervals</span><span class="p">(</span><span class="n">spikes</span><span class="p">[</span><span class="mi">9</span><span class="p">])</span>
+<span class="n">rand_peth</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent</span><span class="p">(</span><span class="n">rand_ts</span><span class="p">,</span> <span class="n">crossing_times</span><span class="p">,</span> <span class="n">minmax</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">peth</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_fr</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">rand_peth</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span><span class="o">/</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f66881180d0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/5a9b7fca15e890c79e3c83ca62aadf8549141e109e843b156cecd0eae546cf44.png" src="../../_images/5a9b7fca15e890c79e3c83ca62aadf8549141e109e843b156cecd0eae546cf44.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="fundamentals_of_pynapple.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Learning the fundamentals of pynapple</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="phase_precession.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Signal processing and decoding in pynapple</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-neural-activity">Decode neural activity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-perievent">Compute perievent</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

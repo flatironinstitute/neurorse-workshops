@@ -1,0 +1,816 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Welcome! &#8212; CCN software workshop, January 2025  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css?v=f4437bd1" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'index';</script>
+    <link rel="icon" href="_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Learning the fundamentals of pynapple" href="full/day1/fundamentals_of_pynapple.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="#">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <img src="_static/03-FI-primary-logo-white.png" class="logo__image only-dark pst-js-only" alt="Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-jan-2025" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/jan2025?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1 current active">
+                <a class="reference internal" href="#">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="full/day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day1/head_direction.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/head_direction.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/place_cells.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day1/head_direction-users.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/head_direction-users.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/place_cells-users.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/head_direction-presenters.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/head_direction-presenters.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/place_cells-presenters.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-jan-2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/index.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Welcome!</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome!</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ccn-software-workshop-jan-2025">CCN Software Workshop, Jan 2025</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#this-website">This website</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-virtual-environment-with-python-3-11">Create a virtual environment with python 3.11</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-dependencies-and-setup-notebooks">Install dependencies and setup notebooks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binder">Binder</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="welcome">
+<h1 class="sd-d-none">Welcome!<a class="headerlink" href="#welcome" title="Link to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="ccn-software-workshop-jan-2025">
+<h1>CCN Software Workshop, Jan 2025<a class="headerlink" href="#ccn-software-workshop-jan-2025" title="Link to this heading">#</a></h1>
+<p>We are excited to see everyone at the Flatiron Center for Computational Neuroscience workshop on using open source packages to analyze and visualize neural data! You should have received an email with logistical information, including the schedule and link to the slack channel where we will be communicating the workshop. If you did not receive this email, please let us know!</p>
+<p>Over the course of this two-day workshop, we will walk you through the notebooks included on this site in order to demonstrate how to use pynapple and NeMoS to analyze and visualize your data.</p>
+<p>Before the workshop, please try to follow the <a class="reference internal" href="#setup"><span class="xref myst">setup</span></a> instructions below to install everything on your personal laptop.</p>
+<p>The presentations and schedule for this workshop can be found at <a class="reference external" href="https://neurorse.flatironinstitute.org/workshops/jan-2025.html">this page</a>.</p>
+<section id="this-website">
+<h2>This website<a class="headerlink" href="#this-website" title="Link to this heading">#</a></h2>
+<p>This website contains rendered versions of the notebooks we will be working through during this workshop. During the workshop, attendees should look at the versions found under the <code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">users</span></code> section. These notebooks have some code pre-filled, as well as brief notes to help orient you. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.</p>
+<p>If you miss something or fall behind, you can look into the <code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">presenters</span></code> section, which includes the completed code blocks (along with some notes), so you can catch up.</p>
+<p>After the workshop, we encourage you to return and check out the <code class="docutils literal notranslate"><span class="pre">Full</span> <span class="pre">notebooks</span></code> section, which, as the name implies, includes everything: explanatory text, code, and plots.</p>
+</section>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<p>Before the workshop, please try to complete the following steps. If you are unable to do so, we have an installation help session at the Flatiron Institute, 160 5th Ave, in the 3rd floor conference center, from 2 to 5pm on Wednesday, January 29. Please come by!</p>
+<ol class="arabic" start="0">
+<li><p>Make sure you have <code class="docutils literal notranslate"><span class="pre">git</span></code> installed. It is installed by default on most Mac and Linux machines, but you may need to install it if you are on Windows. <a class="reference external" href="https://github.com/git-guides/install-git">These instructions</a> should help.</p></li>
+<li><p>Clone the github repo for this workshop:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/flatironinstitute/ccn-software-jan-2025.git
+</pre></div>
+</div>
+</li>
+</ol>
+<section id="create-a-virtual-environment-with-python-3-11">
+<h3>Create a virtual environment with python 3.11<a class="headerlink" href="#create-a-virtual-environment-with-python-3-11" title="Link to this heading">#</a></h3>
+<p>There are many ways to set up a python virtual environment. You can use your favorite way of doing so. If you don’t have a preference or don’t know what to do, choose one of the following:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-0" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="uv" for="sd-tab-item-0">
+uv</label><div class="sd-tab-content docutils">
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-2" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="os" data-sync-id="posix" for="sd-tab-item-2">
+Mac/Linux</label><div class="sd-tab-content docutils">
+<ol class="arabic">
+<li><p>Install <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/"><code class="docutils literal notranslate"><span class="pre">uv</span></code></a> by running:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>curl<span class="w"> </span>-LsSf<span class="w"> </span>https://astral.sh/uv/install.sh<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</pre></div>
+</div>
+</li>
+<li><p>Install python 3.11:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>python<span class="w"> </span>install<span class="w"> </span><span class="m">3</span>.11
+</pre></div>
+</div>
+</li>
+<li><p>Navigate to your cloned repo and create a new virtual environment:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>ccn-software-jan-2025
+uv<span class="w"> </span>venv<span class="w"> </span>-p<span class="w"> </span><span class="m">3</span>.11
+</pre></div>
+</div>
+</li>
+<li><p>Activate your new virtual environment by running:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<input id="sd-tab-item-3" name="sd-tab-set-1" type="radio">
+<label class="sd-tab-label" data-sync-group="os" data-sync-id="windows" for="sd-tab-item-3">
+Windows</label><div class="sd-tab-content docutils">
+<p>Open up <code class="docutils literal notranslate"><span class="pre">powershell</span></code>, then:</p>
+<ol class="arabic">
+<li><p>Install <a class="reference external" href="https://docs.astral.sh/uv/getting-started/installation/"><code class="docutils literal notranslate"><span class="pre">uv</span></code></a>:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">powershell</span> <span class="n">-ExecutionPolicy</span> <span class="n">ByPass</span> <span class="n">-c</span> <span class="s2">&quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p>Install python 3.11:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="n">uv</span> <span class="n">python</span> <span class="n">install</span> <span class="n">3</span><span class="p">.</span><span class="n">11</span>
+</pre></div>
+</div>
+</li>
+<li><p>Navigate to your cloned repo and create a new virtual environment:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">ccn-software-jan</span><span class="p">-</span><span class="n">2025</span>
+<span class="n">uv</span> <span class="n">venv</span> <span class="n">-p</span> <span class="n">3</span><span class="p">.</span><span class="n">11</span>
+</pre></div>
+</div>
+</li>
+<li><p>Activate your new virtual environment by running:</p>
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="p">.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>You may receive an error saying “running scripts is disabled on this system”. If so, run <code class="docutils literal notranslate"><span class="pre">Set-ExecutionPolicy</span> <span class="pre">-Scope</span> <span class="pre">CurrentUser</span></code> and enter <code class="docutils literal notranslate"><span class="pre">Unrestricted</span></code>, then press <code class="docutils literal notranslate"><span class="pre">Y</span></code>.</p>
+<p>You may have to do this every time you open powershell.</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-1" name="sd-tab-set-0" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="conda" for="sd-tab-item-1">
+conda / miniforge</label><div class="sd-tab-content docutils">
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Due to <a class="reference external" href="https://www.anaconda.com/blog/update-on-anacondas-terms-of-service-for-academia-and-research">recent changes</a> to Anaconda’s Terms of Service, the Simons Foundation cannot use the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> conda channel and it is blocked on all Flatiron Institute wireless networks. You need to specify <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> instead (which is community-managed and open to all). The following instructions do so, but if you follow your normal workflow, you may hit issues.</p>
+</div>
+<ol class="arabic">
+<li><p>Install <a class="reference external" href="https://github.com/conda-forge/miniforge">miniforge</a> if you do not have some version of <code class="docutils literal notranslate"><span class="pre">conda</span></code> or <code class="docutils literal notranslate"><span class="pre">mamba</span></code> installed already.</p></li>
+<li><p>Create the new virtual environment by running:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>--name<span class="w"> </span>ccn-jan25<span class="w"> </span>pip<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11<span class="w"> </span>-c<span class="w"> </span>conda-forge
+</pre></div>
+</div>
+<p>Note the <code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">conda-forge</span></code>!</p>
+</li>
+<li><p>Activate your new environment and navigate to the cloned repo:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>activate<span class="w"> </span>ccn-jan25
+<span class="nb">cd</span><span class="w"> </span>ccn-software-jan-2025
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<section id="install-dependencies-and-setup-notebooks">
+<h4>Install dependencies and setup notebooks<a class="headerlink" href="#install-dependencies-and-setup-notebooks" title="Link to this heading">#</a></h4>
+<ol class="arabic">
+<li><p>Install the required dependencies. This will install pynapple and nemos, as well as jupyter and several other packages.</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-4" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="uv" for="sd-tab-item-4">
+uv</label><div class="sd-tab-content docutils">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>uv<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-5" name="sd-tab-set-2" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="conda" for="sd-tab-item-5">
+conda</label><div class="sd-tab-content docutils">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</div>
+</div>
+</li>
+<li><p>Run our setup script to download data and prepare the notebooks:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/setup.py
+</pre></div>
+</div>
+</li>
+<li><p>Confirm the installation and setup completed correctly by running:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>scripts/check_setup.py
+</pre></div>
+</div>
+</li>
+</ol>
+<p>If <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> tells you setup was successful, check that you can run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span> <span class="pre">notebooks/day2/current_injection-users.ipynb</span></code> and run the first few cells (up until the one containing <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">workshop_utils.fetch_data(&quot;allen_478498617.nwb&quot;)</span></code>). If that all works, then you’re good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.</p>
+<p>After doing the above, the <code class="docutils literal notranslate"><span class="pre">data/</span></code> and <code class="docutils literal notranslate"><span class="pre">notebooks/</span></code> directories within your local copy of the <code class="docutils literal notranslate"><span class="pre">ccn-software-jan-2025</span></code> repository will contain the NWB files and jupyter notebooks for the workshop.</p>
+<p>On the day of the workshop, we will run through the notebooks in the order they’re listed on this website. To open them, navigate to the <code class="docutils literal notranslate"><span class="pre">notebooks/</span></code> directory, activate your virtual environment and start <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code>:</p>
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-6" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="uv" for="sd-tab-item-6">
+uv</label><div class="sd-tab-content docutils">
+<div class="sd-tab-set docutils">
+<input checked="checked" id="sd-tab-item-8" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="os" data-sync-id="posix" for="sd-tab-item-8">
+Mac/Linux</label><div class="sd-tab-content docutils">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path/to/ccn-software-jan-2025/notebooks
+<span class="nb">source</span><span class="w"> </span>../.venv/bin/activate
+jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+</div>
+<input id="sd-tab-item-9" name="sd-tab-set-4" type="radio">
+<label class="sd-tab-label" data-sync-group="os" data-sync-id="windows" for="sd-tab-item-9">
+Windows</label><div class="sd-tab-content docutils">
+<div class="highlight-powershell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd </span><span class="n">path</span><span class="p">\</span><span class="n">to</span><span class="p">\</span><span class="n">ccn-software-jan</span><span class="p">-</span><span class="n">2025</span><span class="p">\</span><span class="n">notebooks</span>
+<span class="p">..\.</span><span class="n">venv</span><span class="p">\</span><span class="n">Scripts</span><span class="p">\</span><span class="n">activate</span>
+<span class="n">jupyter</span> <span class="n">lab</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<input id="sd-tab-item-7" name="sd-tab-set-3" type="radio">
+<label class="sd-tab-label" data-sync-group="category" data-sync-id="conda" for="sd-tab-item-7">
+conda / miniforge</label><div class="sd-tab-content docutils">
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>path/to/ccn-software-jan-2025/notebooks
+conda<span class="w"> </span>activate<span class="w"> </span>ccn-jan25
+jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<ul>
+<li><p>If you are on Mac and get an error related to <code class="docutils literal notranslate"><span class="pre">ruamel.yaml</span></code> (or <code class="docutils literal notranslate"><span class="pre">clang</span></code>) when running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>, we think this can be fixed by updating your Xcode Command Line Tools.</p></li>
+<li><p>On Windows, you may receive an error saying “running scripts is disabled on this system” when trying to activate the virtual environment. If so, run <code class="docutils literal notranslate"><span class="pre">Set-ExecutionPolicy</span> <span class="pre">-Scope</span> <span class="pre">CurrentUser</span></code> and enter <code class="docutils literal notranslate"><span class="pre">Unrestricted</span></code>, then press <code class="docutils literal notranslate"><span class="pre">Y</span></code>. (You may have to do this every time you open powershell.)</p></li>
+<li><p>When creating the conda environment, you may get errors related to accessing the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> channel. Due to <a class="reference external" href="https://www.anaconda.com/blog/update-on-anacondas-terms-of-service-for-academia-and-research">recent changes</a> to Anaconda’s Terms of Service, the Simons Foundation cannot use the <code class="docutils literal notranslate"><span class="pre">defaults</span></code> conda channel and it is blocked on all Flatiron Institute wireless networks. You need to specify <code class="docutils literal notranslate"><span class="pre">conda-forge</span></code> instead (which is community-managed and open to all). (The instructions above should do so.)</p></li>
+<li><p>If you have multiple jupyter installs on your path (because e.g., because you have an existing jupyter installation in a conda environment and you then used <code class="docutils literal notranslate"><span class="pre">uv</span></code> to setup the virtual environment for this workshop), jupyter can get confused. (You can check if this is the case by running <code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">-a</span> <span class="pre">jupyter</span></code> on Mac / Linux.)
+To avoid this problem, either make sure you only have one virtual environment active (e.g., by running <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">deactivate</span></code>) or prepend <code class="docutils literal notranslate"><span class="pre">JUPYTER_DATA_DIR=$(realpath</span> <span class="pre">..)/.venv/share/jupyter/</span></code> to your jupyter command above:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nv">JUPYTER_DATA_DIR</span><span class="o">=</span><span class="k">$(</span>realpath<span class="w"> </span>..<span class="k">)</span>/.venv/share/jupyter/<span class="w"> </span>jupyter<span class="w"> </span>lab
+</pre></div>
+</div>
+<p>(On Windows, replace <code class="docutils literal notranslate"><span class="pre">$(realpath</span> <span class="pre">..)</span></code> with the path to the <code class="docutils literal notranslate"><span class="pre">ccn-software-jan-2025</span></code> directory.)</p>
+</li>
+<li><p>We have noticed jupyter notebooks behaving a bit odd in Safari — if you are running/editing jupyter in Safari and the behavior seems off (scrolling not smooth, lag between creation and display of cells), try a different browser. We’ve had better luck with Firefox or using the arrow keys to navigate between cells.</p></li>
+<li><p>On <strong>Windows + conda</strong>: if after installing conda the path are not correctly set, you may encounter this error message:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="p">:</span> <span class="n">The</span> <span class="n">term</span> <span class="s1">&#39;conda&#39;</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">recognized</span> <span class="k">as</span> <span class="n">the</span> <span class="n">name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">cmdlet</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">script</span> <span class="n">file</span><span class="p">,</span> <span class="ow">or</span> <span class="n">operable</span> <span class="n">program</span><span class="o">.</span> <span class="n">Check</span> <span class="n">the</span> <span class="n">spelling</span> <span class="n">of</span> <span class="n">the</span> <span class="n">name</span><span class="p">,</span> <span class="ow">or</span> <span class="k">if</span> <span class="n">a</span> <span class="n">path</span> <span class="n">was</span> <span class="n">included</span><span class="p">,</span> <span class="n">verify</span> <span class="n">that</span> <span class="n">the</span> <span class="n">path</span> <span class="ow">is</span> <span class="n">correct</span> <span class="ow">and</span> <span class="k">try</span> <span class="n">again</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>In this case, you can try the following steps:</p>
+<ul>
+<li><p>Locate the path to the <code class="docutils literal notranslate"><span class="pre">condabin</span></code> folder. The path should look like: <code class="docutils literal notranslate"><span class="pre">some-folder-path\Miniforge3\condabin</span></code>.</p>
+<p>The following powershell command could be useful (note that i am starting form C: as a root, but you can change that):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Get</span><span class="o">-</span><span class="n">ChildItem</span> <span class="o">-</span><span class="n">Path</span> <span class="n">C</span><span class="p">:</span>\ <span class="o">-</span><span class="n">Directory</span> <span class="o">-</span><span class="n">Recurse</span> <span class="o">-</span><span class="n">Filter</span> <span class="s2">&quot;condabin&quot;</span> <span class="o">-</span><span class="n">ErrorAction</span> <span class="n">SilentlyContinue</span> <span class="o">|</span> <span class="n">Select</span><span class="o">-</span><span class="n">Object</span> <span class="o">-</span><span class="n">ExpandProperty</span> <span class="n">FullName</span>
+</pre></div>
+</div>
+</li>
+<li><p>Temporarily add conda to the paths:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$env:Path += &quot;;some-folder-path\Miniforge3\condabin&quot;
+</pre></div>
+</div>
+</li>
+<li><p>Initialize conda:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">init</span> <span class="n">powershell</span> 
+</pre></div>
+</div>
+</li>
+<li><p>Restart the powershell and check that conda is in the path. Run for example <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">--version</span></code>.</p></li>
+</ul>
+</li>
+<li><p>If you see <code class="docutils literal notranslate"><span class="pre">sys:1:</span> <span class="pre">DeprecationWarning:</span> <span class="pre">Call</span> <span class="pre">to</span> <span class="pre">deprecated</span> <span class="pre">function</span> <span class="pre">(or</span> <span class="pre">staticmethod)</span> <span class="pre">_destroy.</span></code> when running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/setup.py</span></code>, we don’t think this is actually a problem. As long as <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> says everything looks good, you’re fine!</p></li>
+<li><p>If you see an error that mentions SSL verification and are using <code class="docutils literal notranslate"><span class="pre">conda</span></code>, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.condarc</span></code>: <code class="docutils literal notranslate"><span class="pre">ssl_verify:</span> <span class="pre">false</span></code>. Then restart your terminal and run the command again. (If you are using <code class="docutils literal notranslate"><span class="pre">uv</span></code>, I’m not sure how to set this configuration option.)</p></li>
+</ul>
+</section>
+<section id="binder">
+<h2>Binder<a class="headerlink" href="#binder" title="Link to this heading">#</a></h2>
+<p>A binder instance (a virtual environment running on Flatiron’s cluster) is provided in case we cannot get your installation working. To access it, click the “launch binder” button in the top left of this site or click <a class="reference external" href="https://binder.flatironinstitute.org/v2/user/wbroderick/jan2025?labpath=notebooks">here</a>.</p>
+<p>You must login with the email address you provided when registering for the workshop. If you get a <code class="docutils literal notranslate"><span class="pre">403</span> <span class="pre">Forbidden</span></code> error or would like to use a different email, send Billy Broderick a message on the workshop slack.</p>
+<p>Some usage notes:</p>
+<ul class="simple">
+<li><p>You are only allowed to have a single binder instance running at a time, so if you get the “already have an instance running error”, go to the <a class="reference external" href="https://binder.flatironinstitute.org/hub/hub/home">binderhub page</a> (or click on “check your currently running servers” on the right of the page) to join your running instance.</p></li>
+<li><p>If you lose connection halfway through the workshop, go to the <a class="reference external" href="https://binder.flatironinstitute.org/hub/hub/home">binderhub page</a> to join your running instance rather than restarting the image.</p></li>
+<li><p>This is important because if you restart the image, <strong>you will lose all data and progress</strong>.</p></li>
+<li><p>The binder will be shutdown automatically after 1 day of inactivity or 7 days of total usage. Data will not persist after the binder instance shuts down, so <strong>please download any notebooks</strong> you want to keep.</p></li>
+<li><p>I will destroy this instance in 2 weeks. You can download your notebooks to keep them after the fact.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="full/day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day1/head_direction.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/head_direction.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/day2/place_cells.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day1/head_direction-users.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/head_direction-users.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/day2/place_cells-users.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/head_direction-presenters.html">Data analysis with pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/head_direction-presenters.html">Fit head-direction population</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/day2/place_cells-presenters.html">Model and feature selection with scikit-learn</a></li>
+</ul>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="right-next"
+       href="full/day1/fundamentals_of_pynapple.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Learning the fundamentals of pynapple</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Welcome!</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#ccn-software-workshop-jan-2025">CCN Software Workshop, Jan 2025</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#this-website">This website</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-virtual-environment-with-python-3-11">Create a virtual environment with python 3.11</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#install-dependencies-and-setup-notebooks">Install dependencies and setup notebooks</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#troubleshooting">Troubleshooting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binder">Binder</a><ul class="nav section-nav flex-column">
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
