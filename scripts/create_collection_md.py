@@ -6,7 +6,7 @@ import os
 import os.path as op
 import numpy as np
 from glob import glob
-from packaging.version import Version
+from packaging.version import Version, InvalidVersion
 
 REDIRECT_HTML="""<head>
   <meta http-equiv="Refresh" content="0; URL={}" />
@@ -38,8 +38,19 @@ def collection_md(site):
         if 'main' in branch:
             md_file['main_url'] = op.join(site, 'branch', 'main')
         md_file['branches'].append(op.split(branch[:-1])[-1])
-    md_file['releases'] = sorted([op.split(p[:-1])[-1] for p in glob(op.join(site, 'tags/*/'))],
-                                 key=Version)[::-1]
+    # releases that follow normal version naming
+    good_releases = []
+    # releases that don't
+    bad_releases = []
+    for tag in [op.split(p[:-1])[-1] for p in glob(op.join(site, 'tags/*/'))]:
+        try:
+            Version(tag)
+            good_releases.append(tag)
+        except InvalidVersion:
+            bad_releases.append(tag)
+    good_releases = sorted(good_releases, key=Version)[::-1]
+    bad_releases = sorted(bad_releases)[::-1]
+    md_file['releases'] = good_releases + bad_releases
     md_file['pulls'] = sorted([op.split(p[:-1])[-1] for p in glob(op.join(site, 'pulls/*/'))])[::-1]
     with open(f'site/_workshops/{op.split(site[:-1])[-1]}.md', 'w') as f:
         f.write('---\n')
