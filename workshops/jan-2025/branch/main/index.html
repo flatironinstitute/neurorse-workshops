@@ -654,7 +654,20 @@ To avoid this problem, either make sure you only have one virtual environment ac
 </ul>
 </li>
 <li><p>If you see <code class="docutils literal notranslate"><span class="pre">sys:1:</span> <span class="pre">DeprecationWarning:</span> <span class="pre">Call</span> <span class="pre">to</span> <span class="pre">deprecated</span> <span class="pre">function</span> <span class="pre">(or</span> <span class="pre">staticmethod)</span> <span class="pre">_destroy.</span></code> when running <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">scripts/setup.py</span></code>, we don’t think this is actually a problem. As long as <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> says everything looks good, you’re fine!</p></li>
+<li><p>If you get an issue during the creation of the conda environment, try making sure the <code class="docutils literal notranslate"><span class="pre">~/.condarc</span></code> file looks like the following (that file might not be created; create it if needed):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">channels</span><span class="p">:</span>
+<span class="o">-</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span>
+<span class="n">ssl_verify</span><span class="p">:</span> <span class="n">false</span>
+<span class="n">channel_priority</span><span class="p">:</span> <span class="n">true</span>
+</pre></div>
+</div>
+</li>
 <li><p>If you see an error that mentions SSL verification and are using <code class="docutils literal notranslate"><span class="pre">conda</span></code>, add the following line to your <code class="docutils literal notranslate"><span class="pre">~/.condarc</span></code>: <code class="docutils literal notranslate"><span class="pre">ssl_verify:</span> <span class="pre">false</span></code>. Then restart your terminal and run the command again. (If you are using <code class="docutils literal notranslate"><span class="pre">uv</span></code>, I’m not sure how to set this configuration option.)</p></li>
+<li><p>On an ARM-based (newer) Mac using <code class="docutils literal notranslate"><span class="pre">conda</span></code>, during <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code>, if you get <code class="docutils literal notranslate"><span class="pre">This</span> <span class="pre">version</span> <span class="pre">of</span> <span class="pre">jaxlib</span> <span class="pre">was</span> <span class="pre">built</span> <span class="pre">using</span> <span class="pre">AVX</span> <span class="pre">instructions,</span></code> uninstall using pip and install using conda: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">uninstall</span> <span class="pre">jax</span> <span class="pre">jaxlib</span></code>; <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">jax</span> <span class="pre">jaxlib</span></code>.</p>
+<ul class="simple">
+<li><p>If not using <code class="docutils literal notranslate"><span class="pre">conda</span></code>, not sure how to avoid this issue, you may have to switch.</p></li>
+</ul>
+</li>
 </ul>
 </section>
 <section id="binder">

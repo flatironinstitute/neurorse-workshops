@@ -247,7 +247,17 @@ jupyter lab
     ```
   - Restart the powershell and check that conda is in the path. Run for example `conda --version`.
 - If you see `sys:1: DeprecationWarning: Call to deprecated function (or staticmethod) _destroy.` when running `python scripts/setup.py`, we don't think this is actually a problem. As long as `check_setup.py` says everything looks good, you're fine!
+- If you get an issue during the creation of the conda environment, try making sure the `~/.condarc` file looks like the following (that file might not be created; create it if needed):
+    ```
+    channels:
+    - conda-forge
+    ssl_verify: false
+    channel_priority: true
+    ```
+
 - If you see an error that mentions SSL verification and are using `conda`, add the following line to your `~/.condarc`: `ssl_verify: false`. Then restart your terminal and run the command again. (If you are using `uv`, I'm not sure how to set this configuration option.)
+- On an ARM-based (newer) Mac using `conda`, during `check_setup.py`, if you get `This version of jaxlib was built using AVX instructions,` uninstall using pip and install using conda: `pip uninstall jax jaxlib`; `conda install -c conda-forge jax jaxlib`.
+    - If not using `conda`, not sure how to avoid this issue, you may have to switch.
 
 ## Binder
 
