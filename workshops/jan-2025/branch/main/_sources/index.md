@@ -52,18 +52,20 @@ There are many ways to set up a python virtual environment. You can use your fav
    ```shell
    curl -LsSf https://astral.sh/uv/install.sh | sh
    ```
-2. Install python 3.11:
+   
+2. Restart your terminal to make sure `uv` is available.
+3. Install python 3.11:
    ```shell
    uv python install 3.11
    ```
    
-3. Navigate to your cloned repo and create a new virtual environment:
+4. Navigate to your cloned repo and create a new virtual environment:
    ```shell
    cd ccn-software-jan-2025
    uv venv -p 3.11
    ```
    
-4. Activate your new virtual environment by running:
+5. Activate your new virtual environment by running:
    ```shell
    source .venv/bin/activate
    ```
