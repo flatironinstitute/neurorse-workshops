@@ -1,0 +1,2274 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Learning the fundamentals of pynapple &#8212; CCN software workshop, SfN 2025  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'full/day1/fundamentals_of_pynapple';</script>
+    <link rel="icon" href="../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data analysis with pynapple &amp; nemos" href="head_direction.html" />
+    <link rel="prev" title="Welcome!" href="../../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <script>document.write(`<img src="../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark" alt="Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-sfn-2025" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/sfn2025?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="head_direction.html">Data analysis with pynapple &amp; nemos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day2/current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day2/place_cells.html">Model selection</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model selection</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model selection</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-sfn-2025" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/full/day1/fundamentals_of_pynapple.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Learning the fundamentals of pynapple</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-pynapple-objects">Instantiate pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-between-pynapple-objects">Interaction between pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-pynapple">Numpy &amp; pynapple</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-pynapple-objects">Slicing pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-case-of-slicing-tsdframe">Special case of slicing : <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-functions-of-pynapple">Core functions of pynapple</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-high-level-function-compute-tuning-curves">First high level function : <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/24e1a6234e11f57bd1ea3b9e35a1608c/fundamentals_of_pynapple.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">fundamentals_of_pynapple.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<div class="render-all">
+<section class="tex2jax_ignore mathjax_ignore" id="learning-the-fundamentals-of-pynapple">
+<h1>Learning the fundamentals of pynapple<a class="headerlink" href="#learning-the-fundamentals-of-pynapple" title="Link to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Instantiate the pynapple objects</p></li>
+<li><p>Make the pynapple objects interact</p></li>
+<li><p>Use numpy with pynapple</p></li>
+<li><p>Slicing pynapple objects</p></li>
+<li><p>Adding metadata to pynapple objects</p></li>
+<li><p>Learn the core functions of pynapple</p></li>
+</ul>
+<p>The pynapple documentation can be found <a class="reference external" href="https://pynapple.org">here</a>.</p>
+<p>The documentation for objects and method of the core of pynapple is <a class="reference external" href="https://pynapple.org/api.html">here</a>.</p>
+<p>Let’s start by importing the pynapple package and matplotlib to see if everything is correctly installed.
+If an import fails, you can do <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pynapple</span> <span class="pre">matplotlib</span></code> in a cell to fix it.</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-10-23 16:48:52,040:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/nemos/_documentation_utils/plotting.py:39: UserWarning: plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation. Feel free to use them, but they will probably not work as intended with other datasets / in other contexts.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<p>For this notebook we will work with fake data. The following cells generate a set of variables that we will use to create the different pynapple objects.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">var1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># Variable 1</span>
+<span class="n">tsp1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="c1"># The timesteps of variable 1</span>
+
+<span class="n">var2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span> <span class="c1"># Variable 2</span>
+<span class="n">tsp2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1"># The timesteps of variable 2</span>
+<span class="n">col2</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;pineapple&#39;</span><span class="p">,</span> <span class="s1">&#39;banana&#39;</span><span class="p">,</span> <span class="s1">&#39;tomato&#39;</span><span class="p">]</span> <span class="c1"># The name of each columns of var2</span>
+
+<span class="n">var3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="c1"># Variable 3</span>
+<span class="n">tsp3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span> <span class="c1"># The timesteps of variable 3</span>
+
+<span class="n">random_times_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.14</span><span class="p">,</span> <span class="mf">37.0</span><span class="p">,</span> <span class="mf">42.0</span><span class="p">])</span>
+<span class="n">random_times_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">70</span><span class="p">])</span>
+<span class="n">random_times_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+
+<span class="n">starts_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">60000</span><span class="p">,</span> <span class="mi">90000</span><span class="p">])</span> <span class="c1"># starts of an epoch in `ms`</span>
+<span class="n">ends_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">20000</span><span class="p">,</span> <span class="mi">80000</span><span class="p">,</span> <span class="mi">95000</span><span class="p">])</span> <span class="c1"># ends in `ms`</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="instantiate-pynapple-objects">
+<h2>Instantiate pynapple objects<a class="headerlink" href="#instantiate-pynapple-objects" title="Link to this heading">#</a></h2>
+<p>This is a lot of variables to carry around. pynapple can help reduce the size of the workspace. Here we will instantiate all the different pynapple objects with the variables created above.</p>
+<p>Let’s start with the simple ones.</p>
+<div class="render-all">
+<p><strong>Question:</strong> Can you instantiate the right pynapple objects for <code class="docutils literal notranslate"><span class="pre">var1</span></code>, <code class="docutils literal notranslate"><span class="pre">var2</span></code> and <code class="docutils literal notranslate"><span class="pre">var3</span></code>? Objects should be named respectively <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>, <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> and <code class="docutils literal notranslate"><span class="pre">tsd3</span></code>. Don’t forget the column name for <code class="docutils literal notranslate"><span class="pre">var2</span></code>.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsd1</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tsp1</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">var1</span><span class="p">)</span>
+<span class="n">tsd2</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tsp2</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">var2</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">col2</span><span class="p">)</span>
+<span class="n">tsd3</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdTensor</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">tsp3</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">var3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you print <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsd1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  ---------
+0.0         -0.970864
+1.0         -1.28296
+2.0         -1.15705
+3.0          1.75065
+4.0          1.024
+5.0         -0.657167
+6.0         -0.346258
+...
+93.0         0.982239
+94.0         1.97685
+95.0        -2.06948
+96.0         0.881675
+97.0         1.58952
+98.0         1.0692
+99.0        -0.541765
+dtype: float64, shape: (100,)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you print <code class="docutils literal notranslate"><span class="pre">tsd2</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsd2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)      pineapple      banana      tomato
+----------  -----------  ----------  ----------
+0.0          -0.0546567  -0.670668    1.19444
+1.0          -1.27606     0.880551    1.46951
+2.0          -1.51485     0.100562   -0.911316
+3.0          -0.367121   -0.480931    0.808813
+4.0          -1.35264     0.91139    -1.42035
+5.0          -0.837766   -1.03555     1.12686
+6.0          -0.200257    1.02303    -0.726268
+...
+93.0          1.94176     0.0770869   0.682347
+94.0          0.446101    1.11638     0.393515
+95.0         -0.619065    0.504345    0.944426
+96.0         -0.0434128   1.3217      0.0382972
+97.0         -0.801049   -1.49096    -0.585243
+98.0         -0.487962   -0.560534   -0.897839
+99.0          0.57651    -1.4269      1.56615
+dtype: float64, shape: (100, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you print <code class="docutils literal notranslate"><span class="pre">tsd3</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsd3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  -------------------------------
+0.0         [[0.364538 ... 1.270283] ...]
+0.1         [[-0.521739 ...  0.422826] ...]
+0.2         [[ 0.356511 ... -0.005187] ...]
+0.3         [[ 1.083515 ... -1.28692 ] ...]
+0.4         [[-1.184734 ... -1.547737] ...]
+0.5         [[ 0.635732 ... -1.035988] ...]
+0.6         [[ 0.495043 ... -1.600711] ...]
+...
+99.3        [[-0.350334 ... -0.966421] ...]
+99.4        [[-0.780731 ...  0.435703] ...]
+99.5        [[-0.99433  ...  1.629664] ...]
+99.6        [[-1.115138 ... -0.323632] ...]
+99.7        [[-0.429142 ...  1.435563] ...]
+99.8        [[ 0.361844 ... -0.673391] ...]
+99.9        [[-1.47236  ... -0.213665] ...]
+dtype: float64, shape: (1000, 4, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you create an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> called <code class="docutils literal notranslate"><span class="pre">ep</span></code> out of <code class="docutils literal notranslate"><span class="pre">starts_1</span></code> and <code class="docutils literal notranslate"><span class="pre">ends_1</span></code> and print it? Be careful, times given above are in <code class="docutils literal notranslate"><span class="pre">ms</span></code>.</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">starts_1</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">ends_1</span><span class="p">,</span> <span class="n">time_units</span><span class="o">=</span><span class="s1">&#39;ms&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ep</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end
+      0       10     20
+      1       60     80
+      2       90     95
+shape: (3, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The experiment generated a set of timestamps from 3 different channels.</p>
+<p><strong>Question:</strong> Can you instantiate the corresponding pynapple object (<code class="docutils literal notranslate"><span class="pre">ts1</span></code>, <code class="docutils literal notranslate"><span class="pre">ts2</span></code>, <code class="docutils literal notranslate"><span class="pre">ts3</span></code>) for each one of them?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ts1</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">random_times_1</span><span class="p">)</span>
+<span class="n">ts2</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">random_times_2</span><span class="p">)</span>
+<span class="n">ts3</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">random_times_3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>This is a lot of timestamps to carry around as well.</p>
+<p><strong>Question:</strong> Can you instantiate the right pynapple object (call it <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code>) to group them together?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsGroup</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="n">ts1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">ts2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">ts3</span><span class="p">})</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and print it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate
+-------  -------
+      0  0.04002
+      1  0.05335
+      2  1.33385
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="interaction-between-pynapple-objects">
+<h2>Interaction between pynapple objects<a class="headerlink" href="#interaction-between-pynapple-objects" title="Link to this heading">#</a></h2>
+<p>We reduced 12 variables in our workspace to 5 using pynapple. Now we can see how the objects interact.</p>
+<div class="render-all">
+<p><strong>Question:</strong> Can you print the <code class="docutils literal notranslate"><span class="pre">time_support</span></code> of <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
+      0     3.14  78.1107
+shape: (1, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<p>The experiment ran from 0 to 100 seconds and as you can see, the <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> object shows the rate. But the rate is not accurate as it was computed over the default <code class="docutils literal notranslate"><span class="pre">time_support</span></code>.</p>
+<div class="render-all">
+<p><strong>Question:</strong> can you recreate the <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> object passing the right <code class="docutils literal notranslate"><span class="pre">time_support</span></code> during initialisation?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsGroup</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="n">ts1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">tsd2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">ts3</span><span class="p">},</span> <span class="n">time_support</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you print the <code class="docutils literal notranslate"><span class="pre">time_support</span></code> and <code class="docutils literal notranslate"><span class="pre">rate</span></code> to see how they changed?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end
+      0        0    100
+shape: (1, 2), time unit: sec.
+0    0.03
+1    1.00
+2    1.00
+Name: rate, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>Now you realized the variable <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> has some noise. The good signal is between 10 and 30 seconds and  50 and 100.</p>
+<p><strong>Question:</strong> Can you create an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object called <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> and use it to restrict the variable <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep_signal</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">50</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="p">[</span><span class="mi">30</span><span class="p">,</span> <span class="mi">100</span><span class="p">])</span>
+
+<span class="n">tsd1</span> <span class="o">=</span> <span class="n">tsd1</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_signal</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+You can print `tsd1` to check that the timestamps are in fact within `ep`.
+You can also check the `time_support` of `tsd1` to see that it has been updated.
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsd1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tsd1</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  ----------
+10.0        -0.0441381
+11.0         1.73751
+12.0         0.818859
+13.0         0.358108
+14.0        -1.28246
+15.0        -0.0257201
+16.0         0.0581005
+...
+93.0         0.982239
+94.0         1.97685
+95.0        -2.06948
+96.0         0.881675
+97.0         1.58952
+98.0         1.0692
+99.0        -0.541765
+dtype: float64, shape: (71,)
+  index    start    end
+      0       10     30
+      1       50    100
+shape: (2, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep_tmp</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">20</span><span class="p">)))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start       end
+      0   1.89989   3.45255
+      1   4.84488   5.83978
+      2   6.30372  13.2422
+      3  15.9392   17.4519
+      4  18.4245   24.6764
+      5  25.9034   27.8424
+      6  39.9778   41.8473
+      7  61.6761   66.3641
+      8  85.9508   90.4161
+      9  91.1928   91.6159
+shape: (10, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you do the intersection of <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> and <code class="docutils literal notranslate"><span class="pre">ep_tmp</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ep_signal</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
+      0  10       13.2422
+      1  15.9392  17.4519
+      2  18.4245  24.6764
+      3  25.9034  27.8424
+      4  61.6761  66.3641
+      5  85.9508  90.4161
+      6  91.1928  91.6159
+shape: (7, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+You can visualize IntervalSet using the function `workshop_utils.visualize_intervals` we provide.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">visualize_intervals</span><span class="p">([</span><span class="n">ep_signal</span><span class="p">,</span> <span class="n">ep_tmp</span><span class="p">,</span> <span class="n">ep_signal</span><span class="o">.</span><span class="n">intersect</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/22c9712b4a9068ce5ded8c81416795bc0ec587c2e4c621619652ec427f2a04be.png" src="../../_images/22c9712b4a9068ce5ded8c81416795bc0ec587c2e4c621619652ec427f2a04be.png" />
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you do the union of <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> and <code class="docutils literal notranslate"><span class="pre">ep_tmp</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ep_signal</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start        end
+      0   1.89989    3.45255
+      1   4.84488    5.83978
+      2   6.30372   30
+      3  39.9778    41.8473
+      4  50        100
+shape: (5, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and visualize it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">visualize_intervals</span><span class="p">([</span><span class="n">ep_signal</span><span class="p">,</span> <span class="n">ep_tmp</span><span class="p">,</span> <span class="n">ep_signal</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/fa643f6c1c944623fc0905a34a70368ed9f140f6372cc5b9a2f41ae19f3c6fb2.png" src="../../_images/fa643f6c1c944623fc0905a34a70368ed9f140f6372cc5b9a2f41ae19f3c6fb2.png" />
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you do the difference of <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> and <code class="docutils literal notranslate"><span class="pre">ep_tmp</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ep_signal</span><span class="o">.</span><span class="n">set_diff</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start       end
+      0  13.2422   15.9392
+      1  17.4519   18.4245
+      2  24.6764   25.9034
+      3  27.8424   30
+      4  50        61.6761
+      5  66.3641   85.9508
+      6  90.4161   91.1928
+      7  91.6159  100
+shape: (8, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and visualize it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">visualize_intervals</span><span class="p">([</span><span class="n">ep_signal</span><span class="p">,</span> <span class="n">ep_tmp</span><span class="p">,</span> <span class="n">ep_signal</span><span class="o">.</span><span class="n">set_diff</span><span class="p">(</span><span class="n">ep_tmp</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/2661bd6cbfd9815037376b4e0fc921b961eb5f097c56b206ce657b68115abb65.png" src="../../_images/2661bd6cbfd9815037376b4e0fc921b961eb5f097c56b206ce657b68115abb65.png" />
+</div>
+</div>
+</section>
+<section id="numpy-pynapple">
+<h2>Numpy &amp; pynapple<a class="headerlink" href="#numpy-pynapple" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Pynapple objects behaves very similarly like numpy array. They can be sliced with the following syntax :</p>
+<p><code class="docutils literal notranslate"><span class="pre">tsd[0:10]</span> <span class="pre">#</span> <span class="pre">First</span> <span class="pre">10</span> <span class="pre">elements</span></code></p>
+<p>Arithmetical operations are available as well :</p>
+<p><code class="docutils literal notranslate"><span class="pre">tsd</span> <span class="pre">=</span> <span class="pre">tsd</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
+<p>Finally numpy functions works directly. Let’s imagine <code class="docutils literal notranslate"><span class="pre">tsd3</span></code> is a movie with frame size (4,5).</p>
+<p><strong>Question:</strong> Can you compute the average frame along the time axis using <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> and print the result?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tsd3</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.07555292 -0.04017614 -0.05301951  0.01746602  0.0058922 ]
+ [-0.00324604  0.00094704  0.02294463  0.00380179 -0.00658049]
+ [-0.00647891  0.00310406  0.00329083  0.05062797  0.0264366 ]
+ [ 0.05788062 -0.02270673 -0.02779032  0.0330108  -0.01782266]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong>: can you compute the average of <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> for each timestamps and print it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tsd2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  ----------
+0.0          0.156372
+1.0          0.357999
+2.0         -0.775203
+3.0         -0.0130797
+4.0         -0.620531
+5.0         -0.248821
+6.0          0.0321684
+...
+93.0         0.900399
+94.0         0.651999
+95.0         0.276569
+96.0         0.438862
+97.0        -0.959084
+98.0        -0.648778
+99.0         0.238584
+dtype: float64, shape: (100,)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Notice how the output in the second case is still a pynapple object.
+In most cases, applying a numpy function will return a pynapple object if the time index is preserved.</p>
+</section>
+<section id="slicing-pynapple-objects">
+<h2>Slicing pynapple objects<a class="headerlink" href="#slicing-pynapple-objects" title="Link to this heading">#</a></h2>
+<p>Multiple methods exists to slice pynapple object. This parts reviews them.</p>
+<p><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> also behaves like numpy array.</p>
+<div class="render-all">
+<p><strong>Question:</strong> Can you extract the first and last epoch of <code class="docutils literal notranslate"><span class="pre">ep</span></code> in a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ep</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end
+      0       10     20
+      1       90     95
+shape: (2, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>Sometimes you want to get a data point as close as possible in time to another timestamps.</p>
+<p><strong>Question:</strong> Using the <code class="docutils literal notranslate"><span class="pre">get</span></code> method, can you get the data point from <code class="docutils literal notranslate"><span class="pre">tsd3</span></code> as close as possible to the time 50.1 seconds?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsd3</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mf">50.1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 2.23882591 -1.08429267  0.36834759 -0.41645505  0.4840616 ]
+ [ 0.13096049 -1.40249253 -0.36389769  0.09742041  0.74181069]
+ [-0.22469526  0.74292238 -0.82760241 -0.04786306  1.23253774]
+ [-1.2272659  -0.34373555 -1.72987802 -0.12618094  0.33914361]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Metadata are ubiquitous in neuroscience. They can be added to 3 pynapple objects :</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> : to label neurons in electrophysiology</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> : to label intervals</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> : to label neurons in calcium imaging</p></li>
+</ul>
+<p><strong>Question:</strong> Can you run the following command <code class="docutils literal notranslate"><span class="pre">tsgroup['planet']</span> <span class="pre">=</span> <span class="pre">['mars',</span> <span class="pre">'venus',</span> <span class="pre">'saturn']</span></code></p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span><span class="p">[</span><span class="s1">&#39;planet&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;mars&#39;</span><span class="p">,</span> <span class="s1">&#39;venus&#39;</span><span class="p">,</span> <span class="s1">&#39;saturn&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> … and print it?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index    rate  planet
+-------  ------  --------
+      0    0.03  mars
+      1    1     venus
+      2    1     saturn
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The object <code class="docutils literal notranslate"><span class="pre">ep</span></code> has 3 epochs labelled <code class="docutils literal notranslate"><span class="pre">['left',</span> <span class="pre">'right',</span> <span class="pre">'left']</span></code>.</p>
+<p><strong>Question:</strong> Can you add them as a metadata column called <code class="docutils literal notranslate"><span class="pre">direction</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span><span class="p">[</span><span class="s1">&#39;direction&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;left&#39;</span><span class="p">,</span> <span class="s1">&#39;right&#39;</span><span class="p">,</span> <span class="s1">&#39;left&#39;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ep</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end  direction
+      0       10     20  left
+      1       60     80  right
+      2       90     95  left
+shape: (3, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>The object <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> has 3 columns. Each column correspond to the rgb colors <code class="docutils literal notranslate"><span class="pre">[(0,0,1),</span> <span class="pre">(0.5,</span> <span class="pre">0.5,</span> <span class="pre">1),</span> <span class="pre">(0.1,</span> <span class="pre">0.2,</span> <span class="pre">0.3)]</span></code>.</p>
+<p><strong>Question:</strong> Can you add them as metadata of <code class="docutils literal notranslate"><span class="pre">tsd2</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsd2</span><span class="p">[</span><span class="s1">&#39;colors&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tsd2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    pineapple              banana               tomato
+----------  ---------------------  -------------------  --------------------
+0.0         -0.05465667596415442   -0.6706680253930318  1.1944412958092108
+1.0         -1.2760636531335507    0.8805513563646098   1.4695095780082146
+2.0         -1.5148540516749436    0.10056206867201706  -0.9113157404198673
+3.0         -0.367121059174191     -0.4809314403048137  0.808813457400616
+4.0         -1.352636939860163     0.9113899357786702   -1.4203466349497038
+5.0         -0.8377659085373763    -1.0355534895944514  1.1268564823802494
+6.0         -0.20025701314567693   1.0230305466080578   -0.7262682613977087
+...
+93.0        1.941761940837071      0.07708692026178308  0.682347269943078
+94.0        0.446100832553125      1.116379742290183    0.39351515261040876
+95.0        -0.6190649223395698    0.5043450180950204   0.9444263990616899
+96.0        -0.043412826714039454  1.321700536536084    0.038297154637744114
+97.0        -0.8010488479530811    -1.4909609236753085  -0.5852428233001435
+98.0        -0.48796170424519425   -0.5605337726809281  -0.8978387676670591
+99.0        0.5765100138787077     -1.426904125310958   1.5661474369514243
+Metadata
+colors      [0. 0. 1.]             [0.5 0.5 1. ]        [0.1 0.2 0.3]
+dtype: float64, shape: (100, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>You can also add metadata at initialization as a dictionnary using the keyword argument <code class="docutils literal notranslate"><span class="pre">metadata</span></code> :</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsGroup</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="n">ts1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">ts2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">ts3</span><span class="p">},</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;planet&#39;</span><span class="p">:[</span><span class="s1">&#39;mars&#39;</span><span class="p">,</span><span class="s1">&#39;venus&#39;</span><span class="p">,</span> <span class="s1">&#39;saturn&#39;</span><span class="p">]})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
+-------  -------  --------
+      0  0.04002  mars
+      1  0.05335  venus
+      2  1.33385  saturn
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p>Metadata are accessible either as attributes (i.e. <code class="docutils literal notranslate"><span class="pre">tsgroup.planet</span></code>) or as dictionnary-like keys (i.e. <code class="docutils literal notranslate"><span class="pre">ep['direction']</span></code>).</p>
+<p>They can be used to slice objects.</p>
+<p><strong>Question:</strong> Can you select only the elements of <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> with rate below 1Hz?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">[</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">rate</span><span class="o">&lt;</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">[</span><span class="n">tsgroup</span><span class="p">[</span><span class="s1">&#39;rate&#39;</span><span class="p">]</span><span class="o">&lt;</span><span class="mf">1.0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">getby_threshold</span><span class="p">(</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;&lt;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
+-------  -------  --------
+      0  0.04002  mars
+      1  0.05335  venus
+  Index     rate  planet
+-------  -------  --------
+      0  0.04002  mars
+      1  0.05335  venus
+  Index     rate  planet
+-------  -------  --------
+      0  0.04002  mars
+      1  0.05335  venus
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you select the intervals in <code class="docutils literal notranslate"><span class="pre">ep</span></code> labelled as <code class="docutils literal notranslate"><span class="pre">'left'</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">ep</span><span class="p">[</span><span class="n">ep</span><span class="o">.</span><span class="n">direction</span><span class="o">==</span><span class="s1">&#39;left&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end  direction
+      0       10     20  left
+      1       90     95  left
+shape: (2, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<section id="special-case-of-slicing-tsdframe">
+<h3>Special case of slicing : <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code><a class="headerlink" href="#special-case-of-slicing-tsdframe" title="Link to this heading">#</a></h3>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tsdframe</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span>
+  <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;alpha&#39;</span><span class="p">:[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]})</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">tsdframe</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12                    0                     1
+----------  --------------------  --------------------  --------------------
+0.0         -1.0839926752572169   0.4467945116348366    -0.11540238320982019
+1.0         -0.9823939174815296   -0.774337241653844    1.0319243382766332
+2.0         -0.12115616397817819  0.9938577073999705    -1.9384031071996448
+3.0         0.2704457045834966    -0.24180576160697287  0.21381845218158418
+Metadata
+alpha       2                     1                     0
+dtype: float64, shape: (4, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> What happen when you do <code class="docutils literal notranslate"><span class="pre">tsdframe[0]</span></code> vs <code class="docutils literal notranslate"><span class="pre">tsdframe[:,0]</span></code> vs <code class="docutils literal notranslate"><span class="pre">tsdframe[[12,1]]</span></code></p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsdframe</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-1.08399268  0.44679451 -0.11540238]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> What happen when you do <code class="docutils literal notranslate"><span class="pre">tsdframe.loc[0]</span></code> and <code class="docutils literal notranslate"><span class="pre">tsdframe.loc[[0,1]]</span></code></p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsdframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tsdframe</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
+----------  ---------
+0            0.446795
+1           -0.774337
+2            0.993858
+3           -0.241806
+dtype: float64, shape: (4,)
+Time (s)    0                     1
+----------  --------------------  --------------------
+0.0         0.4467945116348366    -0.11540238320982019
+1.0         -0.774337241653844    1.0319243382766332
+2.0         0.9938577073999705    -1.9384031071996448
+3.0         -0.24180576160697287  0.21381845218158418
+Metadata
+alpha       1                     0
+dtype: float64, shape: (4, 2)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> What happen when you do <code class="docutils literal notranslate"><span class="pre">tsdframe[:,tsdframe.alpha==2]</span></code></p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tsdframe</span><span class="p">[:,</span><span class="n">tsdframe</span><span class="o">.</span><span class="n">alpha</span><span class="o">==</span><span class="mi">2</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12
+----------  --------------------
+0.0         -1.0839926752572169
+1.0         -0.9823939174815296
+2.0         -0.12115616397817819
+3.0         0.2704457045834966
+Metadata
+alpha       2
+dtype: float64, shape: (4, 1)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="core-functions-of-pynapple">
+<h2>Core functions of pynapple<a class="headerlink" href="#core-functions-of-pynapple" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>This part focuses on the most important core functions of pynapple.</p>
+<p><strong>Question:</strong> Using the <code class="docutils literal notranslate"><span class="pre">count</span></code> function, can you count the number of events within 1 second bins for <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> over the <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> intervals?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">tsgroup</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">ep_signal</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    0     1      2
+----------  ----  -----  ------
+10.5        0     1      3
+11.5        0     0      2
+12.5        0     0      0
+13.5        0     0      1
+14.5        0     0      1
+15.5        0     0      3
+16.5        0     0      3
+...
+93.5        0     0      0
+94.5        0     0      0
+95.5        0     0      0
+96.5        0     0      0
+97.5        0     0      0
+98.5        0     0      0
+99.5        0     0      0
+Metadata
+planet      mars  venus  saturn
+dtype: int64, shape: (70, 3)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Pynapple works directly with matplotlib. Passing a time series object to <code class="docutils literal notranslate"><span class="pre">plt.plot</span></code> will display the figure with the correct time axis.</p>
+<p><strong>Question:</strong> In two subplots, can you show the count and events over time?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tsgroup</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_signal</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc748213650&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/0184fae86e4cfb0ea8ace6aa253b347404106fb2f98eed0e82410ddff28c2264.png" src="../../_images/0184fae86e4cfb0ea8ace6aa253b347404106fb2f98eed0e82410ddff28c2264.png" />
+</div>
+</div>
+<div class="render-all">
+<p>From a set of timestamps, you want to assign them a set of values with the closest point in time of another time series.</p>
+<p><strong>Question:</strong> Using the function <code class="docutils literal notranslate"><span class="pre">value_from</span></code>, can you assign values to <code class="docutils literal notranslate"><span class="pre">ts2</span></code> from the <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> time series and call the output <code class="docutils literal notranslate"><span class="pre">new_tsd</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_tsd</span> <span class="o">=</span> <span class="n">ts2</span><span class="o">.</span><span class="n">value_from</span><span class="p">(</span><span class="n">tsd1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you plot together <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>, <code class="docutils literal notranslate"><span class="pre">ts2</span></code> and <code class="docutils literal notranslate"><span class="pre">new_tsd</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tsd1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">new_tsd</span><span class="p">,</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ts2</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc74822f9b0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/2bc17c7725c57bbcb4f6239d2ffb836d47b59a0f6b923951ee20d96a8158c9ca.png" src="../../_images/2bc17c7725c57bbcb4f6239d2ffb836d47b59a0f6b923951ee20d96a8158c9ca.png" />
+</div>
+</div>
+<div class="render-all">
+<p>One important aspect of data analysis is to bring data to the same size. Pynapple provides the <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> function to downsample data.</p>
+<p><strong>Question:</strong> Can you downsample <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> to one time point every 5 seconds?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">new_tsd2</span> <span class="o">=</span> <span class="n">tsd2</span><span class="o">.</span><span class="n">bin_average</span><span class="p">(</span><span class="mf">5.0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question:</strong> Can you plot the <code class="docutils literal notranslate"><span class="pre">tomato</span></code> column from <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> as well as the downsampled version?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tsd2</span><span class="p">[</span><span class="s1">&#39;tomato&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">new_tsd2</span><span class="p">[</span><span class="s1">&#39;tomato&#39;</span><span class="p">],</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc6f42a6f30&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/9d16079afe42b4609be3dc932b28a4a11b54560e49e72649ee4fdbf0ac6d7098.png" src="../../_images/9d16079afe42b4609be3dc932b28a4a11b54560e49e72649ee4fdbf0ac6d7098.png" />
+</div>
+</div>
+<div class="render-all">
+<p>For <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>, you want to find all the epochs for which the value is above 0.0. Pynapple provides the function <code class="docutils literal notranslate"><span class="pre">threshold</span></code> to get 1 dimensional time series above or below a certain value.</p>
+<p><strong>Question</strong>: Can you print the epochs for which <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> is above 0.0?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep_above</span> <span class="o">=</span> <span class="n">tsd1</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">time_support</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">ep_above</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>index    start    end
+0        10.5     13.5
+1        15.5     18.5
+2        19.5     23.5
+3        29.5     30.0
+4        50.0     50.5
+5        51.5     54.5
+6        57.5     59.5
+...      ...      ...
+8        69.5     70.5
+9        71.5     72.5
+10       75.5     78.5
+11       82.5     84.5
+12       85.5     88.5
+13       92.5     94.5
+14       95.5     98.5
+shape: (15, 2), time unit: sec.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question</strong>: can you plot <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> as well as the epochs for which <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> is above 0.0?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tsd1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tsd1</span><span class="o">.</span><span class="n">threshold</span><span class="p">(</span><span class="mf">0.0</span><span class="p">),</span> <span class="s1">&#39;o-&#39;</span><span class="p">)</span>
+<span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span><span class="p">,</span><span class="n">e</span> <span class="ow">in</span> <span class="n">ep_above</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.patches.Rectangle at 0x7fc674185910&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6f42a2270&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6741e8dd0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc674357170&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6f42bf500&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc68c309910&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6740fbf20&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6741933b0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6581273e0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc658148440&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc6741922d0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc62c33c1a0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc62c33dee0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc658175790&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fc65819c6e0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/42646874e8601630ab475084e8f97cbf57e6b417e0c53ab090be97f6be399c60.png" src="../../_images/42646874e8601630ab475084e8f97cbf57e6b417e0c53ab090be97f6be399c60.png" />
+</div>
+</div>
+</section>
+<section id="first-high-level-function-compute-tuning-curves">
+<h2>First high level function : <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code><a class="headerlink" href="#first-high-level-function-compute-tuning-curves" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p>Pynapple provides functions for standard analysis in systems neuroscience. The first function we will try is <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code> that calculate the response of a cell to a particular feature.</p>
+<p>A good practice when using a function for the first time is to check the docstrings to learn how to pass the argument.</p>
+<p><strong>Question</strong>: can you examine the docstring of <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    Computes n-dimensional tuning curves relative to n features.
+
+    Parameters
+    ----------
+    data : TsGroup, TsdFrame, Ts, Tsd
+        The data for which the tuning curves will be computed. This usually corresponds to the activity of the
+        neurons, either as spike times (TsGroup or Ts) or continuous values (TsdFrame or Tsd).
+    features : Tsd, TsdFrame
+        The features (i.e. one column per feature). This usually corresponds to behavioral variables such as
+        position, head direction, speed, etc.
+    bins : sequence or int
+        The bin specification:
+
+        * A sequence of arrays describing the monotonically increasing bin
+          edges along each dimension.
+        * The number of bins for each dimension (nx, ny, ... =bins)
+        * The number of bins for all dimensions (nx=ny=...=bins).
+    range : sequence, optional
+        A sequence of entries per feature, each an optional (lower, upper) tuple giving
+        the outer bin edges to be used if the edges are not given explicitly in
+        `bins`.
+        An entry of None in the sequence results in the minimum and maximum
+        values being used for the corresponding dimension.
+        The default, None, is equivalent to passing a tuple of D None values.
+    epochs : IntervalSet, optional
+        The epochs on which tuning curves are computed.
+        If None, the epochs are the time support of the features.
+    fs : float, optional
+        The exact sampling frequency of the features used to normalise the tuning curves.
+        Unit should match that of the features. If not passed, it is estimated.
+    feature_names : list, optional
+        A list of feature names. If not passed, the column names in `features` are used.
+    return_pandas : bool, optional
+        If True, the function returns a pandas.DataFrame instead of an xarray.DataArray.
+        Note that this will not work if the features are not 1D and that occupancy and bin edges
+        will not be stored as attributes.
+    return_counts : bool, optional
+        If True, does not divide the spike counts by occupancy, but returns the counts directly.
+        The occupancy is stored in the xarray attributes, so the division can be performed after any
+        particular processing steps.
+        If the input is a TsdFrame, this does not do anything.
+
+    Returns
+    -------
+    xarray.DataArray
+        A tensor containing the tuning curves with labeled bin centres.
+        The bin edges and occupancy are stored as attributes.
+
+    Examples
+    --------
+    In the simplest case, we can pass a group of spikes per neuron and a single feature:
+
+        &gt;&gt;&gt; import pynapple as nap
+        &gt;&gt;&gt; import numpy as np; np.random.seed(42)
+        &gt;&gt;&gt; group = nap.TsGroup({
+        ...     1: nap.Ts(np.arange(0, 100, 0.1)),
+        ...     2: nap.Ts(np.arange(0, 100, 0.2))
+        ... })
+        &gt;&gt;&gt; feature = nap.Tsd(d=np.arange(0, 100, 0.1) % 1, t=np.arange(0, 100, 0.1))
+        &gt;&gt;&gt; tcs = nap.compute_tuning_curves(group, feature, bins=10)
+        &gt;&gt;&gt; tcs
+        &lt;xarray.DataArray (unit: 2, 0: 10)&gt; Size: 160B
+        array([[10., 10., 10., 10., 10., 10., 10., 10., 10., 10.],
+               [10.,  0., 10.,  0., 10.,  0., 10.,  0., 10.,  0.]])
+        Coordinates:
+          * unit     (unit) int64 16B 1 2
+          * 0        (0) float64 80B 0.045 0.135 0.225 0.315 ... 0.585 0.675 0.765 0.855
+        Attributes:
+            occupancy:  [100. 100. 100. 100. 100. 100. 100. 100. 100. 100.]
+            bin_edges:  [array([0.  , 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72,...
+
+    The function can also take multiple features, in which case it computes n-dimensional tuning curves.
+    We can specify the number of bins for each feature:
+
+        &gt;&gt;&gt; features = nap.TsdFrame(
+        ...     d=np.stack(
+        ...         [
+        ...             np.arange(0, 100, 0.1) % 1,
+        ...             np.arange(0, 100, 0.1) % 2
+        ...         ],
+        ...         axis=1
+        ...     ),
+        ...     t=np.arange(0, 100, 0.1)
+        ... )
+        &gt;&gt;&gt; tcs = nap.compute_tuning_curves(group, features, bins=[5, 3])
+        &gt;&gt;&gt; tcs
+        &lt;xarray.DataArray (unit: 2, 0: 5, 1: 3)&gt; Size: 240B
+        array([[[10., 10., nan],
+                [10., 10., 10.],
+                [10., nan, 10.],
+                [10., 10., 10.],
+                [nan, 10., 10.]],
+        ...
+               [[ 5.,  5., nan],
+                [ 5., 10.,  0.],
+                [ 5., nan,  5.],
+                [10.,  0.,  5.],
+                [nan,  5.,  5.]]])
+        Coordinates:
+          * unit     (unit) int64 16B 1 2
+          * 0        (0) float64 40B 0.09 0.27 0.45 0.63 0.81
+          * 1        (1) float64 24B 0.3167 0.95 1.583
+        Attributes:
+            occupancy:  [[100. 100.  nan]\n [100.  50.  50.]\n [100.  nan 100.]\n [ 5...
+            bin_edges:  [array([0.  , 0.18, 0.36, 0.54, 0.72, 0.9 ]), array([0.      ...
+
+    Or even specify the bin edges directly:
+
+        &gt;&gt;&gt; tcs = nap.compute_tuning_curves(
+        ...     group,
+        ...     features,
+        ...     bins=[np.linspace(0, 1, 5), np.linspace(0, 2, 3)]
+        ... )
+        &gt;&gt;&gt; tcs
+        &lt;xarray.DataArray (unit: 2, 0: 4, 1: 2)&gt; Size: 128B
+        array([[[10.        , 10.        ],
+                [10.        , 10.        ],
+                [10.        , 10.        ],
+                [10.        , 10.        ]],
+        ...
+               [[ 6.66666667,  6.66666667],
+                [ 5.        ,  5.        ],
+                [ 3.33333333,  3.33333333],
+                [ 5.        ,  5.        ]]])
+        Coordinates:
+          * unit     (unit) int64 16B 1 2
+          * 0        (0) float64 32B 0.125 0.375 0.625 0.875
+          * 1        (1) float64 16B 0.5 1.5
+        Attributes:
+            occupancy:  [[150. 150.]\n [100. 100.]\n [150. 150.]\n [100. 100.]]
+            bin_edges:  [array([0.  , 0.25, 0.5 , 0.75, 1.  ]), array([0., 1., 2.])]
+
+    In all of these cases, it is also possible to pass continuous values instead of spikes (e.g. calcium imaging data), in that case the mean response is computed:
+
+        &gt;&gt;&gt; frame = nap.TsdFrame(d=np.random.rand(2000, 3), t=np.arange(0, 100, 0.05))
+        &gt;&gt;&gt; tcs = nap.compute_tuning_curves(frame, feature, bins=10)
+        &gt;&gt;&gt; tcs
+        &lt;xarray.DataArray (unit: 3, 0: 10)&gt; Size: 240B
+        array([[0.49147343, 0.50190395, 0.50971339, 0.50128013, 0.54332711,
+                0.49712328, 0.49594611, 0.5110517 , 0.52247351, 0.52057658],
+               [0.51132036, 0.46410557, 0.47732505, 0.49830908, 0.53523019,
+                0.53099429, 0.48668499, 0.44198555, 0.49222208, 0.47453398],
+               [0.46591801, 0.50662914, 0.46875882, 0.48734997, 0.51836574,
+                0.50722266, 0.48943577, 0.49730095, 0.47944075, 0.48623693]])
+        Coordinates:
+          * unit     (unit) int64 24B 0 1 2
+          * 0        (0) float64 80B 0.045 0.135 0.225 0.315 ... 0.585 0.675 0.765 0.855
+        Attributes:
+            occupancy:  [100. 100. 100. 100. 100. 100. 100. 100. 100. 100.]
+            bin_edges:  [array([0.  , 0.09, 0.18, 0.27, 0.36, 0.45, 0.54, 0.63, 0.72,...
+    
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question</strong>: Can you compute the response (i.e. firing rate) of the units in <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> as function of the feature <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> using the function <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tc</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">tsgroup</span><span class="p">,</span> <span class="n">tsd1</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;feat1&quot;</span><span class="p">])</span>
+<span class="n">tc</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div><svg style="position: absolute; width: 0; height: 0; overflow: hidden">
+<defs>
+<symbol id="icon-database" viewBox="0 0 32 32">
+<path d="M16 0c-8.837 0-16 2.239-16 5v4c0 2.761 7.163 5 16 5s16-2.239 16-5v-4c0-2.761-7.163-5-16-5z"></path>
+<path d="M16 17c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+<path d="M16 26c-8.837 0-16-2.239-16-5v6c0 2.761 7.163 5 16 5s16-2.239 16-5v-6c0 2.761-7.163 5-16 5z"></path>
+</symbol>
+<symbol id="icon-file-text2" viewBox="0 0 32 32">
+<path d="M28.681 7.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378 0-2.5 1.121-2.5 2.5v27c0 1.378 1.122 2.5 2.5 2.5h23c1.378 0 2.5-1.122 2.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543 5.457c0.959 0.959 1.712 1.825 2.268 2.543h-4.811v-4.811c0.718 0.556 1.584 1.309 2.543 2.268zM28 29.5c0 0.271-0.229 0.5-0.5 0.5h-23c-0.271 0-0.5-0.229-0.5-0.5v-27c0-0.271 0.229-0.5 0.5-0.5 0 0 15.499-0 15.5 0v7c0 0.552 0.448 1 1 1h7v19.5z"></path>
+<path d="M23 26h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 22h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+<path d="M23 18h-14c-0.552 0-1-0.448-1-1s0.448-1 1-1h14c0.552 0 1 0.448 1 1s-0.448 1-1 1z"></path>
+</symbol>
+</defs>
+</svg>
+<style>/* CSS stylesheet for displaying xarray objects in notebooks */
+
+:root {
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base rgba(0, 0, 0, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(0, 0, 0, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, white)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, white) h s calc(l - 15))
+  );
+}
+
+html[theme="dark"],
+html[data-theme="dark"],
+body[data-theme="dark"],
+body.vscode-dark {
+  --xr-font-color0: var(
+    --jp-content-font-color0,
+    var(--pst-color-text-base, rgba(255, 255, 255, 1))
+  );
+  --xr-font-color2: var(
+    --jp-content-font-color2,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.54))
+  );
+  --xr-font-color3: var(
+    --jp-content-font-color3,
+    var(--pst-color-text-base, rgba(255, 255, 255, 0.38))
+  );
+  --xr-border-color: var(
+    --jp-border-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 10))
+  );
+  --xr-disabled-color: var(
+    --jp-layout-color3,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 40))
+  );
+  --xr-background-color: var(
+    --jp-layout-color0,
+    var(--pst-color-on-background, #111111)
+  );
+  --xr-background-color-row-even: var(
+    --jp-layout-color1,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 5))
+  );
+  --xr-background-color-row-odd: var(
+    --jp-layout-color2,
+    hsl(from var(--pst-color-on-background, #111111) h s calc(l + 15))
+  );
+}
+
+.xr-wrap {
+  display: block !important;
+  min-width: 300px;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+.xr-text-repr-fallback {
+  /* fallback to plain text repr when CSS is not injected (untrusted notebook) */
+  display: none;
+}
+
+.xr-header {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  margin-bottom: 4px;
+  border-bottom: solid 1px var(--xr-border-color);
+}
+
+.xr-header > div,
+.xr-header > ul {
+  display: inline;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.xr-obj-type,
+.xr-obj-name,
+.xr-group-name {
+  margin-left: 2px;
+  margin-right: 10px;
+}
+
+.xr-group-name::before {
+  content: "📁";
+  padding-right: 0.3em;
+}
+
+.xr-group-name,
+.xr-obj-type {
+  color: var(--xr-font-color2);
+}
+
+.xr-sections {
+  padding-left: 0 !important;
+  display: grid;
+  grid-template-columns: 150px auto auto 1fr 0 20px 0 20px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.xr-section-item {
+  display: contents;
+}
+
+.xr-section-item input {
+  display: inline-block;
+  opacity: 0;
+  height: 0;
+  margin: 0;
+}
+
+.xr-section-item input + label {
+  color: var(--xr-disabled-color);
+  border: 2px solid transparent !important;
+}
+
+.xr-section-item input:enabled + label {
+  cursor: pointer;
+  color: var(--xr-font-color2);
+}
+
+.xr-section-item input:focus + label {
+  border: 2px solid var(--xr-font-color0) !important;
+}
+
+.xr-section-item input:enabled + label:hover {
+  color: var(--xr-font-color0);
+}
+
+.xr-section-summary {
+  grid-column: 1;
+  color: var(--xr-font-color2);
+  font-weight: 500;
+}
+
+.xr-section-summary > span {
+  display: inline-block;
+  padding-left: 0.5em;
+}
+
+.xr-section-summary-in:disabled + label {
+  color: var(--xr-font-color2);
+}
+
+.xr-section-summary-in + label:before {
+  display: inline-block;
+  content: "►";
+  font-size: 11px;
+  width: 15px;
+  text-align: center;
+}
+
+.xr-section-summary-in:disabled + label:before {
+  color: var(--xr-disabled-color);
+}
+
+.xr-section-summary-in:checked + label:before {
+  content: "▼";
+}
+
+.xr-section-summary-in:checked + label > span {
+  display: none;
+}
+
+.xr-section-summary,
+.xr-section-inline-details {
+  padding-top: 4px;
+}
+
+.xr-section-inline-details {
+  grid-column: 2 / -1;
+}
+
+.xr-section-details {
+  display: none;
+  grid-column: 1 / -1;
+  margin-top: 4px;
+  margin-bottom: 5px;
+}
+
+.xr-section-summary-in:checked ~ .xr-section-details {
+  display: contents;
+}
+
+.xr-group-box {
+  display: inline-grid;
+  grid-template-columns: 0px 20px auto;
+  width: 100%;
+}
+
+.xr-group-box-vline {
+  grid-column-start: 1;
+  border-right: 0.2em solid;
+  border-color: var(--xr-border-color);
+  width: 0px;
+}
+
+.xr-group-box-hline {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  height: 1em;
+  width: 20px;
+  border-bottom: 0.2em solid;
+  border-color: var(--xr-border-color);
+}
+
+.xr-group-box-contents {
+  grid-column-start: 3;
+}
+
+.xr-array-wrap {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.xr-array-wrap > label {
+  grid-column: 1;
+  vertical-align: top;
+}
+
+.xr-preview {
+  color: var(--xr-font-color3);
+}
+
+.xr-array-preview,
+.xr-array-data {
+  padding: 0 5px !important;
+  grid-column: 2;
+}
+
+.xr-array-data,
+.xr-array-in:checked ~ .xr-array-preview {
+  display: none;
+}
+
+.xr-array-in:checked ~ .xr-array-data,
+.xr-array-preview {
+  display: inline-block;
+}
+
+.xr-dim-list {
+  display: inline-block !important;
+  list-style: none;
+  padding: 0 !important;
+  margin: 0;
+}
+
+.xr-dim-list li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+.xr-dim-list:before {
+  content: "(";
+}
+
+.xr-dim-list:after {
+  content: ")";
+}
+
+.xr-dim-list li:not(:last-child):after {
+  content: ",";
+  padding-right: 5px;
+}
+
+.xr-has-index {
+  font-weight: bold;
+}
+
+.xr-var-list,
+.xr-var-item {
+  display: contents;
+}
+
+.xr-var-item > div,
+.xr-var-item label,
+.xr-var-item > .xr-var-name span {
+  background-color: var(--xr-background-color-row-even);
+  border-color: var(--xr-background-color-row-odd);
+  margin-bottom: 0;
+  padding-top: 2px;
+}
+
+.xr-var-item > .xr-var-name:hover span {
+  padding-right: 5px;
+}
+
+.xr-var-list > li:nth-child(odd) > div,
+.xr-var-list > li:nth-child(odd) > label,
+.xr-var-list > li:nth-child(odd) > .xr-var-name span {
+  background-color: var(--xr-background-color-row-odd);
+  border-color: var(--xr-background-color-row-even);
+}
+
+.xr-var-name {
+  grid-column: 1;
+}
+
+.xr-var-dims {
+  grid-column: 2;
+}
+
+.xr-var-dtype {
+  grid-column: 3;
+  text-align: right;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-preview {
+  grid-column: 4;
+}
+
+.xr-index-preview {
+  grid-column: 2 / 5;
+  color: var(--xr-font-color2);
+}
+
+.xr-var-name,
+.xr-var-dims,
+.xr-var-dtype,
+.xr-preview,
+.xr-attrs dt {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 10px;
+}
+
+.xr-var-name:hover,
+.xr-var-dims:hover,
+.xr-var-dtype:hover,
+.xr-attrs dt:hover {
+  overflow: visible;
+  width: auto;
+  z-index: 1;
+}
+
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  display: none;
+  border-top: 2px dotted var(--xr-background-color);
+  padding-bottom: 20px !important;
+  padding-top: 10px !important;
+}
+
+.xr-var-attrs-in + label,
+.xr-var-data-in + label,
+.xr-index-data-in + label {
+  padding: 0 1px;
+}
+
+.xr-var-attrs-in:checked ~ .xr-var-attrs,
+.xr-var-data-in:checked ~ .xr-var-data,
+.xr-index-data-in:checked ~ .xr-index-data {
+  display: block;
+}
+
+.xr-var-data > table {
+  float: right;
+}
+
+.xr-var-data > pre,
+.xr-index-data > pre,
+.xr-var-data > table > tbody > tr {
+  background-color: transparent !important;
+}
+
+.xr-var-name span,
+.xr-var-data,
+.xr-index-name div,
+.xr-index-data,
+.xr-attrs {
+  padding-left: 25px !important;
+}
+
+.xr-attrs,
+.xr-var-attrs,
+.xr-var-data,
+.xr-index-data {
+  grid-column: 1 / -1;
+}
+
+dl.xr-attrs {
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: 125px auto;
+}
+
+.xr-attrs dt,
+.xr-attrs dd {
+  padding: 0;
+  margin: 0;
+  float: left;
+  padding-right: 10px;
+  width: auto;
+}
+
+.xr-attrs dt {
+  font-weight: normal;
+  grid-column: 1;
+}
+
+.xr-attrs dt:hover span {
+  display: inline-block;
+  background: var(--xr-background-color);
+  padding-right: 10px;
+}
+
+.xr-attrs dd {
+  grid-column: 2;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.xr-icon-database,
+.xr-icon-file-text2,
+.xr-no-icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 1em;
+  height: 1.5em !important;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.xr-var-attrs-in:checked + label > .xr-icon-file-text2,
+.xr-var-data-in:checked + label > .xr-icon-database,
+.xr-index-data-in:checked + label > .xr-icon-database {
+  color: var(--xr-font-color0);
+  filter: drop-shadow(1px 1px 5px var(--xr-font-color2));
+  stroke-width: 0.8px;
+}
+</style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray (unit: 3, feat1: 5)&gt; Size: 120B
+array([[0.        , 0.        , 0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.11538462, 0.07142857, 0.        ],
+       [1.6       , 0.86363636, 1.        , 0.78571429, 1.5       ]])
+Coordinates:
+  * unit     (unit) int64 24B 0 1 2
+  * feat1    (feat1) float64 40B -1.609 -0.6891 0.2312 1.151 2.072
+Attributes:
+    occupancy:  [ 5. 22. 26. 14.  4.]
+    bin_edges:  [array([-2.06947857, -1.14922416, -0.22896976,  0.69128464,  ...
+    fs:         1.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>feat1</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-243fdfcc-c2af-49b1-a447-df4376a06f6f' class='xr-array-in' type='checkbox' checked><label for='section-243fdfcc-c2af-49b1-a447-df4376a06f6f' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 0.0 ... 0.07143 0.0 1.6 0.8636 1.0 0.7857 1.5</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.        , 0.        , 0.        ],
+       [0.        , 0.        , 0.11538462, 0.07142857, 0.        ],
+       [1.6       , 0.86363636, 1.        , 0.78571429, 1.5       ]])</pre></div></div></li><li class='xr-section-item'><input id='section-74d8f2b0-e11b-4962-9c8d-0484578ab10c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-74d8f2b0-e11b-4962-9c8d-0484578ab10c' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-27368d62-4a0c-4e69-b9ad-932433f9dde9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-27368d62-4a0c-4e69-b9ad-932433f9dde9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e5985ab2-660e-4772-9e1f-0921460bf495' class='xr-var-data-in' type='checkbox'><label for='data-e5985ab2-660e-4772-9e1f-0921460bf495' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>feat1</span></div><div class='xr-var-dims'>(feat1)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.609 -0.6891 0.2312 1.151 2.072</div><input id='attrs-290675d9-7c80-4a88-924e-375ed384ffa7' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-290675d9-7c80-4a88-924e-375ed384ffa7' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-183b7bf6-7802-43bf-914b-327b15b11e40' class='xr-var-data-in' type='checkbox'><label for='data-183b7bf6-7802-43bf-914b-327b15b11e40' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-1.609351, -0.689097,  0.231157,  1.151412,  2.071666])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-16f323fe-bc57-432f-947a-99c0c66436ca' class='xr-section-summary-in' type='checkbox'  checked><label for='section-16f323fe-bc57-432f-947a-99c0c66436ca' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[ 5. 22. 26. 14.  4.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-2.06947857, -1.14922416, -0.22896976,  0.69128464,  1.61153905,
+        2.53179345])]</dd><dt><span>fs :</span></dt><dd>1.0</dd></dl></div></li></ul></div></div></div></div>
+</div>
+<div class="render-all">
+<p>The output is an <a class="reference external" href="https://docs.xarray.dev/en/stable/">xarray</a> object. It is a wrapper of numpy array with extra attributes. It allows to give coordinates to each dimensions as well as attaching attributes. We can make the output look better by labelling the feature we used.</p>
+<p>The coordinates can be accessed with the <code class="docutils literal notranslate"><span class="pre">coords</span></code> attribute. The feature position (i.e. center of the bin) can be accessed with the attribute.</p>
+<p><strong>Question</strong>: Can you print the underlying the units number, bin center and bin edges of the tuning curve xarray object?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">feat1</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">occupancy</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">bin_edges</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">fs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 2]
+[-1.60935137 -0.68909696  0.23115744  1.15141185  2.07166625]
+[ 5. 22. 26. 14.  4.]
+[array([-2.06947857, -1.14922416, -0.22896976,  0.69128464,  1.61153905,
+        2.53179345])]
+1.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+<p><strong>Question</strong>: Can you plot the tuning curves for all units?</p>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># tc.plot()</span>
+<span class="c1"># tc.plot(row=&quot;unit&quot;)</span>
+<span class="c1"># tc.plot(col=&quot;unit&quot;)</span>
+<span class="c1"># tc[1].plot()</span>
+<span class="c1"># plt.plot(tc[1].feat1, tc[1].values)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tc</span><span class="o">.</span><span class="n">feat1</span><span class="p">,</span> <span class="n">tc</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fc6f43412b0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fc6743b04d0&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fc6f4343380&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/aaa2f184a64d3f6b4b0e1a0f729694e6ed484d275992bc129c81d1c99044f825.png" src="../../_images/aaa2f184a64d3f6b4b0e1a0f729694e6ed484d275992bc129c81d1c99044f825.png" />
+</div>
+</div>
+</section>
+<section id="important">
+<h2>Important<a class="headerlink" href="#important" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p><strong>Question:</strong> Does this work?
+If not, please ask a TA.</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;Mouse32-140822.nwb&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;Mouse32-140822.nwb&#39; from &#39;https://osf.io/download/jb2gd/&#39; to &#39;/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/data&#39;.
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/data/Mouse32-140822.nwb
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Welcome!</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="head_direction.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Data analysis with pynapple &amp; nemos</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-pynapple-objects">Instantiate pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-between-pynapple-objects">Interaction between pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#numpy-pynapple">Numpy &amp; pynapple</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#slicing-pynapple-objects">Slicing pynapple objects</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#metadata">Metadata</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#special-case-of-slicing-tsdframe">Special case of slicing : <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-functions-of-pynapple">Core functions of pynapple</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-high-level-function-compute-tuning-curves">First high level function : <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
