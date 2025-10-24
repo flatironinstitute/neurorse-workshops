@@ -389,3 +389,204 @@ plot_raster_psth(peri_black, selected_units, "black", n_units=len(peri_black))
 plot_raster_psth(peri_white, selected_units, "white", n_units=len(peri_white))
 ```
 ## Avoiding overfitting
+
+
+As we've seen throughout this workshop, it is important to avoid overfitting your model. We've covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.
+
+You might find it helpful to refer back to the [](sklearn) notebook and / or to use the following pynapple functions: {func}`~pynapple.IntervalSet.set_diff`, {func}`~pynapple.IntervalSet.union`, {func}`~pynapple.TsGroup.restrict`.
+
+
+```{code-cell}
+# enter code here
+```
+
+## Fit a GLM
+
+
+In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in [](sklearn) to evaluate whether which predictors are necessary for your model, which are the most important.
+
+You don't have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.
+
+Good luck and we look forward to seeing what you come up with!
+
+
+### Prepare data
+
+
+- Create spike count data.
+
+
+```{code-cell}
+# enter code here
+```
+
+### Construct design matrix
+
+
+- Decide on feature(s)
+- Decide on basis
+- Construct design matrix
+
+:::{admonition} What features should I include?
+:class: hint dropdown
+
+If you're having trouble coming up with features to include, here are some possibilities:
+- Stimulus.
+- Stimulus onset.
+- Stimulus offset.
+- For multiple neurons: neuron-to-neuron coupling.
+
+For the stimuli predictors, you probably want to model white and black separately.
+
+:::
+
+
+```{code-cell}
+# enter code here
+```
+
+### Construct and fit your model
+
+
+- Decide on regularization
+- Initialize GLM
+- Call fit
+- Visualize result on PSTHs
+
+
+```{code-cell}
+# enter code here
+```
+
+
+
+Here's a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.
+
+
+```{code-cell} ipython3
+:tags: [render-all, hide-input]
+
+def plot_pop_psth(
+        peri,
+        color_flashes,
+        unit_id=None,
+        bin_size=0.005,
+        smoothing=0.015,
+        **peri_others
+        ):
+    """Plot perievent time histograms (PSTHs) and raster plots for multiple units.
+
+    Model predictions should be passed as additional keyword arguments. The key will be
+    used as the label, and the value should be a 2-tuple of `(style, peri)`, where
+    `style` is a matplotlib style (e.g., "blue" or "--") and `peri` is a PSTH
+    dictionary, as returned by `compute_perievent_continuous`.
+    
+    Parameters:
+    -----------
+    peri : dict or TsGroup
+        Dictionary mapping unit names to binned spike count peri-stimulus data (e.g., binned time series).
+    color_flashes : str
+        A label indicating the flash color condition ('black' or other), used for visual styling.
+    bin_size : float
+        Size of the bin used for spike count computation (in seconds).
+    smoothing : float
+        Standard deviation for Gaussian smoothing of the PSTH traces.
+    peri_others : tuple
+        Model PSTHs to plot. See above for description
+
+    """
+    if not isinstance(peri, dict):
+        peri = {0: peri}
+        
+    n_cols = len(peri)
+    fig, axes = plt.subplots(1, n_cols,
+                             figsize=(2.5 * n_cols, 2.5))
+    if n_cols == 1:
+        axes = [axes]
+
+    for i, (unit, u) in enumerate(peri.items()):
+        try:
+            ax = axes[i]
+        except TypeError:
+            # then there's only set of axes
+            ax = axes
+        # Plot PSTH (smoothed firing rate)
+        ax.plot(
+            (np.mean(u.count(bin_size), 1) / bin_size).smooth(std=smoothing),
+            linewidth=2,
+            color="black",
+            label="Observed"
+        )
+        ax.axvline(0.0)  # Stimulus onset line
+        span_color = "black" if color_flashes == "black" else "silver"
+        ax.axvspan(0, 0.250, color=span_color, alpha=0.3, ec="black")  # Stim duration
+        ax.set_xlim(-0.25, 0.50)
+        ax.set_title(f'{unit}')
+        for (key, (color, peri_pred)) in peri_others.items():
+            try:
+                p = peri_pred[:, :, i]
+            except IndexError:
+                p = peri_pred
+            ax.plot(
+            (np.mean(p, axis=1)),
+            linewidth=1.5,
+            color=color,
+            label=key.capitalize()
+            )
+
+    # Y-axis and title annotations
+    axes[0].set_ylabel("Rate (Hz)")
+    fig.legend(*ax.get_legend_handles_labels())
+    fig.text(0.5, 0.00, 'Time from stim(s)', ha='center')
+    fig.text(0.5, 1.00, f'PSTH - {color_flashes} flashes', ha='center')
+    plt.tight_layout()
+```
+### Score your model
+
+
+- We trained on the train set, so now we score on the test set. (Or use cross-validation.)
+- Get a score for your model that you can use to compare across the modeling choices outlined above.
+
+
+```{code-cell}
+# enter code here
+```
+
+### Try to improve your model?
+
+
+- Go back to the beginning of [this section](visual-glm) and try to improve your model's performance (as reflected by increased score).
+- Keep track of what you've tried and their respective scores. 
+    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), as we've seen in [](sklearn), is useful:
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# Example construction of dataframe.
+# In this:
+# - additive_basis is the single AdditiveBasis object we used to construct the entire design matrix
+# - model is the GLM we fit to a single neuron
+# - unit_id is the int identifying the neuron we're fitting
+# - score is the float giving the model score, summarizing model performance (on the test set)
+import pandas as pd
+data = [
+    {
+        "model_id": 0,
+        "regularizer": model.regularizer.__class__.__name__,
+        "regularizer_strength": model.regularizer_strength,
+        "solver": model.solver_name,
+        "score": score,
+        "n_predictors": len(additive_basis),
+        "unit": unit_id,
+        "predictor_i": i,
+        "predictor": basis.label.strip(),
+        "basis": basis.__class__.__name__,
+        # any other info you think is important ...
+    }
+    for i, basis in enumerate(additive_basis)
+]
+df = pd.DataFrame(data)
+
+df
+```

@@ -274,16 +274,9 @@ full/*/*
 ```
 
 ```{toctree}
-:glob:
-:caption: For users (some code, some text)
 :titlesonly:
-users/*/*
-```
-
-```{toctree}
-:glob:
-:caption: For presenter reference (all code, no text)
-:titlesonly:
+:caption: Limited notebooks
 :maxdepth: 1
-presenters/*/*
+users/index.md
+presenters/index.md
 ```

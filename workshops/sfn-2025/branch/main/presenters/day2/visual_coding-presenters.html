@@ -223,29 +223,28 @@
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/place_cells.html">Model selection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/visual_coding.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">For users (some code, some text)</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
-
-<li class="toctree-l1"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/day2/visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">For presenter reference (all code, no text)</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited notebooks</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="place_cells-presenters.html">Model selection</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day2/visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">For presenter reference (all code, no text)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
 
-
-
-
+<li class="toctree-l2"><a class="reference internal" href="../day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="current_injection-presenters.html">Introduction to GLM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="place_cells-presenters.html">Model selection</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Exploring the Visual Coding Dataset</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -409,19 +408,18 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Exploring the Visual Coding Dataset</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-and-preparing-data">Downloading and preparing data</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-around-stimuli-presentation">Restrict around stimuli presentation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-according-to-criterion-3">Filter according to criterion 3</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-threshold-for-top-15-most-responsive">Get threshold for top 15% most responsive</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#only-keep-units-that-are-within-the-15-most-responsive-for-either-black-or-white">Only keep units that are within the 15% most responsive for either black or white</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analyses-and-neuron-selection">Preliminary analyses and neuron selection</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoiding-overfitting">Avoiding overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm">Fit a GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data">Prepare data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct design matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-and-fit-your-model">Construct and fit your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-your-model">Score your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-to-improve-your-model">Try to improve your model?</a></li>
 </ul>
 </li>
 </ul>
-
             </nav>
         </div>
     </div>
@@ -562,40 +560,53 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <p>As can be seen in the image above, there are many other stimulus types shown in this experiment. If you finish analyzing the flashes and want to look at one of the others, you can do so by grabbing the corresponding <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> from the <code class="docutils literal notranslate"><span class="pre">data</span></code> object; they are all named <code class="docutils literal notranslate"><span class="pre">{stim_type}_presentations</span></code>, where <code class="docutils literal notranslate"><span class="pre">{stim_type}</span></code> may be <code class="docutils literal notranslate"><span class="pre">flashes</span></code>, <code class="docutils literal notranslate"><span class="pre">gabors</span></code>, <code class="docutils literal notranslate"><span class="pre">static_gratings</span></code>, etc.</p>
 </div>
 <p>Let’s visualize our stimuli:</p>
-</div>
-```{code-cell} ipython3
-:tags: [render-all, hide-input]
-<p>n_flashes = 5
-n_seconds = 13
-offset = .5</p>
-<p>start = data[“flashes_presentations”][“start”].min() - offset
-end = start + n_seconds</p>
-<p>fig, ax = plt.subplots(figsize = (17, 4))
-for flash, c in zip([flashes_white, flashes_black], [“silver”, “black”]):
-for fl in flash[:n_flashes]:
-ax.axvspan(fl.start[0], fl.end[0], color=c, alpha=.4, ec=c)</p>
-<p>plt.xlabel(“Time (s)”)
-plt.ylabel(“Absent = 0, Present = 1”)
-ax.set_title(“Stimuli presentation”)
-ax.yaxis.set_major_locator(MaxNLocator(integer=True))</p>
-<p>plt.xlim(start-.1,end)</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>## Preliminary analyses and neuron selection
+</div><div class="cell tag_render-all tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_flashes</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">n_seconds</span> <span class="o">=</span> <span class="mi">13</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="mf">.5</span>
 
+<span class="n">start</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;flashes_presentations&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">n_seconds</span>
 
-From here on out, you will write the code yourself. This first section will involve us doing some preliminary analyses to find the neurons that are most visually responsive; these are the neurons we will fit our GLM to.
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">flash</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="n">flashes_white</span><span class="p">,</span> <span class="n">flashes_black</span><span class="p">],</span> <span class="p">[</span><span class="s2">&quot;silver&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]):</span>
+    <span class="k">for</span> <span class="n">fl</span> <span class="ow">in</span> <span class="n">flash</span><span class="p">[:</span><span class="n">n_flashes</span><span class="p">]:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="n">fl</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fl</span><span class="o">.</span><span class="n">end</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">.4</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>      
 
-First, let&#39;s construct a {class}`~pynapple.IntervalSet` called `extended_flashes` which contains the peristimulus time. Right now, our `flashes` `IntervalSet` defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Absent = 0, Present = 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Stimuli presentation&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="n">integer</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 
-This `IntervalSet` should be the same shape as `flashes` and have the same metadata columns.
-
-
-```{code-cell} ipython3
-dt = .50 # 500 ms
-start = flashes.start - dt # Start 500 ms before stimulus presentation
-end = flashes.end + dt # End 500 ms after stimulus presentation
-
-extended_flashes = nap.IntervalSet(start, end, metadata=flashes.metadata) 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">start</span><span class="o">-</span><span class="mf">.1</span><span class="p">,</span><span class="n">end</span><span class="p">)</span>
+    
 </pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+<section id="preliminary-analyses-and-neuron-selection">
+<h2>Preliminary analyses and neuron selection<a class="headerlink" href="#preliminary-analyses-and-neuron-selection" title="Link to this heading">#</a></h2>
+<p>From here on out, you will write the code yourself. This first section will involve us doing some preliminary analyses to find the neurons that are most visually responsive; these are the neurons we will fit our GLM to.</p>
+<p>First, let’s construct a <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet" title="(in pynapple v0.9.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> called <code class="docutils literal notranslate"><span class="pre">extended_flashes</span></code> which contains the peristimulus time. Right now, our <code class="docutils literal notranslate"><span class="pre">flashes</span></code> <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> should be the same shape as <code class="docutils literal notranslate"><span class="pre">flashes</span></code> and have the same metadata columns.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="mf">.50</span> <span class="c1"># 500 ms</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">flashes</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">dt</span> <span class="c1"># Start 500 ms before stimulus presentation</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">flashes</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="n">dt</span> <span class="c1"># End 500 ms after stimulus presentation</span>
+
+<span class="n">extended_flashes</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">flashes</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
 </div>
 <p>If you have succeeded, the following should pass:</p>
 <div class="cell tag_render-all docutils container">
@@ -656,24 +667,26 @@ extended_flashes = nap.IntervalSet(start, end, metadata=flashes.metadata)
 <p class="admonition-title">Restrict!</p>
 <p>Don’t forget when selecting based on firing rate that we want neurons whose firing rate is above the threshold <strong>around the presentation of the stimuli!</strong> This means you should use <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code>! If only we had a useful <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> lying around…</p>
 </div>
-</div>
-```{code-cell} ipython3
-# Filter units according criteria 1 & 2
-selected_units = units[(units["brain_area"]=="VISp") & (units["quality"]=="good")] 
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="restrict-around-stimuli-presentation">
-<h1>Restrict around stimuli presentation<a class="headerlink" href="#restrict-around-stimuli-presentation" title="Link to this heading">#</a></h1>
-<p>selected_units = selected_units.restrict(extended_flashes)</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="filter-according-to-criterion-3">
-<h1>Filter according to criterion 3<a class="headerlink" href="#filter-according-to-criterion-3" title="Link to this heading">#</a></h1>
-<p>selected_units = selected_units[(selected_units[“rate”]&gt;2.0)]</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{code-cell} ipython3
-:tags: [render-all]
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter units according criteria 1 &amp; 2</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">units</span><span class="p">[(</span><span class="n">units</span><span class="p">[</span><span class="s2">&quot;brain_area&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;VISp&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;good&quot;</span><span class="p">)]</span> 
 
-assert len(selected_units) == 92
+<span class="c1"># Restrict around stimuli presentation</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">extended_flashes</span><span class="p">)</span> 
+
+<span class="c1"># Filter according to criterion 3</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="p">[(</span><span class="n">selected_units</span><span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">2.0</span><span class="p">)]</span>
 </pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected_units</span><span class="p">)</span> <span class="o">==</span> <span class="mi">92</span>
+</pre></div>
+</div>
+</div>
 </div>
 <p>Now, in order to determine the responsiveness of the units, it’s helpful to use the <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent" title="(in pynapple v0.9.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent()</span></code></a> function: this will align units’ spiking timestamps with the onset of the stimulus repetitions and take an average over them.</p>
 <p>Let’s use that function to construct two separate perievent dictionaries, one aligned to the start of the white stimuli, one aligned to the start of the black, and they should run from 250 msec before to 500 msec after the event.</p>
@@ -818,89 +831,496 @@ assert len(selected_units) == 92
 <p>Try defining responsiveness as the normalized difference in average firing rate between during stimulus presentation and before the stimulus was presented.</p>
 <p>We can use <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code> together with <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> to compute the average firing rates above, and then combine them.</p>
 </div>
-</div>
-```{code-cell} ipython3
-def get_responsiveness(perievents, bin_size=0.005):
-    """Calculate responsiveness for each neuron. This is computed as:
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>post_presentation_avg  : 
-    Average firing rate during presentation (250 ms) of stimulus across
-    all instances of stimulus. 
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_responsiveness</span><span class="p">(</span><span class="n">perievents</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate responsiveness for each neuron. This is computed as:</span>
 
-pre_presentation_avg :
-    Average firing rate prior (250 ms) to the presentation of stimulus
-    across all instances prior of stimulus. 
+<span class="sd">    post_presentation_avg  : </span>
+<span class="sd">        Average firing rate during presentation (250 ms) of stimulus across</span>
+<span class="sd">        all instances of stimulus. </span>
 
-responsiveness : 
-    abs((post_presentation_avg - pre_presentation_avg) / (post_presentation_avg + pre_presentation_avg))
+<span class="sd">    pre_presentation_avg :</span>
+<span class="sd">        Average firing rate prior (250 ms) to the presentation of stimulus</span>
+<span class="sd">        across all instances prior of stimulus. </span>
 
-Larger values indicate higher responsiveness to the stimuli.
-    
-Parameters
-----------
-perievents : TsGroup
-    Contains perievent information of a subset of neurons
-bin_size : float
-    Bin size for calculating spike counts
+<span class="sd">    responsiveness : </span>
+<span class="sd">        abs((post_presentation_avg - pre_presentation_avg) / (post_presentation_avg + pre_presentation_avg))</span>
 
-Returns
-----------   
-resp_array : np.array
-    Array of responsiveness information.
+<span class="sd">    Larger values indicate higher responsiveness to the stimuli.</span>
+<span class="sd">        </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    perievents : TsGroup</span>
+<span class="sd">        Contains perievent information of a subset of neurons</span>
+<span class="sd">    bin_size : float</span>
+<span class="sd">        Bin size for calculating spike counts</span>
 
-&quot;&quot;&quot;
-resp_dict = {}
-resp_array = np.zeros(len(perievents.keys()), dtype=float)
+<span class="sd">    Returns</span>
+<span class="sd">    ----------   </span>
+<span class="sd">    resp_array : np.array</span>
+<span class="sd">        Array of responsiveness information.</span>
 
-for index, peri in enumerate(perievents.values()):
-    # Count the number of timestamps in each bin_size bin.
-    peri_counts = peri.count(bin_size)
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resp_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">resp_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">perievents</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
 
-    # Compute average spikes for each millisecond in the
-    # the 250 ms before stimulus presentation
-    pre_presentation = np.mean(peri_counts, 1).restrict(nap.IntervalSet([-.25,0]))
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">peri</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">perievents</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="c1"># Count the number of timestamps in each bin_size bin.</span>
+        <span class="n">peri_counts</span> <span class="o">=</span> <span class="n">peri</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">)</span>
 
-    # Compute average spikes for each millisecond in the
-    # the 250 ms after stimulus presentation
-    post_presentation = np.mean(peri_counts, 1).restrict(nap.IntervalSet([0,.25]))
+        <span class="c1"># Compute average spikes for each millisecond in the</span>
+        <span class="c1"># the 250 ms before stimulus presentation</span>
+        <span class="n">pre_presentation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">peri_counts</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">([</span><span class="o">-</span><span class="mf">.25</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
 
-    pre_presentation_avg = np.mean(pre_presentation)
-    post_presentation_avg = np.mean(post_presentation)
-    responsiveness = abs((post_presentation_avg - pre_presentation_avg) / (post_presentation_avg + pre_presentation_avg))
+        <span class="c1"># Compute average spikes for each millisecond in the</span>
+        <span class="c1"># the 250 ms after stimulus presentation</span>
+        <span class="n">post_presentation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">peri_counts</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">.25</span><span class="p">]))</span>
 
-    resp_array[index] = responsiveness
+        <span class="n">pre_presentation_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pre_presentation</span><span class="p">)</span>
+        <span class="n">post_presentation_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">post_presentation</span><span class="p">)</span>
+        <span class="n">responsiveness</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">post_presentation_avg</span> <span class="o">-</span> <span class="n">pre_presentation_avg</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">post_presentation_avg</span> <span class="o">+</span> <span class="n">pre_presentation_avg</span><span class="p">))</span>
 
-return resp_array
+        <span class="n">resp_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">responsiveness</span>
+
+    <span class="k">return</span> <span class="n">resp_array</span>
+
+
+<span class="n">responsiveness_white</span> <span class="o">=</span> <span class="n">get_responsiveness</span><span class="p">(</span><span class="n">peri_white</span><span class="p">)</span>
+<span class="n">responsiveness_black</span> <span class="o">=</span> <span class="n">get_responsiveness</span><span class="p">(</span><span class="n">peri_black</span><span class="p">)</span>
+
+<span class="c1"># Get threshold for top 15% most responsive</span>
+<span class="n">thresh_black</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">responsiveness_black</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
+<span class="n">thresh_white</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">responsiveness_white</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
+
+<span class="c1"># Only keep units that are within the 15% most responsive for either black or white</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="p">[(</span><span class="n">responsiveness_black</span> <span class="o">&gt;</span> <span class="n">thresh_black</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">responsiveness_white</span> <span class="o">&gt;</span> <span class="n">thresh_white</span><span class="p">)]</span>
 </pre></div>
 </div>
-<p>responsiveness_white = get_responsiveness(peri_white)
-responsiveness_black = get_responsiveness(peri_black)</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="get-threshold-for-top-15-most-responsive">
-<h1>Get threshold for top 15% most responsive<a class="headerlink" href="#get-threshold-for-top-15-most-responsive" title="Link to this heading">#</a></h1>
-<p>thresh_black = np.percentile(responsiveness_black, 85)
-thresh_white = np.percentile(responsiveness_white, 85)</p>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="only-keep-units-that-are-within-the-15-most-responsive-for-either-black-or-white">
-<h1>Only keep units that are within the 15% most responsive for either black or white<a class="headerlink" href="#only-keep-units-that-are-within-the-15-most-responsive-for-either-black-or-white" title="Link to this heading">#</a></h1>
-<p>selected_units = selected_units[(responsiveness_black &gt; thresh_black) | (responsiveness_white &gt; thresh_white)]</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</div>
+</div>
+<p>Let’s visualize the selected units PSTHs to make sure they all look reasonable:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Remaining units: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">selected_units</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">peri_white</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">peri_white</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">selected_units</span><span class="o">.</span><span class="n">index</span><span class="p">}</span>
+<span class="n">peri_black</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">peri_black</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">selected_units</span><span class="o">.</span><span class="n">index</span><span class="p">}</span>
 
-Let&#39;s visualize the selected units PSTHs to make sure they all look reasonable:
-
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-print(f&quot;Remaining units: {len(selected_units)}&quot;)
-peri_white = {k: peri_white[k] for k in selected_units.index}
-peri_black = {k: peri_black[k] for k in selected_units.index}
-
-plot_raster_psth(peri_black, selected_units, &quot;black&quot;, n_units=len(peri_black))
-plot_raster_psth(peri_white, selected_units, &quot;white&quot;, n_units=len(peri_white))
+<span class="n">plot_raster_psth</span><span class="p">(</span><span class="n">peri_black</span><span class="p">,</span> <span class="n">selected_units</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">peri_black</span><span class="p">))</span>
+<span class="n">plot_raster_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">,</span> <span class="n">selected_units</span><span class="p">,</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">n_units</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">peri_white</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+</div>
+</section>
 <section id="avoiding-overfitting">
 <h2>Avoiding overfitting<a class="headerlink" href="#avoiding-overfitting" title="Link to this heading">#</a></h2>
+<p>As we’ve seen throughout this workshop, it is important to avoid overfitting your model. We’ve covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.</p>
+<p>You might find it helpful to refer back to the <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a> notebook and / or to use the following pynapple functions: <code class="xref py py-func docutils literal notranslate"><span class="pre">set_diff()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">union()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># We take one every three flashes (33% of all flashes of test)</span>
+<span class="n">flashes_test_white</span> <span class="o">=</span> <span class="n">extended_flashes_white</span><span class="p">[::</span><span class="mi">3</span><span class="p">]</span>
+<span class="n">flashes_test_black</span> <span class="o">=</span> <span class="n">extended_flashes_black</span><span class="p">[::</span><span class="mi">3</span><span class="p">]</span>
+<span class="c1"># The remaining is separated for training</span>
+<span class="n">flashes_train_white</span> <span class="o">=</span> <span class="n">extended_flashes_white</span><span class="o">.</span><span class="n">set_diff</span><span class="p">(</span><span class="n">flashes_test_white</span><span class="p">)</span>
+<span class="n">flashes_train_black</span> <span class="o">=</span> <span class="n">extended_flashes_black</span><span class="o">.</span><span class="n">set_diff</span><span class="p">(</span><span class="n">flashes_test_black</span><span class="p">)</span>
+<span class="c1"># Merge both stimuli types in a single interval set</span>
+<span class="n">flashes_test</span> <span class="o">=</span> <span class="n">flashes_test_white</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">flashes_test_black</span><span class="p">)</span>
+<span class="n">flashes_train</span> <span class="o">=</span> <span class="n">flashes_train_white</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">flashes_train_black</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fit-a-glm">
+<h2>Fit a GLM<a class="headerlink" href="#fit-a-glm" title="Link to this heading">#</a></h2>
+<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
+<p>You don’t have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.</p>
+<p>Good luck and we look forward to seeing what you come up with!</p>
+<section id="prepare-data">
+<h3>Prepare data<a class="headerlink" href="#prepare-data" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Create spike count data.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># General spike counts</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">.005</span>
+<span class="n">units_counts</span> <span class="o">=</span> <span class="n">selected_units</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">extended_flashes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-design-matrix">
+<h3>Construct design matrix<a class="headerlink" href="#construct-design-matrix" title="Link to this heading">#</a></h3>
+<div class="render-all">
+<ul class="simple">
+<li><p>Decide on feature(s)</p></li>
+<li><p>Decide on basis</p></li>
+<li><p>Construct design matrix</p></li>
+</ul>
+<div class="hint dropdown admonition">
+<p class="admonition-title">What features should I include?</p>
+<p>If you’re having trouble coming up with features to include, here are some possibilities:</p>
+<ul class="simple">
+<li><p>Stimulus.</p></li>
+<li><p>Stimulus onset.</p></li>
+<li><p>Stimulus offset.</p></li>
+<li><p>For multiple neurons: neuron-to-neuron coupling.</p></li>
+</ul>
+<p>For the stimuli predictors, you probably want to model white and black separately.</p>
+</div>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a TsdFrame filled by zeros, for the size of units_counts</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">units_counts</span><span class="o">.</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">units_counts</span><span class="p">),</span> <span class="mi">2</span><span class="p">)),</span> 
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="c1"># Check whether there is a flash within a given bin of spikes</span>
+<span class="c1"># If there is not, put a nan in that index</span>
+<span class="n">idx_white</span> <span class="o">=</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">in_interval</span><span class="p">(</span><span class="n">units_counts</span><span class="p">)</span>
+<span class="n">idx_black</span> <span class="o">=</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">in_interval</span><span class="p">(</span><span class="n">units_counts</span><span class="p">)</span>
+
+<span class="c1"># Replace everything that is not nan with 1 in the corresponding column</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">idx_white</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">idx_black</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">white_onset</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">stim</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> 
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">stim</span><span class="p">[</span><span class="s2">&quot;white&quot;</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">time_support</span> <span class="o">=</span> <span class="n">units_counts</span><span class="o">.</span><span class="n">time_support</span>
+<span class="p">)</span>
+
+<span class="n">white_offset</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">stim</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> 
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">stim</span><span class="p">[</span><span class="s2">&quot;white&quot;</span><span class="p">])</span><span class="o">==-</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">time_support</span> <span class="o">=</span> <span class="n">units_counts</span><span class="o">.</span><span class="n">time_support</span>
+<span class="p">)</span>
+
+<span class="n">black_onset</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">stim</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> 
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">stim</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">time_support</span> <span class="o">=</span> <span class="n">units_counts</span><span class="o">.</span><span class="n">time_support</span>
+<span class="p">)</span>
+<span class="n">black_offset</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">stim</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> 
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">stim</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">])</span><span class="o">==-</span><span class="mi">1</span><span class="p">)),</span>
+    <span class="n">time_support</span> <span class="o">=</span> <span class="n">units_counts</span><span class="o">.</span><span class="n">time_support</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Duration of stimuli</span>
+<span class="n">stimulus_history_duration</span> <span class="o">=</span> <span class="mf">0.250</span>
+
+<span class="c1"># Window length in bin size units</span>
+<span class="n">window_len</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">stimulus_history_duration</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span>
+
+<span class="c1"># Initialize basis objects</span>
+<span class="n">basis_white_on</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;white_on&quot;</span>
+<span class="p">)</span>
+<span class="n">basis_white_off</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLinearConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;white_off&quot;</span><span class="p">,</span>
+    <span class="n">conv_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;predictor_causality&quot;</span><span class="p">:</span><span class="s2">&quot;acausal&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">basis_white_stim</span><span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;white_stim&quot;</span>
+<span class="p">)</span>
+<span class="n">basis_black_on</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;black_on&quot;</span>
+<span class="p">)</span>
+<span class="n">basis_black_off</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLinearConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;black_off&quot;</span><span class="p">,</span>
+    <span class="n">conv_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;predictor_causality&quot;</span><span class="p">:</span><span class="s2">&quot;acausal&quot;</span><span class="p">}</span>
+<span class="p">)</span>
+<span class="n">basis_black_stim</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> 
+    <span class="n">window_size</span><span class="o">=</span><span class="n">window_len</span><span class="p">,</span> 
+    <span class="n">label</span><span class="o">=</span><span class="s2">&quot;black_stim&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Define additive basis object to construct design matrix</span>
+<span class="n">additive_basis</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">basis_white_on</span> <span class="o">+</span> 
+    <span class="n">basis_white_off</span> <span class="o">+</span> 
+    <span class="n">basis_white_stim</span> <span class="o">+</span> 
+    <span class="n">basis_black_on</span> <span class="o">+</span> 
+    <span class="n">basis_black_off</span> <span class="o">+</span> 
+    <span class="n">basis_black_stim</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convolve basis with inputs - test set</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">additive_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span>
+    <span class="n">white_onset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">white_offset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">stim</span><span class="p">[</span><span class="s2">&quot;white&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">black_onset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">black_offset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">stim</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># Convolve basis with inputs - train set</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">additive_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span>
+    <span class="n">white_onset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">),</span>
+    <span class="n">white_offset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">),</span>
+    <span class="n">stim</span><span class="p">[</span><span class="s2">&quot;white&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">),</span>
+    <span class="n">black_onset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">),</span>
+    <span class="n">black_offset</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">),</span>
+    <span class="n">stim</span><span class="p">[</span><span class="s2">&quot;black&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="construct-and-fit-your-model">
+<h3>Construct and fit your model<a class="headerlink" href="#construct-and-fit-your-model" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Decide on regularization</p></li>
+<li><p>Initialize GLM</p></li>
+<li><p>Call fit</p></li>
+<li><p>Visualize result on PSTHs</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">regularizer_strength</span> <span class="o">=</span> <span class="mf">7.745e-06</span>
+<span class="c1"># Initialize model object of a single unit</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span>
+    <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="n">regularizer_strength</span><span class="o">=</span><span class="n">regularizer_strength</span><span class="p">,</span>
+    <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">,</span> 
+<span class="p">)</span>
+<span class="c1"># Choose an example unit</span>
+<span class="n">unit_id</span> <span class="o">=</span> <span class="mi">951768318</span>
+
+<span class="c1"># Get counts for train and test for said unit</span>
+<span class="n">u_counts</span> <span class="o">=</span> <span class="n">units_counts</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">unit_id</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">u_counts</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_train</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use predict to obtain the firing rates</span>
+<span class="n">pred_unit</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Convert units from spikes/bin to spikes/sec</span>
+<span class="n">pred_unit</span> <span class="o">=</span> <span class="n">pred_unit</span><span class="o">/</span> <span class="n">bin_size</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Re-center timestamps around white stimuli</span>
+<span class="c1"># +50 because we subtracted .50 at beginning of stimulus presentation</span>
+<span class="n">peri_white_pred_unit</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent_continuous</span><span class="p">(</span>
+    <span class="n">timeseries</span><span class="o">=</span><span class="n">pred_unit</span><span class="p">,</span> 
+    <span class="n">tref</span><span class="o">=</span><span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">flashes_test_white</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mf">.50</span><span class="p">),</span>
+    <span class="n">minmax</span><span class="o">=</span><span class="n">window_size</span>
+<span class="p">)</span>  
+<span class="c1"># Re-center timestamps for black stimuli</span>
+<span class="c1"># +50 because we subtracted .50 at beginning of stimulus presentation</span>
+<span class="n">peri_black_pred_unit</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent_continuous</span><span class="p">(</span>
+    <span class="n">timeseries</span><span class="o">=</span><span class="n">pred_unit</span><span class="p">,</span> 
+    <span class="n">tref</span><span class="o">=</span><span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">flashes_test_black</span><span class="o">.</span><span class="n">start</span><span class="o">+</span><span class="mf">.50</span><span class="p">),</span> 
+    <span class="n">minmax</span><span class="o">=</span><span class="n">window_size</span>
+<span class="p">)</span>  
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here’s a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.</p>
+<div class="cell tag_render-all tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_pop_psth</span><span class="p">(</span>
+        <span class="n">peri</span><span class="p">,</span>
+        <span class="n">color_flashes</span><span class="p">,</span>
+        <span class="n">unit_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
+        <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">peri_others</span>
+        <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot perievent time histograms (PSTHs) and raster plots for multiple units.</span>
+
+<span class="sd">    Model predictions should be passed as additional keyword arguments. The key will be</span>
+<span class="sd">    used as the label, and the value should be a 2-tuple of `(style, peri)`, where</span>
+<span class="sd">    `style` is a matplotlib style (e.g., &quot;blue&quot; or &quot;--&quot;) and `peri` is a PSTH</span>
+<span class="sd">    dictionary, as returned by `compute_perievent_continuous`.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    peri : dict or TsGroup</span>
+<span class="sd">        Dictionary mapping unit names to binned spike count peri-stimulus data (e.g., binned time series).</span>
+<span class="sd">    color_flashes : str</span>
+<span class="sd">        A label indicating the flash color condition (&#39;black&#39; or other), used for visual styling.</span>
+<span class="sd">    bin_size : float</span>
+<span class="sd">        Size of the bin used for spike count computation (in seconds).</span>
+<span class="sd">    smoothing : float</span>
+<span class="sd">        Standard deviation for Gaussian smoothing of the PSTH traces.</span>
+<span class="sd">    peri_others : tuple</span>
+<span class="sd">        Model PSTHs to plot. See above for description</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">peri</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">peri</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">peri</span><span class="p">}</span>
+        
+    <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">peri</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span>
+                             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">n_cols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">peri</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># then there&#39;s only set of axes</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span>
+        <span class="c1"># Plot PSTH (smoothed firing rate)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="n">smoothing</span><span class="p">),</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed&quot;</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Stimulus onset line</span>
+        <span class="n">span_color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span> <span class="k">if</span> <span class="n">color_flashes</span> <span class="o">==</span> <span class="s2">&quot;black&quot;</span> <span class="k">else</span> <span class="s2">&quot;silver&quot;</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.250</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">span_color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>  <span class="c1"># Stim duration</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">peri_pred</span><span class="p">))</span> <span class="ow">in</span> <span class="n">peri_others</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Y-axis and title annotations</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Rate (Hz)&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">())</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s1">&#39;Time from stim(s)&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;PSTH - </span><span class="si">{</span><span class="n">color_flashes</span><span class="si">}</span><span class="s1"> flashes&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_white_pred_unit</span><span class="p">))</span>
+<span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_black</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_black_pred_unit</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="score-your-model">
+<h3>Score your model<a class="headerlink" href="#score-your-model" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>We trained on the train set, so now we score on the test set. (Or use cross-validation.)</p></li>
+<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the mean score for the Stimuli + Coupling model</span>
+<span class="c1"># using pseudo-r2-McFadden</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">score</span><span class="p">(</span>
+    <span class="n">X_test</span><span class="p">,</span>
+    <span class="n">u_counts</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">flashes_test</span><span class="p">),</span>
+    <span class="n">score_type</span><span class="o">=</span><span class="s2">&quot;pseudo-r2-McFadden&quot;</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="try-to-improve-your-model">
+<h3>Try to improve your model?<a class="headerlink" href="#try-to-improve-your-model" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Go back to the beginning of <a class="reference internal" href="../../full/day2/visual_coding.html#visual-glm"><span class="std std-ref">this section</span></a> and try to improve your model’s performance (as reflected by increased score).</p></li>
+<li><p>Keep track of what you’ve tried and their respective scores.</p>
+<ul>
+<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a>, is useful:</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example construction of dataframe.</span>
+<span class="c1"># In this:</span>
+<span class="c1"># - additive_basis is the single AdditiveBasis object we used to construct the entire design matrix</span>
+<span class="c1"># - model is the GLM we fit to a single neuron</span>
+<span class="c1"># - unit_id is the int identifying the neuron we&#39;re fitting</span>
+<span class="c1"># - score is the float giving the model score, summarizing model performance (on the test set)</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;model_id&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;regularizer&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">regularizer</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="s2">&quot;regularizer_strength&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">regularizer_strength</span><span class="p">,</span>
+        <span class="s2">&quot;solver&quot;</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">solver_name</span><span class="p">,</span>
+        <span class="s2">&quot;score&quot;</span><span class="p">:</span> <span class="n">score</span><span class="p">,</span>
+        <span class="s2">&quot;n_predictors&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">additive_basis</span><span class="p">),</span>
+        <span class="s2">&quot;unit&quot;</span><span class="p">:</span> <span class="n">unit_id</span><span class="p">,</span>
+        <span class="s2">&quot;predictor_i&quot;</span><span class="p">:</span> <span class="n">i</span><span class="p">,</span>
+        <span class="s2">&quot;predictor&quot;</span><span class="p">:</span> <span class="n">basis</span><span class="o">.</span><span class="n">label</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+        <span class="s2">&quot;basis&quot;</span><span class="p">:</span> <span class="n">basis</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+        <span class="c1"># any other info you think is important ...</span>
+    <span class="p">}</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">basis</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">additive_basis</span><span class="p">)</span>
+<span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 </section>
 </section>
 
@@ -940,19 +1360,18 @@ plot_raster_psth(peri_white, selected_units, &quot;white&quot;, n_units=len(peri
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Exploring the Visual Coding Dataset</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#downloading-and-preparing-data">Downloading and preparing data</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-around-stimuli-presentation">Restrict around stimuli presentation</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-according-to-criterion-3">Filter according to criterion 3</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#get-threshold-for-top-15-most-responsive">Get threshold for top 15% most responsive</a></li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#only-keep-units-that-are-within-the-15-most-responsive-for-either-black-or-white">Only keep units that are within the 15% most responsive for either black or white</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analyses-and-neuron-selection">Preliminary analyses and neuron selection</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#avoiding-overfitting">Avoiding overfitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm">Fit a GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data">Prepare data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct design matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-and-fit-your-model">Construct and fit your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-your-model">Score your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-to-improve-your-model">Try to improve your model?</a></li>
 </ul>
 </li>
 </ul>
-
   </nav></div>
 
 </div></div>

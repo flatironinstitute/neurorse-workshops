@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 ---
+
 ```{code-cell} ipython3
 :tags: [hide-input, render-all]
 
@@ -24,16 +25,19 @@ warnings.filterwarnings(
     category=UserWarning,
 )
 ```
+
 :::{admonition} Download
 :class: important render-all
 
 This notebook can be downloaded as **{nb-download}`visual_coding-presenters.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
+
 # Exploring the Visual Coding Dataset
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
  rendered of this notebook, go [here](../../full/day2/visual_coding.md)
+
 
 
 This notebook serves as a group project: in groups of 4 or 5, you will analyze data from the [Visual Coding - Neuropixels dataset](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels), published by the Allen Institute. This dataset uses [extracellular electrophysiology probes](https://www.nature.com/articles/nature24636) to record spikes from multiple regions in the brain during passive visual stimulation.
@@ -53,6 +57,7 @@ As this is the last notebook, the instructions are a bit more hands-off: you wil
 - How to evaluate your model.
 
 At the end of this session, we will regroup to discuss the decisions people made and evaluate each others' models.
+
 
 
 ```{code-cell} ipython3
@@ -78,11 +83,14 @@ from matplotlib.patches import Patch
 # configure plots some
 plt.style.use(nmo.styles.plot_style)
 ```
+
 ## Downloading and preparing data
+
 
 In this section, we will download the data from DANDI and extract the relevant parts for analysis and modeling. This section is largely presented to you as is, so that you can get to the substantive sections more quickly.
 
 First we download and load the data into pynapple.
+
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -115,11 +123,13 @@ units.restrict_info(["rate", "quality", "brain_area"])
 ```
 
 
+
 Now that we have our spiking data, let's restrict our dataset to the relevant part.
 
 ![Visual stimuli set](../../_static/visual_stimuli_set.png)
 
 During the flashes presentation trials, mice were exposed to white or black full-field flashes in a gray background, each lasting 250 ms, and separated by a 2 second inter-trial interval. In total, they were exposed to 150 flashes (75 black, 75 white).
+
 
 
 ```{code-cell} ipython3
@@ -132,6 +142,7 @@ flashes.restrict_info(["color"])
 flashes_white = flashes[flashes["color"] == "1.0"]
 flashes_black = flashes[flashes["color"] == "-1.0"]
 ```
+
 <div class="render-all">
 
 :::{admonition} Other stimulus classes?
@@ -144,6 +155,7 @@ As can be seen in the image above, there are many other stimulus types shown in 
 Let's visualize our stimuli:
 
 </div>
+
 ```{code-cell} ipython3
 :tags: [render-all, hide-input]
 
@@ -167,7 +179,9 @@ ax.yaxis.set_major_locator(MaxNLocator(integer=True))
 plt.xlim(start-.1,end)
     
 ```
+
 ## Preliminary analyses and neuron selection
+
 
 
 From here on out, you will write the code yourself. This first section will involve us doing some preliminary analyses to find the neurons that are most visually responsive; these are the neurons we will fit our GLM to.
@@ -175,6 +189,7 @@ From here on out, you will write the code yourself. This first section will invo
 First, let's construct a {class}`~pynapple.IntervalSet` called `extended_flashes` which contains the peristimulus time. Right now, our `flashes` `IntervalSet` defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.
 
 This `IntervalSet` should be the same shape as `flashes` and have the same metadata columns.
+
 
 
 ```{code-cell} ipython3
@@ -186,7 +201,9 @@ extended_flashes = nap.IntervalSet(start, end, metadata=flashes.metadata)
 ```
 
 
+
 If you have succeeded, the following should pass:
+
 
 
 ```{code-cell} ipython3
@@ -199,7 +216,9 @@ assert all(extended_flashes.end == flashes.end + .5)
 ```
 
 
+
 Now, create two separate `IntervalSet` objects, `extended_flashes_black` and `extended_flashes_white`, which contain this info for only the black and the white flashes, respectively.
+
 
 
 ```{code-cell} ipython3
@@ -217,6 +236,7 @@ start = flashes_black.start - dt # Start 500 ms before stimulus presentation
 end = flashes_black.end + dt # End 500 ms after stimulus presentation
 extended_flashes_black = nap.IntervalSet(start, end, metadata=flashes_black.metadata) 
 ```
+
 ```{code-cell} ipython3
 :tags: [render-all]
 
@@ -230,6 +250,7 @@ assert all(extended_flashes_black.metadata == flashes_black.metadata)
 assert all(extended_flashes_black.start == flashes_black.start - .5)
 assert all(extended_flashes_black.end == flashes_black.end + .5)
 ```
+
 <div class="render-all">
 
 Now, select your neurons. There are four criteria we want to use:
@@ -249,6 +270,7 @@ Don't forget when selecting based on firing rate that we want neurons whose firi
 :::
 
 </div>
+
 ```{code-cell} ipython3
 # Filter units according criteria 1 & 2
 selected_units = units[(units["brain_area"]=="VISp") & (units["quality"]=="good")] 
@@ -259,6 +281,7 @@ selected_units = selected_units.restrict(extended_flashes)
 # Filter according to criterion 3
 selected_units = selected_units[(selected_units["rate"]>2.0)]
 ```
+
 ```{code-cell} ipython3
 :tags: [render-all]
 
@@ -266,9 +289,11 @@ assert len(selected_units) == 92
 ```
 
 
+
 Now, in order to determine the responsiveness of the units, it's helpful to use the {func}`~pynapple.process.perievent.compute_perievent` function: this will align units' spiking timestamps with the onset of the stimulus repetitions and take an average over them.
 
 Let's use that function to construct two separate perievent dictionaries, one aligned to the start of the white stimuli, one aligned to the start of the black, and they should run from 250 msec before to 500 msec after the event.
+
 
 
 ```{code-cell} ipython3
@@ -296,6 +321,7 @@ peri_black = nap.compute_perievent(timestamps=selected_units,
                                    tref=nap.Ts(flashes_black.start),
                                    minmax=window_size)
 ```
+
 ```{code-cell} ipython3
 assert len(peri_white) == len(selected_units)
 assert ([p.ref_times for p in peri_white.values()] == flashes_white.start).all()
@@ -304,7 +330,9 @@ assert ([p.ref_times for p in peri_black.values()] == flashes_black.start).all()
 ```
 
 
+
 Visualizing these perievents can help us determine which units to include. The following helper function should help.
+
 
 
 ```{code-cell} ipython3
@@ -379,6 +407,7 @@ def plot_raster_psth(peri, units, color_flashes, n_units=9, start_unit=0, bin_si
     fig.text(0.5, 1.00, f'PSTH & Spike Raster Plot - {color_flashes} flashes', ha='center')
     plt.tight_layout()
 ```
+
 ```{code-cell} ipython3
 :tags: [render-all]
 
@@ -387,6 +416,7 @@ def plot_raster_psth(peri, units, color_flashes, n_units=9, start_unit=0, bin_si
 plot_raster_psth(peri_white, selected_units, "white", n_units=9, start_unit=0)
 plot_raster_psth(peri_black, selected_units, "black", n_units=9, start_unit=0)
 ```
+
 <div class="render-all">
 
 You could manually visualize each of our units and select those that appear, from their PSTH to be responsive.
@@ -409,6 +439,7 @@ We can use {func}`~pynapple.TsGroup.restrict` together with `np.mean` to compute
 :::
 
 </div>
+
 ```{code-cell} ipython3
 def get_responsiveness(perievents, bin_size=0.005):
     """Calculate responsiveness for each neuron. This is computed as:
@@ -475,7 +506,9 @@ selected_units = selected_units[(responsiveness_black > thresh_black) | (respons
 ```
 
 
+
 Let's visualize the selected units PSTHs to make sure they all look reasonable:
+
 
 
 ```{code-cell} ipython3
@@ -488,4 +521,395 @@ peri_black = {k: peri_black[k] for k in selected_units.index}
 plot_raster_psth(peri_black, selected_units, "black", n_units=len(peri_black))
 plot_raster_psth(peri_white, selected_units, "white", n_units=len(peri_white))
 ```
+
 ## Avoiding overfitting
+
+
+
+As we've seen throughout this workshop, it is important to avoid overfitting your model. We've covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.
+
+You might find it helpful to refer back to the [](sklearn) notebook and / or to use the following pynapple functions: {func}`~pynapple.IntervalSet.set_diff`, {func}`~pynapple.IntervalSet.union`, {func}`~pynapple.TsGroup.restrict`.
+
+
+
+```{code-cell} ipython3
+# We take one every three flashes (33% of all flashes of test)
+flashes_test_white = extended_flashes_white[::3]
+flashes_test_black = extended_flashes_black[::3]
+# The remaining is separated for training
+flashes_train_white = extended_flashes_white.set_diff(flashes_test_white)
+flashes_train_black = extended_flashes_black.set_diff(flashes_test_black)
+# Merge both stimuli types in a single interval set
+flashes_test = flashes_test_white.union(flashes_test_black)
+flashes_train = flashes_train_white.union(flashes_train_black)
+```
+
+## Fit a GLM
+
+
+
+In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in [](sklearn) to evaluate whether which predictors are necessary for your model, which are the most important.
+
+You don't have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.
+
+Good luck and we look forward to seeing what you come up with!
+
+
+
+### Prepare data
+
+
+
+- Create spike count data.
+
+
+
+```{code-cell} ipython3
+# General spike counts
+bin_size = .005
+units_counts = selected_units.count(bin_size, ep=extended_flashes)
+```
+
+### Construct design matrix
+
+<div class="render-all">
+
+- Decide on feature(s)
+- Decide on basis
+- Construct design matrix
+
+:::{admonition} What features should I include?
+:class: hint dropdown
+
+If you're having trouble coming up with features to include, here are some possibilities:
+- Stimulus.
+- Stimulus onset.
+- Stimulus offset.
+- For multiple neurons: neuron-to-neuron coupling.
+
+For the stimuli predictors, you probably want to model white and black separately.
+
+:::
+
+</div>
+
+```{code-cell} ipython3
+# Create a TsdFrame filled by zeros, for the size of units_counts
+stim = nap.TsdFrame(
+    t=units_counts.t,
+    d=np.zeros((len(units_counts), 2)), 
+    columns = ['white', 'black']
+)
+# Check whether there is a flash within a given bin of spikes
+# If there is not, put a nan in that index
+idx_white = flashes_white.in_interval(units_counts)
+idx_black = flashes_black.in_interval(units_counts)
+
+# Replace everything that is not nan with 1 in the corresponding column
+stim.d[~np.isnan(idx_white), 0] = 1
+stim.d[~np.isnan(idx_black), 1] = 1
+
+white_onset = nap.Tsd(
+    t=stim.t, 
+    d=np.hstack((0,np.diff(stim["white"])==1)),
+    time_support = units_counts.time_support
+)
+
+white_offset = nap.Tsd(
+    t=stim.t, 
+    d=np.hstack((0,np.diff(stim["white"])==-1)),
+    time_support = units_counts.time_support
+)
+
+black_onset = nap.Tsd(
+    t=stim.t, 
+    d=np.hstack((0,np.diff(stim["black"])==1)),
+    time_support = units_counts.time_support
+)
+black_offset = nap.Tsd(
+    t=stim.t, 
+    d=np.hstack((0,np.diff(stim["black"])==-1)),
+    time_support = units_counts.time_support
+)
+```
+
+```{code-cell} ipython3
+# Duration of stimuli
+stimulus_history_duration = 0.250
+
+# Window length in bin size units
+window_len = int(stimulus_history_duration / bin_size)
+
+# Initialize basis objects
+basis_white_on = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="white_on"
+)
+basis_white_off = nmo.basis.RaisedCosineLinearConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="white_off",
+    conv_kwargs={"predictor_causality":"acausal"}
+)
+basis_white_stim= nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="white_stim"
+)
+basis_black_on = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="black_on"
+)
+basis_black_off = nmo.basis.RaisedCosineLinearConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="black_off",
+    conv_kwargs={"predictor_causality":"acausal"}
+)
+basis_black_stim = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=5, 
+    window_size=window_len, 
+    label="black_stim"
+)
+
+# Define additive basis object to construct design matrix
+additive_basis = (
+    basis_white_on + 
+    basis_white_off + 
+    basis_white_stim + 
+    basis_black_on + 
+    basis_black_off + 
+    basis_black_stim
+)
+```
+
+```{code-cell} ipython3
+# Convolve basis with inputs - test set
+X_test = additive_basis.compute_features(
+    white_onset.restrict(flashes_test),
+    white_offset.restrict(flashes_test),
+    stim["white"].restrict(flashes_test),
+    black_onset.restrict(flashes_test),
+    black_offset.restrict(flashes_test),
+    stim["black"].restrict(flashes_test)
+)
+
+# Convolve basis with inputs - train set
+X_train = additive_basis.compute_features(
+    white_onset.restrict(flashes_train),
+    white_offset.restrict(flashes_train),
+    stim["white"].restrict(flashes_train),
+    black_onset.restrict(flashes_train),
+    black_offset.restrict(flashes_train),
+    stim["black"].restrict(flashes_train)
+)
+```
+
+### Construct and fit your model
+
+
+
+- Decide on regularization
+- Initialize GLM
+- Call fit
+- Visualize result on PSTHs
+
+
+
+```{code-cell} ipython3
+regularizer_strength = 7.745e-06
+# Initialize model object of a single unit
+model = nmo.glm.GLM(
+    regularizer="Ridge",
+    regularizer_strength=regularizer_strength,
+    solver_name="LBFGS", 
+)
+# Choose an example unit
+unit_id = 951768318
+
+# Get counts for train and test for said unit
+u_counts = units_counts.loc[unit_id]
+```
+
+```{code-cell} ipython3
+model.fit(X_train, u_counts.restrict(flashes_train))
+```
+
+```{code-cell} ipython3
+# Use predict to obtain the firing rates
+pred_unit = model.predict(X_test)
+
+# Convert units from spikes/bin to spikes/sec
+pred_unit = pred_unit/ bin_size
+```
+
+```{code-cell} ipython3
+# Re-center timestamps around white stimuli
+# +50 because we subtracted .50 at beginning of stimulus presentation
+peri_white_pred_unit = nap.compute_perievent_continuous(
+    timeseries=pred_unit, 
+    tref=nap.Ts(flashes_test_white.start+.50),
+    minmax=window_size
+)  
+# Re-center timestamps for black stimuli
+# +50 because we subtracted .50 at beginning of stimulus presentation
+peri_black_pred_unit = nap.compute_perievent_continuous(
+    timeseries=pred_unit, 
+    tref=nap.Ts(flashes_test_black.start+.50), 
+    minmax=window_size
+)  
+```
+
+
+
+Here's a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.
+
+
+
+```{code-cell} ipython3
+:tags: [render-all, hide-input]
+
+def plot_pop_psth(
+        peri,
+        color_flashes,
+        unit_id=None,
+        bin_size=0.005,
+        smoothing=0.015,
+        **peri_others
+        ):
+    """Plot perievent time histograms (PSTHs) and raster plots for multiple units.
+
+    Model predictions should be passed as additional keyword arguments. The key will be
+    used as the label, and the value should be a 2-tuple of `(style, peri)`, where
+    `style` is a matplotlib style (e.g., "blue" or "--") and `peri` is a PSTH
+    dictionary, as returned by `compute_perievent_continuous`.
+    
+    Parameters:
+    -----------
+    peri : dict or TsGroup
+        Dictionary mapping unit names to binned spike count peri-stimulus data (e.g., binned time series).
+    color_flashes : str
+        A label indicating the flash color condition ('black' or other), used for visual styling.
+    bin_size : float
+        Size of the bin used for spike count computation (in seconds).
+    smoothing : float
+        Standard deviation for Gaussian smoothing of the PSTH traces.
+    peri_others : tuple
+        Model PSTHs to plot. See above for description
+
+    """
+    if not isinstance(peri, dict):
+        peri = {0: peri}
+        
+    n_cols = len(peri)
+    fig, axes = plt.subplots(1, n_cols,
+                             figsize=(2.5 * n_cols, 2.5))
+    if n_cols == 1:
+        axes = [axes]
+
+    for i, (unit, u) in enumerate(peri.items()):
+        try:
+            ax = axes[i]
+        except TypeError:
+            # then there's only set of axes
+            ax = axes
+        # Plot PSTH (smoothed firing rate)
+        ax.plot(
+            (np.mean(u.count(bin_size), 1) / bin_size).smooth(std=smoothing),
+            linewidth=2,
+            color="black",
+            label="Observed"
+        )
+        ax.axvline(0.0)  # Stimulus onset line
+        span_color = "black" if color_flashes == "black" else "silver"
+        ax.axvspan(0, 0.250, color=span_color, alpha=0.3, ec="black")  # Stim duration
+        ax.set_xlim(-0.25, 0.50)
+        ax.set_title(f'{unit}')
+        for (key, (color, peri_pred)) in peri_others.items():
+            try:
+                p = peri_pred[:, :, i]
+            except IndexError:
+                p = peri_pred
+            ax.plot(
+            (np.mean(p, axis=1)),
+            linewidth=1.5,
+            color=color,
+            label=key.capitalize()
+            )
+
+    # Y-axis and title annotations
+    axes[0].set_ylabel("Rate (Hz)")
+    fig.legend(*ax.get_legend_handles_labels())
+    fig.text(0.5, 0.00, 'Time from stim(s)', ha='center')
+    fig.text(0.5, 1.00, f'PSTH - {color_flashes} flashes', ha='center')
+    plt.tight_layout()
+```
+
+```{code-cell} ipython3
+plot_pop_psth(peri_white[unit_id], "white", predictions=("red", peri_white_pred_unit))
+plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_unit))
+```
+
+### Score your model
+
+
+
+- We trained on the train set, so now we score on the test set. (Or use cross-validation.)
+- Get a score for your model that you can use to compare across the modeling choices outlined above.
+
+
+
+```{code-cell} ipython3
+# Calculate the mean score for the Stimuli + Coupling model
+# using pseudo-r2-McFadden
+score = model.score(
+    X_test,
+    u_counts.restrict(flashes_test),
+    score_type="pseudo-r2-McFadden"
+)
+
+print(score)
+```
+
+### Try to improve your model?
+
+
+
+- Go back to the beginning of [this section](visual-glm) and try to improve your model's performance (as reflected by increased score).
+- Keep track of what you've tried and their respective scores. 
+    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), as we've seen in [](sklearn), is useful:
+
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# Example construction of dataframe.
+# In this:
+# - additive_basis is the single AdditiveBasis object we used to construct the entire design matrix
+# - model is the GLM we fit to a single neuron
+# - unit_id is the int identifying the neuron we're fitting
+# - score is the float giving the model score, summarizing model performance (on the test set)
+import pandas as pd
+data = [
+    {
+        "model_id": 0,
+        "regularizer": model.regularizer.__class__.__name__,
+        "regularizer_strength": model.regularizer_strength,
+        "solver": model.solver_name,
+        "score": score,
+        "n_predictors": len(additive_basis),
+        "unit": unit_id,
+        "predictor_i": i,
+        "predictor": basis.label.strip(),
+        "basis": basis.__class__.__name__,
+        # any other info you think is important ...
+    }
+    for i, basis in enumerate(additive_basis)
+]
+df = pd.DataFrame(data)
+
+df
+```
