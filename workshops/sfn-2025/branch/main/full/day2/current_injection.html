@@ -59,8 +59,8 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Model selection" href="place_cells.html" />
-    <link rel="prev" title="Signal processing and decoding in pynapple" href="../day1/phase_precession.html" />
+    <link rel="next" title="NeMoS Advanced: Cross-Validation and Model Selection" href="nemos_advanced.html" />
+    <link rel="prev" title="Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS" href="../day1/phase_precession.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -221,9 +221,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../day1/head_direction.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../day1/phase_precession.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to GLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="place_cells.html">Model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="place_cells.html">Fit an Encoding Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visual_coding.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited notebooks</span></p>
@@ -232,9 +233,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../users/day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/day2/place_cells-users.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day2/nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/day2/place_cells-users.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day2/visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -242,9 +244,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/visual_coding-presenters.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -543,7 +546,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-10-24 20:33:05,536:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-10-30 20:12:52,919:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -580,6 +583,138 @@ data.</p>
 </div>
 <div class="cell_output docutils container">
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;allen_478498617.nwb&#39; from &#39;https://osf.io/download/vf2nj/&#39; to &#39;/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/data&#39;.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                               | 0.00/363M [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  1%|▎                                     | 2.89M/363M [00:00&lt;00:12, 28.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  3%|█▏                                    | 11.7M/363M [00:00&lt;00:05, 63.5MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  6%|██▏                                   | 20.7M/363M [00:00&lt;00:04, 75.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  8%|███                                   | 29.8M/363M [00:00&lt;00:04, 81.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 11%|████                                  | 38.9M/363M [00:00&lt;00:03, 85.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█████                                 | 47.8M/363M [00:00&lt;00:03, 86.6MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 16%|█████▉                                | 56.9M/363M [00:00&lt;00:03, 87.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 18%|██████▉                               | 66.0M/363M [00:00&lt;00:03, 88.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 21%|███████▊                              | 75.1M/363M [00:00&lt;00:03, 89.4MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 23%|████████▊                             | 84.0M/363M [00:01&lt;00:03, 89.3MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 26%|█████████▋                            | 93.2M/363M [00:01&lt;00:03, 90.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 28%|██████████▉                            | 102M/363M [00:01&lt;00:02, 90.5MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|███████████▉                           | 111M/363M [00:01&lt;00:02, 90.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 33%|████████████▉                          | 121M/363M [00:01&lt;00:02, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 36%|█████████████▉                         | 130M/363M [00:01&lt;00:02, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|██████████████▉                        | 139M/363M [00:01&lt;00:02, 91.1MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 41%|███████████████▉                       | 148M/363M [00:01&lt;00:02, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 43%|████████████████▊                      | 157M/363M [00:01&lt;00:02, 90.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 46%|█████████████████▊                     | 166M/363M [00:01&lt;00:02, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 48%|██████████████████▊                    | 175M/363M [00:02&lt;00:02, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 51%|███████████████████▊                   | 184M/363M [00:02&lt;00:01, 91.1MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 53%|████████████████████▊                  | 194M/363M [00:02&lt;00:01, 90.5MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 56%|█████████████████████▋                 | 203M/363M [00:02&lt;00:01, 90.5MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 58%|██████████████████████▋                | 212M/363M [00:02&lt;00:01, 90.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|███████████████████████▋               | 221M/363M [00:02&lt;00:01, 90.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|████████████████████████▋              | 230M/363M [00:02&lt;00:01, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 66%|█████████████████████████▋             | 239M/363M [00:02&lt;00:01, 90.8MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 68%|██████████████████████████▋            | 248M/363M [00:02&lt;00:01, 91.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 71%|███████████████████████████▌           | 257M/363M [00:02&lt;00:01, 91.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 73%|████████████████████████████▌          | 266M/363M [00:03&lt;00:01, 90.7MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 76%|█████████████████████████████▌         | 275M/363M [00:03&lt;00:00, 90.6MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 78%|██████████████████████████████▌        | 285M/363M [00:03&lt;00:00, 90.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 81%|███████████████████████████████▌       | 294M/363M [00:03&lt;00:00, 90.3MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 83%|████████████████████████████████▍      | 303M/363M [00:03&lt;00:00, 90.6MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|█████████████████████████████████▍     | 312M/363M [00:03&lt;00:00, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|██████████████████████████████████▍    | 321M/363M [00:03&lt;00:00, 91.1MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 91%|███████████████████████████████████▍   | 330M/363M [00:03&lt;00:00, 90.7MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|████████████████████████████████████▍  | 339M/363M [00:03&lt;00:00, 91.0MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 96%|█████████████████████████████████████▍ | 348M/363M [00:03&lt;00:00, 91.1MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 98%|██████████████████████████████████████▍| 358M/363M [00:04&lt;00:00, 90.9MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                               | 0.00/363M [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████| 363M/363M [00:00&lt;00:00, 746GB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -905,7 +1040,7 @@ Let's visualize the data from this trial:
 </div>
 </section>
 <section id="basic-analyses">
-<h3>Basic analyses<a class="headerlink" href="#basic-analyses" title="Link to this heading">#</a></h3>
+<span id="current-inj-basic"></span><h3>Basic analyses<a class="headerlink" href="#basic-analyses" title="Link to this heading">#</a></h3>
 <p>Before using the Generalized Linear Model, or any model, it’s worth taking
 some time to examine our data and think about what features are interesting
 and worth capturing. As Edoardo explained earlier today,
@@ -1557,11 +1692,11 @@ Coordinates:
 Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
-    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-080bf170-5117-46a4-9ab4-a8cc2a918935' class='xr-array-in' type='checkbox' checked><label for='section-080bf170-5117-46a4-9ab4-a8cc2a918935' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-048d2ed7-790a-4acd-bd48-bc5312752a03' class='xr-array-in' type='checkbox' checked><label for='section-048d2ed7-790a-4acd-bd48-bc5312752a03' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-d07f0a10-5f75-4d75-bc5f-f181513659ef' class='xr-section-summary-in' type='checkbox'  checked><label for='section-d07f0a10-5f75-4d75-bc5f-f181513659ef' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-253101e1-1a43-4ca1-866d-2dac325f2476' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-253101e1-1a43-4ca1-866d-2dac325f2476' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-159d157e-6e4b-4942-a8b5-865f1b0aa7b0' class='xr-var-data-in' type='checkbox'><label for='data-159d157e-6e4b-4942-a8b5-865f1b0aa7b0' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-d1fa252b-7b0f-4550-acd8-739cfc430fed' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-d1fa252b-7b0f-4550-acd8-739cfc430fed' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c430c8d7-5e1b-4ec8-8ffd-6c641d761a6f' class='xr-var-data-in' type='checkbox'><label for='data-c430c8d7-5e1b-4ec8-8ffd-6c641d761a6f' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-792125eb-5f8b-496a-875f-5976c677c719' class='xr-section-summary-in' type='checkbox'  checked><label for='section-792125eb-5f8b-496a-875f-5976c677c719' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-956c3e48-5dc9-4f5c-85fc-d83cd6ccb06b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-956c3e48-5dc9-4f5c-85fc-d83cd6ccb06b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-f3c844b8-dfe6-4e92-bb9b-3d869acaecfd' class='xr-var-data-in' type='checkbox'><label for='data-f3c844b8-dfe6-4e92-bb9b-3d869acaecfd' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-279e3d15-2569-4a8a-af7c-cf3fcda61f05' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-279e3d15-2569-4a8a-af7c-cf3fcda61f05' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-44009009-4c82-4a45-8014-04d3e3df1961' class='xr-var-data-in' type='checkbox'><label for='data-44009009-4c82-4a45-8014-04d3e3df1961' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-7c865fbd-a4d6-4bf0-b500-78078453063d' class='xr-section-summary-in' type='checkbox'  checked><label for='section-7c865fbd-a4d6-4bf0-b500-78078453063d' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-fcf43f8c-a457-476d-b71a-2beeea23669a' class='xr-section-summary-in' type='checkbox'  checked><label for='section-fcf43f8c-a457-476d-b71a-2beeea23669a' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -1598,7 +1733,7 @@ explain:</p>
 <section id="nemos">
 <h2>NeMoS<a class="headerlink" href="#nemos" title="Link to this heading">#</a></h2>
 <section id="preparing-data">
-<h3>Preparing data<a class="headerlink" href="#preparing-data" title="Link to this heading">#</a></h3>
+<span id="current-inj-prep"></span><h3>Preparing data<a class="headerlink" href="#preparing-data" title="Link to this heading">#</a></h3>
 <p>Now that we understand our data, we’re almost ready to put the model together.
 Before we construct it, however, we need to get the data into the right format.</p>
 <p>When fitting a single neuron, NeMoS requires that the predictors and spike
@@ -1701,7 +1836,7 @@ make your life easier by e.g., allowing you to parallelize more easily.</p>
 </div>
 </section>
 <section id="fitting-the-model">
-<h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h3>
+<span id="current-inj-glm"></span><h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h3>
 <p>Now we’re ready to fit our model!</p>
 <p>First, we need to define our GLM model object. We intend for users
 to interact with our models like
@@ -2282,7 +2417,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7fe155ffe980&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f314b1b6520&gt;&gt;</td>
         </tr>
     
 
@@ -2433,7 +2568,7 @@ model’s linear-nonlinear step, as described earlier!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -2495,7 +2630,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdfe42ba390&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2ff0293ad0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" src="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" />
@@ -2510,7 +2645,7 @@ approximately exponential. We already knew that! That’s what it means to be a
 LNP model of a single input. But it’s nice to see it made explicit.</p>
 </section>
 <section id="extending-the-model-to-use-injection-history">
-<h3>Extending the model to use injection history<a class="headerlink" href="#extending-the-model-to-use-injection-history" title="Link to this heading">#</a></h3>
+<span id="current-inj-basis"></span><h3>Extending the model to use injection history<a class="headerlink" href="#extending-the-model-to-use-injection-history" title="Link to this heading">#</a></h3>
 <p>We can try extending the model in order to improve its performance. There are many
 ways one can do this: the iterative refinement and improvement of your model is an
 important part of the scientific process! In this tutorial, we’ll discuss one such
@@ -2676,7 +2811,7 @@ order to create plots like the type seen above.</p>
 dtype: float32, shape: (28020, 8)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -3241,7 +3376,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7fe155ffe980&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f314b1b6520&gt;&gt;</td>
         </tr>
     
 
@@ -3405,7 +3540,7 @@ rate.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:196: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -3451,7 +3586,7 @@ Predicted mean firing rate (current history): 1.5012256160535864 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fdffc17a930&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f305c1eeae0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" src="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" />
@@ -3506,10 +3641,10 @@ train sets, training the model on one subset of the data and testing it on
 another to test the model’s generalizability. We’ll see a simple version of this
 in the <a class="reference internal" href="#./head_direction.md"><span class="xref myst">next notebook</span></a>, and a more streamlined version,
 using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s pipelining and cross-validation machinery, will be shown
-in the <a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a>.</p>
+in the <a class="reference internal" href="#./place_cells_part_2"><span class="xref myst">final notebook</span></a>.</p>
 </section>
 <section id="finishing-up">
-<h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
+<span id="current-inj-score"></span><h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
 <p>Note that, because the log-likelihood is un-normalized, it should not be compared
 across datasets (because e.g., it won’t account for difference in noise levels). We
 provide the ability to compute the pseudo-<span class="math notranslate nohighlight">\(R^2\)</span> for this purpose:</p>
@@ -3571,7 +3706,7 @@ model explored here quite accurately captures the relationship between the
 current and the firing rate. Can we improve that somehow? We saw that adding
 the current history changed this relationship, but we can also change it
 without including the history by using an <code class="docutils literal notranslate"><span class="pre">Eval</span></code> basis object. We’ll see how
-to do this in more detail in the <a class="reference internal" href="place_cells.html"><span class="std std-doc">final notebook</span></a></p></li>
+to do this in more detail in the <a class="reference internal" href="#./place_cells_part_2"><span class="xref myst">final notebook</span></a></p></li>
 </ul>
 <div class="render-all">
 <section id="data-citation">
@@ -3613,15 +3748,15 @@ with a probabilistic spiking model. Journal of Neuroscience, 25(47),
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Signal processing and decoding in pynapple</p>
+        <p class="prev-next-title">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</p>
       </div>
     </a>
     <a class="right-next"
-       href="place_cells.html"
+       href="nemos_advanced.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Model selection</p>
+        <p class="prev-next-title">NeMoS Advanced: Cross-Validation and Model Selection</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

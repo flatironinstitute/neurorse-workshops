@@ -58,7 +58,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="For presenter reference (all code, no text)" href="../../presenters/index.html" />
-    <link rel="prev" title="Model selection" href="place_cells-users.html" />
+    <link rel="prev" title="Fit an Encoding Model" href="place_cells-users.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -219,9 +219,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../full/day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day1/head_direction.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../../full/day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day1/phase_precession.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/current_injection.html">Introduction to GLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../full/day2/place_cells.html">Model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day2/nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day2/place_cells.html">Fit an Encoding Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/visual_coding.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited notebooks</span></p>
@@ -230,9 +231,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1/phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="place_cells-users.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="place_cells-users.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -240,9 +242,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/visual_coding-presenters.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -448,6 +451,12 @@ document.write(`
     <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
     <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
 <span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Converting &#39;d&#39; to numpy.array&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -465,14 +474,9 @@ while listening to the presenter’s explanation. In order to see the fully
 rendered of this notebook, go <a class="reference internal" href="../../full/day2/visual_coding.html"><span class="std std-doc">here</span></a></p>
 <p>This notebook serves as a group project: in groups of 4 or 5, you will analyze data from the <a class="reference external" href="https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels">Visual Coding - Neuropixels dataset</a>, published by the Allen Institute. This dataset uses <a class="reference external" href="https://www.nature.com/articles/nature24636">extracellular electrophysiology probes</a> to record spikes from multiple regions in the brain during passive visual stimulation.</p>
 <p>To start, we will focus on the activity of neurons in the visual cortex (VISp) during passive exposure to full-field flashes of color either black (coded as “-1.0”) or white (coded as “1.0”) in a gray background. If you have time, you can apply the same procedure to other stimuli or brain areas.</p>
-<p>For this exercise, you will:</p>
+<p>In this notebook, the pre-filled section will first select visually responsive neurons in area VISp. Then, you will fit GLMs to the selected neurons using <code class="docutils literal notranslate"><span class="pre">nemos</span></code>.</p>
+<p>As this is the last notebook, the instructions are a bit more hands-off: you will make more of the modeling decisions yourselves. As a group, you will use your neuroscience knowledge and the skills gained over this workshop to decide:</p>
 <ul class="simple">
-<li><p>Compute Peristimulus Time Histograms (PSTHs) and select relevant neurons to analyze using <code class="docutils literal notranslate"><span class="pre">pynapple</span></code>.</p></li>
-<li><p>Fit GLMs to these neurons using <code class="docutils literal notranslate"><span class="pre">nemos</span></code>.</p></li>
-</ul>
-<p>As this is the last notebook, the instructions are a bit more hands-off: you will make more of the analysis and modeling decisions yourselves. As a group, you will use your neuroscience knowledge and the skills gained over this workshop to decide:</p>
-<ul class="simple">
-<li><p>How to select relevant neurons.</p></li>
 <li><p>How to avoid overfitting.</p></li>
 <li><p>What features to include in your GLMs.</p></li>
 <li><p>Which basis functions (and parameters) to use for each feature.</p></li>
@@ -507,35 +511,12 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 <section id="downloading-and-preparing-data">
 <h2>Downloading and preparing data<a class="headerlink" href="#downloading-and-preparing-data" title="Link to this heading">#</a></h2>
-<p>In this section, we will download the data from DANDI and extract the relevant parts for analysis and modeling. This section is largely presented to you as is, so that you can get to the substantive sections more quickly.</p>
+<p>In this section, we will download the data and extract the relevant parts for analysis and modeling. This section is largely presented to you as is, so that you can get to the substantive sections more quickly.</p>
 <p>First we download and load the data into pynapple.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dataset information</span>
-<span class="n">dandiset_id</span> <span class="o">=</span> <span class="s2">&quot;000021&quot;</span>
-<span class="n">dandi_filepath</span> <span class="o">=</span> <span class="s2">&quot;sub-726298249/sub-726298249_ses-754829445.nwb&quot;</span>
-
-<span class="c1"># Download the data using NeMoS</span>
-<span class="n">io</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">fetch</span><span class="o">.</span><span class="n">download_dandi_data</span><span class="p">(</span><span class="n">dandiset_id</span><span class="p">,</span> <span class="n">dandi_filepath</span><span class="p">)</span>
-
-<span class="c1"># load data using pynapple</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">NWBFile</span><span class="p">(</span><span class="n">io</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">lazy_loading</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-
-<span class="c1"># grab the spiking data</span>
-<span class="n">units</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
-
-<span class="c1"># map from electrodes to brain area</span>
-<span class="n">channel_probes</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">elec</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">nwb</span><span class="o">.</span><span class="n">electrodes</span><span class="p">:</span>
-    <span class="n">channel_id</span> <span class="o">=</span> <span class="n">elec</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">location</span> <span class="o">=</span> <span class="n">elec</span><span class="p">[</span><span class="s2">&quot;location&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">channel_probes</span><span class="p">[</span><span class="n">channel_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">location</span>
-
-<span class="c1"># Add a new column to include location in our spikes TsGroup</span>
-<span class="n">units</span><span class="o">.</span><span class="n">brain_area</span> <span class="o">=</span> <span class="p">[</span><span class="n">channel_probes</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ch_id</span><span class="p">)]</span> <span class="k">for</span> <span class="n">ch_id</span> <span class="ow">in</span> <span class="n">units</span><span class="o">.</span><span class="n">peak_channel_id</span><span class="p">]</span>
-
-<span class="c1"># drop unnecessary metadata</span>
-<span class="n">units</span><span class="o">.</span><span class="n">restrict_info</span><span class="p">([</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="s2">&quot;quality&quot;</span><span class="p">,</span> <span class="s2">&quot;brain_area&quot;</span><span class="p">])</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;visual_coding_data.zip&quot;</span><span class="p">)</span>
+<span class="n">flashes</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -545,19 +526,12 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <p>During the flashes presentation trials, mice were exposed to white or black full-field flashes in a gray background, each lasting 250 ms, and separated by a 2 second inter-trial interval. In total, they were exposed to 150 flashes (75 black, 75 white).</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">flashes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;flashes_presentations&quot;</span><span class="p">]</span>
-<span class="n">flashes</span><span class="o">.</span><span class="n">restrict_info</span><span class="p">([</span><span class="s2">&quot;color&quot;</span><span class="p">])</span>
-
-<span class="c1"># create a separate object for black and white flashes</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create a separate object for black and white flashes</span>
 <span class="n">flashes_white</span> <span class="o">=</span> <span class="n">flashes</span><span class="p">[</span><span class="n">flashes</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1.0&quot;</span><span class="p">]</span>
 <span class="n">flashes_black</span> <span class="o">=</span> <span class="n">flashes</span><span class="p">[</span><span class="n">flashes</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-1.0&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
-</div>
-<div class="dropdown admonition">
-<p class="admonition-title">Other stimulus classes?</p>
-<p>As can be seen in the image above, there are many other stimulus types shown in this experiment. If you finish analyzing the flashes and want to look at one of the others, you can do so by grabbing the corresponding <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> from the <code class="docutils literal notranslate"><span class="pre">data</span></code> object; they are all named <code class="docutils literal notranslate"><span class="pre">{stim_type}_presentations</span></code>, where <code class="docutils literal notranslate"><span class="pre">{stim_type}</span></code> may be <code class="docutils literal notranslate"><span class="pre">flashes</span></code>, <code class="docutils literal notranslate"><span class="pre">gabors</span></code>, <code class="docutils literal notranslate"><span class="pre">static_gratings</span></code>, etc.</p>
 </div>
 <p>Let’s visualize our stimuli:</p>
 <div class="cell tag_render-all tag_hide-input docutils container">
@@ -571,7 +545,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <span class="n">n_seconds</span> <span class="o">=</span> <span class="mi">13</span>
 <span class="n">offset</span> <span class="o">=</span> <span class="mf">.5</span>
 
-<span class="n">start</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;flashes_presentations&quot;</span><span class="p">][</span><span class="s2">&quot;start&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">flashes</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="n">offset</span>
 <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">n_seconds</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">17</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
@@ -594,89 +568,69 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </section>
 <section id="preliminary-analyses-and-neuron-selection">
 <h2>Preliminary analyses and neuron selection<a class="headerlink" href="#preliminary-analyses-and-neuron-selection" title="Link to this heading">#</a></h2>
-<p>From here on out, you will write the code yourself. This first section will involve us doing some preliminary analyses to find the neurons that are most visually responsive; these are the neurons we will fit our GLM to.</p>
-<p>First, let’s construct a <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet" title="(in pynapple v0.9.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> called <code class="docutils literal notranslate"><span class="pre">extended_flashes</span></code> which contains the peristimulus time. Right now, our <code class="docutils literal notranslate"><span class="pre">flashes</span></code> <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.</p>
-<p>This <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> should be the same shape as <code class="docutils literal notranslate"><span class="pre">flashes</span></code> and have the same metadata columns.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="mf">.5</span>
-<span class="n">extended_flashes</span> <span class="o">=</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>If you have succeeded, the following should pass:</p>
+<p>In this section, we will select a subset of the neurons that are visually responsive, which we will fit our GLM to.</p>
+<p>First, we’ll construct a <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet" title="(in pynapple v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> called <code class="docutils literal notranslate"><span class="pre">extended_flashes</span></code> which contains the peristimulus time. Right now, our <code class="docutils literal notranslate"><span class="pre">flashes</span></code> <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.</p>
+<p>This <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> will be the same shape as <code class="docutils literal notranslate"><span class="pre">flashes</span></code> and have the same metadata columns.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">extended_flashes</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">flashes</span><span class="o">.</span><span class="n">shape</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes</span><span class="o">.</span><span class="n">metadata</span> <span class="o">==</span> <span class="n">flashes</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes</span><span class="o">.</span><span class="n">start</span> <span class="o">==</span> <span class="n">flashes</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes</span><span class="o">.</span><span class="n">end</span> <span class="o">==</span> <span class="n">flashes</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mf">.5</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dt</span> <span class="o">=</span> <span class="mf">.50</span> <span class="c1"># 500 ms</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">flashes</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">dt</span> <span class="c1"># Start 500 ms before stimulus presentation</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">flashes</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="n">dt</span> <span class="c1"># End 500 ms after stimulus presentation</span>
+
+<span class="n">extended_flashes</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="n">flashes</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span> 
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, create two separate <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> objects, <code class="docutils literal notranslate"><span class="pre">extended_flashes_black</span></code> and <code class="docutils literal notranslate"><span class="pre">extended_flashes_white</span></code>, which contain this info for only the black and the white flashes, respectively.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_flashes_white</span> <span class="o">=</span>
-<span class="n">extended_flashes_black</span> <span class="o">=</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Now, we’ll create two separate <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> objects, <code class="docutils literal notranslate"><span class="pre">extended_flashes_black</span></code> and <code class="docutils literal notranslate"><span class="pre">extended_flashes_white</span></code>, which contain this info for only the black and the white flashes, respectively.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># This should all pass if you created the IntervalSet correctly</span>
-<span class="k">assert</span> <span class="n">extended_flashes_white</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">shape</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_white</span><span class="o">.</span><span class="n">metadata</span> <span class="o">==</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_white</span><span class="o">.</span><span class="n">start</span> <span class="o">==</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_white</span><span class="o">.</span><span class="n">end</span> <span class="o">==</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mf">.5</span><span class="p">)</span>
-<span class="k">assert</span> <span class="n">extended_flashes_black</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">shape</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_black</span><span class="o">.</span><span class="n">metadata</span> <span class="o">==</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_black</span><span class="o">.</span><span class="n">start</span> <span class="o">==</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="mf">.5</span><span class="p">)</span>
-<span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="n">extended_flashes_black</span><span class="o">.</span><span class="n">end</span> <span class="o">==</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">end</span> <span class="o">+</span> <span class="mf">.5</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">extended_flashes_white</span> <span class="o">=</span> <span class="n">extended_flashes</span><span class="p">[</span><span class="n">extended_flashes</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1.0&quot;</span><span class="p">]</span>
+<span class="n">extended_flashes_black</span> <span class="o">=</span> <span class="n">extended_flashes</span><span class="p">[</span><span class="n">extended_flashes</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;-1.0&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, select your neurons. There are four criteria we want to use:</p>
+<p>Now, we’ll select our neurons. There are four criteria we want to use:</p>
 <ol class="arabic simple">
 <li><p>Brain area: we are interested in analyzing VISp units for this tutorial</p></li>
 <li><p>Quality: we will only select “good” quality units. If you’re curious, you can (optionally) <a class="reference external" href="https://alleninstitute.github.io/openscope_databook/visualization/visualize_unit_metrics.html">read more</a> how about the Allen Institute defines quality.</p></li>
 <li><p>Firing rate: overall, we want units with a firing rate larger than 2Hz around the presentation of stimuli</p></li>
 <li><p>Responsiveness: we want units that actually respond to changes in the visual stimuli, i.e., their firing rate changes as a result of the stimulus.</p></li>
 </ol>
-<p>Create a new <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code>, <code class="docutils literal notranslate"><span class="pre">selected_units</span></code>, which includes only those units that meet the first three criteria, then check that it passes the assertion block.</p>
-<div class="reminder admonition">
-<p class="admonition-title">Restrict!</p>
-<p>Don’t forget when selecting based on firing rate that we want neurons whose firing rate is above the threshold <strong>around the presentation of the stimuli!</strong> This means you should use <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code>! If only we had a useful <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> lying around…</p>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">selected_units</span> <span class="o">=</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>We’ll create a new <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code>, <code class="docutils literal notranslate"><span class="pre">selected_units</span></code>, which includes only those units that meet the first three criteria, then check that it passes the assertion block.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">selected_units</span><span class="p">)</span> <span class="o">==</span> <span class="mi">92</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Filter units according criteria 1 &amp; 2</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">units</span><span class="p">[(</span><span class="n">units</span><span class="p">[</span><span class="s2">&quot;brain_area&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;VISp&quot;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">units</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">]</span><span class="o">==</span><span class="s2">&quot;good&quot;</span><span class="p">)]</span> 
+
+<span class="c1"># Restrict around stimuli presentation</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">extended_flashes</span><span class="p">)</span> 
+
+<span class="c1"># Filter according to criterion 3</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="p">[(</span><span class="n">selected_units</span><span class="p">[</span><span class="s2">&quot;rate&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">2.0</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now, in order to determine the responsiveness of the units, it’s helpful to use the <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent" title="(in pynapple v0.9.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent()</span></code></a> function: this will align units’ spiking timestamps with the onset of the stimulus repetitions and take an average over them.</p>
+<p>Now, in order to determine the responsiveness of the units, it’s helpful to use the <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent" title="(in pynapple v0.10.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent()</span></code></a> function: this will align units’ spiking timestamps with the onset of the stimulus repetitions and take an average over them.</p>
 <p>Let’s use that function to construct two separate perievent dictionaries, one aligned to the start of the white stimuli, one aligned to the start of the black, and they should run from 250 msec before to 500 msec after the event.</p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">peri_white</span> <span class="o">=</span>
-<span class="n">peri_black</span> <span class="o">=</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set window of perievent 500 ms before and after the start of the event</span>
+<span class="n">window_size</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">.250</span><span class="p">,</span> <span class="mf">.500</span><span class="p">)</span> 
+
+<span class="n">peri_white</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent</span><span class="p">(</span><span class="n">timestamps</span><span class="o">=</span><span class="n">selected_units</span><span class="p">,</span>
+                                   <span class="n">tref</span><span class="o">=</span><span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">flashes_white</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
+                                   <span class="n">minmax</span><span class="o">=</span><span class="n">window_size</span><span class="p">)</span>
+<span class="n">peri_black</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_perievent</span><span class="p">(</span><span class="n">timestamps</span><span class="o">=</span><span class="n">selected_units</span><span class="p">,</span>
+                                   <span class="n">tref</span><span class="o">=</span><span class="n">nap</span><span class="o">.</span><span class="n">Ts</span><span class="p">(</span><span class="n">flashes_black</span><span class="o">.</span><span class="n">start</span><span class="p">),</span>
+                                   <span class="n">minmax</span><span class="o">=</span><span class="n">window_size</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Visualizing these perievents can help us determine which units to include. The following helper function should help.</p>
+<p>Visualizing these perievents can help us determine what features we’ll want to include in our GLM. The following helper function should help.</p>
 <div class="cell tag_render-all tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -768,18 +722,83 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 </div>
 <p>You could manually visualize each of our units and select those that appear, from their PSTH to be responsive.</p>
-<p>However, it would be easier to scale (and more reproducible) if you came up with some measure of responsiveness. So how do we compute something that captures “this neuron responds to visual stimuli”?</p>
-<p>You should be able to do this using a function that iterates over the <code class="docutils literal notranslate"><span class="pre">peri_white</span></code> and <code class="docutils literal notranslate"><span class="pre">peri_black</span></code> dictionaries, returning a single float for each unit.</p>
-<p>Let’s aim to pick around 20 neurons.</p>
-<p>If you’re having trouble coming up with one that seems reasonable, expand the following admonition.</p>
-<div class="hint dropdown admonition">
-<p class="admonition-title">How to compute responsiveness?</p>
-<p>Try defining responsiveness as the normalized difference in average firing rate between during stimulus presentation and before the stimulus was presented.</p>
-<p>We can use <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code> together with <code class="docutils literal notranslate"><span class="pre">np.mean</span></code> to compute the average firing rates above, and then combine them.</p>
-</div>
-<div class="cell docutils container">
+<p>However, it would be easier to scale (and more reproducible) if you came up with some measure of responsiveness. So how do we compute something that captures “this neuron responds to visual stimuli”? Here, we will define “responsiveness” as the normalized difference in average firing rate between during stimulus presentation and before the stimulus was presented. We’ll define a function that does that in the following hidden cell.</p>
+<p>If you have other ideas and the time to explore them, you can return to this section and try other definitions of responsiveness.</p>
+<div class="cell tag_render-all tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">get_responsiveness</span><span class="p">(</span><span class="n">perievents</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate responsiveness for each neuron. This is computed as:</span>
+
+<span class="sd">    post_presentation_avg  : </span>
+<span class="sd">        Average firing rate during presentation (250 ms) of stimulus across</span>
+<span class="sd">        all instances of stimulus. </span>
+
+<span class="sd">    pre_presentation_avg :</span>
+<span class="sd">        Average firing rate prior (250 ms) to the presentation of stimulus</span>
+<span class="sd">        across all instances prior of stimulus. </span>
+
+<span class="sd">    responsiveness : </span>
+<span class="sd">        abs((post_presentation_avg - pre_presentation_avg) / (post_presentation_avg + pre_presentation_avg))</span>
+
+<span class="sd">    Larger values indicate higher responsiveness to the stimuli.</span>
+<span class="sd">        </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    perievents : TsGroup</span>
+<span class="sd">        Contains perievent information of a subset of neurons</span>
+<span class="sd">    bin_size : float</span>
+<span class="sd">        Bin size for calculating spike counts</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    ----------   </span>
+<span class="sd">    resp_array : np.array</span>
+<span class="sd">        Array of responsiveness information.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">resp_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">resp_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">perievents</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">peri</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">perievents</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+        <span class="c1"># Count the number of timestamps in each bin_size bin.</span>
+        <span class="n">peri_counts</span> <span class="o">=</span> <span class="n">peri</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">)</span>
+
+        <span class="c1"># Compute average spikes for each millisecond in the</span>
+        <span class="c1"># the 250 ms before stimulus presentation</span>
+        <span class="n">pre_presentation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">peri_counts</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">([</span><span class="o">-</span><span class="mf">.25</span><span class="p">,</span><span class="mi">0</span><span class="p">]))</span>
+
+        <span class="c1"># Compute average spikes for each millisecond in the</span>
+        <span class="c1"># the 250 ms after stimulus presentation</span>
+        <span class="n">post_presentation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">peri_counts</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mf">.25</span><span class="p">]))</span>
+
+        <span class="n">pre_presentation_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">pre_presentation</span><span class="p">)</span>
+        <span class="n">post_presentation_avg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">post_presentation</span><span class="p">)</span>
+        <span class="n">responsiveness</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">((</span><span class="n">post_presentation_avg</span> <span class="o">-</span> <span class="n">pre_presentation_avg</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">post_presentation_avg</span> <span class="o">+</span> <span class="n">pre_presentation_avg</span><span class="p">))</span>
+
+        <span class="n">resp_array</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">responsiveness</span>
+
+    <span class="k">return</span> <span class="n">resp_array</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute the responsiveness measure</span>
+<span class="n">responsiveness_white</span> <span class="o">=</span> <span class="n">get_responsiveness</span><span class="p">(</span><span class="n">peri_white</span><span class="p">)</span>
+<span class="n">responsiveness_black</span> <span class="o">=</span> <span class="n">get_responsiveness</span><span class="p">(</span><span class="n">peri_black</span><span class="p">)</span>
+
+<span class="c1"># Get threshold for top 15% most responsive</span>
+<span class="n">thresh_black</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">responsiveness_black</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
+<span class="n">thresh_white</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">percentile</span><span class="p">(</span><span class="n">responsiveness_white</span><span class="p">,</span> <span class="mi">85</span><span class="p">)</span>
+
+<span class="c1"># Only keep units that are within the 15% most responsive for either black or white</span>
+<span class="n">selected_units</span> <span class="o">=</span> <span class="n">selected_units</span><span class="p">[(</span><span class="n">responsiveness_black</span> <span class="o">&gt;</span> <span class="n">thresh_black</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">responsiveness_white</span> <span class="o">&gt;</span> <span class="n">thresh_white</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -801,7 +820,11 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <section id="avoiding-overfitting">
 <h2>Avoiding overfitting<a class="headerlink" href="#avoiding-overfitting" title="Link to this heading">#</a></h2>
 <p>As we’ve seen throughout this workshop, it is important to avoid overfitting your model. We’ve covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.</p>
-<p>You might find it helpful to refer back to the <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a> notebook and / or to use the following pynapple functions: <code class="xref py py-func docutils literal notranslate"><span class="pre">set_diff()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">union()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code>.</p>
+<p>You might find it helpful to refer back to the <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">advanced nemos</span></a> notebook and / or to use the following pynapple functions: <code class="xref py py-func docutils literal notranslate"><span class="pre">set_diff()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">union()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code> (see <a class="reference internal" href="../day1/phase_precession-users.html#phase-precess-cv"><span class="std std-ref">phase precession notebook</span></a>).</p>
+<div class="hint admonition">
+<p class="admonition-title">Hints</p>
+<p>Throughout this section and the next we’ll include hints. They’ll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint admonition like this, which you can expand to get a hint.</p>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -812,13 +835,13 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </section>
 <section id="fit-a-glm">
 <h2>Fit a GLM<a class="headerlink" href="#fit-a-glm" title="Link to this heading">#</a></h2>
-<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
+<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-feature-selection"><span class="std std-ref">the advanced nemos notebook</span></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
 <p>You don’t have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.</p>
 <p>Good luck and we look forward to seeing what you come up with!</p>
 <section id="prepare-data">
 <h3>Prepare data<a class="headerlink" href="#prepare-data" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Create spike count data.</p></li>
+<li><p>Create spike count data. (Hint: review the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-basic"><span class="std std-ref">current injection notebook</span></a>.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -831,18 +854,18 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <section id="construct-design-matrix">
 <h3>Construct design matrix<a class="headerlink" href="#construct-design-matrix" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Decide on feature(s)</p></li>
-<li><p>Decide on basis</p></li>
-<li><p>Construct design matrix</p></li>
+<li><p>Decide on feature(s).</p></li>
+<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-basis"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-basis"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
+<li><p>Construct design matrix. (Hint: review the <a class="reference internal" href="../../full/day2/place_cells.html#basis-eval-place-cells"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
 </ul>
 <div class="hint dropdown admonition">
 <p class="admonition-title">What features should I include?</p>
 <p>If you’re having trouble coming up with features to include, here are some possibilities:</p>
 <ul class="simple">
-<li><p>Stimulus.</p></li>
-<li><p>Stimulus onset.</p></li>
-<li><p>Stimulus offset.</p></li>
-<li><p>For multiple neurons: neuron-to-neuron coupling.</p></li>
+<li><p>Stimulus. (Review the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-prep"><span class="std std-ref">current injection</span></a> notebook.)</p></li>
+<li><p>Stimulus onset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.diff()</span></code></a> to find when the stimulus transitions from off to on.)</p></li>
+<li><p>Stimulus offset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.diff()</span></code></a> to find when the stimulus transitions from on to off.)</p></li>
+<li><p>For multiple neurons: neuron-to-neuron coupling. (Refer back to the <a class="reference internal" href="../../full/day1/head_direction.html#head-direction-fit"><span class="std std-ref">the head direction notebook from the first day</span></a> to see an example of fitting coupling filters.)</p></li>
 </ul>
 <p>For the stimuli predictors, you probably want to model white and black separately.</p>
 </div>
@@ -857,10 +880,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <section id="construct-and-fit-your-model">
 <h3>Construct and fit your model<a class="headerlink" href="#construct-and-fit-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Decide on regularization</p></li>
-<li><p>Initialize GLM</p></li>
-<li><p>Call fit</p></li>
-<li><p>Visualize result on PSTHs</p></li>
+<li><p>Decide on regularization. (Hint: review Edoardo’s presentation and the <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
+<li><p>Initialize GLM. (Hint: review the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-glm"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
+<li><p>Call fit. (Hint: review the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-glm"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
+<li><p>Visualize result on PSTHs. (Note that you should use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent_continuous" title="(in pynapple v0.10.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent_continuous()</span></code></a> and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -880,7 +903,6 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_pop_psth</span><span class="p">(</span>
         <span class="n">peri</span><span class="p">,</span>
         <span class="n">color_flashes</span><span class="p">,</span>
-        <span class="n">unit_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
         <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
         <span class="o">**</span><span class="n">peri_others</span>
@@ -956,12 +978,26 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 </details>
 </div>
+<p>The following cell shows you how to call this visualization function. Its arguments are:</p>
+<ul class="simple">
+<li><p>The PSTH object computed from the data. This should only contain the responses to either the black or white flashes, but can contain the PSTHs from one or more-than-one neurons.</p></li>
+<li><p>A string, either <code class="docutils literal notranslate"><span class="pre">&quot;white&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;black&quot;</span></code>, which determines some of the styling.</p></li>
+<li><p>Any number of keyword arguments (e.g., <code class="docutils literal notranslate"><span class="pre">predictions=</span></code> shown below) whose values are a tuple of <code class="docutils literal notranslate"><span class="pre">(style,</span> <span class="pre">peri)</span></code>, where <code class="docutils literal notranslate"><span class="pre">style</span></code> is a valid matplotlib style (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;red&quot;</span></code>) and <code class="docutils literal notranslate"><span class="pre">peri</span></code> is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_white_pred_unit</span><span class="p">))</span>
+<span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_black</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_black_pred_unit</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 <section id="score-your-model">
 <h3>Score your model<a class="headerlink" href="#score-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>We trained on the train set, so now we score on the test set. (Or use cross-validation.)</p></li>
-<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above.</p></li>
+<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the <a class="reference internal" href="../../full/day2/current_injection.html#current-inj-score"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -977,7 +1013,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 <li><p>Go back to the beginning of <a class="reference internal" href="../../full/day2/visual_coding.html#visual-glm"><span class="std std-ref">this section</span></a> and try to improve your model’s performance (as reflected by increased score).</p></li>
 <li><p>Keep track of what you’ve tried and their respective scores.</p>
 <ul>
-<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in <a class="reference internal" href="#sklearn"><code class="xref myst docutils literal notranslate"><span class="pre">sklearn</span></code></a>, is useful:</p></li>
+<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in the <a class="reference internal" href="../../full/day2/nemos_advanced.html#sklearn-cv"><span class="std std-ref">advanced nemos notebook</span></a>, is useful:</p></li>
 </ul>
 </li>
 </ul>
@@ -1034,7 +1070,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Model selection</p>
+        <p class="prev-next-title">Fit an Encoding Model</p>
       </div>
     </a>
     <a class="right-next"

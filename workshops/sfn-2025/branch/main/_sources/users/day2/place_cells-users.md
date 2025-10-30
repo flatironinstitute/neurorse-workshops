@@ -45,22 +45,17 @@ warnings.filterwarnings(
 This notebook can be downloaded as **{nb-download}`place_cells-users.ipynb`**. See the button at the top right to download as markdown or pdf.
 
 :::
-# Model selection
+# Fit an Encoding Model
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
  rendered of this notebook, go [here](../../full/day2/place_cells.md)
 
-Data for this notebook comes from recordings in the mouse hippocampus while the mouse runs on a linear track, which we [explored yesterday](../day1/phase_precession-users.md).
+
+In this short group project we will keep working on the hippocampal place field recordings. In particular, we will learn how to model neural responses to multiple predictors: position and speed. 
 
 
-
-## Learning objectives
-
-- Review how to use pynapple to analyze neuronal tuning
-- Learn how to combine NeMoS basis objects for modeling multiple predictors
-
-
+## >>>> Should Be Cropped When Merging
 ```{code-cell} ipython3
 :tags: [render-all]
 
@@ -85,9 +80,6 @@ from sklearn import pipeline
 
 # shut down jax to numpy conversion warning
 nap.nap_config.suppress_conversion_warnings = True
-
-# during development, set this to a lower number so everything runs faster. 
-cv_folds = 5
 ```
 ## Pynapple
 
@@ -161,12 +153,7 @@ position = position.interpolate(count, ep=count.time_support)
 print(count.shape)
 print(position.shape)
 ```
-### Speed modulation
-
-
-- Compute animal's speed for each epoch.
-
-
+### Extract Speed per Epoch
 ```{code-cell} ipython3
 :tags: [render-all]
 
@@ -185,18 +172,22 @@ for s, e in position.time_support.values:
 speed = nap.Tsd(t=position.t, d=np.hstack(speed), time_support=position.time_support)
 print(speed.shape)
 ```
+## <<<< End of Part to Be Cropped
+### Position and Speed modulation
 
 
 - Compute the tuning curve with pynapple's [`compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves)
 
 
-```{code-cell}
-# enter code here
+```{code-cell} ipython3
+:tags: [render-all]
+
+tc_speed = nap.compute_tuning_curves(spikes, speed, bins=20, epochs=speed.time_support, feature_names=["speed"])
 ```
 
 
-
 - Visualize the position and speed tuning for these neurons.
+
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -205,38 +196,43 @@ fig = workshop_utils.plot_position_speed(position, speed, place_fields, tc_speed
 ```
 
 
-These neurons all show both position and speed tuning, and we see that the animal's speed and position are highly correlated. We're going to build a GLM to predict neuronal firing rate -- which variable should we use? Is the speed tuning just epiphenomenal?
+These neurons all show both position and speed tuning, and we see that the animal's speed and position are highly correlated. GLMs can help us model responses to multiple, potentially correlated predictors. 
+
+The goal of this project is to fit a PopulationGLM including both position and speed as predictors, and check if this model  accurately captures the tuning curves of the neurons.
 
 
-## NeMoS
 ### Basis evaluation
 
 
-- Create a separate basis object for each model input.
+- Create a separate basis object for each model input (speed and position).
+- Provide a label for each basis ("position" and "speed").
 - Visualize the basis objects.
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+position_basis = 
+speed_basis = 
+workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 ```
 
 
 
-- Combine the two basis objects into a single "additive basis"
+- For users new to NeMoS: call `compute_fatures` for both position and speed basis, and concatenate the result to form a single design matrix.
+- Alternatively, for people familiar with NeMoS, add the basis together, and call `compute_fatures` on the newly created additive basis.
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+X_position = 
+X_speed = 
+X = np.concatenate(
+X
 ```
 
 
 
-- Create the design matrix!
 - Notice that, since we passed the basis pynapple objects, we got one back, preserving the time stamps.
 - `X` has the same number of time points as our input position and speed, but 25 columns. The columns come from  `n_basis_funcs` from each basis (10 for position, 15 for speed).
 
-
-```{code-cell}
-# enter code here
-```
 
 ### Model learning
 
@@ -246,8 +242,12 @@ These neurons all show both position and speed tuning, and we see that the anima
 - Fit the data, passing the design matrix and spike counts to the glm object.
 
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+# define the model
+glm =
+# fit
+glm.fit(
 ```
 
 ### Prediction
@@ -257,8 +257,13 @@ These neurons all show both position and speed tuning, and we see that the anima
 - Remember to convert the predicted firing rate to spikes per second!
 
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+# predict the model's firing rate
+predicted_rate =
+# compute the position and speed tuning curves using the predicted firing rate.
+glm_tuning_pos = 
+glm_tuning_speed = 
 ```
 
 
@@ -269,257 +274,28 @@ These neurons all show both position and speed tuning, and we see that the anima
 ```{code-cell} ipython3
 :tags: [render-all]
 
-workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_pos, glm_speed);
+workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_tuning_pos, glm_tuning_speed);
 ```
 
 
 We can see that this model does a good job capturing both the position and the speed. In the rest of this notebook, we're going to investigate all the scientific decisions that we swept under the rug: should we regularize the model? what basis should we use? do we need both inputs?
 
-To make our lives easier, let's create a helper function that wraps the above
-lines, because we're going to be visualizing our model predictions a lot.
+## Extra Exercise
 
 
-```{code-cell}
-# enter code here
-```
+If you breezed through this exercise and you feel like working a bit more, here is some suggestions:
 
+- Try to fit and compare the results we just obtained with different models: 
+  - A model with position as the only predictor.
+  - A model with speed as the only predictor.
+- Introduce L1 (Lasso) regularization and fit models with increasingly large penalty strengths ($\lambda$). Plot the regularization path showing how each coefficient changes with $\lambda$. Identify which coefficients remain non-zero longest as $\lambda$ increases - these correspond to the most informative predictors.
 
 
-In our previous analysis of the place field hyppocampal dataset we compared multiple encoding models and tried to figure out which predictor (position, speed or phase) had more explanatory power. In this notebook we will keep going on that effort and learn more principled (and convenient) approaches to model comparison combining NeMoS and scikit-learn.
+To make your lives easier, you can use the helper function  below to visualize model predictions.
 
-## Learning Objectives
 
-- Learn how to use NeMoS objects with [scikit-learn](https://scikit-learn.org/) for cross-validation
-- Learn how to use NeMoS objects with scikit-learn [pipelines](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)
-- Learn how to use cross-validation to perform model and feature selection
-- 
-
-## Scikit-learn
-### How to know when to regularize?
-
-
-- How do we decide when to use regularization?
-- Cross-validation allows you to fairly compare different models on the same dataset.
-- NeMoS makes use of [scikit-learn](https://scikit-learn.org/), the standard machine learning library in python.
-- Define [parameter grid](https://scikit-learn.org/stable/modules/grid_search.html#grid-search) to search over.
-- Anything not specified in grid will be kept constant.
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Initialize scikit-learn's [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) object.
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- We interact with this in a very similar way to the glm object.
-- In particular, call `fit` with same arguments:
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- We got a warning because we didn't specify the regularizer strength, so we just fell back on default value.
-- Let's investigate results:
-
-```{code-cell}
-# enter code here
-```
-
-### Select basis
-
-
-- You can (and should) do something similar to determine how many basis functions you need for each input.
-- NeMoS basis objects are not scikit-learn-compatible right out of the box.
-- But we have provided a simple method to make them so:
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- This gives the basis object the `transform` method, which is equivalent to `compute_features`.
-- However, transformers have some limits:
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Transformers only accept 2d inputs, whereas nemos basis objects can accept inputs of any dimensionality.
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- If the basis is composite (for example, the addition of two 1D bases), the transformer will expect a shape of `(n_sampels, 1)` each 1D component. If that's not the case, you need to call `set_input_shape`:
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Then you can call transform on the 2d input as expected.
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- You can, equivalently, call `compute_features` *before* turning the basis into a transformer. Then we cache the shape for future use:
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Create a single TsdFrame to hold all our inputs:
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-transformer_input = nap.TsdFrame(
-    t=position.t,
-    d=np.stack([position, speed], 1),
-    time_support=position.time_support,
-    columns=["position", "speed"],
-)
-```
-
-
-- Pass this input to our transformed additive basis:
-
-```{code-cell}
-# enter code here
-```
-
-### Pipelines
-
-
-- If we want to cross-validate over the basis, we need more one more step: combining the basis and the GLM into a single scikit-learn estimator.
-- [Pipelines](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) to the rescue!
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Pipeline runs `basis.transform`, then passes that output to `glm`, so we can do everything in a single line:
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Visualize model predictions!
-
-
-```{code-cell}
-# enter code here
-```
-
-### Cross-validating on the basis
-
-
-Now that we have our pipeline estimator, we can cross-validate on any of its parameters!
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-Let's cross-validate on:
-- The number of the basis functions of the position basis
-- The functional form of the basis for speed
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Construct `param_grid`, using `__` to stand in for `.`
-- In sklearn pipelines, we access nested parameters using double underscores:
-  - `pipe["basis"]["position"].n_basis_funcs` ← normal Python syntax
-  - `"basis__position__n_basis_funcs"` ← sklearn parameter grid syntax
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Cross-validate as before:
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Investigate results:
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Can easily grab the best estimator, the pipeline that did the best:
-
-```{code-cell}
-# enter code here
-```
-
-
-
-- Visualize model predictions!
-
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-visualize_model_predictions(best_estim, transformer_input)
-```
-### Feature selection
-```{code-cell}
-# enter code here
-```
-
-## Conclusion
 ## References
 
 
 The data in this tutorial comes from [Grosmark, Andres D., and György Buzsáki. "Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences." Science 351.6280 (2016): 1440-1443](https://www.science.org/doi/full/10.1126/science.aad1935).
 
-
-```{code-cell}
-# enter code here
-```

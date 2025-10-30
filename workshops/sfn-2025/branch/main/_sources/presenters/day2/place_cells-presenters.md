@@ -48,7 +48,7 @@ This notebook can be downloaded as **{nb-download}`place_cells-presenters.ipynb`
 
 :::
 
-# Model selection
+# Fit an Encoding Model
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
@@ -56,12 +56,11 @@ This notebook has had all its explanatory text removed and has not been run.
 
 
 
-## Learning objectives
-
-- Review how to use pynapple to analyze neuronal tuning
-- Learn how to combine NeMoS basis objects for modeling multiple predictors
+In this short group project we will keep working on the hippocampal place field recordings. In particular, we will learn how to model neural responses to multiple predictors: position and speed. 
 
 
+
+## >>>> Should Be Cropped When Merging
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -87,9 +86,6 @@ from sklearn import pipeline
 
 # shut down jax to numpy conversion warning
 nap.nap_config.suppress_conversion_warnings = True
-
-# during development, set this to a lower number so everything runs faster. 
-cv_folds = 5
 ```
 
 ## Pynapple
@@ -178,13 +174,7 @@ print(count.shape)
 print(position.shape)
 ```
 
-### Speed modulation
-
-
-
-- Compute animal's speed for each epoch.
-
-
+### Extract Speed per Epoch
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -205,6 +195,10 @@ speed = nap.Tsd(t=position.t, d=np.hstack(speed), time_support=position.time_sup
 print(speed.shape)
 ```
 
+## <<<< End of Part to Be Cropped
+
+### Position and Speed modulation
+
 
 
 - Compute the tuning curve with pynapple's [`compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves)
@@ -212,12 +206,15 @@ print(speed.shape)
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+
 tc_speed = nap.compute_tuning_curves(spikes, speed, bins=20, epochs=speed.time_support, feature_names=["speed"])
 ```
 
 
 
 - Visualize the position and speed tuning for these neurons.
+
 
 
 ```{code-cell} ipython3
@@ -228,11 +225,11 @@ fig = workshop_utils.plot_position_speed(position, speed, place_fields, tc_speed
 
 
 
-These neurons all show both position and speed tuning, and we see that the animal's speed and position are highly correlated. We're going to build a GLM to predict neuronal firing rate -- which variable should we use? Is the speed tuning just epiphenomenal?
+These neurons all show both position and speed tuning, and we see that the animal's speed and position are highly correlated. GLMs can help us model responses to multiple, potentially correlated predictors. 
+
+The goal of this project is to fit a PopulationGLM including both position and speed as predictors, and check if this model  accurately captures the tuning curves of the neurons.
 
 
-
-## NeMoS
 
 ### Basis evaluation
 
@@ -260,38 +257,41 @@ These neurons all show both position and speed tuning, and we see that the anima
 
 
 
-- Create a separate basis object for each model input.
+- Create a separate basis object for each model input (speed and position).
+- Provide a label for each basis ("position" and "speed").
 - Visualize the basis objects.
 
 
 ```{code-cell} ipython3
-position_basis = nmo.basis.MSplineEval(n_basis_funcs=10)
-speed_basis = nmo.basis.MSplineEval(n_basis_funcs=15)
+:tag: [render-presenter]
+
+position_basis = nmo.basis.MSplineEval(n_basis_funcs=10, label="position")
+speed_basis = nmo.basis.MSplineEval(n_basis_funcs=15, label="speed")
 workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 ```
 
 
 
-- Combine the two basis objects into a single "additive basis"
+- For users new to NeMoS: call `compute_fatures` for both position and speed basis, and concatenate the result to form a single design matrix.
+- Alternatively, for people familiar with NeMoS, add the basis together, and call `compute_fatures` on the newly created additive basis.
 
 
 ```{code-cell} ipython3
+:tag: [render-presenter]
+
 # equivalent to calling nmo.basis.AdditiveBasis(position_basis, speed_basis)
 basis = position_basis + speed_basis
+basis.compute_features(position, speed)
+X = basis.compute_features(position, speed)
+X
 ```
 
 
 
-- Create the design matrix!
 - Notice that, since we passed the basis pynapple objects, we got one back, preserving the time stamps.
 - `X` has the same number of time points as our input position and speed, but 25 columns. The columns come from  `n_basis_funcs` from each basis (10 for position, 15 for speed).
 
 
-
-```{code-cell} ipython3
-X = basis.compute_features(position, speed)
-X
-```
 
 ### Model learning
 
@@ -304,6 +304,9 @@ X
 
 
 ```{code-cell} ipython3
+:tag: [render-presenter]
+
+
 glm = nmo.glm.PopulationGLM(
     solver_kwargs={"tol": 1e-12},
     solver_name="LBFGS",
@@ -322,6 +325,8 @@ glm.fit(X, count)
 
 
 ```{code-cell} ipython3
+:tag: [render-presenter]
+
 # predict the model's firing rate
 predicted_rate = glm.predict(X) / bin_size
 
@@ -329,8 +334,8 @@ predicted_rate = glm.predict(X) / bin_size
 print(predicted_rate.shape, count.shape)
 
 # compute the position and speed tuning curves using the predicted firing rate.
-glm_pos = nap.compute_tuning_curves(predicted_rate, position, bins=50, epochs=position.time_support, feature_names=["position"])
-glm_speed = nap.compute_tuning_curves(predicted_rate, speed, bins=30, epochs=speed.time_support, feature_names=["speed"])
+glm_tuning_pos = nap.compute_tuning_curves(predicted_rate, position, bins=50, epochs=position.time_support, feature_names=["position"])
+glm_tuning_speed = nap.compute_tuning_curves(predicted_rate, speed, bins=30, epochs=speed.time_support, feature_names=["speed"])
 ```
 
 
@@ -342,398 +347,29 @@ glm_speed = nap.compute_tuning_curves(predicted_rate, speed, bins=30, epochs=spe
 ```{code-cell} ipython3
 :tags: [render-all]
 
-workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_pos, glm_speed);
+workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_tuning_pos, glm_tuning_speed);
 ```
 
 
 
 We can see that this model does a good job capturing both the position and the speed. In the rest of this notebook, we're going to investigate all the scientific decisions that we swept under the rug: should we regularize the model? what basis should we use? do we need both inputs?
 
-To make our lives easier, let's create a helper function that wraps the above
-lines, because we're going to be visualizing our model predictions a lot.
 
+## Extra Exercise
 
 
-```{code-cell} ipython3
-def visualize_model_predictions(glm, X):
-    # predict the model's firing rate
-    predicted_rate = glm.predict(X) / bin_size
 
-    # compute the position and speed tuning curves using the predicted firing rate.
-    glm_pos = nap.compute_tuning_curves(predicted_rate, position, bins=50, epochs=position.time_support, feature_names=["position"])
-    glm_speed = nap.compute_tuning_curves(predicted_rate, speed, bins=30, epochs=position.time_support, feature_names=["speed"])
+If you breezed through this exercise and you feel like working a bit more, here is some suggestions:
 
-    workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_pos, glm_speed);
-```
+- Try to fit and compare the results we just obtained with different models: 
+  - A model with position as the only predictor.
+  - A model with speed as the only predictor.
+- Introduce L1 (Lasso) regularization and fit models with increasingly large penalty strengths ($\lambda$). Plot the regularization path showing how each coefficient changes with $\lambda$. Identify which coefficients remain non-zero longest as $\lambda$ increases - these correspond to the most informative predictors.
 
 
+To make your lives easier, you can use the helper function  below to visualize model predictions.
 
-In our previous analysis of the place field hyppocampal dataset we compared multiple encoding models and tried to figure out which predictor (position, speed or phase) had more explanatory power. In this notebook we will keep going on that effort and learn more principled (and convenient) approaches to model comparison combining NeMoS and scikit-learn.
 
-## Learning Objectives
-
-- Learn how to use NeMoS objects with [scikit-learn](https://scikit-learn.org/) for cross-validation
-- Learn how to use NeMoS objects with scikit-learn [pipelines](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html)
-- Learn how to use cross-validation to perform model and feature selection
-- 
-
-
-## Scikit-learn
-
-### How to know when to regularize?
-
-
-
-- How do we decide when to use regularization?
-- Cross-validation allows you to fairly compare different models on the same dataset.
-- NeMoS makes use of [scikit-learn](https://scikit-learn.org/), the standard machine learning library in python.
-- Define [parameter grid](https://scikit-learn.org/stable/modules/grid_search.html#grid-search) to search over.
-- Anything not specified in grid will be kept constant.
-
-
-
-```{code-cell} ipython3
-# define a Ridge GLM
-glm = nmo.glm.PopulationGLM(
-    regularizer="Ridge",
-    solver_kwargs={"tol": 1e-12},
-    solver_name="LBFGS",
-)
-param_grid = {
-    "regularizer_strength": [0.0001, 1.],
-}
-```
-
-
-
-- Initialize scikit-learn's [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) object.
-
-
-```{code-cell} ipython3
-cv = model_selection.GridSearchCV(glm, param_grid, cv=cv_folds)
-cv
-```
-
-
-
-- We interact with this in a very similar way to the glm object.
-- In particular, call `fit` with same arguments:
-
-
-```{code-cell} ipython3
-cv.fit(X, count)
-```
-
-
-
-- We got a warning because we didn't specify the regularizer strength, so we just fell back on default value.
-- Let's investigate results:
-
-
-```{code-cell} ipython3
-import pandas as pd
-
-pd.DataFrame(cv.cv_results_)
-```
-
-### Select basis
-
-
-
-- You can (and should) do something similar to determine how many basis functions you need for each input.
-- NeMoS basis objects are not scikit-learn-compatible right out of the box.
-- But we have provided a simple method to make them so:
-
-
-
-```{code-cell} ipython3
-position_basis = nmo.basis.MSplineEval(n_basis_funcs=10, label="position").to_transformer()
-# or equivalently:
-position_basis = nmo.basis.TransformerBasis(nmo.basis.MSplineEval(n_basis_funcs=10, label="position"))
-position_basis
-```
-
-
-
-- This gives the basis object the `transform` method, which is equivalent to `compute_features`.
-- However, transformers have some limits:
-
-
-
-```{code-cell} ipython3
-:tags: [raises-exception]
-
-position_basis.transform(position)
-```
-
-
-
-- Transformers only accept 2d inputs, whereas nemos basis objects can accept inputs of any dimensionality.
-
-
-
-```{code-cell} ipython3
-position_basis.transform(position[:, np.newaxis])
-```
-
-
-
-- If the basis is composite (for example, the addition of two 1D bases), the transformer will expect a shape of `(n_sampels, 1)` each 1D component. If that's not the case, you need to call `set_input_shape`:
-
-
-
-```{code-cell} ipython3
-# generate a composite basis
-basis_2d = nmo.basis.MSplineEval(5) +  nmo.basis.MSplineEval(5)
-basis_2d = basis_2d.to_transformer()
-
-# this will work: 1 input per component
-x, y = np.random.randn(10, 1), np.random.randn(10, 1)
-X = np.concatenate([x, y], axis=1)
-result = basis_2d.transform(X)
-```
-
-
-
-- Then you can call transform on the 2d input as expected.
-
-
-```{code-cell} ipython3
-# Assume 2 input for the first component and 3 for the second.
-x, y = np.random.randn(10, 2), np.random.randn(10, 3)
-X = np.concatenate([x, y], axis=1)
-try:
-    basis_2d.transform(X)
-except Exception as e:
-    print("Exception Raised:")
-    print(repr(e))
-
-# Set the expected input shape instead.
-
-# array
-res1 = basis_2d.set_input_shape(x, y).transform(X)
-# int
-res2 = basis_2d.set_input_shape(2, 3).transform(X)
-# tuple
-res3 = basis_2d.set_input_shape((2,), (3,)).transform(X)
-```
-
-
-
-- You can, equivalently, call `compute_features` *before* turning the basis into a transformer. Then we cache the shape for future use:
-
-
-
-```{code-cell} ipython3
-position_basis = nmo.basis.MSplineEval(n_basis_funcs=10, label="position")
-position_basis.compute_features(position)
-position_basis = position_basis.to_transformer()
-speed_basis = nmo.basis.MSplineEval(n_basis_funcs=15, label="speed").to_transformer().set_input_shape(1)
-basis = position_basis + speed_basis
-basis
-```
-
-
-
-- Create a single TsdFrame to hold all our inputs:
-
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-transformer_input = nap.TsdFrame(
-    t=position.t,
-    d=np.stack([position, speed], 1),
-    time_support=position.time_support,
-    columns=["position", "speed"],
-)
-```
-
-
-
-- Pass this input to our transformed additive basis:
-
-
-```{code-cell} ipython3
-basis.transform(transformer_input)
-```
-
-### Pipelines
-
-
-
-- If we want to cross-validate over the basis, we need more one more step: combining the basis and the GLM into a single scikit-learn estimator.
-- [Pipelines](https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html) to the rescue!
-
-
-
-```{code-cell} ipython3
-# set the reg strength to the optimal
-glm = nmo.glm.PopulationGLM(solver_name="LBFGS", solver_kwargs={"tol": 10**-12})
-pipe = pipeline.Pipeline([
-    ("basis", basis),
-    ("glm", glm)
-])
-pipe
-```
-
-
-
-- Pipeline runs `basis.transform`, then passes that output to `glm`, so we can do everything in a single line:
-
-
-```{code-cell} ipython3
-pipe.fit(transformer_input, count)
-```
-
-
-
-- Visualize model predictions!
-
-
-
-```{code-cell} ipython3
-visualize_model_predictions(pipe, transformer_input)
-```
-
-### Cross-validating on the basis
-
-
-
-Now that we have our pipeline estimator, we can cross-validate on any of its parameters!
-
-
-
-```{code-cell} ipython3
-pipe.steps
-```
-
-
-
-Let's cross-validate on:
-- The number of the basis functions of the position basis
-- The functional form of the basis for speed
-
-
-```{code-cell} ipython3
-print(pipe["basis"]["position"].n_basis_funcs)
-print(pipe["basis"]["speed"])
-```
-
-
-
-- Construct `param_grid`, using `__` to stand in for `.`
-- In sklearn pipelines, we access nested parameters using double underscores:
-  - `pipe["basis"]["position"].n_basis_funcs` ← normal Python syntax
-  - `"basis__position__n_basis_funcs"` ← sklearn parameter grid syntax
-
-
-
-```{code-cell} ipython3
-param_grid = {
-    "basis__position__n_basis_funcs": [5, 10, 20],
-    "basis__speed": [nmo.basis.MSplineEval(15).set_input_shape(1),
-                      nmo.basis.BSplineEval(15).set_input_shape(1),
-                      nmo.basis.RaisedCosineLinearEval(15).set_input_shape(1)],
-}
-```
-
-
-
-- Cross-validate as before:
-
-
-```{code-cell} ipython3
-cv = model_selection.GridSearchCV(pipe, param_grid, cv=cv_folds)
-cv.fit(transformer_input, count)
-```
-
-
-
-- Investigate results:
-
-
-```{code-cell} ipython3
-pd.DataFrame(cv.cv_results_)
-```
-
-
-
-- Can easily grab the best estimator, the pipeline that did the best:
-
-
-```{code-cell} ipython3
-best_estim = cv.best_estimator_
-best_estim
-```
-
-
-
-- Visualize model predictions!
-
-
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-visualize_model_predictions(best_estim, transformer_input)
-```
-
-### Feature selection
-
-```{code-cell} ipython3
-# this function creates an empty array (n_sample, 0)
-def func(x):
-    return np.zeros((x.shape[0], 0))
-
-# Create a null basis using the custom basis class
-null_basis = nmo.basis.CustomBasis([func]).to_transformer()
-
-# this creates an empty feature
-null_basis.compute_features(position).shape
-```
-
-```{code-cell} ipython3
-# first we note that the position + speed basis is in the basis attribute
-print(pipe["basis"].basis)
-
-position_bas = nmo.basis.MSplineEval(n_basis_funcs=10).to_transformer()
-speed_bas = nmo.basis.MSplineEval(n_basis_funcs=15).to_transformer()
-
-# define 2D basis per each model 
-basis_all = position_bas + speed_bas
-basis_position = position_bas + null_basis
-basis_speed = null_basis + speed_bas
-
-# assign label (not necessary but nice)
-basis_all.label = "position + speed"
-basis_position.label = "position"
-basis_speed.label = "speed"
-
-
-# then we create a parameter grid defining a grid of 2D basis for each model of interest
-param_grid = {
-    "basis__basis": 
-    [
-        basis_all,  
-        basis_position, 
-        basis_speed 
-    ],
-}
-
-# finally we define and fit our CV
-cv = model_selection.GridSearchCV(pipe, param_grid, cv=cv_folds)
-cv.fit(transformer_input, count)
-```
-
-```{code-cell} ipython3
-cv_df = pd.DataFrame(cv.cv_results_)
-
-# let's just plot a minimal subset of cols
-cv_df[["param_basis__basis", "mean_test_score", "rank_test_score"]]
-```
-
-## Conclusion
 
 ## References
 
@@ -741,8 +377,3 @@ cv_df[["param_basis__basis", "mean_test_score", "rank_test_score"]]
 
 The data in this tutorial comes from [Grosmark, Andres D., and György Buzsáki. "Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences." Science 351.6280 (2016): 1440-1443](https://www.science.org/doi/full/10.1126/science.aad1935).
 
-
-
-```{code-cell} ipython3
-
-```

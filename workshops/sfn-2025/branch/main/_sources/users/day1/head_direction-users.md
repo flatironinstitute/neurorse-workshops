@@ -37,6 +37,9 @@ The pynapple documentation can be found [here](https://pynapple.org).
 The nemos documentation can be found [here](https://nemos.readthedocs.io/en/latest/).
 
 
+
+
+
 Let's start by importing all the packages.
 If an import fails, you can do `!pip install pynapple nemos matplotlib` in a cell to fix it.
 
@@ -752,9 +755,8 @@ doc_plots.plot_rates_and_smoothed_counts(
     {"Self-connection raw history":rate_history, "Self-connection bsais": rate_basis}
 );
 ```
-
-
 ## All-to-all Connectivity
+
 
 The same approach can be applied to the whole population. Now the firing rate of a neuron
 is predicted not only by its own count history, but also by the rest of the
@@ -818,7 +820,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 
 Predict the rate (counts are already sorted by tuning prefs)
 
-**Question: Can you:**11
+**Question: Can you:**
 - Predict the firing rate of each neuron? Call it `predicted_firing_rate`.
 - Convert the rate from spike/bin to spike/sec?
 

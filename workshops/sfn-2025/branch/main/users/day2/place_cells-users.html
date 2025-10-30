@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Model selection &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Fit an Encoding Model &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -53,12 +53,14 @@
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'users/day2/place_cells-users';</script>
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Exploring the Visual Coding Dataset" href="visual_coding-users.html" />
-    <link rel="prev" title="Introduction to GLM" href="current_injection-users.html" />
+    <link rel="prev" title="NeMoS Advanced: Cross-Validation and Model Selection" href="nemos_advanced-users.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -219,9 +221,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../full/day1/fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day1/head_direction.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l1"><a class="reference internal" href="../../full/day1/phase_precession.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day1/phase_precession.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/current_injection.html">Introduction to GLM</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../full/day2/place_cells.html">Model selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day2/nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/day2/place_cells.html">Fit an Encoding Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/day2/visual_coding.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited notebooks</span></p>
@@ -230,9 +233,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../day1/fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../day1/head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../day1/phase_precession-users.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../day1/phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -240,9 +244,10 @@
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/head_direction-presenters.html">Data analysis with pynapple &amp; nemos</a></li>
 
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Signal processing and decoding in pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Model selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/visual_coding-presenters.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -399,7 +404,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Model selection</h1>
+    <h1>Fit an Encoding Model</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -409,28 +414,20 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-be-cropped-when-merging">&gt;&gt;&gt;&gt; Should Be Cropped When Merging</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#place-fields">Place fields</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-modulation">Speed modulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-speed-per-epoch">Extract Speed per Epoch</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-part-to-be-cropped">&lt;&lt;&lt;&lt; End of Part to Be Cropped</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-and-speed-modulation">Position and Speed modulation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-evaluation">Basis evaluation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-learning">Model learning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Learning Objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">Scikit-learn</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-know-when-to-regularize">How to know when to regularize?</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-basis">Select basis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelines">Pipelines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-exercise">Extra Exercise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -484,19 +481,15 @@ document.write(`
 <p class="admonition-title">Download</p>
 <p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/ff7b079b6de87571512b70228935272a/place_cells-users.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">place_cells-users.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="model-selection">
-<h1>Model selection<a class="headerlink" href="#model-selection" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="fit-an-encoding-model">
+<h1>Fit an Encoding Model<a class="headerlink" href="#fit-an-encoding-model" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder)
 while listening to the presenter’s explanation. In order to see the fully
 rendered of this notebook, go <a class="reference internal" href="../../full/day2/place_cells.html"><span class="std std-doc">here</span></a></p>
-<p>Data for this notebook comes from recordings in the mouse hippocampus while the mouse runs on a linear track, which we <a class="reference internal" href="../day1/phase_precession-users.html"><span class="std std-doc">explored yesterday</span></a>.</p>
-<section id="learning-objectives">
-<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Review how to use pynapple to analyze neuronal tuning</p></li>
-<li><p>Learn how to combine NeMoS basis objects for modeling multiple predictors</p></li>
-</ul>
+<p>In this short group project we will keep working on the hippocampal place field recordings. In particular, we will learn how to model neural responses to multiple predictors: position and speed.</p>
+<section id="should-be-cropped-when-merging">
+<h2>&gt;&gt;&gt;&gt; Should Be Cropped When Merging<a class="headerlink" href="#should-be-cropped-when-merging" title="Link to this heading">#</a></h2>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -520,9 +513,6 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 
 <span class="c1"># shut down jax to numpy conversion warning</span>
 <span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
-
-<span class="c1"># during development, set this to a lower number so everything runs faster. </span>
-<span class="n">cv_folds</span> <span class="o">=</span> <span class="mi">5</span>
 </pre></div>
 </div>
 </div>
@@ -608,11 +598,8 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 </div>
 </section>
-<section id="speed-modulation">
-<h3>Speed modulation<a class="headerlink" href="#speed-modulation" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>Compute animal’s speed for each epoch.</p></li>
-</ul>
+<section id="extract-speed-per-epoch">
+<h3>Extract Speed per Epoch<a class="headerlink" href="#extract-speed-per-epoch" title="Link to this heading">#</a></h3>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">speed</span> <span class="o">=</span> <span class="p">[]</span>
@@ -633,12 +620,18 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="end-of-part-to-be-cropped">
+<h2>&lt;&lt;&lt;&lt; End of Part to Be Cropped<a class="headerlink" href="#end-of-part-to-be-cropped" title="Link to this heading">#</a></h2>
+<section id="position-and-speed-modulation">
+<h3>Position and Speed modulation<a class="headerlink" href="#position-and-speed-modulation" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Compute the tuning curve with pynapple’s <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code></a></p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tc_speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">speed</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -653,46 +646,43 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </div>
 </div>
 </div>
-<p>These neurons all show both position and speed tuning, and we see that the animal’s speed and position are highly correlated. We’re going to build a GLM to predict neuronal firing rate – which variable should we use? Is the speed tuning just epiphenomenal?</p>
+<p>These neurons all show both position and speed tuning, and we see that the animal’s speed and position are highly correlated. GLMs can help us model responses to multiple, potentially correlated predictors.</p>
+<p>The goal of this project is to fit a PopulationGLM including both position and speed as predictors, and check if this model  accurately captures the tuning curves of the neurons.</p>
 </section>
-</section>
-<section id="nemos">
-<h2>NeMoS<a class="headerlink" href="#nemos" title="Link to this heading">#</a></h2>
 <section id="basis-evaluation">
 <h3>Basis evaluation<a class="headerlink" href="#basis-evaluation" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Create a separate basis object for each model input.</p></li>
+<li><p>Create a separate basis object for each model input (speed and position).</p></li>
+<li><p>Provide a label for each basis (“position” and “speed”).</p></li>
 <li><p>Visualize the basis objects.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">position_basis</span> <span class="o">=</span> 
+<span class="n">speed_basis</span> <span class="o">=</span> 
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <ul class="simple">
-<li><p>Combine the two basis objects into a single “additive basis”</p></li>
+<li><p>For users new to NeMoS: call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> for both position and speed basis, and concatenate the result to form a single design matrix.</p></li>
+<li><p>Alternatively, for people familiar with NeMoS, add the basis together, and call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> on the newly created additive basis.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X_position</span> <span class="o">=</span> 
+<span class="n">X_speed</span> <span class="o">=</span> 
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
+<span class="n">X</span>
 </pre></div>
 </div>
 </div>
 </div>
 <ul class="simple">
-<li><p>Create the design matrix!</p></li>
 <li><p>Notice that, since we passed the basis pynapple objects, we got one back, preserving the time stamps.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">X</span></code> has the same number of time points as our input position and speed, but 25 columns. The columns come from  <code class="docutils literal notranslate"><span class="pre">n_basis_funcs</span></code> from each basis (10 for position, 15 for speed).</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 <section id="model-learning">
 <h3>Model learning<a class="headerlink" href="#model-learning" title="Link to this heading">#</a></h3>
@@ -703,7 +693,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the model</span>
+<span class="n">glm</span> <span class="o">=</span>
+<span class="c1"># fit</span>
+<span class="n">glm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
 </pre></div>
 </div>
 </div>
@@ -717,7 +710,11 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># predict the model&#39;s firing rate</span>
+<span class="n">predicted_rate</span> <span class="o">=</span>
+<span class="c1"># compute the position and speed tuning curves using the predicted firing rate.</span>
+<span class="n">glm_tuning_pos</span> <span class="o">=</span> 
+<span class="n">glm_tuning_speed</span> <span class="o">=</span> 
 </pre></div>
 </div>
 </div>
@@ -727,312 +724,31 @@ rendered of this notebook, go <a class="reference internal" href="../../full/day
 </ul>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed_tuning</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">glm_pos</span><span class="p">,</span> <span class="n">glm_speed</span><span class="p">);</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed_tuning</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">glm_tuning_pos</span><span class="p">,</span> <span class="n">glm_tuning_speed</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>We can see that this model does a good job capturing both the position and the speed. In the rest of this notebook, we’re going to investigate all the scientific decisions that we swept under the rug: should we regularize the model? what basis should we use? do we need both inputs?</p>
-<p>To make our lives easier, let’s create a helper function that wraps the above
-lines, because we’re going to be visualizing our model predictions a lot.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>In our previous analysis of the place field hyppocampal dataset we compared multiple encoding models and tried to figure out which predictor (position, speed or phase) had more explanatory power. In this notebook we will keep going on that effort and learn more principled (and convenient) approaches to model comparison combining NeMoS and scikit-learn.</p>
 </section>
 </section>
-<section id="id1">
-<h2>Learning Objectives<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<section id="extra-exercise">
+<h2>Extra Exercise<a class="headerlink" href="#extra-exercise" title="Link to this heading">#</a></h2>
+<p>If you breezed through this exercise and you feel like working a bit more, here is some suggestions:</p>
 <ul class="simple">
-<li><p>Learn how to use NeMoS objects with <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> for cross-validation</p></li>
-<li><p>Learn how to use NeMoS objects with scikit-learn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">pipelines</a></p></li>
-<li><p>Learn how to use cross-validation to perform model and feature selection</p></li>
-<li></li>
-</ul>
-</section>
-<section id="scikit-learn">
-<h2>Scikit-learn<a class="headerlink" href="#scikit-learn" title="Link to this heading">#</a></h2>
-<section id="how-to-know-when-to-regularize">
-<h3>How to know when to regularize?<a class="headerlink" href="#how-to-know-when-to-regularize" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>How do we decide when to use regularization?</p></li>
-<li><p>Cross-validation allows you to fairly compare different models on the same dataset.</p></li>
-<li><p>NeMoS makes use of <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a>, the standard machine learning library in python.</p></li>
-<li><p>Define <a class="reference external" href="https://scikit-learn.org/stable/modules/grid_search.html#grid-search">parameter grid</a> to search over.</p></li>
-<li><p>Anything not specified in grid will be kept constant.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Initialize scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a> object.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>We interact with this in a very similar way to the glm object.</p></li>
-<li><p>In particular, call <code class="docutils literal notranslate"><span class="pre">fit</span></code> with same arguments:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>We got a warning because we didn’t specify the regularizer strength, so we just fell back on default value.</p></li>
-<li><p>Let’s investigate results:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="select-basis">
-<h3>Select basis<a class="headerlink" href="#select-basis" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>You can (and should) do something similar to determine how many basis functions you need for each input.</p></li>
-<li><p>NeMoS basis objects are not scikit-learn-compatible right out of the box.</p></li>
-<li><p>But we have provided a simple method to make them so:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>This gives the basis object the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method, which is equivalent to <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>.</p></li>
-<li><p>However, transformers have some limits:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Transformers only accept 2d inputs, whereas nemos basis objects can accept inputs of any dimensionality.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>If the basis is composite (for example, the addition of two 1D bases), the transformer will expect a shape of <code class="docutils literal notranslate"><span class="pre">(n_sampels,</span> <span class="pre">1)</span></code> each 1D component. If that’s not the case, you need to call <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code>:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Then you can call transform on the 2d input as expected.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>You can, equivalently, call <code class="docutils literal notranslate"><span class="pre">compute_features</span></code> <em>before</em> turning the basis into a transformer. Then we cache the shape for future use:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Create a single TsdFrame to hold all our inputs:</p></li>
-</ul>
-<div class="cell tag_render-all docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transformer_input</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span>
-    <span class="n">t</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">t</span><span class="p">,</span>
-    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span><span class="p">],</span> <span class="mi">1</span><span class="p">),</span>
-    <span class="n">time_support</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">],</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Pass this input to our transformed additive basis:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="pipelines">
-<h3>Pipelines<a class="headerlink" href="#pipelines" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>If we want to cross-validate over the basis, we need more one more step: combining the basis and the GLM into a single scikit-learn estimator.</p></li>
-<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">Pipelines</a> to the rescue!</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Pipeline runs <code class="docutils literal notranslate"><span class="pre">basis.transform</span></code>, then passes that output to <code class="docutils literal notranslate"><span class="pre">glm</span></code>, so we can do everything in a single line:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Visualize model predictions!</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="cross-validating-on-the-basis">
-<h3>Cross-validating on the basis<a class="headerlink" href="#cross-validating-on-the-basis" title="Link to this heading">#</a></h3>
-<p>Now that we have our pipeline estimator, we can cross-validate on any of its parameters!</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Let’s cross-validate on:</p>
-<ul class="simple">
-<li><p>The number of the basis functions of the position basis</p></li>
-<li><p>The functional form of the basis for speed</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Construct <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, using <code class="docutils literal notranslate"><span class="pre">__</span></code> to stand in for <code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
-<li><p>In sklearn pipelines, we access nested parameters using double underscores:</p>
+<li><p>Try to fit and compare the results we just obtained with different models:</p>
 <ul>
-<li><p><code class="docutils literal notranslate"><span class="pre">pipe[&quot;basis&quot;][&quot;position&quot;].n_basis_funcs</span></code> ← normal Python syntax</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">&quot;basis__position__n_basis_funcs&quot;</span></code> ← sklearn parameter grid syntax</p></li>
+<li><p>A model with position as the only predictor.</p></li>
+<li><p>A model with speed as the only predictor.</p></li>
 </ul>
 </li>
+<li><p>Introduce L1 (Lasso) regularization and fit models with increasingly large penalty strengths (<span class="math notranslate nohighlight">\(\lambda\)</span>). Plot the regularization path showing how each coefficient changes with <span class="math notranslate nohighlight">\(\lambda\)</span>. Identify which coefficients remain non-zero longest as <span class="math notranslate nohighlight">\(\lambda\)</span> increases - these correspond to the most informative predictors.</p></li>
 </ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Cross-validate as before:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Investigate results:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Can easily grab the best estimator, the pipeline that did the best:</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Visualize model predictions!</p></li>
-</ul>
-<div class="cell tag_render-all docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_model_predictions</span><span class="p">(</span><span class="n">best_estim</span><span class="p">,</span> <span class="n">transformer_input</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-<section id="feature-selection">
-<h3>Feature selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
+<p>To make your lives easier, you can use the helper function  below to visualize model predictions.</p>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
 <p>The data in this tutorial comes from <a class="reference external" href="https://www.science.org/doi/full/10.1126/science.aad1935">Grosmark, Andres D., and György Buzsáki. “Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences.” Science 351.6280 (2016): 1440-1443</a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 </section>
 
@@ -1048,12 +764,12 @@ lines, because we’re going to be visualizing our model predictions a lot.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="current_injection-users.html"
+       href="nemos_advanced-users.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to GLM</p>
+        <p class="prev-next-title">NeMoS Advanced: Cross-Validation and Model Selection</p>
       </div>
     </a>
     <a class="right-next"
@@ -1081,28 +797,20 @@ lines, because we’re going to be visualizing our model predictions a lot.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#should-be-cropped-when-merging">&gt;&gt;&gt;&gt; Should Be Cropped When Merging</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#place-fields">Place fields</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#speed-modulation">Speed modulation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-speed-per-epoch">Extract Speed per Epoch</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#end-of-part-to-be-cropped">&lt;&lt;&lt;&lt; End of Part to Be Cropped</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#position-and-speed-modulation">Position and Speed modulation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-evaluation">Basis evaluation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-learning">Model learning</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prediction">Prediction</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Learning Objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">Scikit-learn</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-know-when-to-regularize">How to know when to regularize?</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-basis">Select basis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelines">Pipelines</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#extra-exercise">Extra Exercise</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>

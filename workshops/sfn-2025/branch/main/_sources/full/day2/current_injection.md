@@ -338,6 +338,7 @@ ax.set_ylabel("Current (pA)")
 ax.set_xlabel("Time (s)")
 ```
 
+(current-inj-basic)=
 ### Basic analyses
 
 Before using the Generalized Linear Model, or any model, it's worth taking
@@ -519,6 +520,7 @@ explain:
 
 ## NeMoS 
 
+(current-inj-prep)=
 ### Preparing data
 
 Now that we understand our data, we're almost ready to put the model together.
@@ -616,6 +618,7 @@ make your life easier by e.g., allowing you to parallelize more easily.
 
 :::
 
+(current-inj-glm)=
 ### Fitting the model
 
 Now we're ready to fit our model!
@@ -807,6 +810,7 @@ Viewing this plot also makes it clear that the model's tuning curve is
 approximately exponential. We already knew that! That's what it means to be a
 LNP model of a single input. But it's nice to see it made explicit.
 
+(current-inj-basis)=
 ### Extending the model to use injection history
 
 We can try extending the model in order to improve its performance. There are many
@@ -1136,8 +1140,9 @@ train sets, training the model on one subset of the data and testing it on
 another to test the model's generalizability. We'll see a simple version of this
 in the [next notebook](./head_direction.md), and a more streamlined version,
 using `scikit-learn`'s pipelining and cross-validation machinery, will be shown
-in the [final notebook](./place_cells.md).
+in the [final notebook](./place_cells_part_2).
 
+(current-inj-score)=
 ### Finishing up
 
 Note that, because the log-likelihood is un-normalized, it should not be compared
@@ -1203,7 +1208,7 @@ We could try adding the following inputs to the model, alone or together:
   current and the firing rate. Can we improve that somehow? We saw that adding
   the current history changed this relationship, but we can also change it
   without including the history by using an `Eval` basis object. We'll see how
-  to do this in more detail in the [final notebook](./place_cells.md)
+  to do this in more detail in the [final notebook](./place_cells_part_2)
 
 <div class="render-all">
 
