@@ -274,8 +274,15 @@ full/live_coding/*
 ```
 
 ```{toctree}
+:glob:
+:caption: Group projects
 :titlesonly:
-:caption: Limited notebooks
+users/group_projects/*
+```
+
+```{toctree}
+:titlesonly:
+:caption: Limited live coding notebooks
 :maxdepth: 1
 users/index.md
 presenters/index.md

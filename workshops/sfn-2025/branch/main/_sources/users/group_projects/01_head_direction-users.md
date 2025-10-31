@@ -9,7 +9,7 @@ kernelspec:
   name: python3
   display_name: Python 3 (ipykernel)
   language: python
-no-search:
+
 ---
 ```{code-cell} ipython3
 :tags: [render-all]
