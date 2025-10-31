@@ -270,7 +270,7 @@ Some usage notes:
 :glob:
 :caption: Full notebooks
 :titlesonly:
-full/*/*
+full/live_coding/*
 ```
 
 ```{toctree}

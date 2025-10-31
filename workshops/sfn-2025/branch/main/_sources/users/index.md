@@ -4,5 +4,5 @@
 :glob:
 :titlesonly:
 :maxdepth: 1
-*/*
+live_coding/*
 ```
