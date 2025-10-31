@@ -57,7 +57,7 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Fit an Encoding Model" href="place_cells.html" />
+    <link rel="next" title="Exploring the Visual Coding Dataset" href="visual_coding.html" />
     <link rel="prev" title="Introduction to GLM" href="current_injection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -222,7 +222,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../day1/phase_precession.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="current_injection.html">Introduction to GLM</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-<li class="toctree-l1"><a class="reference internal" href="place_cells.html">Fit an Encoding Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="visual_coding.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited notebooks</span></p>
@@ -234,7 +233,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../users/day1/phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day2/current_injection-users.html">Introduction to GLM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day2/nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/day2/place_cells-users.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/day2/visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -245,7 +243,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day1/phase_precession-presenters.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/current_injection-presenters.html">Introduction to GLM</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/place_cells-presenters.html">Fit an Encoding Model</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/day2/visual_coding-presenters.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 </details></li>
@@ -527,7 +524,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-10-30 20:13:20,968:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-10-31 19:12:37,132:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1290,7 +1287,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1432,7 +1429,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -2024,7 +2021,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2166,7 +2163,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -2317,10 +2314,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
   <tbody>
     <tr>
       <th>0</th>
-      <td>4.450794</td>
-      <td>1.072272</td>
-      <td>0.351113</td>
-      <td>0.424381</td>
+      <td>4.280874</td>
+      <td>1.185113</td>
+      <td>0.341299</td>
+      <td>0.414262</td>
       <td>0.0001</td>
       <td>{'regularizer_strength': 0.0001}</td>
       <td>-0.128512</td>
@@ -2334,10 +2331,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>1</th>
-      <td>1.851521</td>
-      <td>0.087383</td>
-      <td>0.004490</td>
-      <td>0.000454</td>
+      <td>1.676941</td>
+      <td>0.123584</td>
+      <td>0.003248</td>
+      <td>0.000071</td>
       <td>1.0000</td>
       <td>{'regularizer_strength': 1.0}</td>
       <td>-0.137128</td>
@@ -4315,7 +4312,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                 (&#x27;glm&#x27;,
-                 PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+                 PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -4508,7 +4505,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -5128,7 +5125,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.],
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -5321,7 +5318,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -6044,7 +6041,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.]...
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
              param_grid={&#x27;basis__position__n_basis_funcs&#x27;: [5, 10, 20],
                          &#x27;basis__speed&#x27;: [MSplineEval(n_basis_funcs=15),
                                           BSplineEval(n_basis_funcs=15),
@@ -6301,7 +6298,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -6451,10 +6448,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.957611</td>
-      <td>0.320135</td>
-      <td>0.187491</td>
-      <td>0.208971</td>
+      <td>1.963432</td>
+      <td>0.268331</td>
+      <td>0.183861</td>
+      <td>0.206821</td>
       <td>5</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6469,10 +6466,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>1</th>
-      <td>1.722824</td>
-      <td>0.097624</td>
-      <td>0.017353</td>
-      <td>0.001497</td>
+      <td>1.624443</td>
+      <td>0.074548</td>
+      <td>0.018320</td>
+      <td>0.003715</td>
       <td>5</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6487,10 +6484,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>2</th>
-      <td>1.648180</td>
-      <td>0.076886</td>
-      <td>0.013419</td>
-      <td>0.001794</td>
+      <td>1.657091</td>
+      <td>0.083843</td>
+      <td>0.013599</td>
+      <td>0.001992</td>
       <td>5</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6505,10 +6502,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>3</th>
-      <td>1.807398</td>
-      <td>0.162284</td>
-      <td>0.017387</td>
-      <td>0.003262</td>
+      <td>1.836987</td>
+      <td>0.154570</td>
+      <td>0.016688</td>
+      <td>0.000802</td>
       <td>10</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6523,10 +6520,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>4</th>
-      <td>1.725291</td>
-      <td>0.096868</td>
-      <td>0.020346</td>
-      <td>0.003441</td>
+      <td>1.721846</td>
+      <td>0.084545</td>
+      <td>0.019207</td>
+      <td>0.002802</td>
       <td>10</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6541,10 +6538,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>5</th>
-      <td>1.811323</td>
-      <td>0.082623</td>
-      <td>0.016111</td>
-      <td>0.003369</td>
+      <td>1.673400</td>
+      <td>0.094858</td>
+      <td>0.014289</td>
+      <td>0.001367</td>
       <td>10</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6559,10 +6556,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>6</th>
-      <td>2.222007</td>
-      <td>0.257829</td>
-      <td>0.129995</td>
-      <td>0.130177</td>
+      <td>1.991279</td>
+      <td>0.284406</td>
+      <td>0.115406</td>
+      <td>0.117294</td>
       <td>20</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -6577,10 +6574,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>7</th>
-      <td>2.035566</td>
-      <td>0.351422</td>
-      <td>0.026750</td>
-      <td>0.008808</td>
+      <td>1.901925</td>
+      <td>0.281882</td>
+      <td>0.025215</td>
+      <td>0.007542</td>
       <td>20</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -6595,10 +6592,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>8</th>
-      <td>1.841355</td>
-      <td>0.050491</td>
-      <td>0.018623</td>
-      <td>0.001547</td>
+      <td>1.774156</td>
+      <td>0.106787</td>
+      <td>0.017167</td>
+      <td>0.000753</td>
       <td>20</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -7142,7 +7139,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.],
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f024878f100&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f5a5c51f2e0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -7335,7 +7332,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -8997,7 +8994,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f024878f100&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f5a5c51f2e0&gt;&gt;</td>
         </tr>
     
 
@@ -9207,11 +9204,11 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
       </div>
     </a>
     <a class="right-next"
-       href="place_cells.html"
+       href="visual_coding.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Fit an Encoding Model</p>
+        <p class="prev-next-title">Exploring the Visual Coding Dataset</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
