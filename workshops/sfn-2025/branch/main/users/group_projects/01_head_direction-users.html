@@ -554,6 +554,10 @@ If you have installed the repository, you can run the following cell:</p>
 </div>
 <p>NWB file can save intervals with multiple labels. The object <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> includes the labels as a metadata object.</p>
 <p><strong>Question:</strong> Using the column <code class="docutils literal notranslate"><span class="pre">tags</span></code>, can you create one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">wake</span></code> and one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">sleep</span></code>?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="o">...</span>
+<span class="n">sleep_ep</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -565,8 +569,17 @@ If you have installed the repository, you can run the following cell:</p>
 <section id="compute-tuning-curves">
 <h2>Compute tuning curves<a class="headerlink" href="#compute-tuning-curves" title="Link to this heading">#</a></h2>
 <p>Now that we have spikes and a behavioral feature (i.e. head-direction), we would like to compute the firing rate of neurons as a function of the variable <code class="docutils literal notranslate"><span class="pre">angle</span></code> during <code class="docutils literal notranslate"><span class="pre">wake_ep</span></code>.
-To do this in pynapple, all you need is a single line of code!</p>
+To do this in pynapple, all you need is the call of a single function : <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>!</p>
 <p><strong>Question:</strong> can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>?</p>
+<p>Here are the parameters of the function to fill :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Should be the spike times of all neurons</span>
+<span class="n">features</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Which feature? Here the head-direction of the animal</span>
+<span class="n">bins</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># How many bins of feature space? 61 angular bins is a good numbers</span>
+<span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span> <span class="c1"># The epochs should correspond to when the features are defined. Here we use the time support directly</span>
+<span class="nb">range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="c1"># The min and max of the bin array</span>
+<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span> <span class="c1"># Let&#39;s give a name to our feature for better labelling of the output.</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -574,6 +587,7 @@ To do this in pynapple, all you need is a single line of code!</p>
 </div>
 </div>
 </div>
+<p>The output is an xarray object. The first dimensions is neurons. The second dimension is angular head-direction. Some metadata fields have been added.</p>
 <p><strong>Question:</strong> Can you plot some tuning curves?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -586,14 +600,21 @@ To do this in pynapple, all you need is a single line of code!</p>
 <p>The next cell allows us to get a quick estimate of the neurons’s preferred direction. Since this is a lot of xarray wrangling, it is given.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pref_ang</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;Angle&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pref_ang</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;angle&quot;</span><span class="p">)</span>
 
-<span class="c1"># pref_ang = tuning_curves.idxmax()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pref_ang</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p><strong>Question:</strong> Can you add it to the metainformation of <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
+<p>Hint :</p>
+<p>There are multiple ways of doing this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="n">tsgroup</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="n">metadata</span>
+<span class="n">tsgroup</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -603,7 +624,15 @@ To do this in pynapple, all you need is a single line of code!</p>
 </div>
 <p>This index maps a neuron to a preferred direction between 0 and 360 degrees.</p>
 <p><strong>Question:</strong> Can you plot the spiking activity of the neurons based on their preferred direction as well as the head-direction of the animal?
-For the sake of visibility, you should restrict the data to the following epoch : <code class="docutils literal notranslate"><span class="pre">ex_ep</span> <span class="pre">=</span> <span class="pre">nap.IntervalSet(start=8910,</span> <span class="pre">end=8960)</span></code>.</p>
+For the sake of visibility, you should restrict the data to the following epoch :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+<span class="n">ex_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">)</span>
+
+</pre></div>
+</div>
+<p><em>Hint for plotting</em></p>
+<p>The object <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> has the function <code class="docutils literal notranslate"><span class="pre">to_tsd</span></code> that transforms it from a collection of timestamps to a sorted timestamps array with values.
+Values can be assigned based on the metadata <code class="docutils literal notranslate"><span class="pre">to_tsd(&quot;pref_ang&quot;)</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -614,8 +643,15 @@ For the sake of visibility, you should restrict the data to the following epoch 
 </section>
 <section id="compute-correlograms">
 <h2>Compute correlograms<a class="headerlink" href="#compute-correlograms" title="Link to this heading">#</a></h2>
-<p>We see that some neurons have a correlated activity. Can we measure it?</p>
+<p>We see that some neurons have a correlated activity. Can we measure it with the function <code class="docutils literal notranslate"><span class="pre">nap.compute_crosscorrelogram</span></code>?</p>
 <p><strong>Question:</strong> Can you compute cross-correlograms during wake for all pairs of neurons and call it <code class="docutils literal notranslate"><span class="pre">cc_wake</span></code>?</p>
+<p>Here are the parameters of the function to fill :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># The neural activity as a TsGroup</span>
+<span class="n">binsize</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># 200 ms bin</span>
+<span class="n">windowsize</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># 20 s window</span>
+<span class="n">ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.</span>
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -646,7 +682,7 @@ The index shows the time lag.</p>
 </div>
 <p>Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.</p>
 <p><strong>Question:</strong> can you compute the cross-correlograms during sleep?</p>
-<p><em>Hint: change the argument ep to <code class="docutils literal notranslate"><span class="pre">sleep_ep</span></code></em></p>
+<p><em>Hint: change the argument ep of nap.compute_crosscorrelogram to <code class="docutils literal notranslate"><span class="pre">sleep_ep</span></code></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -1206,7 +1242,7 @@ all the coupling filters.</p>
     <span class="n">bins</span><span class="o">=</span><span class="mi">61</span><span class="p">,</span> 
     <span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
     <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Angle&quot;</span><span class="p">]</span>
+    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span>
     <span class="p">)</span>
 
                                                  

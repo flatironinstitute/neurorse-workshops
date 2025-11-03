@@ -159,6 +159,11 @@ NWB file can save intervals with multiple labels. The object `IntervalSet` inclu
 
 **Question:** Using the column `tags`, can you create one `IntervalSet` object for intervals labeled `wake` and one `IntervalSet` object for intervals labeled `sleep`?
 
+```
+wake_ep = ...
+sleep_ep = ...
+```
+
 
 ```{code-cell}
 # enter code here
@@ -168,9 +173,20 @@ NWB file can save intervals with multiple labels. The object `IntervalSet` inclu
 
 
 Now that we have spikes and a behavioral feature (i.e. head-direction), we would like to compute the firing rate of neurons as a function of the variable `angle` during `wake_ep`.
-To do this in pynapple, all you need is a single line of code!
+To do this in pynapple, all you need is the call of a single function : `nap.compute_tuning_curves`!
 
 **Question:** can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable `tuning_curves`?
+
+Here are the parameters of the function to fill :
+```
+data = ... # Should be the spike times of all neurons
+features = ... # Which feature? Here the head-direction of the animal
+bins = ... # How many bins of feature space? 61 angular bins is a good numbers
+epochs = angle.time_support # The epochs should correspond to when the features are defined. Here we use the time support directly
+range = (0, 2*np.pi) # The min and max of the bin array
+feature_names = ["angle"] # Let's give a name to our feature for better labelling of the output.
+```
+
 
 
 ```{code-cell}
@@ -178,6 +194,8 @@ To do this in pynapple, all you need is a single line of code!
 ```
 
 
+
+The output is an xarray object. The first dimensions is neurons. The second dimension is angular head-direction. Some metadata fields have been added.
 
 **Question:** Can you plot some tuning curves?
 
@@ -196,13 +214,22 @@ The next cell allows us to get a quick estimate of the neurons's preferred direc
 ```{code-cell} ipython3
 :tags: [render-all]
 
-pref_ang = tuning_curves.idxmax(dim="Angle")
+pref_ang = tuning_curves.idxmax(dim="angle")
 
-# pref_ang = tuning_curves.idxmax()
+print(pref_ang)
 ```
 
 
 **Question:** Can you add it to the metainformation of `spikes`?
+
+Hint :
+
+There are multiple ways of doing this:
+```
+tsgroup['label'] = metadata
+tsgroup.label = metadata
+tsgroup.set_info(label=metadata)
+```
 
 
 ```{code-cell}
@@ -214,7 +241,20 @@ pref_ang = tuning_curves.idxmax(dim="Angle")
 This index maps a neuron to a preferred direction between 0 and 360 degrees.
 
 **Question:** Can you plot the spiking activity of the neurons based on their preferred direction as well as the head-direction of the animal?
-For the sake of visibility, you should restrict the data to the following epoch : `ex_ep = nap.IntervalSet(start=8910, end=8960)`.
+For the sake of visibility, you should restrict the data to the following epoch : 
+
+```
+
+ex_ep = nap.IntervalSet(start=8910, end=8960)
+
+```
+
+
+*Hint for plotting*
+
+The object `TsGroup` has the function `to_tsd` that transforms it from a collection of timestamps to a sorted timestamps array with values.
+Values can be assigned based on the metadata `to_tsd("pref_ang")`.
+
 
 
 ```{code-cell}
@@ -224,9 +264,18 @@ For the sake of visibility, you should restrict the data to the following epoch 
 ## Compute correlograms
 
 
-We see that some neurons have a correlated activity. Can we measure it?
+We see that some neurons have a correlated activity. Can we measure it with the function `nap.compute_crosscorrelogram`?
 
 **Question:** Can you compute cross-correlograms during wake for all pairs of neurons and call it `cc_wake`?
+
+Here are the parameters of the function to fill :
+```
+group = ... # The neural activity as a TsGroup
+binsize = 0.2 # 200 ms bin
+windowsize = 20 # 20 s window
+ep = ... # Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.
+```
+
 
 
 ```{code-cell}
@@ -267,7 +316,7 @@ Pairwise correlation were computed during wakefulness. The activity of the neuro
 
 **Question:** can you compute the cross-correlograms during sleep?
 
-*Hint: change the argument ep to `sleep_ep`*
+*Hint: change the argument ep of nap.compute_crosscorrelogram to `sleep_ep`*
 
 
 ```{code-cell}
@@ -890,7 +939,7 @@ predicted_tuning_curves = nap.compute_tuning_curves(
     bins=61, 
     epochs = angle.time_support,
     range=(0, 2 * np.pi),
-    feature_names = ["Angle"]
+    feature_names = ["angle"]
     )
 
                                                  
