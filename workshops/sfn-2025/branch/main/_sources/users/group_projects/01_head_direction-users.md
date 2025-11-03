@@ -378,7 +378,7 @@ To use the GLM, we need first to bin the spike trains. Here we use pynapple and 
 
 **Question: can you reorder the columns of `count` based on the preferred direction of each neuron?**
 
-Above we defined `pref_ang` as the preferred direction of each neuron.
+Above we defined `pref_ang` as the preferred direction of each neuron. `np.argsort(pref_ang.values)` gives you the order to sort the columns of count.
 
 
 ```{code-cell}
@@ -395,8 +395,9 @@ The simplest approach is to use counts in fixed length window $i$, $y_{t-i}, \do
 count $y_{t}$. 
 
 Before starting the analysis, let's 
-    - **select a neuron from the `count` object (call the variable `neuron_count`)** 
-    - **Select the first 1.2 seconds for visualization. (call the epoch `epoch_one_spk`).**
+
+- **select a neuron (firt column is good) from the `count` object (call the variable `neuron_count`)** 
+- **Select the first 1.2 seconds of wake_ep for visualization. (call the epoch `epoch_one_spk`).**
 
 
 ```{code-cell}

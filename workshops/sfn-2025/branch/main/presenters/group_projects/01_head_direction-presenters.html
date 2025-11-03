@@ -817,7 +817,7 @@ The index shows the time lag.</p>
 </div>
 </div>
 <p><strong>Question: can you reorder the columns of <code class="docutils literal notranslate"><span class="pre">count</span></code> based on the preferred direction of each neuron?</strong></p>
-<p>Above we defined <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> as the preferred direction of each neuron.</p>
+<p>Above we defined <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> as the preferred direction of each neuron. <code class="docutils literal notranslate"><span class="pre">np.argsort(pref_ang.values)</span></code> gives you the order to sort the columns of count.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pref_ang</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
@@ -830,9 +830,11 @@ This can be quantified with a GLM if we use the recent population spike history 
 <p>To simplify our life, let’s see first how we can model spike history effects in a single neuron.
 The simplest approach is to use counts in fixed length window <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(y_{t-i}, \dots, y_{t-1}\)</span> to predict the next
 count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
-<p>Before starting the analysis, let’s
-- <strong>select a neuron from the <code class="docutils literal notranslate"><span class="pre">count</span></code> object (call the variable <code class="docutils literal notranslate"><span class="pre">neuron_count</span></code>)</strong>
-- <strong>Select the first 1.2 seconds for visualization. (call the epoch <code class="docutils literal notranslate"><span class="pre">epoch_one_spk</span></code>).</strong></p>
+<p>Before starting the analysis, let’s</p>
+<ul class="simple">
+<li><p><strong>select a neuron (firt column is good) from the <code class="docutils literal notranslate"><span class="pre">count</span></code> object (call the variable <code class="docutils literal notranslate"><span class="pre">neuron_count</span></code>)</strong></p></li>
+<li><p><strong>Select the first 1.2 seconds of wake_ep for visualization. (call the epoch <code class="docutils literal notranslate"><span class="pre">epoch_one_spk</span></code>).</strong></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a neuron&#39;s spike count time series</span>
