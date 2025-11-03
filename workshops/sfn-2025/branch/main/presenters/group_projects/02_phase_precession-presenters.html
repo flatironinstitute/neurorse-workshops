@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -225,7 +225,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Data analysis with pynapple &amp; nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
 
@@ -380,7 +380,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</h1>
+    <h1>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -409,7 +409,7 @@ document.write(`
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">6. Define 100 log-spaced samples between 5 and 200 Hz using <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></span></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-supplying-the-known-sampling-rate-of-1250-hz">7. Compute the wavelet transform, supplying the known sampling rate of 1250 Hz.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform">7. Compute the wavelet transform.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-for-theta">Filtering for theta</a><ul class="nav section-nav flex-column">
@@ -418,7 +418,7 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">scipy.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
@@ -435,13 +435,13 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">16. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes-using-50-bins-for-position-and-20-bins-for-theta-phase">18. Apply <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, using 50 bins for position and 20 bins for theta phase.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">18. Apply <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep-using-40-ms-time-bins">19. Use <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code> using 40 ms time bins.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep">19. Use <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-the-same-run-as-above-now-using-sliding-window-size-of-5-bins">20. Decode the same run as above, now using sliding window size of 5 bins.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms">21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins">21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span> and sliding window size of 5 bins.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>
@@ -478,8 +478,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="group-project-analyzing-hippocampal-place-cells-with-pynapple-and-nemos">
-<h1>Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS<a class="headerlink" href="#group-project-analyzing-hippocampal-place-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="group-project-2-analyzing-hippocampal-place-cells-with-pynapple-and-nemos">
+<h1>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS<a class="headerlink" href="#group-project-2-analyzing-hippocampal-place-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder)
 while listening to the presenter’s explanation. In order to see the fully
@@ -515,7 +515,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="kn">import</span> <span class="n">signal</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">tqdm</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
@@ -710,8 +710,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="extract-time-intervals-from-position-using-the-dropna-and-find-support-methods">
 <h4>3. Extract time intervals from <code class="docutils literal notranslate"><span class="pre">position</span></code> using the <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.dropna.html#pynapple.Tsd.dropna" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">dropna</span></code></span></a> and <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.find_support.html#pynapple.Tsd.find_support" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">find_support</span></code></span></a> methods.<a class="headerlink" href="#extract-time-intervals-from-position-using-the-dropna-and-find-support-methods" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p>The first input argument, <code class="docutils literal notranslate"><span class="pre">min_gap</span></code>, sets the minumum separation between adjacent intervals in order to be split</p></li>
-<li><p>Here, use <code class="docutils literal notranslate"><span class="pre">min_gap</span></code> of 1 s</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">min_gap</span></code> of 1 s</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -773,15 +772,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </section>
 <section id="getting-the-wavelet-decomposition">
 <h3>Getting the Wavelet Decomposition<a class="headerlink" href="#getting-the-wavelet-decomposition" title="Link to this heading">#</a></h3>
-<p>To illustrate this further, we’ll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_wavelet_transform</span></code></span></a>. This function takes the following inputs (in order):</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">sig</span></code>: the input signal; a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code>, a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code>, or a <code class="docutils literal notranslate"><span class="pre">TsdTensor</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">freqs</span></code>: a 1D array of frequency values to decompose</p></li>
-</ul>
-<p>We will also supply the following optional arguments:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fs</span></code>: the sampling rate of <code class="docutils literal notranslate"><span class="pre">sig</span></code></p></li>
-</ul>
+<p>To illustrate this further, we’ll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_wavelet_transform</span></code></span></a>.</p>
 <p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Continuous_wavelet_transform">continuous wavelet transform</a> decomposes a signal into a set of <a class="reference external" href="https://en.wikipedia.org/wiki/Wavelet">wavelets</a>, in this case <a class="reference external" href="https://en.wikipedia.org/wiki/Morlet_wavelet">Morlet wavelets</a>, that span both frequency and time. You can think of the wavelet transform as a cross-correlation between the signal and each wavelet, giving the similarity between the signal and various frequency components at each time point of the signal. Similar to a Fourier transform, this gives us an estimate of what frequencies are dominating a signal. Unlike the Fourier tranform, however, the wavelet transform gives us this estimate as a function of time.</p>
 <p>We must define the frequency set that we’d like to use for our decomposition. We can do this with the numpy function <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html#numpy.geomspace" title="NumPy 2.3"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></span></a>, which returns numbers evenly spaced on a log scale. We pass the lower frequency, the upper frequency, and number of samples as positional arguments.</p>
 <section id="define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">
@@ -796,8 +787,11 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 <p>We can now compute the wavelet transform on our LFP data during the example run using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_wavelet_transform</span></code></span></a> by passing both <code class="docutils literal notranslate"><span class="pre">ex_lfp_run</span></code> and <code class="docutils literal notranslate"><span class="pre">freqs</span></code>. We’ll also pass the optional argument <code class="docutils literal notranslate"><span class="pre">fs</span></code>, which is known to be 1250Hz from the study methods.</p>
 </section>
-<section id="compute-the-wavelet-transform-supplying-the-known-sampling-rate-of-1250-hz">
-<h4>7. Compute the wavelet transform, supplying the known sampling rate of 1250 Hz.<a class="headerlink" href="#compute-the-wavelet-transform-supplying-the-known-sampling-rate-of-1250-hz" title="Link to this heading">#</a></h4>
+<section id="compute-the-wavelet-transform">
+<h4>7. Compute the wavelet transform.<a class="headerlink" href="#compute-the-wavelet-transform" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Supply the known sampling rate, 1250 Hz, as the optional argument <code class="docutils literal notranslate"><span class="pre">fs</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1250</span>
@@ -850,19 +844,13 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </div>
 </div>
-<p>We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></span></a>, which takes the the following arguments:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: the signal to be filtered; a <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.html#pynapple.Tsd" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">Tsd</span></code></span></a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.TsdFrame.html#pynapple.TsdFrame" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></span></a>, or <a class="reference external" href="https://pynapple.org/generated/pynapple.TsdTensor.html#pynapple.TsdTensor" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">TsdTensor</span></code></span></a></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cutoff</span></code>: tuple containing the frequency cutoffs, (lower frequency, upper frequency)</p></li>
-</ul>
-<p>Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don’t have to worry about passing signals that have been split in time.</p>
-<p>Same as before, we’ll pass the optional argument:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">fs</span></code>: the sampling rate of <code class="docutils literal notranslate"><span class="pre">data</span></code> in Hz</p></li>
-</ul>
+<p>We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></span></a>. Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don’t have to worry about passing signals that have been split in time.</p>
 </section>
 <section id="using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range">
 <h4>9. Using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></span></a>, filter the LFP for theta within a 6-12 Hz range.<a class="headerlink" href="#using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Same as before, pass the sampling rate</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">theta_band</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">apply_bandpass_filter</span><span class="p">(</span><span class="n">lfp</span><span class="p">,</span> <span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">),</span> <span class="n">fs</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
@@ -889,14 +877,14 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="computing-theta-phase">
 <h3>Computing theta phase<a class="headerlink" href="#computing-theta-phase" title="Link to this heading">#</a></h3>
 <p>In order to examine phase precession in place cells, we need to extract the phase of theta from the filtered signal. We can do this by taking the angle of the <a class="reference external" href="https://en.wikipedia.org/wiki/Hilbert_transform">Hilbert transform</a>.</p>
-<section id="use-scipy-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">
-<h4>10. Use <code class="docutils literal notranslate"><span class="pre">scipy.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.<a class="headerlink" href="#use-scipy-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object" title="Link to this heading">#</a></h4>
+<section id="use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">
+<h4>10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.<a class="headerlink" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>TIP: don’t forget to pass the time support!</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">hilbert</span><span class="p">(</span><span class="n">theta_band</span><span class="p">))</span> <span class="c1"># compute phase with hilbert transform</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phase</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">hilbert</span><span class="p">(</span><span class="n">theta_band</span><span class="p">))</span> <span class="c1"># compute phase with hilbert transform</span>
 <span class="n">phase</span><span class="p">[</span><span class="n">phase</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="c1"># wrap to [0,2pi]</span>
 <span class="n">theta_phase</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">theta_band</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">phase</span><span class="p">,</span> <span class="n">time_support</span><span class="o">=</span><span class="n">theta_band</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
 <span class="n">theta_phase</span>
@@ -907,8 +895,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <p>Let’s plot the phase on top of the filtered LFP signal, zooming in on a few cycles.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
-<span class="n">ex_run_shorter</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">ex_run_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ex_run_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ex_run_shorter</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">ex_run_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ex_run_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span><span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1">#, height_ratios=[2,1])</span>
 <span class="n">ax</span> <span class="o">=</span> <span class="n">axs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lfp</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_run_shorter</span><span class="p">))</span>
@@ -930,12 +917,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </section>
 <section id="computing-1d-tuning-curves-place-fields">
 <h3>Computing 1D tuning curves: place fields<a class="headerlink" href="#computing-1d-tuning-curves-place-fields" title="Link to this heading">#</a></h3>
-<p>In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a> This function has the following required inputs:</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: a pynapple object containing the data for which tuning curves will be computed, either spike times (<code class="docutils literal notranslate"><span class="pre">Ts</span></code> and <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code>) or continuous data (e.g. calcium transients, <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> or <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">feature</span></code>: a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> or <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> of the feature(s) over which tuning curves are computed (e.g. position)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">bins</span></code>: similar to the argument for <code class="docutils literal notranslate"><span class="pre">np.histogram</span></code>, this variable can either be the number of bins or the bin edges. For multiple features, you can specify <code class="docutils literal notranslate"><span class="pre">bins</span></code> by providing a list with length equal to the number of features.</p></li>
-</ul>
+<p>In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a>.</p>
 <p>First, we’ll filter for units that fire at least 1 Hz and at most 10 Hz when the animal is running forward along the linear track. This will select for units that are active during our window of interest and eliminate putative interneurons (i.e. fast-firing inhibitory neurons that don’t usually have place selectivity). Afterwards, we’ll compute the tuning curves for these sub-selected units over position.</p>
 <section id="restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz">
 <h4>11. Restrict <code class="docutils literal notranslate"><span class="pre">spikes</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and select for units whose rate is at least 1 Hz and at most 10 Hz<a class="headerlink" href="#restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz" title="Link to this heading">#</a></h4>
@@ -949,6 +931,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </section>
 <section id="compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins">
 <h4>12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to forward running position, using 50 position bins.<a class="headerlink" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Use 50 position bins</p></li>
+<li><p>Name the feature <code class="docutils literal notranslate"><span class="pre">&quot;position&quot;</span></code> using the optional argument <code class="docutils literal notranslate"><span class="pre">feature_names</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">place_fields</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">good_spikes</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
@@ -969,7 +955,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <span class="c1"># smooth the place fields so they look nice</span>
 <span class="n">place_fields</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">place_fields</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
 
-<span class="n">p</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">)</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="n">p</span><span class="o">.</span><span class="n">set_ylabels</span><span class="p">(</span><span class="s2">&quot;firing rate (Hz)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1097,6 +1083,9 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </section>
 <section id="stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">
 <h4>17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code><a class="headerlink" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Make sure to name your <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> columns <code class="docutils literal notranslate"><span class="pre">&quot;position&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;phase&quot;</span></code></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">upsampled_pos</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">theta_phase</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
@@ -1112,8 +1101,11 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </div>
 </section>
-<section id="apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes-using-50-bins-for-position-and-20-bins-for-theta-phase">
-<h4>18. Apply <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, using 50 bins for position and 20 bins for theta phase.<a class="headerlink" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes-using-50-bins-for-position-and-20-bins-for-theta-phase" title="Link to this heading">#</a></h4>
+<section id="apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">
+<h4>18. Apply <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code><a class="headerlink" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Use 50 bins for position and 20 bins for theta phase</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">good_spikes</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span>
@@ -1179,24 +1171,22 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <span class="n">place_fields</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">position_train</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
 <span class="c1"># smooth place fields</span>
 <span class="n">place_fields</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">place_fields</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">axis</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># plot sorted, normalized tuning curves</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">place_fields_sorted</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
+<span class="n">place_fields_sorted</span><span class="p">[</span><span class="s2">&quot;unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">place_fields_sorted</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="p">(</span><span class="n">place_fields_sorted</span> <span class="o">/</span> <span class="n">place_fields_sorted</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>We can decode any number of features using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span></a>. This function requires the following inputs:</p>
+<p>We can decode any number of features using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span></a>, which will decode any number of features given by the input <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>, computed by <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a>.</p>
+<section id="use-nap-decode-bayes-to-decode-position-during-ex-run-ep">
+<h4>19. Use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span></a> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code><a class="headerlink" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>: an <code class="docutils literal notranslate"><span class="pre">xarray.DataArray</span></code>, computed by <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span></a>, with the tuning curves relative to the feature(s) being decoded</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">data</span></code>: a <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> of spike times, or a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> of spike counts, for each unit in <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code>: an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> containing the epochs to be decoded</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">bin_size</span></code>: the time length, in seconds, of each decoded bin. If <code class="docutils literal notranslate"><span class="pre">group</span></code> is a <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> of spike times, this determines how the spikes are binned in time. If <code class="docutils literal notranslate"><span class="pre">group</span></code> is a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> of spike counts, this should be the bin size used for the counts.</p></li>
+<li><p>Use 40 ms time bins</p></li>
 </ul>
-<p>This function will return two outputs:</p>
-<ul class="simple">
-<li><p>a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> containing the decoded feature at each decoded time point</p></li>
-<li><p>a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> or <code class="docutils literal notranslate"><span class="pre">TsdTensor</span></code> containing the decoded probability of each feature value at each decoded time point</p></li>
-</ul>
-<section id="use-nap-decode-bayes-to-decode-position-during-ex-run-ep-using-40-ms-time-bins">
-<h4>19. Use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes" title="pynapple 0.10.0"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span></a> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code> using 40 ms time bins.<a class="headerlink" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep-using-40-ms-time-bins" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">decoded_position</span><span class="p">,</span> <span class="n">decoded_prob</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_bayes</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">ex_run_ep</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">)</span>
@@ -1256,8 +1246,8 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <p>This gives us a much closer approximation of the animal’s true position.</p>
 <p>Units phase precessing together creates fast, spatial sequences around the animal’s true position. We can reveal this by decoding at an even shorter time scale, which will appear as smooth errors in the decoder.</p>
 </section>
-<section id="decode-again-using-a-smaller-bin-size-of-10-ms">
-<h4>21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span>.<a class="headerlink" href="#decode-again-using-a-smaller-bin-size-of-10-ms" title="Link to this heading">#</a></h4>
+<section id="decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins">
+<h4>21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span> and sliding window size of 5 bins.<a class="headerlink" href="#decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins" title="Link to this heading">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">smth_decoded_position</span><span class="p">,</span> <span class="n">smth_decoded_prob</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_bayes</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">ex_run_ep</span><span class="p">,</span> <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">sliding_window_size</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
@@ -1530,7 +1520,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">6. Define 100 log-spaced samples between 5 and 200 Hz using <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></span></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-supplying-the-known-sampling-rate-of-1250-hz">7. Compute the wavelet transform, supplying the known sampling rate of 1250 Hz.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform">7. Compute the wavelet transform.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-for-theta">Filtering for theta</a><ul class="nav section-nav flex-column">
@@ -1539,7 +1529,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-scipy-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">scipy.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
@@ -1556,13 +1546,13 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">16. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes-using-50-bins-for-position-and-20-bins-for-theta-phase">18. Apply <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, using 50 bins for position and 20 bins for theta phase.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">18. Apply <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></span> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep-using-40-ms-time-bins">19. Use <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code> using 40 ms time bins.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep">19. Use <span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></span> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-the-same-run-as-above-now-using-sliding-window-size-of-5-bins">20. Decode the same run as above, now using sliding window size of 5 bins.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms">21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins">21. Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span> and sliding window size of 5 bins.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>

@@ -9,10 +9,9 @@ kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
   name: python3
-no-search:
 ---
 
-# Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS
+# Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
@@ -57,7 +56,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import requests
-from scipy import signal
+import scipy as sp
 import seaborn as sns
 import tqdm
 import pynapple as nap
@@ -303,8 +302,7 @@ What if we want *all* movement epochs, not just forward runs? We can derive this
 
 
 
-- The first input argument, `min_gap`, sets the minumum separation between adjacent intervals in order to be split
-- Here, use `min_gap` of 1 s
+- Use `min_gap` of 1 s
 
 
 
@@ -377,12 +375,7 @@ As we would expect, there is a strong theta oscillation dominating the LFP while
 
 
 
-To illustrate this further, we'll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](pynapple.process.wavelets.compute_wavelet_transform). This function takes the following inputs (in order):
-- `sig`: the input signal; a `Tsd`, a `TsdFrame`, or a `TsdTensor`
-- `freqs`: a 1D array of frequency values to decompose
-
-We will also supply the following optional arguments:
-- `fs`: the sampling rate of `sig`
+To illustrate this further, we'll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](pynapple.process.wavelets.compute_wavelet_transform).
 
 A [continuous wavelet transform](https://en.wikipedia.org/wiki/Continuous_wavelet_transform) decomposes a signal into a set of [wavelets](https://en.wikipedia.org/wiki/Wavelet), in this case [Morlet wavelets](https://en.wikipedia.org/wiki/Morlet_wavelet), that span both frequency and time. You can think of the wavelet transform as a cross-correlation between the signal and each wavelet, giving the similarity between the signal and various frequency components at each time point of the signal. Similar to a Fourier transform, this gives us an estimate of what frequencies are dominating a signal. Unlike the Fourier tranform, however, the wavelet transform gives us this estimate as a function of time.
 
@@ -403,7 +396,13 @@ We can now compute the wavelet transform on our LFP data during the example run 
 
 
 
-#### 7. Compute the wavelet transform, supplying the known sampling rate of 1250 Hz.
+#### 7. Compute the wavelet transform.
+
+
+
+- Supply the known sampling rate, 1250 Hz, as the optional argument `fs` 
+
+
 
 ```{code-cell} ipython3
 sample_rate = 1250
@@ -466,18 +465,17 @@ ex_run_ep = nap.IntervalSet(start=forward_ep[9].start, end=forward_ep[9].end)
 
 
 
-We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function [`nap.apply_bandpass_filter`](pynapple.process.filtering.apply_bandpass_filter), which takes the the following arguments:
-- `data`: the signal to be filtered; a [`Tsd`](pynapple.Tsd), [`TsdFrame`](pynapple.TsdFrame), or [`TsdTensor`](pynapple.TsdTensor)
-- `cutoff`: tuple containing the frequency cutoffs, (lower frequency, upper frequency)
-
-Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don't have to worry about passing signals that have been split in time.
-
-Same as before, we'll pass the optional argument:
-- `fs`: the sampling rate of `data` in Hz
+We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function [`nap.apply_bandpass_filter`](pynapple.process.filtering.apply_bandpass_filter). Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don't have to worry about passing signals that have been split in time.
 
 
 
 #### 9. Using [`nap.apply_bandpass_filter`](pynapple.process.filtering.apply_bandpass_filter), filter the LFP for theta within a 6-12 Hz range.
+
+
+
+- Same as before, pass the sampling rate
+
+
 
 ```{code-cell} ipython3
 theta_band = nap.apply_bandpass_filter(lfp, (6.0, 12.0), fs=sample_rate)
@@ -507,13 +505,14 @@ plt.legend();
 
 In order to examine phase precession in place cells, we need to extract the phase of theta from the filtered signal. We can do this by taking the angle of the [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform).
 
-#### 10. Use `scipy.signal.hilbert` to perform the Hilbert transform, and  the numpy function `np.angle` to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
+#### 10. Use `sp.signal.hilbert` to perform the Hilbert transform, and  the numpy function `np.angle` to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
+
 - TIP: don't forget to pass the time support!
   
 
 
 ```{code-cell} ipython3
-phase = np.angle(signal.hilbert(theta_band)) # compute phase with hilbert transform
+phase = np.angle(sp.signal.hilbert(theta_band)) # compute phase with hilbert transform
 phase[phase < 0] += 2 * np.pi # wrap to [0,2pi]
 theta_phase = nap.Tsd(t=theta_band.t, d=phase, time_support=theta_band.time_support)
 theta_phase
@@ -527,7 +526,6 @@ Let's plot the phase on top of the filtered LFP signal, zooming in on a few cycl
 
 ```{code-cell} ipython3
 :tags: [render-all]
-
 
 ex_run_shorter = nap.IntervalSet(ex_run_ep.start[0], ex_run_ep.start[0]+0.5)
 fig,axs = plt.subplots(2,1,figsize=(10,4), constrained_layout=True, sharex=True)#, height_ratios=[2,1])
@@ -554,22 +552,26 @@ We can see that cycle "resets" (i.e. goes from $2\pi$ to $0$) at peaks of the th
 
 
 
-In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves) This function has the following required inputs:
-- `data`: a pynapple object containing the data for which tuning curves will be computed, either spike times (`Ts` and `TsGroup`) or continuous data (e.g. calcium transients, `Tsd` or `TsdFrame`)
-- `feature`: a `Tsd` or `TsdFrame` of the feature(s) over which tuning curves are computed (e.g. position)
-- `bins`: similar to the argument for `np.histogram`, this variable can either be the number of bins or the bin edges. For multiple features, you can specify `bins` by providing a list with length equal to the number of features.
+In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves).
 
 First, we'll filter for units that fire at least 1 Hz and at most 10 Hz when the animal is running forward along the linear track. This will select for units that are active during our window of interest and eliminate putative interneurons (i.e. fast-firing inhibitory neurons that don't usually have place selectivity). Afterwards, we'll compute the tuning curves for these sub-selected units over position.
 
+
+
 #### 11. Restrict `spikes` to `forward_ep` and select for units whose rate is at least 1 Hz and at most 10 Hz
-
-
 
 ```{code-cell} ipython3
 good_spikes = spikes[(spikes.restrict(forward_ep).rate >= 1) & (spikes.restrict(forward_ep).rate <= 10)]
 ```
 
 #### 12. Compute tuning curves for units in `good_spikes` with respect to forward running position, using 50 position bins.
+
+
+
+- Use 50 position bins
+- Name the feature `"position"` using the optional argument `feature_names`
+
+
 
 ```{code-cell} ipython3
 place_fields = nap.compute_tuning_curves(good_spikes, position, 50, feature_names=["position"])
@@ -601,7 +603,7 @@ from scipy.ndimage import gaussian_filter1d
 # smooth the place fields so they look nice
 place_fields.data = gaussian_filter1d(place_fields.data, 1, axis=-1)
 
-p = place_fields.plot(x="position", col="unit", col_wrap=5, size=1.2)
+p = place_fields.plot(x="position", col="unit", col_wrap=5, size=1.2, sharey=False)
 p.set_ylabels("firing rate (Hz)")
 ```
 
@@ -757,6 +759,12 @@ axs[1].set(ylabel="Position (cm)", xlabel="Time (s)", title="Upsampled position 
 
 #### 17. Stack `upsampled_pos` and `theta_phase` together into a single `TsdFrame`
 
+
+    
+- Make sure to name your `TsdFrame` columns `"position"` and `"phase"`
+  
+
+
 ```{code-cell} ipython3
 feats = np.stack((upsampled_pos.values, theta_phase.values))
 features = nap.TsdFrame(
@@ -768,7 +776,13 @@ features = nap.TsdFrame(
 features
 ```
 
-#### 18. Apply [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves) for `features` on our subselected group of units, `good_spikes`, using 50 bins for position and 20 bins for theta phase.
+#### 18. Apply [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves) for `features` on our subselected group of units, `good_spikes`
+
+
+
+- Use 50 bins for position and 20 bins for theta phase
+
+
 
 ```{code-cell} ipython3
 tuning_curves = nap.compute_tuning_curves(good_spikes, features, bins=[50,20])
@@ -858,23 +872,23 @@ position_train = position.restrict(run_train)
 place_fields = nap.compute_tuning_curves(spikes, position_train, bins=50, feature_names=["position"])
 # smooth place fields
 place_fields.data = gaussian_filter1d(place_fields.data, 1, axis=-1)
+
+# plot sorted, normalized tuning curves
+idx = place_fields.argmax(axis=1)
+place_fields_sorted = place_fields.sortby(idx)
+place_fields_sorted["unit"] = np.arange(place_fields_sorted.shape[0])
+(place_fields_sorted / place_fields_sorted.max(axis=1)).plot()
 ```
 
 
 
-We can decode any number of features using the function [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes). This function requires the following inputs:
-- `tuning_curves`: an `xarray.DataArray`, computed by [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves), with the tuning curves relative to the feature(s) being decoded
-- `data`: a `TsGroup` of spike times, or a `TsdFrame` of spike counts, for each unit in `tuning_curves`.
-- `epochs`: an `IntervalSet` containing the epochs to be decoded
-- `bin_size`: the time length, in seconds, of each decoded bin. If `group` is a `TsGroup` of spike times, this determines how the spikes are binned in time. If `group` is a `TsdFrame` of spike counts, this should be the bin size used for the counts.
+We can decode any number of features using the function [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes), which will decode any number of features given by the input `tuning_curves`, computed by [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves).
 
-This function will return two outputs:
-- a `Tsd` containing the decoded feature at each decoded time point
-- a `TsdFrame` or `TsdTensor` containing the decoded probability of each feature value at each decoded time point
-    
+#### 19. Use [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep`
+
+- Use 40 ms time bins
 
 
-#### 19. Use [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep` using 40 ms time bins.
 
 ```{code-cell} ipython3
 decoded_position, decoded_prob = nap.decode_bayes(place_fields, spikes, ex_run_ep, 0.04)
@@ -951,7 +965,7 @@ Units phase precessing together creates fast, spatial sequences around the anima
 
 
 
-#### 21. Decode again using a smaller bin size of $10 ms$.
+#### 21. Decode again using a smaller bin size of $10 ms$ and sliding window size of 5 bins.
 
 ```{code-cell} ipython3
 smth_decoded_position, smth_decoded_prob = nap.decode_bayes(place_fields, spikes, ex_run_ep, bin_size=0.01, sliding_window_size=5)
