@@ -9,7 +9,6 @@ kernelspec:
   name: python3
   display_name: Python 3 (ipykernel)
   language: python
-
 ---
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -222,60 +221,6 @@ For the sake of visibility, you should restrict the data to the following epoch 
 # enter code here
 ```
 
-## Decode neural activity
-
-
-Population activity clearly codes for head-direction. Can we use the spiking activity of the neurons to infer the current heading of the animal? There are currently 2 ways to do this in pynapple :
-
-- bayesian decoding
-- template matching 
-
-**Question:** Using the method of your choice, can you compute the decoded angle from the spiking activity during wakefulness?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** ... and display the decoded angle next to the true angle?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-Since the tuning curves were computed during wakefulness, it is a circular action to decode spiking activity during wakefulness.
-We can try something more interesting by trying to decode the angle during sleep. 
-
-**Question:** Can you instantiate an `IntervalSet` object called `rem_ep` that contains the epochs of REM sleep? You can check the contents of the NWB file by doing first `print(data)`
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you compute the decoded angle from the spiking activity during REM sleep?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** ... and display the decoded angle next to the spiking activity?
-
-
-```{code-cell}
-# enter code here
-```
-
 ## Compute correlograms
 
 
@@ -290,8 +235,17 @@ We see that some neurons have a correlated activity. Can we measure it?
 
 
 
+The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
+The index shows the time lag.
+
 
 **Question:** can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?
+
+*Hint : Take neurons 7 and 20*
+
+To index pandas columns, you can do `cc[(7, 20)]`.
+
+To index xarray tuning curves, you can do `tuning_curves.sel(unit=[7,20])`
 
 
 ```{code-cell}
@@ -313,6 +267,8 @@ Pairwise correlation were computed during wakefulness. The activity of the neuro
 
 **Question:** can you compute the cross-correlograms during sleep?
 
+*Hint: change the argument ep to `sleep_ep`*
+
 
 ```{code-cell}
 # enter code here
@@ -321,6 +277,20 @@ Pairwise correlation were computed during wakefulness. The activity of the neuro
 
 
 **Question:** can you display the cross-correlogram for wakefulness and sleep of the same pairs of neurons?
+
+```{code-cell}
+# enter code here
+```
+
+
+
+
+Now let's see what happen if you take neurons with opposite tunig curves.
+
+**Question : Can you plot the cross-correlograms of 2 neurons firing for opposite directions during wake and sleep?**
+
+*Hint : take neurons 7 and 26. `tuning_curves.sel(unit=[7,26])`, `cc_wake[(7, 26)]`, `cc_sleep[(7, 26)]`*
+
 
 ```{code-cell}
 # enter code here

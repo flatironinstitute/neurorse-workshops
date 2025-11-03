@@ -9,7 +9,6 @@ kernelspec:
   name: python3
   display_name: Python 3 (ipykernel)
   language: python
-no-search:
 ---
 
 ```{code-cell} ipython3
@@ -281,103 +280,6 @@ plt.subplot(212)
 plt.plot(spikes.restrict(ex_ep).to_tsd("pref_ang"), '|')
 ```
 
-## Decode neural activity
-
-<div class="render-all">
-
-Population activity clearly codes for head-direction. Can we use the spiking activity of the neurons to infer the current heading of the animal? There are currently 2 ways to do this in pynapple :
-
-- bayesian decoding
-- template matching 
-
-**Question:** Using the method of your choice, can you compute the decoded angle from the spiking activity during wakefulness?
-
-</div>
-
-```{code-cell} ipython3
-decoded, proba_feature = nap.decode_bayes(
-    tuning_curves=tuning_curves,
-    data=spikes,
-    epochs=wake_ep,
-    bin_size=0.3,  # second
-)
-
-# decoded, proba_feature = nap.decode_template(
-#     tuning_curves=tuning_curves,
-#     data=spikes,
-#     epochs=wake_ep,
-#     bin_size=0.3,  # second
-# )
-```
-
-<div class="render-all">
-
-**Question:** ... and display the decoded angle next to the true angle?
-
-</div>
-
-```{code-cell} ipython3
-plt.figure()
-plt.subplot(211)
-plt.plot(angle.restrict(ex_ep))
-plt.plot(decoded.restrict(ex_ep), label="decoded")
-plt.ylim(0, 2*np.pi)
-
-plt.subplot(212)
-plt.plot(spikes.restrict(ex_ep).to_tsd("pref_ang"), '|')
-```
-
-<div class="render-all">
-
-Since the tuning curves were computed during wakefulness, it is a circular action to decode spiking activity during wakefulness.
-We can try something more interesting by trying to decode the angle during sleep. 
-
-**Question:** Can you instantiate an `IntervalSet` object called `rem_ep` that contains the epochs of REM sleep? You can check the contents of the NWB file by doing first `print(data)`
-
-</div>
-
-```{code-cell} ipython3
-rem_ep = data['rem'][1]
-```
-
-<div class="render-all">
-
-**Question:** Can you compute the decoded angle from the spiking activity during REM sleep?
-
-</div>
-
-```{code-cell} ipython3
-decoded, proba_feature = nap.decode_bayes(
-    tuning_curves=tuning_curves,
-    data=spikes,
-    epochs=rem_ep,
-    bin_size=0.3,  # second
-)
-
-# decoded, proba_feature = nap.decode_template(
-#     tuning_curves=tuning_curves,
-#     data=spikes,
-#     epochs=rem_ep,
-#     bin_size=0.3,  # second
-# )
-```
-
-<div class="render-all">
-
-**Question:** ... and display the decoded angle next to the spiking activity?
-
-</div>
-
-```{code-cell} ipython3
-plt.figure()
-plt.subplot(211)
-plt.plot(decoded.restrict(rem_ep), label="decoded")
-plt.ylim(0, 2*np.pi)
-
-plt.subplot(212)
-plt.plot(spikes.restrict(rem_ep).to_tsd("pref_ang"), '|')
-```
-
 ## Compute correlograms
 
 <div class="render-all">
@@ -394,8 +296,17 @@ cc_wake = nap.compute_crosscorrelogram(spikes, binsize=0.2, windowsize=20.0, ep=
 
 <div class="render-all">
 
+The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
+The index shows the time lag.
+
 
 **Question:** can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?
+
+*Hint : Take neurons 7 and 20*
+
+To index pandas columns, you can do `cc[(7, 20)]`.
+
+To index xarray tuning curves, you can do `tuning_curves.sel(unit=[7,20])`
 
 </div>
 
@@ -439,6 +350,8 @@ Pairwise correlation were computed during wakefulness. The activity of the neuro
 
 **Question:** can you compute the cross-correlograms during sleep?
 
+*Hint: change the argument ep to `sleep_ep`*
+
 </div>
 
 ```{code-cell} ipython3
@@ -466,7 +379,20 @@ plt.title("Sleep")
 plt.tight_layout()
 ```
 
+<div class="render-all">
+
+
+Now let's see what happen if you take neurons with opposite tunig curves.
+
+**Question : Can you plot the cross-correlograms of 2 neurons firing for opposite directions during wake and sleep?**
+
+*Hint : take neurons 7 and 26. `tuning_curves.sel(unit=[7,26])`, `cc_wake[(7, 26)]`, `cc_sleep[(7, 26)]`*
+
+</div>
+
 ```{code-cell} ipython3
+
+
 plt.figure()
 plt.subplot(131)
 tuning_curves.sel(unit=[7,26]).plot(x='Angle', hue='unit')

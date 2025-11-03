@@ -393,7 +393,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-neural-activity">Decode neural activity</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
@@ -651,93 +650,6 @@ For the sake of visibility, you should restrict the data to the following epoch 
 </div>
 </div>
 </section>
-<section id="decode-neural-activity">
-<h2>Decode neural activity<a class="headerlink" href="#decode-neural-activity" title="Link to this heading">#</a></h2>
-<p>Population activity clearly codes for head-direction. Can we use the spiking activity of the neurons to infer the current heading of the animal? There are currently 2 ways to do this in pynapple :</p>
-<ul class="simple">
-<li><p>bayesian decoding</p></li>
-<li><p>template matching</p></li>
-</ul>
-<p><strong>Question:</strong> Using the method of your choice, can you compute the decoded angle from the spiking activity during wakefulness?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">decoded</span><span class="p">,</span> <span class="n">proba_feature</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_bayes</span><span class="p">(</span>
-    <span class="n">tuning_curves</span><span class="o">=</span><span class="n">tuning_curves</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">spikes</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="n">wake_ep</span><span class="p">,</span>
-    <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>  <span class="c1"># second</span>
-<span class="p">)</span>
-
-<span class="c1"># decoded, proba_feature = nap.decode_template(</span>
-<span class="c1">#     tuning_curves=tuning_curves,</span>
-<span class="c1">#     data=spikes,</span>
-<span class="c1">#     epochs=wake_ep,</span>
-<span class="c1">#     bin_size=0.3,  # second</span>
-<span class="c1"># )</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Question:</strong> … and display the decoded angle next to the true angle?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Since the tuning curves were computed during wakefulness, it is a circular action to decode spiking activity during wakefulness.
-We can try something more interesting by trying to decode the angle during sleep.</p>
-<p><strong>Question:</strong> Can you instantiate an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object called <code class="docutils literal notranslate"><span class="pre">rem_ep</span></code> that contains the epochs of REM sleep? You can check the contents of the NWB file by doing first <code class="docutils literal notranslate"><span class="pre">print(data)</span></code></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rem_ep</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;rem&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Question:</strong> Can you compute the decoded angle from the spiking activity during REM sleep?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">decoded</span><span class="p">,</span> <span class="n">proba_feature</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_bayes</span><span class="p">(</span>
-    <span class="n">tuning_curves</span><span class="o">=</span><span class="n">tuning_curves</span><span class="p">,</span>
-    <span class="n">data</span><span class="o">=</span><span class="n">spikes</span><span class="p">,</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="n">rem_ep</span><span class="p">,</span>
-    <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>  <span class="c1"># second</span>
-<span class="p">)</span>
-
-<span class="c1"># decoded, proba_feature = nap.decode_template(</span>
-<span class="c1">#     tuning_curves=tuning_curves,</span>
-<span class="c1">#     data=spikes,</span>
-<span class="c1">#     epochs=rem_ep,</span>
-<span class="c1">#     bin_size=0.3,  # second</span>
-<span class="c1"># )</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Question:</strong> … and display the decoded angle next to the spiking activity?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decoded</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">rem_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;decoded&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">rem_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-</section>
 <section id="compute-correlograms">
 <h2>Compute correlograms<a class="headerlink" href="#compute-correlograms" title="Link to this heading">#</a></h2>
 <p>We see that some neurons have a correlated activity. Can we measure it?</p>
@@ -749,7 +661,12 @@ We can try something more interesting by trying to decode the angle during sleep
 </div>
 </div>
 </div>
+<p>The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
+The index shows the time lag.</p>
 <p><strong>Question:</strong> can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?</p>
+<p><em>Hint : Take neurons 7 and 20</em></p>
+<p>To index pandas columns, you can do <code class="docutils literal notranslate"><span class="pre">cc[(7,</span> <span class="pre">20)]</span></code>.</p>
+<p>To index xarray tuning curves, you can do <code class="docutils literal notranslate"><span class="pre">tuning_curves.sel(unit=[7,20])</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
@@ -787,6 +704,7 @@ We can try something more interesting by trying to decode the angle during sleep
 </div>
 <p>Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.</p>
 <p><strong>Question:</strong> can you compute the cross-correlograms during sleep?</p>
+<p><em>Hint: change the argument ep to <code class="docutils literal notranslate"><span class="pre">sleep_ep</span></code></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc_sleep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">sleep_ep</span><span class="p">)</span>
@@ -814,9 +732,13 @@ We can try something more interesting by trying to decode the angle during sleep
 </div>
 </div>
 </div>
+<p>Now let’s see what happen if you take neurons with opposite tunig curves.</p>
+<p><strong>Question : Can you plot the cross-correlograms of 2 neurons firing for opposite directions during wake and sleep?</strong></p>
+<p><em>Hint : take neurons 7 and 26. <code class="docutils literal notranslate"><span class="pre">tuning_curves.sel(unit=[7,26])</span></code>, <code class="docutils literal notranslate"><span class="pre">cc_wake[(7,</span> <span class="pre">26)]</span></code>, <code class="docutils literal notranslate"><span class="pre">cc_sleep[(7,</span> <span class="pre">26)]</span></code></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span>
 <span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">26</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
@@ -1480,7 +1402,6 @@ all the coupling filters.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-neural-activity">Decode neural activity</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
