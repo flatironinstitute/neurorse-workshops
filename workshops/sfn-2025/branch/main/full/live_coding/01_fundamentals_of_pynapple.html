@@ -226,21 +226,6 @@
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-</ul>
-</details></li>
-</ul>
 
     </div>
 </nav></div>
@@ -464,7 +449,7 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-03 17:07:51,582:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-03 17:17:53,407:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/nemos/_documentation_utils/plotting.py:39: UserWarning: plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation. Feel free to use them, but they will probably not work as intended with other datasets / in other contexts.
@@ -522,22 +507,22 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
-----------  ---------
-0.0          0.343204
-1.0          0.417138
-2.0          2.34101
-3.0          0.814128
-4.0         -1.23312
-5.0         -0.319031
-6.0          1.16162
+----------  -----------
+0.0          0.15998
+1.0         -1.55549
+2.0          0.0308376
+3.0         -1.78677
+4.0         -0.31742
+5.0         -0.745666
+6.0         -0.354294
 ...
-93.0        -0.452198
-94.0        -2.20465
-95.0        -0.65854
-96.0         0.444187
-97.0        -0.853397
-98.0        -0.395235
-99.0         0.302099
+93.0         0.675842
+94.0         0.330402
+95.0        -0.628863
+96.0         0.00360703
+97.0        -0.0340402
+98.0         1.1065
+99.0        -1.52492
 dtype: float64, shape: (100,)
 </pre></div>
 </div>
@@ -552,23 +537,23 @@ dtype: float64, shape: (100,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)      pineapple      banana      tomato
-----------  -----------  ----------  ----------
-0.0          -0.997657    0.821203    1.67527
-1.0           3.27411     2.03352    -0.541257
-2.0           1.0816      2.53445    -0.357461
-3.0          -0.12589     0.505431   -1.24415
-4.0           1.0356     -0.661148    1.2245
-5.0           2.45199    -1.32832    -0.773732
-6.0           0.760332   -0.118862    0.248433
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)      pineapple     banana     tomato
+----------  -----------  ---------  ---------
+0.0            0.320599   0.446722   0.456481
+1.0           -1.19237   -1.14986   -1.19826
+2.0            1.52912   -0.299281   0.82488
+3.0            0.203359   1.86182    0.842347
+4.0           -0.100742   0.112212   0.735449
+5.0            0.536036  -0.325589  -1.14577
+6.0            1.20249    1.32123    0.221807
 ...
-93.0          0.109964   -0.199784    1.21723
-94.0          0.587429    0.871444    0.239926
-95.0          0.405133    0.148005    0.359492
-96.0         -0.215616    0.445861    1.31736
-97.0          0.0448156  -0.0568472   2.01032
-98.0          0.639307   -0.63747     0.0521712
-99.0         -0.336032    1.93547     0.430701
+93.0           0.247423   1.11223    1.56863
+94.0           0.155089  -1.59148    0.993703
+95.0          -0.119924   1.37953   -0.978004
+96.0          -1.33938   -1.99556    0.524902
+97.0          -0.574673   0.12935    0.501422
+98.0           0.706098   0.880106   0.365635
+99.0           0.770095   0.455469  -1.47918
 dtype: float64, shape: (100, 3)
 </pre></div>
 </div>
@@ -585,21 +570,21 @@ dtype: float64, shape: (100, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  -------------------------------
-0.0         [[-0.161532 ... -0.062774] ...]
-0.1         [[ 0.377656 ... -1.864806] ...]
-0.2         [[ 0.136824 ... -0.753934] ...]
-0.3         [[-0.057002 ...  0.393507] ...]
-0.4         [[0.337169 ... 0.138396] ...]
-0.5         [[-0.291565 ... -0.334663] ...]
-0.6         [[-1.100584 ... -0.087285] ...]
+0.0         [[ 0.242865 ... -0.86692 ] ...]
+0.1         [[-0.841135 ... -0.252113] ...]
+0.2         [[-0.766511 ...  0.139873] ...]
+0.3         [[-1.876335 ... -0.483986] ...]
+0.4         [[-1.753117 ...  0.270577] ...]
+0.5         [[ 0.18611  ... -0.690751] ...]
+0.6         [[ 2.974989 ... -1.837023] ...]
 ...
-99.3        [[-0.188323 ... -0.09255 ] ...]
-99.4        [[-1.214193 ... -1.253658] ...]
-99.5        [[0.913323 ... 1.054258] ...]
-99.6        [[-0.30419  ...  0.452471] ...]
-99.7        [[-0.247973 ...  0.972801] ...]
-99.8        [[-0.519113 ...  1.441913] ...]
-99.9        [[-0.309478 ...  1.266917] ...]
+99.3        [[ 0.048943 ... -1.320491] ...]
+99.4        [[ 1.409062 ... -1.098447] ...]
+99.5        [[-1.825987 ...  0.120335] ...]
+99.6        [[-0.794175 ...  0.089464] ...]
+99.7        [[ 0.139415 ... -0.719778] ...]
+99.8        [[-0.471817 ...  0.756427] ...]
+99.9        [[-0.752093 ...  0.338562] ...]
 dtype: float64, shape: (1000, 4, 5)
 </pre></div>
 </div>
@@ -657,9 +642,9 @@ shape: (3, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate
 -------  -------
-      0  0.03973
-      1  0.05298
-      2  1.32449
+      0  0.03916
+      1  0.05221
+      2  1.30535
 </pre></div>
 </div>
 </div>
@@ -678,7 +663,7 @@ shape: (3, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
-      0     3.14  78.6406
+      0     3.14  79.7477
 shape: (1, 2), time unit: sec.
 </pre></div>
 </div>
@@ -739,22 +724,22 @@ You can also check the `time_support` of `tsd1` to see that it has been updated.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
-----------  ---------
-10.0        -0.577876
-11.0         0.723079
-12.0         1.02117
-13.0        -0.360654
-14.0        -0.191543
-15.0         3.12607
-16.0        -0.560737
+----------  -----------
+10.0         0.884966
+11.0        -0.63294
+12.0         1.83154
+13.0        -0.517621
+14.0         0.687767
+15.0         0.758733
+16.0        -0.247103
 ...
-93.0        -0.452198
-94.0        -2.20465
-95.0        -0.65854
-96.0         0.444187
-97.0        -0.853397
-98.0        -0.395235
-99.0         0.302099
+93.0         0.675842
+94.0         0.330402
+95.0        -0.628863
+96.0         0.00360703
+97.0        -0.0340402
+98.0         1.1065
+99.0        -1.52492
 dtype: float64, shape: (71,)
   index    start    end
       0       10     30
@@ -772,17 +757,17 @@ shape: (2, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start       end
-      0   1.11888   2.80259
-      1   4.78179  19.0135
-      2  27.2012   33.3761
-      3  41.6761   45.2049
-      4  46.0716   46.9394
-      5  56.1273   59.3861
-      6  66.3994   68.7049
-      7  72.5615   74.524
-      8  77.5404   78.3282
-      9  83.6352   84.0946
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start      end
+      0   7.16993  17.8655
+      1  18.8527   25.4179
+      2  28.6867   51.5057
+      3  63.9709   65.2269
+      4  66.0214   77.3553
+      5  77.6749   79.9536
+      6  80.2598   84.673
+      7  86.6542   91.6135
+      8  97.317    97.9428
+      9  98.4417   99.7097
 shape: (10, 2), time unit: sec.
 </pre></div>
 </div>
@@ -798,14 +783,18 @@ shape: (10, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start      end
-      0  10       19.0135
-      1  27.2012  30
-      2  56.1273  59.3861
-      3  66.3994  68.7049
-      4  72.5615  74.524
-      5  77.5404  78.3282
-      6  83.6352  84.0946
-shape: (7, 2), time unit: sec.
+      0  10       17.8655
+      1  18.8527  25.4179
+      2  28.6867  30
+      3  50       51.5057
+      4  63.9709  65.2269
+      5  66.0214  77.3553
+      6  77.6749  79.9536
+      7  80.2598  84.673
+      8  86.6542  91.6135
+      9  97.317   97.9428
+     10  98.4417  99.7097
+shape: (11, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -819,7 +808,7 @@ You can visualize IntervalSet using the function `workshop_utils.visualize_inter
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/648d3a2205723e583b088a75c728e4e459739cf20ea7da180bbb85f9b15ead84.png" src="../../_images/648d3a2205723e583b088a75c728e4e459739cf20ea7da180bbb85f9b15ead84.png" />
+<img alt="../../_images/ec7fb213f3e791c07885bfcdd33db68e140d98eeff3a89528c53edec28fb29d8.png" src="../../_images/ec7fb213f3e791c07885bfcdd33db68e140d98eeff3a89528c53edec28fb29d8.png" />
 </div>
 </div>
 <div class="render-all">
@@ -831,13 +820,9 @@ You can visualize IntervalSet using the function `workshop_utils.visualize_inter
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index     start        end
-      0   1.11888    2.80259
-      1   4.78179   33.3761
-      2  41.6761    45.2049
-      3  46.0716    46.9394
-      4  50        100
-shape: (5, 2), time unit: sec.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end
+      0  7.16993    100
+shape: (1, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -851,7 +836,7 @@ shape: (5, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/7d12b7f66b1efd1d4dec6f1a3331a955caf0688a82cd2fd09a5c0300426491ad.png" src="../../_images/7d12b7f66b1efd1d4dec6f1a3331a955caf0688a82cd2fd09a5c0300426491ad.png" />
+<img alt="../../_images/7c0e27bc1e03bd2daa852d9a102c1283b2f742a4f21b9fab260f89c7d0c3f20d.png" src="../../_images/7c0e27bc1e03bd2daa852d9a102c1283b2f742a4f21b9fab260f89c7d0c3f20d.png" />
 </div>
 </div>
 <div class="render-all">
@@ -864,14 +849,17 @@ shape: (5, 2), time unit: sec.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start       end
-      0  19.0135   27.2012
-      1  50        56.1273
-      2  59.3861   66.3994
-      3  68.7049   72.5615
-      4  74.524    77.5404
-      5  78.3282   83.6352
-      6  84.0946  100
-shape: (7, 2), time unit: sec.
+      0  17.8655   18.8527
+      1  25.4179   28.6867
+      2  51.5057   63.9709
+      3  65.2269   66.0214
+      4  77.3553   77.6749
+      5  79.9536   80.2598
+      6  84.673    86.6542
+      7  91.6135   97.317
+      8  97.9428   98.4417
+      9  99.7097  100
+shape: (10, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -885,7 +873,7 @@ shape: (7, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9b60a3cd57c975e3d3770631f900387f2a76e050c2adecbb3b63bb7a39b6cf73.png" src="../../_images/9b60a3cd57c975e3d3770631f900387f2a76e050c2adecbb3b63bb7a39b6cf73.png" />
+<img alt="../../_images/0572de2901d40388433c5ff82355ebe6c5a70b30a71870074ce6c19dce23a45e.png" src="../../_images/0572de2901d40388433c5ff82355ebe6c5a70b30a71870074ce6c19dce23a45e.png" />
 </div>
 </div>
 </section>
@@ -905,14 +893,10 @@ shape: (7, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1.18314340e-02  1.80278566e-02  4.52294963e-02  2.32514828e-02
-   2.25005665e-02]
- [-1.31434780e-02 -1.06523169e-02 -1.97311943e-02 -6.57300932e-03
-  -3.97728190e-02]
- [-9.48321042e-03  5.45568128e-02  1.01406306e-02 -4.48593543e-02
-   3.99761390e-02]
- [-3.66282274e-02  1.08040012e-02  2.20154624e-02  2.86618270e-02
-   8.55411657e-06]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 0.04145337 -0.03219272 -0.00061187 -0.00497045  0.03267077]
+ [-0.00291124  0.01799303  0.0123102   0.07374891 -0.02872193]
+ [ 0.00623137  0.02754381  0.03001025  0.02161832 -0.0509165 ]
+ [ 0.02288091  0.00297067 -0.01329413  0.02677529 -0.03306875]]
 </pre></div>
 </div>
 </div>
@@ -928,21 +912,21 @@ shape: (7, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ----------
-0.0          0.499605
-1.0          1.58879
-2.0          1.0862
-3.0         -0.288204
-4.0          0.532983
-5.0          0.116647
-6.0          0.296634
+0.0          0.407934
+1.0         -1.18017
+2.0          0.684908
+3.0          0.969177
+4.0          0.248973
+5.0         -0.311774
+6.0          0.915177
 ...
-93.0         0.375804
-94.0         0.566266
-95.0         0.30421
-96.0         0.515868
-97.0         0.666097
-98.0         0.0180027
-99.0         0.676713
+93.0         0.976095
+94.0        -0.147564
+95.0         0.0938669
+96.0        -0.93668
+97.0         0.0186998
+98.0         0.650613
+99.0        -0.0845384
 dtype: float64, shape: (100,)
 </pre></div>
 </div>
@@ -982,10 +966,10 @@ shape: (2, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-0.23615629 -0.51323664 -0.9875423   0.57408009  1.43406807]
- [ 0.07790497  1.65181016 -0.13160454  0.43292553 -0.72595757]
- [ 0.67529989  1.78029701  0.16453154  1.01545974 -0.76960951]
- [ 0.46736044 -0.24277405  0.0473887  -0.32346636  1.20385665]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[-1.02323706 -1.57064551  1.10088095  0.29791653  0.98427005]
+ [ 0.3553029  -1.28282542  0.35809389  0.80132483  0.19786088]
+ [-0.9208868   1.32344799  0.71688701 -1.76456466 -0.59782855]
+ [ 0.49267029 -0.53047556  0.25992599 -0.3690053  -1.66580016]]
 </pre></div>
 </div>
 </div>
@@ -1057,25 +1041,25 @@ shape: (3, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    pineapple             banana                tomato
-----------  --------------------  --------------------  -------------------
-0.0         -0.9976567142652903   0.8212032251846555    1.6752670839156574
-1.0         3.2741147898624776    2.033516896922676     -0.5412573471055012
-2.0         1.0815979256233514    2.5344512505488503    -0.3574606437114722
-3.0         -0.12589005542572598  0.5054311208957809    -1.2441518685422075
-4.0         1.035596510970738     -0.6611481189253083   1.224501741701839
-5.0         2.4519938273749737    -1.3283211737777445   -0.7737322724875809
-6.0         0.7603320547025944    -0.11886202909638505  0.24843306354260256
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    pineapple             banana               tomato
+----------  --------------------  -------------------  -------------------
+0.0         0.3205985843213379    0.4467216006682217   0.45648119797912834
+1.0         -1.192374207209478    -1.1498587494175552  -1.1982648975531784
+2.0         1.529124313280917     -0.2992806364152011  0.8248800015786734
+3.0         0.20335944264750389   1.861824095438544    0.8423468077370646
+4.0         -0.1007418718524434   0.11221188192419557  0.73544896743982
+5.0         0.5360361642451957    -0.3255890789893909  -1.1457692213184651
+6.0         1.2024913017206509    1.3212342191884943   0.22180679801800554
 ...
-93.0        0.10996356298641337   -0.19978369509408578  1.2172325714990964
-94.0        0.5874288431407121    0.8714439402014835    0.23992585017715984
-95.0        0.4051332984867762    0.14800502673951685   0.3594916195583243
-96.0        -0.2156159561161133   0.44586103560893836   1.317358343422932
-97.0        0.04481557446212679   -0.0568472416848436   2.010322632177837
-98.0        0.6393070645881523    -0.6374702294093728   0.05217122236988007
-99.0        -0.3360320293240524   1.93546979024044      0.43070142793740673
+93.0        0.24742284878892506   1.1122282604711828   1.5686327805036298
+94.0        0.15508919894196607   -1.5914833956506547  0.9937031680383797
+95.0        -0.11992444343476921  1.3795295272475805   -0.9780044957607423
+96.0        -1.3393798985256138   -1.9955627021674167  0.5249023790837928
+97.0        -0.5746725447177946   0.1293503971414695   0.5014215852756511
+98.0        0.7060981222586303    0.8801056049595294   0.3656345846378602
+99.0        0.7700948875255468    0.45546860063828526  -1.4791788118960802
 Metadata
-colors      [0. 0. 1.]            [0.5 0.5 1. ]         [0.1 0.2 0.3]
+colors      [0. 0. 1.]            [0.5 0.5 1. ]        [0.1 0.2 0.3]
 dtype: float64, shape: (100, 3)
 </pre></div>
 </div>
@@ -1094,9 +1078,9 @@ dtype: float64, shape: (100, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
 -------  -------  --------
-      0  0.03973  mars
-      1  0.05298  venus
-      2  1.32449  saturn
+      0  0.03916  mars
+      1  0.05221  venus
+      2  1.30535  saturn
 </pre></div>
 </div>
 </div>
@@ -1118,16 +1102,16 @@ dtype: float64, shape: (100, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Index     rate  planet
 -------  -------  --------
-      0  0.03973  mars
-      1  0.05298  venus
+      0  0.03916  mars
+      1  0.05221  venus
   Index     rate  planet
 -------  -------  --------
-      0  0.03973  mars
-      1  0.05298  venus
+      0  0.03916  mars
+      1  0.05221  venus
   Index     rate  planet
 -------  -------  --------
-      0  0.03973  mars
-      1  0.05298  venus
+      0  0.03916  mars
+      1  0.05221  venus
 </pre></div>
 </div>
 </div>
@@ -1161,14 +1145,14 @@ shape: (2, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12                    0                    1
-----------  --------------------  -------------------  --------------------
-0.0         -0.17850744013042405  0.6229551613415244   0.5105128382294616
-1.0         0.31286994121392864   -2.499515241603046   -0.07838963373486107
-2.0         -0.8962733816093386   1.2825159075762538   -1.9591817787903036
-3.0         1.258155273463242     -0.4322171563796811  -0.9562039109368043
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12                   0                    1
+----------  -------------------  -------------------  --------------------
+0.0         -0.5161943636965214  0.8076225319169542   -0.38797375733401446
+1.0         0.8981755292131596   1.1878406104777912   -1.4100137619800586
+2.0         0.14897472061307562  -0.9852730311824044  -0.823477866733455
+3.0         0.3202599932503816   -0.6859614293559078  -2.2661006337942524
 Metadata
-alpha       2                     1                    0
+alpha       2                    1                    0
 dtype: float64, shape: (4, 3)
 </pre></div>
 </div>
@@ -1183,7 +1167,7 @@ dtype: float64, shape: (4, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.17850744  0.62295516  0.51051284]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.51619436  0.80762253 -0.38797376]
 </pre></div>
 </div>
 </div>
@@ -1200,17 +1184,17 @@ dtype: float64, shape: (4, 3)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ---------
-0            0.622955
-1           -2.49952
-2            1.28252
-3           -0.432217
+0            0.807623
+1            1.18784
+2           -0.985273
+3           -0.685961
 dtype: float64, shape: (4,)
 Time (s)    0                    1
 ----------  -------------------  --------------------
-0.0         0.6229551613415244   0.5105128382294616
-1.0         -2.499515241603046   -0.07838963373486107
-2.0         1.2825159075762538   -1.9591817787903036
-3.0         -0.4322171563796811  -0.9562039109368043
+0.0         0.8076225319169542   -0.38797375733401446
+1.0         1.1878406104777912   -1.4100137619800586
+2.0         -0.9852730311824044  -0.823477866733455
+3.0         -0.6859614293559078  -2.2661006337942524
 Metadata
 alpha       1                    0
 dtype: float64, shape: (4, 2)
@@ -1228,11 +1212,11 @@ dtype: float64, shape: (4, 2)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    12
-----------  --------------------
-0.0         -0.17850744013042405
-1.0         0.31286994121392864
-2.0         -0.8962733816093386
-3.0         1.258155273463242
+----------  -------------------
+0.0         -0.5161943636965214
+1.0         0.8981755292131596
+2.0         0.14897472061307562
+3.0         0.3202599932503816
 Metadata
 alpha       2
 dtype: float64, shape: (4, 1)
@@ -1257,12 +1241,12 @@ dtype: float64, shape: (4, 1)
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)    0     1      2
 ----------  ----  -----  ------
-10.5        0     1      3
+10.5        0     1      1
 11.5        0     0      2
-12.5        0     0      2
-13.5        0     0      1
-14.5        0     0      1
-15.5        0     0      0
+12.5        0     0      3
+13.5        0     0      3
+14.5        0     0      0
+15.5        0     0      1
 16.5        0     0      1
 ...
 93.5        0     0      0
@@ -1292,10 +1276,10 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f19541eaab0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fe7102ff050&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/88c582a052c3dd57273399d0de27296cb86ddbd02fee4217947800e9c828cffb.png" src="../../_images/88c582a052c3dd57273399d0de27296cb86ddbd02fee4217947800e9c828cffb.png" />
+<img alt="../../_images/e2f35f0c506aac745ef8bacaaec917e1705baad660dcbbeecf2c33146dfbe24a.png" src="../../_images/e2f35f0c506aac745ef8bacaaec917e1705baad660dcbbeecf2c33146dfbe24a.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1320,10 +1304,10 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f192412fe60&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fe710293530&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/e22059431294427ecd2d77e0e0ce85248258622a014c76e65c162a994c5fd75a.png" src="../../_images/e22059431294427ecd2d77e0e0ce85248258622a014c76e65c162a994c5fd75a.png" />
+<img alt="../../_images/553049cbea22b28aa509146c9c891ebd1bd8d86cc79c5dcfdd729cd5b6e94336.png" src="../../_images/553049cbea22b28aa509146c9c891ebd1bd8d86cc79c5dcfdd729cd5b6e94336.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1347,10 +1331,10 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f1954190b60&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fe7401e9f40&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/33865b3303d69d7000140b12861822dc1c18b60cf4888e87e23df6a9575eaa27.png" src="../../_images/33865b3303d69d7000140b12861822dc1c18b60cf4888e87e23df6a9575eaa27.png" />
+<img alt="../../_images/e4fdd5d6b24d6f714bbbbe3d0c0dc2ac81d4a47300d6a2517f3874de101b988d.png" src="../../_images/e4fdd5d6b24d6f714bbbbe3d0c0dc2ac81d4a47300d6a2517f3874de101b988d.png" />
 </div>
 </div>
 <div class="render-all">
@@ -1365,22 +1349,23 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  index    start    end
-      0     10.5   12.5
-      1     14.5   15.5
-      2     26.5   30
-      3     50     50.5
-      4     52.5   54.5
-      5     57.5   58.5
-      6     60.5   65.5
-      7     68.5   69.5
-      8     71.5   76.5
-      9     79.5   81.5
-     10     85.5   89.5
-     11     91.5   92.5
-     12     95.5   96.5
-     13     98.5   99
-shape: (14, 2), time unit: sec.
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>index    start    end
+0        10.0     10.5
+1        11.5     12.5
+2        13.5     15.5
+3        23.5     26.5
+4        27.5     28.5
+5        29.5     30.0
+6        50.5     53.5
+...      ...      ...
+15       83.5     84.5
+16       85.5     86.5
+17       87.5     89.5
+18       90.5     91.5
+19       92.5     94.5
+20       95.5     96.5
+21       97.5     98.5
+shape: (22, 2), time unit: sec.
 </pre></div>
 </div>
 </div>
@@ -1397,23 +1382,31 @@ shape: (14, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.patches.Rectangle at 0x7f1954196150&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f1964117da0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec3198e0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f1924250770&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec2fc2c0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f19541ab7a0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec312270&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec3109e0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f19543f79e0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec16eed0&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec154080&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec138920&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec2f3e90&gt;,
- &lt;matplotlib.patches.Rectangle at 0x7f18ec2cd9a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.patches.Rectangle at 0x7fe7981dd760&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7402b1b80&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7401e9190&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe72836b650&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe72836ad50&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e029ce60&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e026ce30&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e0245190&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e0211280&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e03e9880&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e03dddc0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e03d21e0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e03b1850&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e0390050&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e03571a0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe6e0392390&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7282d12b0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7101aac90&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7101a9e80&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7101abc50&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7101aaed0&gt;,
+ &lt;matplotlib.patches.Rectangle at 0x7fe7101b83b0&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/3483cb89f8cbca88240a1a4b5f17e827d26493edfe3a03967c5f89ba3e5bc1a4.png" src="../../_images/3483cb89f8cbca88240a1a4b5f17e827d26493edfe3a03967c5f89ba3e5bc1a4.png" />
+<img alt="../../_images/7b8b20abb39907fdf32f48f3d749a6d970f5fa1c25811f264d80841ae2172eb8.png" src="../../_images/7b8b20abb39907fdf32f48f3d749a6d970f5fa1c25811f264d80841ae2172eb8.png" />
 </div>
 </div>
 </section>
@@ -2075,18 +2068,18 @@ dl.xr-attrs {
 }
 </style><pre class='xr-text-repr-fallback'>&lt;xarray.DataArray (unit: 3, feat1: 5)&gt; Size: 120B
 array([[0.        , 0.        , 0.        , 0.        , 0.        ],
-       [0.125     , 0.05      , 0.06451613, 0.        , 0.        ],
-       [0.875     , 1.        , 0.93548387, 1.        , 0.        ]])
+       [0.        , 0.0952381 , 0.04      , 0.07692308, 0.        ],
+       [0.55555556, 1.33333333, 0.96      , 0.84615385, 2.        ]])
 Coordinates:
   * unit     (unit) int64 24B 0 1 2
-  * feat1    (feat1) float64 40B -2.037 -0.89 0.2574 1.405 2.552
+  * feat1    (feat1) float64 40B -1.364 -0.5859 0.1925 0.971 1.749
 Attributes:
-    occupancy:  [ 8. 20. 31. 11.  1.]
-    bin_edges:  [array([-2.61118667, -1.46373567, -0.31628467,  0.83116633,  ...
-    fs:         1.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>feat1</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-dbee3221-45c4-4a02-8668-ca2f9c1d924d' class='xr-array-in' type='checkbox' checked><label for='section-dbee3221-45c4-4a02-8668-ca2f9c1d924d' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.125 0.05 ... 0.0 0.0 0.875 1.0 0.9355 1.0 0.0</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.        , 0.        , 0.        ],
-       [0.125     , 0.05      , 0.06451613, 0.        , 0.        ],
-       [0.875     , 1.        , 0.93548387, 1.        , 0.        ]])</pre></div></div></li><li class='xr-section-item'><input id='section-1361dc8d-59cc-4b65-adb1-a19e2adb3b77' class='xr-section-summary-in' type='checkbox'  checked><label for='section-1361dc8d-59cc-4b65-adb1-a19e2adb3b77' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-e224506c-c625-4d87-befb-9e0c7649f150' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e224506c-c625-4d87-befb-9e0c7649f150' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-04014d1a-7f10-4cea-9f60-e41c37e0bd0e' class='xr-var-data-in' type='checkbox'><label for='data-04014d1a-7f10-4cea-9f60-e41c37e0bd0e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>feat1</span></div><div class='xr-var-dims'>(feat1)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-2.037 -0.89 0.2574 1.405 2.552</div><input id='attrs-e807dce0-2215-4c62-b582-5be33f8cdbb5' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e807dce0-2215-4c62-b582-5be33f8cdbb5' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-6b3b953a-92b9-421e-8f38-892b74b5c12a' class='xr-var-data-in' type='checkbox'><label for='data-6b3b953a-92b9-421e-8f38-892b74b5c12a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-2.037461, -0.89001 ,  0.257441,  1.404892,  2.552343])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-ed442c59-e3e7-4a4e-ab36-98adb6d97205' class='xr-section-summary-in' type='checkbox'  checked><label for='section-ed442c59-e3e7-4a4e-ab36-98adb6d97205' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[ 8. 20. 31. 11.  1.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-2.61118667, -1.46373567, -0.31628467,  0.83116633,  1.97861733,
-        3.12606833])]</dd><dt><span>fs :</span></dt><dd>1.0</dd></dl></div></li></ul></div></div></div></div>
+    occupancy:  [ 9. 21. 25. 13.  3.]
+    bin_edges:  [array([-1.75362516, -0.97515569, -0.19668621,  0.58178326,  ...
+    fs:         1.0</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>feat1</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-de48cf58-8988-4b9a-a972-cad6c8825476' class='xr-array-in' type='checkbox' checked><label for='section-de48cf58-8988-4b9a-a972-cad6c8825476' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 0.09524 ... 0.0 0.5556 1.333 0.96 0.8462 2.0</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.        , 0.        , 0.        ],
+       [0.        , 0.0952381 , 0.04      , 0.07692308, 0.        ],
+       [0.55555556, 1.33333333, 0.96      , 0.84615385, 2.        ]])</pre></div></div></li><li class='xr-section-item'><input id='section-4a3f600b-fdc9-4960-b50e-98af87bd5c95' class='xr-section-summary-in' type='checkbox'  checked><label for='section-4a3f600b-fdc9-4960-b50e-98af87bd5c95' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-a6b8cd30-532a-407e-b312-9faa156c9d6d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-a6b8cd30-532a-407e-b312-9faa156c9d6d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-851b1bb2-93c0-4610-95a9-b87a626e6c1d' class='xr-var-data-in' type='checkbox'><label for='data-851b1bb2-93c0-4610-95a9-b87a626e6c1d' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>feat1</span></div><div class='xr-var-dims'>(feat1)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-1.364 -0.5859 0.1925 0.971 1.749</div><input id='attrs-1978a64c-2f67-4abb-8f21-679bc4eb5105' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-1978a64c-2f67-4abb-8f21-679bc4eb5105' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-13ad47b0-2531-42b5-885a-1c2cd695ac72' class='xr-var-data-in' type='checkbox'><label for='data-13ad47b0-2531-42b5-885a-1c2cd695ac72' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-1.36439 , -0.585921,  0.192549,  0.971018,  1.749487])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-d06e2cdc-2afb-4102-86f0-5dc513f4aa5b' class='xr-section-summary-in' type='checkbox'  checked><label for='section-d06e2cdc-2afb-4102-86f0-5dc513f4aa5b' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[ 9. 21. 25. 13.  3.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-1.75362516, -0.97515569, -0.19668621,  0.58178326,  1.36025274,
+        2.13872221])]</dd><dt><span>fs :</span></dt><dd>1.0</dd></dl></div></li></ul></div></div></div></div>
 </div>
 <div class="render-all">
 <p>The output is an <a class="reference external" href="https://docs.xarray.dev/en/stable/">xarray</a> object. It is a wrapper of numpy array with extra attributes. It allows to give coordinates to each dimensions as well as attaching attributes. We can make the output look better by labelling the feature we used.</p>
@@ -2104,10 +2097,10 @@ Attributes:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0 1 2]
-[-2.03746117 -0.89001017  0.25744083  1.40489183  2.55234283]
-[ 8. 20. 31. 11.  1.]
-[array([-2.61118667, -1.46373567, -0.31628467,  0.83116633,  1.97861733,
-        3.12606833])]
+[-1.36439043 -0.58592095  0.19254852  0.971018    1.74948748]
+[ 9. 21. 25. 13.  3.]
+[array([-1.75362516, -0.97515569, -0.19668621,  0.58178326,  1.36025274,
+        2.13872221])]
 1.0
 </pre></div>
 </div>
@@ -2127,12 +2120,12 @@ Attributes:
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f18ec361c40&gt;,
- &lt;matplotlib.lines.Line2D at 0x7f18d02e2cf0&gt;,
- &lt;matplotlib.lines.Line2D at 0x7f18d02eeae0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fe6c83f7f80&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fe6c83f6e70&gt;,
+ &lt;matplotlib.lines.Line2D at 0x7fe6c83f7d10&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/d9ec49eb70a38c1c0994d9923362ead3bedb57a4927fc33dac50ce4cafefc781.png" src="../../_images/d9ec49eb70a38c1c0994d9923362ead3bedb57a4927fc33dac50ce4cafefc781.png" />
+<img alt="../../_images/e6716f8f22b915543aeb228c6170ff87c0941aef3f294f59d0590ce1224e3ec7.png" src="../../_images/e6716f8f22b915543aeb228c6170ff87c0941aef3f294f59d0590ce1224e3ec7.png" />
 </div>
 </div>
 </section>

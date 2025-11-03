@@ -228,21 +228,6 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Group Project: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../live_coding/02_current_injection-users.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-</ul>
-</details></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
-</ul>
-</details></li>
-</ul>
 
     </div>
 </nav></div>
@@ -1386,8 +1371,8 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <section id="create-a-design-matrix-by-doing-one-of-the-following">
 <h4>2. Create a design matrix by doing one of the following:<a class="headerlink" href="#create-a-design-matrix-by-doing-one-of-the-following" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p><strong>Call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> for both position and speed bases and concatenate the result to form a single design matrix.</strong></p></li>
-<li><p><strong>Add the basis objects together and call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> on the newly created additive basis.</strong></p></li>
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> for both position and speed bases and concatenate the result to form a single design matrix.</p></li>
+<li><p>Add the basis objects together and call <code class="docutils literal notranslate"><span class="pre">compute_fatures</span></code> on the newly created additive basis.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">

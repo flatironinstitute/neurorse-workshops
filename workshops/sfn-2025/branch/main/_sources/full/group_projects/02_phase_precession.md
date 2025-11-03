@@ -1265,8 +1265,8 @@ For people familiar with NeMoS basis composition, you can add the two bases toge
 
 <div class="render-all">
 
-- **Call `compute_fatures` for both position and speed bases and concatenate the result to form a single design matrix.**
-- **Add the basis objects together and call `compute_fatures` on the newly created additive basis.**
+- Call `compute_fatures` for both position and speed bases and concatenate the result to form a single design matrix.
+- Add the basis objects together and call `compute_fatures` on the newly created additive basis.
   
 </div>
 
