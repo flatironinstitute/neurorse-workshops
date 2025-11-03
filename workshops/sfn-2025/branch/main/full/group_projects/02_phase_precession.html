@@ -525,7 +525,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-03 18:23:51,854:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-03 18:34:48,707:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -865,7 +865,7 @@ shape: (1, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4de83876b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff948346d50&gt;
 </pre></div>
 </div>
 <img alt="../../_images/338e8858cf0778996ed97a0226a5c30fbb21e42934c1c590e19d0b58e8e2d075.png" src="../../_images/338e8858cf0778996ed97a0226a5c30fbb21e42934c1c590e19d0b58e8e2d075.png" />
@@ -1146,7 +1146,7 @@ ex_cwt =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4da42ab530&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff9043d1970&gt;
 </pre></div>
 </div>
 <img alt="../../_images/a81accda5bfce252b3bd73ccb6b94d4336878e16046ca1b7c56cd0ca19d11c67.png" src="../../_images/a81accda5bfce252b3bd73ccb6b94d4336878e16046ca1b7c56cd0ca19d11c67.png" />
@@ -1289,7 +1289,7 @@ dtype: float64, shape: (240384,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4da42673b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff9200f9310&gt;
 </pre></div>
 </div>
 <img alt="../../_images/767598ac4e66e43c1d0737d1f84fff5c8123d78395f4202c747206cef4f2a2af.png" src="../../_images/767598ac4e66e43c1d0737d1f84fff5c8123d78395f4202c747206cef4f2a2af.png" />
@@ -1409,7 +1409,7 @@ spike_theta =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4da42298b0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff8dc2b49e0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/d161411b3ca4e639271a942623e0951989ee9f51dc0096886ce2170647eccb66.png" src="../../_images/d161411b3ca4e639271a942623e0951989ee9f51dc0096886ce2170647eccb66.png" />
@@ -1456,7 +1456,7 @@ spike_phase =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f4de819b680&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff87c1a9310&gt;
 </pre></div>
 </div>
 <img alt="../../_images/c29431543c951edc0a61ac23c20beb3ac0fdad7bbe2a8f748c3d844f24306263.png" src="../../_images/c29431543c951edc0a61ac23c20beb3ac0fdad7bbe2a8f748c3d844f24306263.png" />
@@ -1620,7 +1620,7 @@ tuning_curves =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.plot.facetgrid.FacetGrid at 0x7f4ce8228e30&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.plot.facetgrid.FacetGrid at 0x7ff87c17b2c0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/16be7fad8d412a7fe52bc8802ab5fda0bc2001dbf51f0e975ecdcd73ca5d8b32.png" src="../../_images/16be7fad8d412a7fe52bc8802ab5fda0bc2001dbf51f0e975ecdcd73ca5d8b32.png" />
@@ -1649,20 +1649,22 @@ tuning_curves =
 <li><p>Neurons fire independently from one another.</p></li>
 </ol>
 <p>While neither of these assumptions are strictly true, they are generally reasonable for pyramidal cells in hippocampus and allow us to simplify our computation of <span class="math notranslate nohighlight">\(P(spikes|position)\)</span></p>
-<p>The first assumption gives us an equation for <span class="math notranslate nohighlight">\(P(spikes|position)\)</span> for a single neuron, which we’ll call <span class="math notranslate nohighlight">\(P(spikes_i|position)\)</span> to differentiate it from <span class="math notranslate nohighlight">\(P(spikes|position) = P(spikes_1,spikes_2,...,spikes_i,...,spikes_N|position) \)</span>, or the total probability across all <span class="math notranslate nohighlight">\(N\)</span> neurons. The equation we get is that of the Poisson distribution:
-$<span class="math notranslate nohighlight">\(
+<p>The first assumption gives us an equation for <span class="math notranslate nohighlight">\(P(spikes|position)\)</span> for a single neuron, which we’ll call <span class="math notranslate nohighlight">\(P(spikes_i|position)\)</span> to differentiate it from <span class="math notranslate nohighlight">\(P(spikes|position) = P(spikes_1,spikes_2,...,spikes_N|position)\)</span>, or the total probability across all <span class="math notranslate nohighlight">\(N\)</span> neurons. The equation we get is that of the Poisson distribution:</p>
+<div class="math notranslate nohighlight">
+\[
 P(spikes_i|position) = \frac{(\tau f_i(position))^n e^{-\tau f_i(position)}}{n!}
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span>f_i(position)<span class="math notranslate nohighlight">\( is the firing rate of the neuron at position \)</span>(position)<span class="math notranslate nohighlight">\( (i.e. the tuning curve), \)</span>\tau<span class="math notranslate nohighlight">\( is the width of the time window over which we're computing the probability, and \)</span>n$ is the total number of times the neuron spiked in the time window of interest.</p>
-<p>The second assumptions allows us to simply combine the probabilities of individual neurons. Recall the product rule for independent events: <span class="math notranslate nohighlight">\(P(A,B) = P(A)P(B)\)</span> if <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are independent. Treating neurons as independent, then, gives us the following:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(f_i(position)\)</span> is the firing rate of the neuron at position <span class="math notranslate nohighlight">\((position)\)</span> (i.e. the tuning curve), <span class="math notranslate nohighlight">\(\tau\)</span> is the width of the time window over which we’re computing the probability, and <span class="math notranslate nohighlight">\(n\)</span> is the total number of times the neuron spiked in the time window of interest.</p>
+<p>The second assumptions allows us to simply combine the probabilities of individual neurons. Recall the product rule for independent events: <span class="math notranslate nohighlight">\(P(A,B) = P(A)P(B)\)</span> if <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are independent. Treating neurons as independent, then, gives us the following:</p>
+<div class="math notranslate nohighlight">
+\[
 P(spikes|position) = \prod_i P(spikes_i|position)
-\)</span>$</p>
+\]</div>
 <p>The final term, <span class="math notranslate nohighlight">\(P(spikes)\)</span>, is inferred indirectly using the law of total probability:</p>
 <div class="math notranslate nohighlight">
 \[P(spikes) = \sum_{position}P(position,spikes) = \sum_{position}P(position)P(spikes|position)\]</div>
 <p>Another way of putting it is <span class="math notranslate nohighlight">\(P(spikes)\)</span> is the normalization factor such that <span class="math notranslate nohighlight">\(\sum_{position} P(position|spikes) = 1\)</span>, which is achived by dividing the numerator by its sum.</p>
-<p>If this method looks daunting, we have some good news: pynapple has it implemented already in the function <code class="docutils literal notranslate"><span class="pre">nap.decode_1d</span></code> for decoding a single dimension (or <code class="docutils literal notranslate"><span class="pre">nap.decode_2d</span></code> for two dimensions). All we’ll need are the spikes, the tuning curves, and the width of the time window <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
+<p>If this method looks daunting, we have some good news: pynapple has it implemented already in the function <code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code>. All we’ll need are the spikes, the tuning curves, and the width of the time window <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
 </div>
 <div class="tip render-all admonition" id="phase-precess-cv">
 <p class="admonition-title">Aside: Cross-validation</p>
@@ -1690,7 +1692,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x7f4c2014ab40&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x7ff7a0378da0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/fc4fe37cd11a676f5a7339898564ace7734b1a8c5956cba6a1134b81c58ed17d.png" src="../../_images/fc4fe37cd11a676f5a7339898564ace7734b1a8c5956cba6a1134b81c58ed17d.png" />
@@ -1929,42 +1931,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgb708fef0cfcd4ba68a5805c2ad8b952f">
+  <img id="_anim_imgd82b2589e9b64fde9c070d3e1b11ce8b">
   <div class="anim-controls">
-    <input id="_anim_sliderb708fef0cfcd4ba68a5805c2ad8b952f" type="range" class="anim-slider"
+    <input id="_anim_sliderd82b2589e9b64fde9c070d3e1b11ce8b" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="animb708fef0cfcd4ba68a5805c2ad8b952f.set_frame(parseInt(this.value));">
+           oninput="animd82b2589e9b64fde9c070d3e1b11ce8b.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animb708fef0cfcd4ba68a5805c2ad8b952f.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animd82b2589e9b64fde9c070d3e1b11ce8b.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectb708fef0cfcd4ba68a5805c2ad8b952f"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectd82b2589e9b64fde9c070d3e1b11ce8b"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_b708fef0cfcd4ba68a5805c2ad8b952f"
+      <input type="radio" name="state" value="once" id="_anim_radio1_d82b2589e9b64fde9c070d3e1b11ce8b"
              >
-      <label for="_anim_radio1_b708fef0cfcd4ba68a5805c2ad8b952f">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_b708fef0cfcd4ba68a5805c2ad8b952f"
+      <label for="_anim_radio1_d82b2589e9b64fde9c070d3e1b11ce8b">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_d82b2589e9b64fde9c070d3e1b11ce8b"
              checked>
-      <label for="_anim_radio2_b708fef0cfcd4ba68a5805c2ad8b952f">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_b708fef0cfcd4ba68a5805c2ad8b952f"
+      <label for="_anim_radio2_d82b2589e9b64fde9c070d3e1b11ce8b">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_d82b2589e9b64fde9c070d3e1b11ce8b"
              >
-      <label for="_anim_radio3_b708fef0cfcd4ba68a5805c2ad8b952f">Reflect</label>
+      <label for="_anim_radio3_d82b2589e9b64fde9c070d3e1b11ce8b">Reflect</label>
     </form>
   </div>
 </div>
@@ -1974,9 +1976,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgb708fef0cfcd4ba68a5805c2ad8b952f";
-    var slider_id = "_anim_sliderb708fef0cfcd4ba68a5805c2ad8b952f";
-    var loop_select_id = "_anim_loop_selectb708fef0cfcd4ba68a5805c2ad8b952f";
+    var img_id = "_anim_imgd82b2589e9b64fde9c070d3e1b11ce8b";
+    var slider_id = "_anim_sliderd82b2589e9b64fde9c070d3e1b11ce8b";
+    var loop_select_id = "_anim_loop_selectd82b2589e9b64fde9c070d3e1b11ce8b";
     var frames = new Array(54);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAABQRZlvAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -26041,7 +26043,7 @@ iIiIiIgdUIEuIiIiIiIiYgf+H9o2XYpoPiu0AAAAAElFTkSuQmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animb708fef0cfcd4ba68a5805c2ad8b952f = new Animation(frames, img_id, slider_id, 100.0,
+        animd82b2589e9b64fde9c070d3e1b11ce8b = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -26846,7 +26848,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f4e8d22a840&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7ffa119d2840&gt;&gt;</td>
         </tr>
     
 
