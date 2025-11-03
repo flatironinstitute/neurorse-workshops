@@ -674,8 +674,8 @@ For scikit-learn parameter grids, we use `__` to stand in for `.`:
 
 - Construct `param_grid`, using `__` to stand in for `.`
 - In scikit-learn pipelines, we access nested parameters using double underscores:
-  - `pipe["basis"]["position"].n_basis_funcs` ← normal Python syntax
-  - `"basis__position__n_basis_funcs"` ← scikit-learn parameter grid syntax
+  - `pipe["basis"]["position"].n_basis_funcs` - normal Python syntax
+  - `"basis__position__n_basis_funcs"` - scikit-learn parameter grid syntax
 
 </div>
 

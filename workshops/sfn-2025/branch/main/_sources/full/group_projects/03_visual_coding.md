@@ -239,7 +239,7 @@ extended_flashes_black = extended_flashes[extended_flashes["color"] == "-1.0"]
 Now, we'll select our neurons. There are four criteria we want to use:
 
 1. Brain area: we are interested in analyzing VISp units for this tutorial
-2. Quality: we will only select “good” quality units. If you're curious, you can (optionally) [read more](https://alleninstitute.github.io/openscope_databook/visualization/visualize_unit_metrics.html) how about the Allen Institute defines quality.
+2. Quality: we will only select "good" quality units. If you're curious, you can (optionally) [read more](https://alleninstitute.github.io/openscope_databook/visualization/visualize_unit_metrics.html) how about the Allen Institute defines quality.
 3. Firing rate: overall, we want units with a firing rate larger than 2Hz around the presentation of stimuli
 4. Responsiveness: we want units that actually respond to changes in the visual stimuli, i.e., their firing rate changes as a result of the stimulus.
 
