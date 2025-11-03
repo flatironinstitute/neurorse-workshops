@@ -1101,8 +1101,8 @@ This afternoon, we'll show how to cross-validate across basis identity, which yo
 
 
 ```{code-cell} ipython3
-position_basis = nmo.basis.MSplineEval(n_basis_funcs=10, label="position")
-speed_basis = nmo.basis.MSplineEval(n_basis_funcs=15, label="speed")
+position_basis = nmo.basis.BSplineEval(n_basis_funcs=10, label="position")
+speed_basis = nmo.basis.BSplineEval(n_basis_funcs=10, label="speed")
 workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 ```
 
