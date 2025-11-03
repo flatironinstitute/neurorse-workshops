@@ -1376,9 +1376,10 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <section id="instantiate-the-basis-by-doing-the-following">
 <h4>1. Instantiate the basis by doing the following:<a class="headerlink" href="#instantiate-the-basis-by-doing-the-following" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p><strong>Create a separate basis object for each model input (speed and position).</strong></p></li>
-<li><p><strong>Provide a label for each basis (“position” and “speed”).</strong></p></li>
-<li><p><strong>Visualize the basis objects.</strong></p></li>
+<li><p>Create a separate basis object for each model input (speed and position).</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">BSplineEval</span></code> basis with 10 basis functions each.</p></li>
+<li><p>Provide a label for each basis (“position” and “speed”).</p></li>
+<li><p>Visualize the basis objects.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1410,6 +1411,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </div>
 </div>
 </div>
+<p>Notice that, since we passed pynapple objects to the basis, we got a pynapple object back, preserving the time stamps. Additionally, <code class="docutils literal notranslate"><span class="pre">X</span></code> has the same number of time points as our input position and speed, but 20 columns. The columns come from  <code class="docutils literal notranslate"><span class="pre">n_basis_funcs</span></code> from each basis (10 for position, 10 for speed).</p>
 </section>
 </section>
 <section id="model-learning">
@@ -1418,9 +1420,9 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <section id="fit-a-glm-by-doing-the-following">
 <h4>3. Fit a GLM by doing the following:<a class="headerlink" href="#fit-a-glm-by-doing-the-following" title="Link to this heading">#</a></h4>
 <ul class="simple">
-<li><p><strong>Initialize <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></strong></p></li>
-<li><p><strong>Use the “LBFGS” solver and pass <code class="docutils literal notranslate"><span class="pre">{&quot;tol&quot;:</span> <span class="pre">1e-12}</span></code> to <code class="docutils literal notranslate"><span class="pre">solver_kwargs</span></code>.</strong></p></li>
-<li><p><strong>Fit the data, passing the design matrix and spike counts to the glm object.</strong></p></li>
+<li><p>Initialize <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></p></li>
+<li><p>Use the “LBFGS” solver and pass <code class="docutils literal notranslate"><span class="pre">{&quot;tol&quot;:</span> <span class="pre">1e-12}</span></code> to <code class="docutils literal notranslate"><span class="pre">solver_kwargs</span></code>.</p></li>
+<li><p>Fit the data, passing the design matrix and spike counts to the glm object.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1438,7 +1440,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </section>
 <section id="prediction">
 <h3>Prediction<a class="headerlink" href="#prediction" title="Link to this heading">#</a></h3>
-<p>Let’s check first if our model can accurately predict the tuning curves we displayed above. We can use the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict" title="nemos 0.2.4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">predict</span></code></span></a> function of NeMoS and then compute new tuning curves</p>
+<p>Let’s check first if our model can accurately predict the tuning curves we displayed above. We can use the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict" title="nemos 0.2.4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">predict</span></code></span></a> function of NeMoS and then compute new tuning curves. Set <code class="docutils literal notranslate"><span class="pre">bins=50</span></code> for the tuning curves.</p>
 <section id="use-predict-to-check-whether-our-glm-has-captured-each-neuron-s-speed-and-position-tuning">
 <h4>4. Use <code class="docutils literal notranslate"><span class="pre">predict</span></code> to check whether our GLM has captured each neuron’s speed and position tuning.<a class="headerlink" href="#use-predict-to-check-whether-our-glm-has-captured-each-neuron-s-speed-and-position-tuning" title="Link to this heading">#</a></h4>
 <ul class="simple">
@@ -1472,7 +1474,7 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 </section>
 <section id="id1">
 <h3>Bonus Exercise<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
-<p>As an bonus, more open-ended exercize, we can investigate all the scientific decisions that we swept under the rug: should we regularize the model? What basis should we use? Do we need both inputs? If you’re feeling ambitious, here are some suggestions to answer these questions:</p>
+<p>As an bonus, more open-ended exercise, we can investigate all the scientific decisions that we swept under the rug: should we regularize the model? What basis should we use? Do we need both inputs? If you’re feeling ambitious, here are some suggestions to answer these questions:</p>
 <ul class="simple">
 <li><p>Try to fit and compare the results we just obtained with different models:</p>
 <ul>

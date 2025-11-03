@@ -1230,9 +1230,10 @@ This afternoon, we'll show how to cross-validate across basis identity, which yo
 
 <div class="render-all">
 
-- **Create a separate basis object for each model input (speed and position).**
-- **Provide a label for each basis ("position" and "speed").**
-- **Visualize the basis objects.**
+- Create a separate basis object for each model input (speed and position).
+- Use `BSplineEval` basis with 10 basis functions each.
+- Provide a label for each basis ("position" and "speed").
+- Visualize the basis objects.
 
 </div>
 
@@ -1286,9 +1287,9 @@ X = basis.compute_features(position, speed)
 X
 ```
 
-<div class="render-uall">
+<div class="render-all">
 
-Notice that, since we passed pynapple objects to the basis, we got a pynapple object back, preserving the time stamps. Additionally, `X` has the same number of time points as our input position and speed, but 25 columns. The columns come from  `n_basis_funcs` from each basis (10 for position, 15 for speed).
+Notice that, since we passed pynapple objects to the basis, we got a pynapple object back, preserving the time stamps. Additionally, `X` has the same number of time points as our input position and speed, but 20 columns. The columns come from  `n_basis_funcs` from each basis (10 for position, 10 for speed).
 
 </div>
 
@@ -1305,9 +1306,9 @@ As we've done before, we can now use the Poisson GLM from NeMoS to learn the com
 
 <div class="render-all">
 
-- **Initialize `PopulationGLM`**
-- **Use the "LBFGS" solver and pass `{"tol": 1e-12}` to `solver_kwargs`.**
-- **Fit the data, passing the design matrix and spike counts to the glm object.**
+- Initialize `PopulationGLM`
+- Use the "LBFGS" solver and pass `{"tol": 1e-12}` to `solver_kwargs`.
+- Fit the data, passing the design matrix and spike counts to the glm object.
 
 </div>
 
@@ -1333,7 +1334,7 @@ glm.fit(X, count)
 
 <div class="render-all">
 
-Let's check first if our model can accurately predict the tuning curves we displayed above. We can use the [`predict`](nemos.glm.GLM.predict) function of NeMoS and then compute new tuning curves
+Let's check first if our model can accurately predict the tuning curves we displayed above. We can use the [`predict`](nemos.glm.GLM.predict) function of NeMoS and then compute new tuning curves. Set `bins=50` for the tuning curves.
 
 </div>
 
@@ -1389,7 +1390,7 @@ We can see that this model does a good job capturing both the position and the s
 
 <div class="render-all">
 
-As an bonus, more open-ended exercize, we can investigate all the scientific decisions that we swept under the rug: should we regularize the model? What basis should we use? Do we need both inputs? If you're feeling ambitious, here are some suggestions to answer these questions:
+As an bonus, more open-ended exercise, we can investigate all the scientific decisions that we swept under the rug: should we regularize the model? What basis should we use? Do we need both inputs? If you're feeling ambitious, here are some suggestions to answer these questions:
 
 - Try to fit and compare the results we just obtained with different models: 
   - A model with position as the only predictor.
