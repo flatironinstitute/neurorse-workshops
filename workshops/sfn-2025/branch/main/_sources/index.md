@@ -10,7 +10,7 @@ We are excited to see everyone at the Flatiron Center for Computational Neurosci
 
 Over the course of this two-day workshop, we will walk you through the notebooks included on this site in order to demonstrate how to use pynapple and NeMoS to analyze and visualize your data.
 
-Before the workshop, please try to follow the [setup](#setup) instructions below to install everything on your personal laptop.
+Before the workshop, please try to follow the [setup](#setup) instructions below to install everything on your personal laptop. If you run into issues, first check the [](#troubleshooting) section on this page to see if there's a solution for your problem and then, if you are unable to solve the problem, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
 
 The presentations and schedule for this workshop can be found at [this page](https://neurorse.flatironinstitute.org/workshops/sfn-2025.html).
 
@@ -206,6 +206,66 @@ jupyter lab
 :::::
 
 ::::::
+
+### **Optional**: Install pynaviz
+
+During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.io/pynaviz/) a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.
+
+**This section is optional.** If you would like to run pynaviz on your machine, follow the steps outlined here, but if you do not, you will still be able to watch and follow along. As `pynaviz` is under active development, there is a higher chance that you will have installation issues here (especially if you have a Windows machine). If this installation fails and you would like help trying to get it working, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
+
+1. Install pynaviz with the pyqt backend:
+    ::::::{tab-set}
+    :sync-group: category
+    
+    :::::{tab-item} uv
+    :sync: uv
+    
+    ::::{tab-set}
+    :sync-group: os
+    
+    :::{tab-item} Mac/Linux
+    :sync: posix
+    
+    ```shell
+    cd path/to/ccn-software-sfn-2025
+    source .venv/bin/activate
+    uv pip install "pynaviz[qt]"
+    ```
+    :::
+    
+    :::{tab-item} Windows
+    :sync: windows
+    
+    ```powershell
+    cd path\to\ccn-software-sfn-2025
+    .venv\Scripts\activate
+    uv pip install "pynaviz[qt]"
+    ```
+    :::
+    
+    :::::
+    
+    :::::{tab-item} conda / miniforge
+    :sync: conda
+    
+    ```shell
+    cd path/to/ccn-software-sfn-2025
+    conda activate ccn-sfn25
+    pip install "pynaviz[qt]"
+    ```
+    
+    :::::
+    
+    ::::::
+    
+2. Run `scripts/test_pynaviz.py`.
+    ```shell
+    python scripts/test_pynaviz.py
+    ```
+    
+    You should see a window that looks like the following pop up, display for about 5 seconds, and then close.
+    
+    ![pynaviz window](pynaviz.png)
 
 ## Troubleshooting
 

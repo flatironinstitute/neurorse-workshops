@@ -479,7 +479,7 @@ You might find it helpful to refer back to the [advanced nemos](sklearn-cv) note
 :::{admonition} Hints
 :class: hint
 
-Throughout this section and the next we'll include hints. They'll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint admonition like this, which you can expand to get a hint.
+Throughout the rest of the notebook we'll include hints. They'll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint like this, which you can expand to get a hint.
 
 :::
 
@@ -534,6 +534,7 @@ units_counts = selected_units.count(bin_size, ep=extended_flashes)
 
 - Decide on feature(s).
 - Decide on basis. (Hint: review the [current injection](current-inj-basis) or [place cell](sklearn-basis) notebooks.)
+    - If you set the `label` argument for your basis objects, interpreting the output will be easier.
 - Construct design matrix. (Hint: review the [place cell](basis_eval_place_cells) notebook.)
 
 :::{admonition} What features should I include?
@@ -684,59 +685,7 @@ X_train = additive_basis.compute_features(
 - Call fit. (Hint: review the [current injection](current-inj-glm) or [place cell](sklearn-cv) notebooks.)
 - Visualize result on PSTHs. (Note that you should use {func}`~pynapple.process.perievent.compute_perievent_continuous` and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)
 
-</div>
-
-Here's an example of how this could look for a single neuron. To do multiple neurons, `model` should be a `PopulationGLM` and fit to `units_counts.restrict(flashes_train)` instead.
-
-(The following regularizer strength comes from cross-validation.)
-
-```{code-cell} ipython3
-regularizer_strength = 7.745e-06
-# Initialize model object of a single unit
-model = nmo.glm.GLM(
-    regularizer="Ridge",
-    regularizer_strength=regularizer_strength,
-    solver_name="LBFGS", 
-)
-# Choose an example unit
-unit_id = 951768318
-
-# Get counts for train and test for said unit
-u_counts = units_counts.loc[unit_id]
-```
-
-```{code-cell} ipython3
-model.fit(X_train, u_counts.restrict(flashes_train))
-```
-
-```{code-cell} ipython3
-# Use predict to obtain the firing rates
-pred_unit = model.predict(X_test)
-
-# Convert units from spikes/bin to spikes/sec
-pred_unit = pred_unit/ bin_size
-```
-
-```{code-cell} ipython3
-# Re-center timestamps around white stimuli
-# +50 because we subtracted .50 at beginning of stimulus presentation
-peri_white_pred_unit = nap.compute_perievent_continuous(
-    timeseries=pred_unit, 
-    tref=nap.Ts(flashes_test_white.start+.50),
-    minmax=window_size
-)  
-# Re-center timestamps for black stimuli
-# +50 because we subtracted .50 at beginning of stimulus presentation
-peri_black_pred_unit = nap.compute_perievent_continuous(
-    timeseries=pred_unit, 
-    tref=nap.Ts(flashes_test_black.start+.50), 
-    minmax=window_size
-)  
-```
-
-<div class="render-all">
-
-Here's a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.
+When you go to plot the PSTH from model predictions and compare them against regular data, the following helper function should help (it works for one or multiple neurons).
 
 </div>
 
@@ -825,11 +774,66 @@ The following cell shows you how to call this visualization function. Its argume
 - A string, either `"white"` or `"black"`, which determines some of the styling.
 - Any number of keyword arguments (e.g., `predictions=` shown below) whose values are a tuple of `(style, peri)`, where `style` is a valid matplotlib style (e.g., `"red"`) and `peri` is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.
 
+```{code-block} python
+
+plot_pop_psth(peri_white[unit_id], "white", predictions=("red", peri_white_pred_unit))
+plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_unit))
+```
+
 </div>
 
-```{code-cell} ipython3
-:tags: [render-all]
 
+Here's an example of how this could look for a single neuron. To do multiple neurons, `model` should be a `PopulationGLM` and fit to `units_counts.restrict(flashes_train)` instead.
+
+(The following regularizer strength comes from cross-validation.)
+
+```{code-cell} ipython3
+regularizer_strength = 7.745e-06
+# Initialize model object of a single unit
+model = nmo.glm.GLM(
+    regularizer="Ridge",
+    regularizer_strength=regularizer_strength,
+    solver_name="LBFGS", 
+)
+# Choose an example unit
+unit_id = 951768318
+
+# Get counts for train and test for said unit
+u_counts = units_counts.loc[unit_id]
+```
+
+```{code-cell} ipython3
+model.fit(X_train, u_counts.restrict(flashes_train))
+```
+
+```{code-cell} ipython3
+# Use predict to obtain the firing rates
+pred_unit = model.predict(X_test)
+
+# Convert units from spikes/bin to spikes/sec
+pred_unit = pred_unit/ bin_size
+```
+
+```{code-cell} ipython3
+# Re-center timestamps around white stimuli
+# +50 because we subtracted .50 at beginning of stimulus presentation
+peri_white_pred_unit = nap.compute_perievent_continuous(
+    timeseries=pred_unit, 
+    tref=nap.Ts(flashes_test_white.start+.50),
+    minmax=window_size
+)  
+# Re-center timestamps for black stimuli
+# +50 because we subtracted .50 at beginning of stimulus presentation
+peri_black_pred_unit = nap.compute_perievent_continuous(
+    timeseries=pred_unit, 
+    tref=nap.Ts(flashes_test_black.start+.50), 
+    minmax=window_size
+)  
+```
+
+```{code-cell} ipython3
+
+# visualize predicted psth
 plot_pop_psth(peri_white[unit_id], "white", predictions=("red", peri_white_pred_unit))
 plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_unit))
 ```

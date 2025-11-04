@@ -400,7 +400,7 @@ You might find it helpful to refer back to the [advanced nemos](sklearn-cv) note
 :::{admonition} Hints
 :class: hint
 
-Throughout this section and the next we'll include hints. They'll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint admonition like this, which you can expand to get a hint.
+Throughout the rest of the notebook we'll include hints. They'll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint like this, which you can expand to get a hint.
 
 :::
 
@@ -435,6 +435,7 @@ Good luck and we look forward to seeing what you come up with!
 
 - Decide on feature(s).
 - Decide on basis. (Hint: review the [current injection](current-inj-basis) or [place cell](sklearn-basis) notebooks.)
+    - If you set the `label` argument for your basis objects, interpreting the output will be easier.
 - Construct design matrix. (Hint: review the [place cell](basis_eval_place_cells) notebook.)
 
 :::{admonition} What features should I include?
@@ -463,14 +464,7 @@ For the stimuli predictors, you probably want to model white and black separatel
 - Call fit. (Hint: review the [current injection](current-inj-glm) or [place cell](sklearn-cv) notebooks.)
 - Visualize result on PSTHs. (Note that you should use {func}`~pynapple.process.perievent.compute_perievent_continuous` and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)
 
-
-```{code-cell}
-# enter code here
-```
-
-
-
-Here's a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.
+When you go to plot the PSTH from model predictions and compare them against regular data, the following helper function should help (it works for one or multiple neurons).
 
 
 ```{code-cell} ipython3
@@ -557,13 +551,17 @@ The following cell shows you how to call this visualization function. Its argume
 - A string, either `"white"` or `"black"`, which determines some of the styling.
 - Any number of keyword arguments (e.g., `predictions=` shown below) whose values are a tuple of `(style, peri)`, where `style` is a valid matplotlib style (e.g., `"red"`) and `peri` is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.
 
-
-```{code-cell} ipython3
-:tags: [render-all]
+```{code-block} python
 
 plot_pop_psth(peri_white[unit_id], "white", predictions=("red", peri_white_pred_unit))
 plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_unit))
 ```
+
+
+```{code-cell}
+# enter code here
+```
+
 ### Score your model
 
 

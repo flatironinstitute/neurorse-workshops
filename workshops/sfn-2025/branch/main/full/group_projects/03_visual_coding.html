@@ -482,7 +482,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-03 21:37:40,743:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-04 17:59:24,140:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -878,7 +878,7 @@ In this section, we will download the data and extract the relevant parts for an
 <p>You might find it helpful to refer back to the <a class="reference internal" href="../live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">advanced nemos</span></a> notebook and / or to use the following pynapple functions: <code class="xref py py-func docutils literal notranslate"><span class="pre">set_diff()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">union()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code> (see <a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html#phase-precess-cv"><span class="std std-ref">phase precession notebook</span></a>).</p>
 <div class="hint admonition">
 <p class="admonition-title">Hints</p>
-<p>Throughout this section and the next we’ll include hints. They’ll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint admonition like this, which you can expand to get a hint.</p>
+<p>Throughout the rest of the notebook we’ll include hints. They’ll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint like this, which you can expand to get a hint.</p>
 </div>
 </div>
 <p>Again, multiple viable ways of solving this. Here’s the simplest: grab every third flash and use that as the test set.</p>
@@ -936,7 +936,11 @@ In this section, we will download the data and extract the relevant parts for an
 <div class="render-all">
 <ul class="simple">
 <li><p>Decide on feature(s).</p></li>
-<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../live_coding/02_current_injection.html#current-inj-basis"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../live_coding/03_nemos_advanced.html#sklearn-basis"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
+<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../live_coding/02_current_injection.html#current-inj-basis"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../live_coding/03_nemos_advanced.html#sklearn-basis"><span class="std std-ref">place cell</span></a> notebooks.)</p>
+<ul>
+<li><p>If you set the <code class="docutils literal notranslate"><span class="pre">label</span></code> argument for your basis objects, interpreting the output will be easier.</p></li>
+</ul>
+</li>
 <li><p>Construct design matrix. (Hint: review the <a class="reference internal" href="02_phase_precession.html#basis-eval-place-cells"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
 </ul>
 <div class="hint dropdown admonition">
@@ -1110,6 +1114,103 @@ In this section, we will download the data and extract the relevant parts for an
 <li><p>Call fit. (Hint: review the <a class="reference internal" href="../live_coding/02_current_injection.html#current-inj-glm"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
 <li><p>Visualize result on PSTHs. (Note that you should use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent_continuous" title="(in pynapple v0.10.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent_continuous()</span></code></a> and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)</p></li>
 </ul>
+<p>When you go to plot the PSTH from model predictions and compare them against regular data, the following helper function should help (it works for one or multiple neurons).</p>
+</div><div class="cell tag_render-all tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_pop_psth</span><span class="p">(</span>
+        <span class="n">peri</span><span class="p">,</span>
+        <span class="n">color_flashes</span><span class="p">,</span>
+        <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
+        <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
+        <span class="o">**</span><span class="n">peri_others</span>
+        <span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot perievent time histograms (PSTHs) and raster plots for multiple units.</span>
+
+<span class="sd">    Model predictions should be passed as additional keyword arguments. The key will be</span>
+<span class="sd">    used as the label, and the value should be a 2-tuple of `(style, peri)`, where</span>
+<span class="sd">    `style` is a matplotlib style (e.g., &quot;blue&quot; or &quot;--&quot;) and `peri` is a PSTH</span>
+<span class="sd">    dictionary, as returned by `compute_perievent_continuous`.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    peri : dict or TsGroup</span>
+<span class="sd">        Dictionary mapping unit names to binned spike count peri-stimulus data (e.g., binned time series).</span>
+<span class="sd">    color_flashes : str</span>
+<span class="sd">        A label indicating the flash color condition (&#39;black&#39; or other), used for visual styling.</span>
+<span class="sd">    bin_size : float</span>
+<span class="sd">        Size of the bin used for spike count computation (in seconds).</span>
+<span class="sd">    smoothing : float</span>
+<span class="sd">        Standard deviation for Gaussian smoothing of the PSTH traces.</span>
+<span class="sd">    peri_others : tuple</span>
+<span class="sd">        Model PSTHs to plot. See above for description</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">peri</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">peri</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">peri</span><span class="p">}</span>
+        
+    <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">peri</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span>
+                             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">n_cols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">peri</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+            <span class="c1"># then there&#39;s only set of axes</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span>
+        <span class="c1"># Plot PSTH (smoothed firing rate)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="n">smoothing</span><span class="p">),</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed&quot;</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Stimulus onset line</span>
+        <span class="n">span_color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span> <span class="k">if</span> <span class="n">color_flashes</span> <span class="o">==</span> <span class="s2">&quot;black&quot;</span> <span class="k">else</span> <span class="s2">&quot;silver&quot;</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.250</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">span_color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>  <span class="c1"># Stim duration</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">peri_pred</span><span class="p">))</span> <span class="ow">in</span> <span class="n">peri_others</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
+            <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
+            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Y-axis and title annotations</span>
+    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Rate (Hz)&quot;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">())</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s1">&#39;Time from stim(s)&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;PSTH - </span><span class="si">{</span><span class="n">color_flashes</span><span class="si">}</span><span class="s1"> flashes&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-all">
+<p>The following cell shows you how to call this visualization function. Its arguments are:</p>
+<ul class="simple">
+<li><p>The PSTH object computed from the data. This should only contain the responses to either the black or white flashes, but can contain the PSTHs from one or more-than-one neurons.</p></li>
+<li><p>A string, either <code class="docutils literal notranslate"><span class="pre">&quot;white&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;black&quot;</span></code>, which determines some of the styling.</p></li>
+<li><p>Any number of keyword arguments (e.g., <code class="docutils literal notranslate"><span class="pre">predictions=</span></code> shown below) whose values are a tuple of <code class="docutils literal notranslate"><span class="pre">(style,</span> <span class="pre">peri)</span></code>, where <code class="docutils literal notranslate"><span class="pre">style</span></code> is a valid matplotlib style (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;red&quot;</span></code>) and <code class="docutils literal notranslate"><span class="pre">peri</span></code> is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_white_pred_unit</span><span class="p">))</span>
+<span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_black</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_black_pred_unit</span><span class="p">))</span>
+</pre></div>
+</div>
 </div>
 <p>Here’s an example of how this could look for a single neuron. To do multiple neurons, <code class="docutils literal notranslate"><span class="pre">model</span></code> should be a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> and fit to <code class="docutils literal notranslate"><span class="pre">units_counts.restrict(flashes_train)</span></code> instead.</p>
 <p>(The following regularizer strength comes from cross-validation.)</p>
@@ -1644,7 +1745,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f5618a0e700&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7fe72e2ce520&gt;&gt;</td>
         </tr>
     
 
@@ -1766,103 +1867,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </div>
 </div>
 </div>
-<div class="render-all">
-<p>Here’s a helper function for plotting the PSTH of the data and predictions (for one or multiple neurons), which you may find helpful for visualizing your model performance.</p>
-</div><div class="cell tag_render-all tag_hide-input docutils container">
-<details class="admonition hide above-input">
-<summary aria-label="Toggle hidden content">
-<p class="collapsed admonition-title">Show code cell source</p>
-<p class="expanded admonition-title">Hide code cell source</p>
-</summary>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plot_pop_psth</span><span class="p">(</span>
-        <span class="n">peri</span><span class="p">,</span>
-        <span class="n">color_flashes</span><span class="p">,</span>
-        <span class="n">bin_size</span><span class="o">=</span><span class="mf">0.005</span><span class="p">,</span>
-        <span class="n">smoothing</span><span class="o">=</span><span class="mf">0.015</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">peri_others</span>
-        <span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot perievent time histograms (PSTHs) and raster plots for multiple units.</span>
-
-<span class="sd">    Model predictions should be passed as additional keyword arguments. The key will be</span>
-<span class="sd">    used as the label, and the value should be a 2-tuple of `(style, peri)`, where</span>
-<span class="sd">    `style` is a matplotlib style (e.g., &quot;blue&quot; or &quot;--&quot;) and `peri` is a PSTH</span>
-<span class="sd">    dictionary, as returned by `compute_perievent_continuous`.</span>
-<span class="sd">    </span>
-<span class="sd">    Parameters:</span>
-<span class="sd">    -----------</span>
-<span class="sd">    peri : dict or TsGroup</span>
-<span class="sd">        Dictionary mapping unit names to binned spike count peri-stimulus data (e.g., binned time series).</span>
-<span class="sd">    color_flashes : str</span>
-<span class="sd">        A label indicating the flash color condition (&#39;black&#39; or other), used for visual styling.</span>
-<span class="sd">    bin_size : float</span>
-<span class="sd">        Size of the bin used for spike count computation (in seconds).</span>
-<span class="sd">    smoothing : float</span>
-<span class="sd">        Standard deviation for Gaussian smoothing of the PSTH traces.</span>
-<span class="sd">    peri_others : tuple</span>
-<span class="sd">        Model PSTHs to plot. See above for description</span>
-
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">peri</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-        <span class="n">peri</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">peri</span><span class="p">}</span>
-        
-    <span class="n">n_cols</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">peri</span><span class="p">)</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span>
-                             <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">2.5</span> <span class="o">*</span> <span class="n">n_cols</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">n_cols</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
-
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">unit</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">peri</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-        <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-            <span class="c1"># then there&#39;s only set of axes</span>
-            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span>
-        <span class="c1"># Plot PSTH (smoothed firing rate)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">u</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span><span class="p">)</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="n">std</span><span class="o">=</span><span class="n">smoothing</span><span class="p">),</span>
-            <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Observed&quot;</span>
-        <span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># Stimulus onset line</span>
-        <span class="n">span_color</span> <span class="o">=</span> <span class="s2">&quot;black&quot;</span> <span class="k">if</span> <span class="n">color_flashes</span> <span class="o">==</span> <span class="s2">&quot;black&quot;</span> <span class="k">else</span> <span class="s2">&quot;silver&quot;</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.250</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">span_color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">)</span>  <span class="c1"># Stim duration</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mf">0.25</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">unit</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="n">peri_pred</span><span class="p">))</span> <span class="ow">in</span> <span class="n">peri_others</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-            <span class="k">try</span><span class="p">:</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span>
-            <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
-                <span class="n">p</span> <span class="o">=</span> <span class="n">peri_pred</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
-            <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)),</span>
-            <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">capitalize</span><span class="p">()</span>
-            <span class="p">)</span>
-
-    <span class="c1"># Y-axis and title annotations</span>
-    <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Rate (Hz)&quot;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">ax</span><span class="o">.</span><span class="n">get_legend_handles_labels</span><span class="p">())</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.00</span><span class="p">,</span> <span class="s1">&#39;Time from stim(s)&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.00</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;PSTH - </span><span class="si">{</span><span class="n">color_flashes</span><span class="si">}</span><span class="s1"> flashes&#39;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-</details>
-</div>
-<div class="render-all">
-<p>The following cell shows you how to call this visualization function. Its arguments are:</p>
-<ul class="simple">
-<li><p>The PSTH object computed from the data. This should only contain the responses to either the black or white flashes, but can contain the PSTHs from one or more-than-one neurons.</p></li>
-<li><p>A string, either <code class="docutils literal notranslate"><span class="pre">&quot;white&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;black&quot;</span></code>, which determines some of the styling.</p></li>
-<li><p>Any number of keyword arguments (e.g., <code class="docutils literal notranslate"><span class="pre">predictions=</span></code> shown below) whose values are a tuple of <code class="docutils literal notranslate"><span class="pre">(style,</span> <span class="pre">peri)</span></code>, where <code class="docutils literal notranslate"><span class="pre">style</span></code> is a valid matplotlib style (e.g., <code class="docutils literal notranslate"><span class="pre">&quot;red&quot;</span></code>) and <code class="docutils literal notranslate"><span class="pre">peri</span></code> is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.</p></li>
-</ul>
-</div><div class="cell tag_render-all docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_white_pred_unit</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># visualize predicted psth</span>
+<span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_white</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;white&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_white_pred_unit</span><span class="p">))</span>
 <span class="n">plot_pop_psth</span><span class="p">(</span><span class="n">peri_black</span><span class="p">[</span><span class="n">unit_id</span><span class="p">],</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">predictions</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="n">peri_black_pred_unit</span><span class="p">))</span>
 </pre></div>
 </div>
