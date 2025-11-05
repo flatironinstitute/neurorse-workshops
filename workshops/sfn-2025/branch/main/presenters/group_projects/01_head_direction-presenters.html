@@ -562,14 +562,6 @@ By default, data are lazy-loaded. This can be useful when reading larger than me
 <p><strong>Question:</strong> Using the column <code class="docutils literal notranslate"><span class="pre">tags</span></code>, can you create one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">wake</span></code> and one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">sleep</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Get wake intervals from epochs</span>
-<span class="n">sleep_ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Get sleep intervals from epochs</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="n">epochs</span><span class="p">[</span><span class="n">epochs</span><span class="o">.</span><span class="n">tags</span><span class="o">==</span><span class="s2">&quot;wake&quot;</span><span class="p">]</span>
 <span class="n">sleep_ep</span> <span class="o">=</span> <span class="n">epochs</span><span class="p">[</span><span class="n">epochs</span><span class="o">.</span><span class="n">tags</span><span class="o">==</span><span class="s2">&quot;sleep&quot;</span><span class="p">]</span>
 </pre></div>
@@ -589,21 +581,6 @@ By default, data are lazy-loaded. This can be useful when reading larger than me
 We want to know how the firing rate of each neuron changes as a function of the head-direction of the animal during wakefulness.</p>
 <p>To do this in pynapple, all you need is the call of a single function : <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>!</p>
 <p><strong>Question:</strong> can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
-    <span class="n">features</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Which feature? Here the head-direction of the animal</span>
-    <span class="n">bins</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># How many bins of feature space? Here 61 angular bins is a good numbers</span>
-    <span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="c1"># The epochs should correspond to when the features are defined. Here we use the time support directly</span>
-    <span class="nb">range</span><span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="c1"># The min and max of the bin array</span>
-    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span> <span class="c1"># Let&#39;s give a name to our feature for better labelling of the output.</span>
-    <span class="p">)</span> 
-<span class="n">tuning_curves</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
@@ -1211,18 +1188,6 @@ to get an array of predictors of shape, <code class="docutils literal notranslat
 </ul>
 <p>Since this time we are convolving more than one neuron, we need to reset the expected input shape.
 This can be done by passing the population counts to the <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code> method.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># reset the input shape by passing the pop. count</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="mi">152</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
-<span class="n">basis</span><span class="o">.</span><span class="n">set_input_shape</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-<span class="c1"># convolve all the neurons</span>
-<span class="n">convolved_count</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the binned spike count time series</span>
-</pre></div>
-</div>
-</div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># reset the input shape by passing the pop. count</span>

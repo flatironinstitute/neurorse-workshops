@@ -186,11 +186,6 @@ NWB file can save intervals with multiple labels. The object `IntervalSet` inclu
 **Question:** Using the column `tags`, can you create one `IntervalSet` object for intervals labeled `wake` and one `IntervalSet` object for intervals labeled `sleep`?
 
 
-```{code-cell} ipython3
-wake_ep = ... # Get wake intervals from epochs
-sleep_ep = ... # Get sleep intervals from epochs
-```
-
 
 ```{code-cell} ipython3
 wake_ep = epochs[epochs.tags=="wake"]
@@ -213,18 +208,6 @@ To do this in pynapple, all you need is the call of a single function : `nap.com
 
 **Question:** can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable `tuning_curves`?
 
-
-```{code-cell} ipython3
-tuning_curves = nap.compute_tuning_curves(
-    data=..., # The neural activity as a TsGroup
-    features=..., # Which feature? Here the head-direction of the animal
-    bins=..., # How many bins of feature space? Here 61 angular bins is a good numbers
-    epochs = angle.time_support, # The epochs should correspond to when the features are defined. Here we use the time support directly
-    range= (0, 2*np.pi), # The min and max of the bin array
-    feature_names = ["angle"] # Let's give a name to our feature for better labelling of the output.
-    ) 
-tuning_curves
-```
 
 
 ```{code-cell} ipython3
@@ -959,7 +942,11 @@ is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, `(num_time_points, num_neurons * num_basis_funcs)`.
 
+
+
 #### Preparing the features
+
+
 
 **Question: Can you:**
 - Re-define the basis?
@@ -969,15 +956,6 @@ to get an array of predictors of shape, `(num_time_points, num_neurons * num_bas
 Since this time we are convolving more than one neuron, we need to reset the expected input shape. 
 This can be done by passing the population counts to the `set_input_shape` method.
 
-
-```{code-cell} ipython3
-# reset the input shape by passing the pop. count
-print(count.shape)
-print(152/8)
-basis.set_input_shape(count)
-# convolve all the neurons
-convolved_count = basis.compute_features(...) # Parameter is the binned spike count time series
-```
 
 
 ```{code-cell} ipython3
@@ -1158,6 +1136,7 @@ fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
 ```
 
 ### Conclusion
+
 
 
 These coupling filters represent the influence of one neuron on another over time. 

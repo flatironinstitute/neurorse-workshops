@@ -222,6 +222,8 @@ NWB file can save intervals with multiple labels. The object `IntervalSet` inclu
 
 **Question:** Using the column `tags`, can you create one `IntervalSet` object for intervals labeled `wake` and one `IntervalSet` object for intervals labeled `sleep`?
 
+</div>
+
 <div class="render-user">
 ```{code-cell} ipython3
 wake_ep = ... # Get wake intervals from epochs
@@ -249,6 +251,8 @@ We want to know how the firing rate of each neuron changes as a function of the 
 To do this in pynapple, all you need is the call of a single function : `nap.compute_tuning_curves`!
 
 **Question:** can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable `tuning_curves`?
+
+</div>
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -1118,7 +1122,11 @@ is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, `(num_time_points, num_neurons * num_basis_funcs)`.
 
+</div>
+
 #### Preparing the features
+
+<div class="render-all">
 
 **Question: Can you:**
 - Re-define the basis?
@@ -1127,6 +1135,8 @@ to get an array of predictors of shape, `(num_time_points, num_neurons * num_bas
 
 Since this time we are convolving more than one neuron, we need to reset the expected input shape. 
 This can be done by passing the population counts to the `set_input_shape` method.
+
+</div>
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -1352,6 +1362,7 @@ fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
 ### Conclusion
 
 <div class="render-all">
+
 These coupling filters represent the influence of one neuron on another over time. 
 They have been sorted based on the preferred head-direction of each neuron.
 Note that those neurons are not synaptically connected, but they have a functional relationship based on their tuning 
