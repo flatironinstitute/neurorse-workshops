@@ -118,7 +118,9 @@ print(data)
 
 <div class="render-all">
 
-The content of the NWB file is not loaded yet. The object `data` behaves like a dictionnary.
+The content of the NWB file is not loaded yet. The object `data` behaves like a dictionary.
+It contains multiple entries corresponding to different data types stored in the NWB file.
+In NWB files, spike times are stored in the `units` entry.
 
 **Question:** Can you load the spike times from the NWB and call the variables `spikes`?
 
@@ -326,7 +328,7 @@ print(pref_ang)
 The variable `pref_ang` contains the preferred direction of each neuron. 
 Now this information can be useful to add it to the metainformation of the `spikes` object since it is neuron-specific information.
 
-**Question:** Can you add it to the metainformation of `spikes`?
+**Question:** Can you add it to the metainformation of `spikes`? The metadata field should be called `pref_ang`.
 
 Hint :
 

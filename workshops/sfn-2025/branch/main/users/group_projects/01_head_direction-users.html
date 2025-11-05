@@ -503,7 +503,9 @@ This function will give us the file path to where the data is stored.</p>
 </div>
 </div>
 </div>
-<p>The content of the NWB file is not loaded yet. The object <code class="docutils literal notranslate"><span class="pre">data</span></code> behaves like a dictionnary.</p>
+<p>The content of the NWB file is not loaded yet. The object <code class="docutils literal notranslate"><span class="pre">data</span></code> behaves like a dictionary.
+It contains multiple entries corresponding to different data types stored in the NWB file.
+In NWB files, spike times are stored in the <code class="docutils literal notranslate"><span class="pre">units</span></code> entry.</p>
 <p><strong>Question:</strong> Can you load the spike times from the NWB and call the variables <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -627,7 +629,7 @@ Since this is a lot of xarray wrangling, it is given.</p>
 </div>
 <p>The variable <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> contains the preferred direction of each neuron.
 Now this information can be useful to add it to the metainformation of the <code class="docutils literal notranslate"><span class="pre">spikes</span></code> object since it is neuron-specific information.</p>
-<p><strong>Question:</strong> Can you add it to the metainformation of <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
+<p><strong>Question:</strong> Can you add it to the metainformation of <code class="docutils literal notranslate"><span class="pre">spikes</span></code>? The metadata field should be called <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code>.</p>
 <p>Hint :</p>
 <p>There are multiple ways of doing this:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">metadata</span>
