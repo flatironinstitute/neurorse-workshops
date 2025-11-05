@@ -11,30 +11,19 @@ kernelspec:
   language: python
 ---
 
-```{code-cell} ipython3
-:tags: [render-all]
-
-%matplotlib inline
-```
-
-# Data analysis with pynapple & nemos
+# Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
  rendered of this notebook, go [here](../../full/group_projects/01_head_direction.md)
 
-## Learning objectives
 
 
 
-- Loading a NWB file
-- Compute tuning curves
-- Decode neural activity
-- Compute correlograms
-- Include history-related predictors to NeMoS GLM.
-- Reduce over-fitting with `Basis`.
-- Learn functional connectivity.
-
+In this tutorial, we will learn how to use pynapple and nemos to analyze head-direction cells recorded in the 
+anterodorsal thalamic nucleus (ADn) of the mouse. We will use a NWB file containing spike times of neurons and the head-direction of the animal over time.
+We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.
+Finally, we will fit a generalized linear model (GLM) to quantify the functional connectivity between neurons based on their spike history.
 
 The pynapple documentation can be found [here](https://pynapple.org).
 
@@ -43,6 +32,21 @@ The nemos documentation can be found [here](https://nemos.readthedocs.io/en/late
 
 
 
+
+## Objectives
+
+
+
+For part 1 of the tutorial, we will use pynapple to do the following tasks:
+1. Loading a NWB file
+2. Compute tuning curves
+3. Compute cross-correlograms
+
+For part 2 of the tutorial, we will use nemos to do the following tasks:
+1. Create spike history features
+2. Fit a GLM model to a single neuron
+3. Fit a GLM model with basis functions to reduce over-fitting
+4. Fit a GLM model to all neurons to learn functional connectivity
 
 Let's start by importing all the packages.
 If an import fails, you can do `!pip install pynapple nemos matplotlib` in a cell to fix it.
@@ -69,12 +73,18 @@ nap.nap_config.suppress_conversion_warnings = True
 plt.style.use(nmo.styles.plot_style)
 ```
 
-## Loading a NWB file
+## Part 1 : Analyzing head-direction cells with Pynapple
+
+### Fetch and load data
 
 
 
-Pynapple commit to support NWB for data loading. 
-If you have installed the repository, you can run the following cell:
+The dataset we will use is from this study : [Peyrache et al., 2015](https://www.nature.com/articles/nn.3968).
+
+If you ran the workshop setup script, you should have this file downloaded already. 
+If not, the function we'll use to fetch it will download it for you. 
+This function is called `fetch_data`, and can be imported from the `workshop_utils` module. 
+This function will give us the file path to where the data is stored. 
 
 
 
@@ -110,14 +120,6 @@ The content of the NWB file is not loaded yet. The object `data` behaves like a 
 
 ```{code-cell} ipython3
 spikes = data["units"]  # Get spike timings
-```
-
-
-
-**Question:** And print it?
-
-
-```{code-cell} ipython3
 print(spikes)
 ```
 
@@ -137,7 +139,7 @@ print(len(spikes))
 
 
 
-The NWB file contains other informations about the recording. `ry` contains the value of the head-direction of the animal over time. 
+The NWB file contains other information about the recording. `ry` contains the value of the head-direction of the animal over time. 
 
 **Question:** Can you extract the angle of the animal in a variable called `angle` and print it?
 
@@ -151,10 +153,11 @@ print(angle)
 
 
 But are the data actually loaded ... or not?
-
-**Question:** Can you print the underlying data array of `angle`?
-
-Data are lazy-loaded. This can be useful when reading larger than memory array from disk with memory map.
+If you look at the type of `angle`, you will see that it is a `Tsd` object.
+But what about the underlying data array?
+The underlying data array is stored in the property `d` of the `Tsd` object.
+If you print it, you will see that it is a `h5py` array.
+By default, data are lazy-loaded. This can be useful when reading larger than memory array from disk with memory map.
 
 
 
@@ -182,11 +185,11 @@ NWB file can save intervals with multiple labels. The object `IntervalSet` inclu
 
 **Question:** Using the column `tags`, can you create one `IntervalSet` object for intervals labeled `wake` and one `IntervalSet` object for intervals labeled `sleep`?
 
-```
-wake_ep = ...
-sleep_ep = ...
-```
 
+```{code-cell} ipython3
+wake_ep = ... # Get wake intervals from epochs
+sleep_ep = ... # Get sleep intervals from epochs
+```
 
 
 ```{code-cell} ipython3
@@ -194,26 +197,34 @@ wake_ep = epochs[epochs.tags=="wake"]
 sleep_ep = epochs[epochs.tags=="sleep"]
 ```
 
-## Compute tuning curves
+### Compute tuning curves
 
 
 
-Now that we have spikes and a behavioral feature (i.e. head-direction), we would like to compute the firing rate of neurons as a function of the variable `angle` during `wake_ep`.
+Now we have 
+- spikes
+- a behavioral feature (i.e. head-direction), 
+- epochs corresponding to when the feature is defined (i.e. when the head-direction was recorded).
+
+We can compute tuning curves, i.e. the firing rate of neurons as a function of head-direction. 
+We want to know how the firing rate of each neuron changes as a function of the head-direction of the animal during wakefulness.
+
 To do this in pynapple, all you need is the call of a single function : `nap.compute_tuning_curves`!
 
 **Question:** can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable `tuning_curves`?
 
-Here are the parameters of the function to fill :
-```
-data = ... # Should be the spike times of all neurons
-features = ... # Which feature? Here the head-direction of the animal
-bins = ... # How many bins of feature space? 61 angular bins is a good numbers
-epochs = angle.time_support # The epochs should correspond to when the features are defined. Here we use the time support directly
-range = (0, 2*np.pi) # The min and max of the bin array
-feature_names = ["angle"] # Let's give a name to our feature for better labelling of the output.
-```
 
-
+```{code-cell} ipython3
+tuning_curves = nap.compute_tuning_curves(
+    data=..., # The neural activity as a TsGroup
+    features=..., # Which feature? Here the head-direction of the animal
+    bins=..., # How many bins of feature space? Here 61 angular bins is a good numbers
+    epochs = angle.time_support, # The epochs should correspond to when the features are defined. Here we use the time support directly
+    range= (0, 2*np.pi), # The min and max of the bin array
+    feature_names = ["angle"] # Let's give a name to our feature for better labelling of the output.
+    ) 
+tuning_curves
+```
 
 
 ```{code-cell} ipython3
@@ -231,13 +242,14 @@ tuning_curves
 
 
 
-The output is an xarray object. The first dimensions is neurons. The second dimension is angular head-direction. Some metadata fields have been added.
-
-**Question:** Can you plot some tuning curves?
+The output is a xarray object indexed by neuron and head\-direction: the first dimension corresponds to neurons, 
+the second to angular bins, and additional metadata fields are included.
 
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+
 plt.figure()
 plt.subplot(221)
 tuning_curves[0].plot()
@@ -255,7 +267,8 @@ plt.tight_layout()
 
 Most of those neurons are head-directions neurons.
 
-The next cell allows us to get a quick estimate of the neurons's preferred direction. Since this is a lot of xarray wrangling, it is given.
+The next cell allows us to get a quick estimate of the neurons's preferred direction. 
+Since this is a lot of xarray wrangling, it is given.
 
 
 
@@ -268,6 +281,9 @@ print(pref_ang)
 ```
 
 
+
+The variable `pref_ang` contains the preferred direction of each neuron. 
+Now this information can be useful to add it to the metainformation of the `spikes` object since it is neuron-specific information.
 
 **Question:** Can you add it to the metainformation of `spikes`?
 
@@ -291,29 +307,16 @@ spikes
 
 
 
-This index maps a neuron to a preferred direction between 0 and 360 degrees.
-
-**Question:** Can you plot the spiking activity of the neurons based on their preferred direction as well as the head-direction of the animal?
-For the sake of visibility, you should restrict the data to the following epoch : 
-
-```
-
-ex_ep = nap.IntervalSet(start=8910, end=8960)
-
-```
-
-
-*Hint for plotting*
-
-The object `TsGroup` has the function `to_tsd` that transforms it from a collection of timestamps to a sorted timestamps array with values.
-Values can be assigned based on the metadata `to_tsd("pref_ang")`.
-
+This index maps a neuron to a preferred angular direction between 0 and 2pi. 
+Let's visualize the spiking activity of the neurons based on their preferred direction 
+as well as the head-direction of the animal. To make it easier to see, we will restrict the data to a small epoch.
 
 
 
 ```{code-cell} ipython3
-ex_ep = nap.IntervalSet(start=8910, end=8960)
+:tags: [render-all]
 
+ex_ep = nap.IntervalSet(start=8910, end=8960)
 
 plt.figure()
 plt.subplot(211)
@@ -324,22 +327,16 @@ plt.subplot(212)
 plt.plot(spikes.restrict(ex_ep).to_tsd("pref_ang"), '|')
 ```
 
-## Compute correlograms
+### Compute correlograms
 
 
 
-We see that some neurons have a correlated activity. Can we measure it with the function `nap.compute_crosscorrelogram`?
+We see that some neurons have a correlated activity meaning they tend to fire together, while others have an anti-correlated activity meaning when one neuron fires, the other does not.
+Can we quantify this correlation between pairs of neurons? To do this, we can compute cross-correlograms between pairs of neurons.
+A cross-correlogram measures the correlation between the spike trains of two neurons as a function of time lag. It counts how often spikes from one neuron occur at different time lags relative to spikes from another neuron.
+In pynapple, we use the function `nap.compute_crosscorrelogram` to compute cross-correlograms between pairs of neurons.
 
 **Question:** Can you compute cross-correlograms during wake for all pairs of neurons and call it `cc_wake`?
-
-Here are the parameters of the function to fill :
-```
-group = ... # The neural activity as a TsGroup
-binsize = 0.2 # 200 ms bin
-windowsize = 20 # 20 s window
-ep = ... # Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.
-```
-
 
 
 
@@ -351,11 +348,10 @@ cc_wake = nap.compute_crosscorrelogram(spikes, binsize=0.2, windowsize=20.0, ep=
 
 The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
 The index shows the time lag.
+Let's visualize some cross-correlograms. 
+To make things easier, we will focus on two pairs of neurons: one pair that fires for the same direction and one pair that fires for opposite directions.
 
-
-**Question:** can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?
-
-*Hint : Take neurons 7 and 20*
+The pair (7, 20) fires for the same direction while the pair (7, 26) fires for opposite directions. 
 
 To index pandas columns, you can do `cc[(7, 20)]`.
 
@@ -364,46 +360,37 @@ To index xarray tuning curves, you can do `tuning_curves.sel(unit=[7,20])`
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+
 index = spikes.keys()
 
 
 plt.figure()
-plt.subplot(121)
+plt.subplot(221)
 tuning_curves.sel(unit=[7,20]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
-plt.subplot(122)
+plt.subplot(222)
 plt.plot(cc_wake[(7, 20)])
 plt.xlabel("Time lag (s)")
 plt.title("Cross-corr.")
-```
-
-
-
-**Question:** can you plot the cross-correlogram during wake of 2 neurons firing for opposite directions?
-
-
-
-```{code-cell} ipython3
-index = spikes.keys()
-
-
-plt.figure()
-plt.subplot(121)
+plt.subplot(223)
 tuning_curves.sel(unit=[7,26]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
-plt.subplot(122)
+plt.subplot(224)
 plt.plot(cc_wake[(7, 26)])
 plt.xlabel("Time lag (s)")
 plt.title("Cross-corr.")
+plt.tight_layout()
 ```
 
 
+
+As you can see, the pair of neurons that fire for the same direction have a positive correlation at time lag 0, meaning they tend to fire together.
+The pair of neurons that fire for opposite directions have a negative correlation at time lag 0, meaning when one neuron fires, the other does not.
 
 Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.
 
 **Question:** can you compute the cross-correlograms during sleep?
-
-*Hint: change the argument ep of nap.compute_crosscorrelogram to `sleep_ep`*
 
 
 
@@ -413,60 +400,54 @@ cc_sleep = nap.compute_crosscorrelogram(spikes, 0.02, 1.0, ep=sleep_ep)
 
 
 
-**Question:** can you display the cross-correlogram for wakefulness and sleep of the same pairs of neurons?
+Let's visualize the cross-correlograms during wake and sleep for the pair of neurons that fire for the same direction 
+and the pair of neurons that fire for opposite directions.
+
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+
 plt.figure()
-plt.subplot(131)
+plt.subplot(231)
 tuning_curves.sel(unit=[7,20]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
-plt.subplot(132)
+plt.subplot(232)
 plt.plot(cc_wake[(7, 20)])
 plt.xlabel("Time lag (s)")
 plt.title("Wake")
-plt.subplot(133)
+plt.subplot(233)
 plt.plot(cc_sleep[(7, 20)])
 plt.xlabel("Time lag (s)")
 plt.title("Sleep")
-plt.tight_layout()
-```
-
-
-
-
-Now let's see what happen if you take neurons with opposite tunig curves.
-
-**Question : Can you plot the cross-correlograms of 2 neurons firing for opposite directions during wake and sleep?**
-
-*Hint : take neurons 7 and 26. `tuning_curves.sel(unit=[7,26])`, `cc_wake[(7, 26)]`, `cc_sleep[(7, 26)]`*
-
-
-
-```{code-cell} ipython3
-
-plt.figure()
-plt.subplot(131)
+plt.subplot(234)
 tuning_curves.sel(unit=[7,26]).plot(x='angle', hue='unit')
-plt.title("Tuning curves")
-plt.subplot(132)
+plt.subplot(235)
 plt.plot(cc_wake[(7, 26)])
 plt.xlabel("Time lag (s)")
-plt.title("Wake")
-plt.subplot(133)
+plt.subplot(236)
 plt.plot(cc_sleep[(7, 26)])
 plt.xlabel("Time lag (s)")
-plt.title("Sleep")
 plt.tight_layout()
 ```
 
 
 
-What does it mean for the relationship between cells here?
+What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.
 
 
 
 ## Fitting a GLM model with Nemos
+
+
+
+In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep. Cells that fire together during wake also fire together during sleep and cells that don't fire together during wake don't fire together during sleep. The goal here is to characterized this relationship with generalized linear model. Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.
+
+**Question : are neurons constantly tuned to head-direction and can we use it to predict the spiking activity of each neuron based only on the activity of other neurons?**
+
+To fit the GLM faster, we will use only the first 3 min of wake.
+
+
 
 ```{code-cell} ipython3
 wake_ep = nap.IntervalSet(

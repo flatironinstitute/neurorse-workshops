@@ -102,7 +102,7 @@ We will ignore the object `theta_phase` because we will be computing this oursel
 
 <div class="render-all">  
     
-The `units` field is a [`TsGroup`](pynapple.TsGroup): a collection of [`Ts`](pynapple.Ts) objects containing the spike times of each unit, where the "Index" is the unit number or key. Each unit has the following metadata:
+The `units` field is a [`TsGroup`](https://pynapple.org/generated/pynapple.TsGroup.html#pynapple.TsGroup): a collection of [`Ts`](https://pynapple.org/generated/pynapple.Ts.html#pynapple.Ts) objects containing the spike times of each unit, where the "Index" is the unit number or key. Each unit has the following metadata:
 - **rate**: computed by pynapple, is the average firing rate of the neuron across all recorded time points.
 - **location**, **shank**, and **cell_type**: variables saved and imported from the original data set.
 
@@ -130,7 +130,7 @@ data["units"][1]
 
 <div class="render-all">  
 
-The next three objects; `rem`, `nrem`, and `forward_ep`; are all [`IntervalSet`](pynapple.IntervalSet) objects containing time windows of REM sleep, nREM sleep, and forward runs down the linear maze, respectively. 
+The next three objects; `rem`, `nrem`, and `forward_ep`; are all [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) objects containing time windows of REM sleep, nREM sleep, and forward runs down the linear maze, respectively. 
 
 </div>
 
@@ -176,7 +176,7 @@ ax.legend([sp1[0],sp2[0],sp3[0]], ["REM sleep","nREM sleep","forward runs"]);
 
 <div class="render-all">  
 
-The `eeg` object is a [`TsdFrame`](pynapple.TsdFrame) containing an LFP voltage trace for a single representative channel in CA1.
+The `eeg` object is a [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html#pynapple.TsdFrame) containing an LFP voltage trace for a single representative channel in CA1.
 
 </div>
 
@@ -188,7 +188,7 @@ data["eeg"]
 
 <div class="render-all">  
 
-Despite having a single column, this [`TsdFrame`](pynapple.TsdFrame) is still a 2D object. We can represent this as a 1D `Tsd` by indexing into the first column.
+Despite having a single column, this [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html#pynapple.TsdFrame) is still a 2D object. We can represent this as a 1D `Tsd` by indexing into the first column.
 
 </div>
 
@@ -202,7 +202,7 @@ data["eeg"][:,0]
 
 <div class="render-all">  
 
-The final object, `position`, is a [`Tsd`](pynapple.Tsd) containing the linearized position of the animal, in centimeters, recorded during the exploration window.
+The final object, `position`, is a [`Tsd`](https://pynapple.org/generated/pynapple.Tsd.html#pynapple.Tsd) containing the linearized position of the animal, in centimeters, recorded during the exploration window.
 
 </div>
 
@@ -216,7 +216,7 @@ data["position"]
 
 Positions that are not defined, i.e. when the animal is at rest, are filled with `NaN`.
 
-This object additionally contains a [`time_support`](pynapple.Tsd.time_support) attribute, which gives the time interval during which positions are recorded (including points recorded as `NaN`).
+This object additionally contains a [`time_support`](https://pynapple.org/generated/pynapple.Tsd.html#id1) attribute, which gives the time interval during which positions are recorded (including points recorded as `NaN`).
 
 </div>
 
@@ -306,7 +306,7 @@ What if we want *all* movement epochs, not just forward runs? We can derive this
 
 </div>
 
-#### 3. Extract time intervals from `position` using the [`dropna`](pynapple.Tsd.dropna) and [`find_support`](pynapple.Tsd.find_support) methods.
+#### 3. Extract time intervals from `position` using the [`dropna`](https://pynapple.org/generated/pynapple.Tsd.dropna.html) and [`find_support`](https://pynapple.org/generated/pynapple.Tsd.find_support.html) methods.
 
 <div class="render-all">
 
@@ -335,7 +335,7 @@ Finally, we can use `run_ep` and `forward_ep` to extract epochs when the animal 
 
 </div>
 
-#### 4. Use the [`IntervalSet`](pynapple.IntervalSet) method [`set_diff`](pynapple.IntervalSet.set_diff) to get `backward_ep` from `run_ep` and `forward_ep`
+#### 4. Use the [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) method [`set_diff`](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html) to get `backward_ep` from `run_ep` and `forward_ep`
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -405,15 +405,15 @@ As we would expect, there is a strong theta oscillation dominating the LFP while
 
 <div class="render-all">
 
-To illustrate this further, we'll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](pynapple.process.wavelets.compute_wavelet_transform).
+To illustrate this further, we'll perform a wavelet decomposition on the LFP trace during this run. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform).
 
 A [continuous wavelet transform](https://en.wikipedia.org/wiki/Continuous_wavelet_transform) decomposes a signal into a set of [wavelets](https://en.wikipedia.org/wiki/Wavelet), in this case [Morlet wavelets](https://en.wikipedia.org/wiki/Morlet_wavelet), that span both frequency and time. You can think of the wavelet transform as a cross-correlation between the signal and each wavelet, giving the similarity between the signal and various frequency components at each time point of the signal. Similar to a Fourier transform, this gives us an estimate of what frequencies are dominating a signal. Unlike the Fourier tranform, however, the wavelet transform gives us this estimate as a function of time.
 
-We must define the frequency set that we'd like to use for our decomposition. We can do this with the numpy function [`np.geomspace`](numpy.geomspace), which returns numbers evenly spaced on a log scale. We pass the lower frequency, the upper frequency, and number of samples as positional arguments.
+We must define the frequency set that we'd like to use for our decomposition. We can do this with the numpy function [`np.geomspace`](https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html), which returns numbers evenly spaced on a log scale. We pass the lower frequency, the upper frequency, and number of samples as positional arguments.
 
 </div>
 
-#### 6. Define 100 log-spaced samples between 5 and 200 Hz using [`np.geomspace`](numpy.geomspace)
+#### 6. Define 100 log-spaced samples between 5 and 200 Hz using [`np.geomspace`](https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html)
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -429,7 +429,7 @@ freqs = np.geomspace(5, 200, 100)
 
 <div class="render-all">
 
-We can now compute the wavelet transform on our LFP data during the example run using [`nap.compute_wavelet_transform`](pynapple.process.wavelets.compute_wavelet_transform) by passing both `ex_lfp_run` and `freqs`. We'll also pass the optional argument `fs`, which is known to be 1250Hz from the study methods.
+We can now compute the wavelet transform on our LFP data during the example run using [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform) by passing both `ex_lfp_run` and `freqs`. We'll also pass the optional argument `fs`, which is known to be 1250Hz from the study methods.
 
 </div>
 
@@ -456,7 +456,7 @@ ex_cwt = nap.compute_wavelet_transform(ex_lfp, freqs, fs=sample_rate)
 
 :::{admonition} Note
 :class: tip render-all
-If `fs` is not provided, it can be inferred from the time series [`rate`](pynapple.Tsd.rate) attribute, e.g. `ex_lfp.rate`. However, while inferred rate is close to the true sampling rate, it can introduce a small floating-point error. Therefore, it is better to supply the true sampling rate when it is known.
+If `fs` is not provided, it can be inferred from the time series [`rate`](https://pynapple.org/generated/pynapple.Tsd.html#id0) attribute, e.g. `ex_lfp.rate`. However, while inferred rate is close to the true sampling rate, it can introduce a small floating-point error. Therefore, it is better to supply the true sampling rate when it is known.
 :::
 
 <div class="render-all">
@@ -500,7 +500,7 @@ For the remaining exercises, we'll reduce our example epoch to the portion when 
 
 </div>
 
-#### 8. Restrict the LFP and position to epochs when the animal is running forward, and create a new [`IntervalSet`](pynapple.IntervalSet) for forward run 9 with no padding.
+#### 8. Restrict the LFP and position to epochs when the animal is running forward, and create a new [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) for forward run 9 with no padding.
 
 <div class="render-user">  
 ```{code-cell} ipython3
@@ -518,11 +518,11 @@ ex_run_ep = nap.IntervalSet(start=forward_ep[9].start, end=forward_ep[9].end)
 
 <div class="render-all">
 
-We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function [`nap.apply_bandpass_filter`](pynapple.process.filtering.apply_bandpass_filter). Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don't have to worry about passing signals that have been split in time.
+We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter). Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don't have to worry about passing signals that have been split in time.
 
 </div>
 
-#### 9. Using [`nap.apply_bandpass_filter`](pynapple.process.filtering.apply_bandpass_filter), filter the LFP for theta within a 6-12 Hz range.
+#### 9. Using [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter), filter the LFP for theta within a 6-12 Hz range.
 
 <div class="render-all">
 
@@ -619,7 +619,7 @@ We can see that cycle "resets" (i.e. goes from $2\pi$ to $0$) at peaks of the th
 
 <div class="render-all">
 
-In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves).
+In order to identify phase precession in single units, we need to know their place selectivity. We can find place firing preferences of each unit by using the function [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
 
 First, we'll filter for units that fire at least 1 Hz and at most 10 Hz when the animal is running forward along the linear track. This will select for units that are active during our window of interest and eliminate putative interneurons (i.e. fast-firing inhibitory neurons that don't usually have place selectivity). Afterwards, we'll compute the tuning curves for these sub-selected units over position.
 
@@ -666,7 +666,7 @@ This function returns tuning curves as an `xarray.DataArray`, with coordinates f
 :::{admonition} Tip
 :class: tip render-all
 
-The reason [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves) returns a `xarray.DataArray` and not a Pynapple object is because the array elements no longer correspond to *time*, which Pynapple objects require.
+The reason [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) returns a `xarray.DataArray` and not a Pynapple object is because the array elements no longer correspond to *time*, which Pynapple objects require.
 :::
 
 <div class="render-all">
@@ -697,9 +697,9 @@ We can see spatial selectivity in each of the units; across the population, we h
 
 <div class="render-all">
     
-As an initial visualization of phase precession, we'll look at a single traversal of the linear track. First, let's look at how the timing of an example unit's spikes lines up with the LFP and theta. To plot the spike times on the same axis as the LFP, we'll use the pynapple object's method [`value_from`](pynapple.TsGroup.value_from) to align the spike times with the theta amplitude. For our spiking data, this will find the amplitude closest in time to each spike. Let's start by applying [`value_from`](pynapple.TsGroup.value_from) on unit 177, who's place field is cenetered on the linear track, using `theta_band` to align the amplityde of the filtered LFP.
+As an initial visualization of phase precession, we'll look at a single traversal of the linear track. First, let's look at how the timing of an example unit's spikes lines up with the LFP and theta. To plot the spike times on the same axis as the LFP, we'll use the pynapple object's method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) to align the spike times with the theta amplitude. For our spiking data, this will find the amplitude closest in time to each spike. Let's start by applying [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) on unit 177, who's place field is cenetered on the linear track, using `theta_band` to align the amplityde of the filtered LFP.
 
-#### 13. Use the pynapple object method [`value_from`](pynapple.TsGroup.value_from) to find the value of `theta_band` corresponding to each spike time from unit 177.
+#### 13. Use the pynapple object method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) to find the value of `theta_band` corresponding to each spike time from unit 177.
 
 </div>
 
@@ -741,7 +741,7 @@ axs[1].legend()
     
 As the animal runs through unit 177's place field (thick green), the unit spikes (orange dots) at specific points along the theta cycle dependent on position: starting at the rising edge, moving towards the trough, and ending at the falling edge.
 
-We can exemplify this pattern by plotting the spike times aligned to the phase of theta. We'll want the corresponding phase of theta at which the unit fires as the animal is running down the track, which we can again compute using the method [`value_from`](pynapple.TsGroup.value_from). 
+We can exemplify this pattern by plotting the spike times aligned to the phase of theta. We'll want the corresponding phase of theta at which the unit fires as the animal is running down the track, which we can again compute using the method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html). 
 
 </div>
 
@@ -828,9 +828,9 @@ Similar to what we saw in a single run, there is a negative relationship between
 
 <div class="render-all">
 
-The scatter plot above can be similarly be represented as a 2D tuning curve over position and phase. We can compute this using the same function, [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves), but now passing second input, `features`, as a 2-column `TsdFrame` containing the two target features.
+The scatter plot above can be similarly be represented as a 2D tuning curve over position and phase. We can compute this using the same function, [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves), but now passing second input, `features`, as a 2-column `TsdFrame` containing the two target features.
 
-To do this, we'll need to combine `position` and `theta_phase` into a `TsdFrame`. For this to work, both variables must have the same length. We can achieve this by upsampling `position` to the length of `theta_phase` using the pynapple object method [`interpolate`](pynapple.Tsd.interpolate). This method will linearly interpolate new position samples between existing position samples at timestamps given by another pynapple object, in our case by `theta_phase`. Once they're the same length, they can be combined into a single `TsdFrame` and used to compute 2D tuning curves.
+To do this, we'll need to combine `position` and `theta_phase` into a `TsdFrame`. For this to work, both variables must have the same length. We can achieve this by upsampling `position` to the length of `theta_phase` using the pynapple object method [`interpolate`](https://pynapple.org/generated/pynapple.Tsd.interpolate.html). This method will linearly interpolate new position samples between existing position samples at timestamps given by another pynapple object, in our case by `theta_phase`. Once they're the same length, they can be combined into a single `TsdFrame` and used to compute 2D tuning curves.
 
 </div>
 
@@ -888,7 +888,7 @@ features = nap.TsdFrame(
 features
 ```
 
-#### 18. Apply [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves) for `features` on our subselected group of units, `good_spikes`
+#### 18. Apply [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) for `features` on our subselected group of units, `good_spikes`
 
 <div class="render-all">
 
@@ -1003,9 +1003,9 @@ place_fields_sorted["unit"] = np.arange(place_fields_sorted.shape[0])
 
 <div class="render-all">
 
-We can decode any number of features using the function [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes), which will decode any number of features given by the input `tuning_curves`, computed by [`nap.compute_tuning_curves`](pynapple.process.tuning_curves.compute_tuning_curves).
+We can decode any number of features using the function [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes), which will decode any number of features given by the input `tuning_curves`, computed by [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
 
-#### 19. Use [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep`
+#### 19. Use [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep`
 
 - Use 40 ms time bins
 
@@ -1041,7 +1041,7 @@ ax.set(xlabel="Time (s)", ylabel="Position (cm)", );
 
 <div class="render-all">
     
-While the decoder generally follows the animal's true position, there is still a lot of error in the decoder, especially later in the run. We can improve the decoder error by smoothing the spike counts. [`nap.decode_bayes`](pynapple.process.decoding.decode_bayes) provides the option to do this for you by specifying `sliding_window_size`, which specifies the width, in number of bins, of a uniform (all ones) kernel to convolve with the spike counts. This is equivalent to applying a moving sum to adjacent bins, where the width of the kernel is the number of adjacent bins being added together. This is equivalent to counting spikes in a *sliding window* that shifts in shorter increments than the window's width, resulting in bins that overlap. This combines the accuracy of using a wider time bin with the temporal resolution of a shorter time bin.
+While the decoder generally follows the animal's true position, there is still a lot of error in the decoder, especially later in the run. We can improve the decoder error by smoothing the spike counts. [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes) provides the option to do this for you by specifying `sliding_window_size`, which specifies the width, in number of bins, of a uniform (all ones) kernel to convolve with the spike counts. This is equivalent to applying a moving sum to adjacent bins, where the width of the kernel is the number of adjacent bins being added together. This is equivalent to counting spikes in a *sliding window* that shifts in shorter increments than the window's width, resulting in bins that overlap. This combines the accuracy of using a wider time bin with the temporal resolution of a shorter time bin.
 
 For example, let's say we want a sliding window of $200 ms$ that shifts by $40 ms$. This is equivalent to summing together 5 adjacent $40 ms$ bins, or convolving spike counts in $40 ms$ bins with a length-5 array of ones ($[1, 1, 1, 1, 1]$). Let's visualize this convolution.
 
@@ -1144,7 +1144,7 @@ The estimated position oscillates with cycles of theta, where each "sweep" is re
 
 <div class="render-all">
     
-Pynapple has another decoding method, [`nap.decode_template`](pynapple.process.decoding.decode_template), that is agnostic to the underlying noise model of the data. In other words, where the above implementation of Bayesian decoding is specific to spiking data (Poisson distributed data), template decoding can be applied to any data modality. As a bonus exercise, you can try decoding position using this method and compare the results to the Bayesian decoder used above!
+Pynapple has another decoding method, [`nap.decode_template`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_template), that is agnostic to the underlying noise model of the data. In other words, where the above implementation of Bayesian decoding is specific to spiking data (Poisson distributed data), template decoding can be applied to any data modality. As a bonus exercise, you can try decoding position using this method and compare the results to the Bayesian decoder used above!
 
 </div>
 
@@ -1229,9 +1229,9 @@ The goal of this project is to fit a PopulationGLM including both position and s
 
 <div class="all">
     
-As we've seen before, we will use basis objects to represent the input values.  In previous tutorials, we've used the `Conv` basis objects to represent the time-dependent effects we were looking to capture. Here, we're trying to capture the non-linear relationship between our input variables and firing rate, so we want the `Eval` objects. In these circumstances, you should look at the tuning you're trying to capture and compare to the [basis kernels (visualized in NeMoS docs)](table_basis): you want your tuning to be capturable by a linear combination of them.
+As we've seen before, we will use basis objects to represent the input values.  In previous tutorials, we've used the `Conv` basis objects to represent the time-dependent effects we were looking to capture. Here, we're trying to capture the non-linear relationship between our input variables and firing rate, so we want the `Eval` objects. In these circumstances, you should look at the tuning you're trying to capture and compare to the [basis kernels (visualized in NeMoS docs)](https://nemos.readthedocs.io/en/latest/background/basis/README.html#): you want your tuning to be capturable by a linear combination of them.
 
-In this case, several of these would probably work; we will use [`MSplineEval`](nemos.basis.MSplineEval) for both, though with different numbers of basis functions.
+In this case, several of these would probably work; we will use [`MSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.MSplineEval.html#nemos.basis.MSplineEval) for both, though with different numbers of basis functions.
 
 Additionally, since we have two different inputs, we'll need two separate basis objects.
 
@@ -1273,9 +1273,9 @@ workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
     
 However, now we have an issue: in all our previous examples, we had a single basis object, which took a single input to produce a single array which we then passed to the `GLM` object as the design matrix. What do we do when we have multiple basis objects?
 
-For people new to NeMoS, but familiar with NumPy, you can call `basis.compute_features()` for each basis separately and then concatenate the outputs.
+For people new to NeMoS, but familiar with NumPy, you can call `basis.compute_features()` for each basis separately and then [concatenate](https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html) the outputs.
 
-For people familiar with NeMoS basis composition, you can add the two bases together obtaining a new 2D basis, then call `compute_features` passing both position and speed to obtain the same design matrix.
+For people familiar with [NeMoS basis composition](https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html), you can add the two bases together obtaining a new 2D basis, then call `compute_features` passing both position and speed to obtain the same design matrix.
 
 </div>
 
@@ -1283,10 +1283,10 @@ For people familiar with NeMoS basis composition, you can add the two bases toge
 
 <div class="render-all">
 
-- Call `compute_fatures` for both position and speed bases and concatenate the result to form a single design matrix.
-- Add the basis objects together and call `compute_fatures` on the newly created additive basis.
-  
+2.1. Call `compute_fatures` for both position and speed bases and concatenate the result to form a single design matrix.
+
 </div>
+
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -1299,8 +1299,28 @@ X
 
 ```{code-cell} ipython3
 # equivalent to calling nmo.basis.AdditiveBasis(position_basis, speed_basis)
+X_position = position_basis.compute_features(position)
+X_speed = speed_basis.compute_features(speed)
+X = np.concatenate([X_position, X_speed], axis=1)
+X
+```
+
+<div class="render-all">
+
+2.2. Add the basis objects together and call `compute_fatures` on the newly created additive basis.
+
+</div>
+
+<div class="render-user">
+```{code-cell} ipython3
+additive_basis =
+X =
+```
+</div>
+
+```{code-cell} ipython3
+# equivalent to calling nmo.basis.AdditiveBasis(position_basis, speed_basis)
 basis = position_basis + speed_basis
-basis.compute_features(position, speed)
 X = basis.compute_features(position, speed)
 X
 ```
@@ -1352,7 +1372,7 @@ glm.fit(X, count)
 
 <div class="render-all">
 
-Let's check first if our model can accurately predict the tuning curves we displayed above. We can use the [`predict`](nemos.glm.GLM.predict) function of NeMoS and then compute new tuning curves. Set `bins=50` for the tuning curves.
+Let's check first if our model can accurately predict the tuning curves we displayed above. We can use the [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) function of NeMoS and then compute new tuning curves. Set `bins=50` for position and `bins=30` for speed.
 
 </div>
 

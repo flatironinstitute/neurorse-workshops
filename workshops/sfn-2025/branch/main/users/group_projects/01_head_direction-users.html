@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Data analysis with pynapple &amp; nemos &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -224,7 +224,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data analysis with pynapple &amp; nemos</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
 </ul>
@@ -380,7 +380,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Data analysis with pynapple & nemos</h1>
+    <h1>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -390,10 +390,13 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-head-direction-cells-with-pynapple">Part 1 : Analyzing head-direction cells with Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-and-load-data">Fetch and load data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 </ul>
@@ -426,32 +429,33 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <div class="cell tag_render-all docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
-</pre></div>
-</div>
-</div>
-</div>
-<section class="tex2jax_ignore mathjax_ignore" id="data-analysis-with-pynapple-nemos">
-<h1>Data analysis with pynapple &amp; nemos<a class="headerlink" href="#data-analysis-with-pynapple-nemos" title="Link to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="group-project-1-analyzing-head-direction-cells-with-pynapple-and-nemos">
+<h1>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos<a class="headerlink" href="#group-project-1-analyzing-head-direction-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder)
 while listening to the presenter’s explanation. In order to see the fully
 rendered of this notebook, go <a class="reference internal" href="../../full/group_projects/01_head_direction.html"><span class="std std-doc">here</span></a></p>
-<section id="learning-objectives">
-<h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
-<ul class="simple">
-<li><p>Loading a NWB file</p></li>
-<li><p>Compute tuning curves</p></li>
-<li><p>Decode neural activity</p></li>
-<li><p>Compute correlograms</p></li>
-<li><p>Include history-related predictors to NeMoS GLM.</p></li>
-<li><p>Reduce over-fitting with <code class="docutils literal notranslate"><span class="pre">Basis</span></code>.</p></li>
-<li><p>Learn functional connectivity.</p></li>
-</ul>
+<p>In this tutorial, we will learn how to use pynapple and nemos to analyze head-direction cells recorded in the
+anterodorsal thalamic nucleus (ADn) of the mouse. We will use a NWB file containing spike times of neurons and the head-direction of the animal over time.
+We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.
+Finally, we will fit a generalized linear model (GLM) to quantify the functional connectivity between neurons based on their spike history.</p>
 <p>The pynapple documentation can be found <a class="reference external" href="https://pynapple.org">here</a>.</p>
 <p>The nemos documentation can be found <a class="reference external" href="https://nemos.readthedocs.io/en/latest/">here</a>.</p>
+<section id="objectives">
+<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">#</a></h2>
+<p>For part 1 of the tutorial, we will use pynapple to do the following tasks:</p>
+<ol class="arabic simple">
+<li><p>Loading a NWB file</p></li>
+<li><p>Compute tuning curves</p></li>
+<li><p>Compute cross-correlograms</p></li>
+</ol>
+<p>For part 2 of the tutorial, we will use nemos to do the following tasks:</p>
+<ol class="arabic simple">
+<li><p>Create spike history features</p></li>
+<li><p>Fit a GLM model to a single neuron</p></li>
+<li><p>Fit a GLM model with basis functions to reduce over-fitting</p></li>
+<li><p>Fit a GLM model to all neurons to learn functional connectivity</p></li>
+</ol>
 <p>Let’s start by importing all the packages.
 If an import fails, you can do <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pynapple</span> <span class="pre">nemos</span> <span class="pre">matplotlib</span></code> in a cell to fix it.</p>
 <div class="cell tag_render-all docutils container">
@@ -476,10 +480,15 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 </div>
 </section>
-<section id="loading-a-nwb-file">
-<h2>Loading a NWB file<a class="headerlink" href="#loading-a-nwb-file" title="Link to this heading">#</a></h2>
-<p>Pynapple commit to support NWB for data loading.
-If you have installed the repository, you can run the following cell:</p>
+<section id="part-1-analyzing-head-direction-cells-with-pynapple">
+<h2>Part 1 : Analyzing head-direction cells with Pynapple<a class="headerlink" href="#part-1-analyzing-head-direction-cells-with-pynapple" title="Link to this heading">#</a></h2>
+<section id="fetch-and-load-data">
+<h3>Fetch and load data<a class="headerlink" href="#fetch-and-load-data" title="Link to this heading">#</a></h3>
+<p>The dataset we will use is from this study : <a class="reference external" href="https://www.nature.com/articles/nn.3968">Peyrache et al., 2015</a>.</p>
+<p>If you ran the workshop setup script, you should have this file downloaded already.
+If not, the function we’ll use to fetch it will download it for you.
+This function is called <code class="docutils literal notranslate"><span class="pre">fetch_data</span></code>, and can be imported from the <code class="docutils literal notranslate"><span class="pre">workshop_utils</span></code> module.
+This function will give us the file path to where the data is stored.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;Mouse32-140822.nwb&quot;</span><span class="p">)</span>
@@ -493,7 +502,9 @@ If you have installed the repository, you can run the following cell:</p>
 <p><strong>Question:</strong> Can you open the NWB file giving the variable <code class="docutils literal notranslate"><span class="pre">path</span></code> to the function <code class="docutils literal notranslate"><span class="pre">load_file</span></code> and call the output <code class="docutils literal notranslate"><span class="pre">data</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -502,15 +513,8 @@ If you have installed the repository, you can run the following cell:</p>
 <p><strong>Question:</strong> Can you load the spike times from the NWB and call the variables <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p><strong>Question:</strong> And print it?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Get spike timings</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">spikes</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -519,23 +523,28 @@ If you have installed the repository, you can run the following cell:</p>
 <p><strong>Question:</strong> Using the <a class="reference external" href="https://pynapple.org/user_guide/03_metadata.html#using-metadata-to-slice-objects">slicing method</a> of your choice, can you select only the neurons in <code class="docutils literal notranslate"><span class="pre">adn</span></code> that are above 2 Hz firing rate?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Select only ADN neurons with rate &gt; 2.0 Hz</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">spikes</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The NWB file contains other informations about the recording. <code class="docutils literal notranslate"><span class="pre">ry</span></code> contains the value of the head-direction of the animal over time.</p>
+<p>The NWB file contains other information about the recording. <code class="docutils literal notranslate"><span class="pre">ry</span></code> contains the value of the head-direction of the animal over time.</p>
 <p><strong>Question:</strong> Can you extract the angle of the animal in a variable called <code class="docutils literal notranslate"><span class="pre">angle</span></code> and print it?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">angle</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Get head-direction data from NWB object</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>But are the data actually loaded … or not?</p>
-<p><strong>Question:</strong> Can you print the underlying data array of <code class="docutils literal notranslate"><span class="pre">angle</span></code>?</p>
-<p>Data are lazy-loaded. This can be useful when reading larger than memory array from disk with memory map.</p>
+<p>But are the data actually loaded … or not?
+If you look at the type of <code class="docutils literal notranslate"><span class="pre">angle</span></code>, you will see that it is a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
+But what about the underlying data array?
+The underlying data array is stored in the property <code class="docutils literal notranslate"><span class="pre">d</span></code> of the <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
+If you print it, you will see that it is a <code class="docutils literal notranslate"><span class="pre">h5py</span></code> array.
+By default, data are lazy-loaded. This can be useful when reading larger than memory array from disk with memory map.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -547,57 +556,72 @@ If you have installed the repository, you can run the following cell:</p>
 <p><strong>Question:</strong> Can you extract the behavioral intervals in a variable called <code class="docutils literal notranslate"><span class="pre">epochs</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Get behavioral epochs from NWB object</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">epochs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>NWB file can save intervals with multiple labels. The object <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> includes the labels as a metadata object.</p>
 <p><strong>Question:</strong> Using the column <code class="docutils literal notranslate"><span class="pre">tags</span></code>, can you create one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">wake</span></code> and one <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object for intervals labeled <code class="docutils literal notranslate"><span class="pre">sleep</span></code>?</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="o">...</span>
-<span class="n">sleep_ep</span> <span class="o">=</span> <span class="o">...</span>
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">wake_ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Get wake intervals from epochs</span>
+<span class="n">sleep_ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Get sleep intervals from epochs</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="compute-tuning-curves">
-<h2>Compute tuning curves<a class="headerlink" href="#compute-tuning-curves" title="Link to this heading">#</a></h2>
-<p>Now that we have spikes and a behavioral feature (i.e. head-direction), we would like to compute the firing rate of neurons as a function of the variable <code class="docutils literal notranslate"><span class="pre">angle</span></code> during <code class="docutils literal notranslate"><span class="pre">wake_ep</span></code>.
-To do this in pynapple, all you need is the call of a single function : <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>!</p>
+<h3>Compute tuning curves<a class="headerlink" href="#compute-tuning-curves" title="Link to this heading">#</a></h3>
+<p>Now we have</p>
+<ul class="simple">
+<li><p>spikes</p></li>
+<li><p>a behavioral feature (i.e. head-direction),</p></li>
+<li><p>epochs corresponding to when the feature is defined (i.e. when the head-direction was recorded).</p></li>
+</ul>
+<p>We can compute tuning curves, i.e. the firing rate of neurons as a function of head-direction.
+We want to know how the firing rate of each neuron changes as a function of the head-direction of the animal during wakefulness.</p>
+<p>To do this in pynapple, all you need is the call of a single function : <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>!</p>
 <p><strong>Question:</strong> can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>?</p>
-<p>Here are the parameters of the function to fill :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Should be the spike times of all neurons</span>
-<span class="n">features</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Which feature? Here the head-direction of the animal</span>
-<span class="n">bins</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># How many bins of feature space? 61 angular bins is a good numbers</span>
-<span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span> <span class="c1"># The epochs should correspond to when the features are defined. Here we use the time support directly</span>
-<span class="nb">range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="c1"># The min and max of the bin array</span>
-<span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span> <span class="c1"># Let&#39;s give a name to our feature for better labelling of the output.</span>
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">features</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Which feature? Here the head-direction of the animal</span>
+    <span class="n">bins</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># How many bins of feature space? Here 61 angular bins is a good numbers</span>
+    <span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="c1"># The epochs should correspond to when the features are defined. Here we use the time support directly</span>
+    <span class="nb">range</span><span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span> <span class="c1"># The min and max of the bin array</span>
+    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span> <span class="c1"># Let&#39;s give a name to our feature for better labelling of the output.</span>
+    <span class="p">)</span> 
+<span class="n">tuning_curves</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>The output is an xarray object. The first dimensions is neurons. The second dimension is angular head-direction. Some metadata fields have been added.</p>
-<p><strong>Question:</strong> Can you plot some tuning curves?</p>
-<div class="cell docutils container">
+<p>The output is a xarray object indexed by neuron and head-direction: the first dimension corresponds to neurons,
+the second to angular bins, and additional metadata fields are included.</p>
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="c1"># plt.plot(tuning_curves[0])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Most of those neurons are head-directions neurons.</p>
-<p>The next cell allows us to get a quick estimate of the neurons’s preferred direction. Since this is a lot of xarray wrangling, it is given.</p>
+<p>The next cell allows us to get a quick estimate of the neurons’s preferred direction.
+Since this is a lot of xarray wrangling, it is given.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pref_ang</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;angle&quot;</span><span class="p">)</span>
@@ -607,6 +631,8 @@ To do this in pynapple, all you need is the call of a single function : <code cl
 </div>
 </div>
 </div>
+<p>The variable <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> contains the preferred direction of each neuron.
+Now this information can be useful to add it to the metainformation of the <code class="docutils literal notranslate"><span class="pre">spikes</span></code> object since it is neuron-specific information.</p>
 <p><strong>Question:</strong> Can you add it to the metainformation of <code class="docutils literal notranslate"><span class="pre">spikes</span></code>?</p>
 <p>Hint :</p>
 <p>There are multiple ways of doing this:</p>
@@ -622,93 +648,123 @@ To do this in pynapple, all you need is the call of a single function : <code cl
 </div>
 </div>
 </div>
-<p>This index maps a neuron to a preferred direction between 0 and 360 degrees.</p>
-<p><strong>Question:</strong> Can you plot the spiking activity of the neurons based on their preferred direction as well as the head-direction of the animal?
-For the sake of visibility, you should restrict the data to the following epoch :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-<span class="n">ex_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">)</span>
-
-</pre></div>
-</div>
-<p><em>Hint for plotting</em></p>
-<p>The object <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> has the function <code class="docutils literal notranslate"><span class="pre">to_tsd</span></code> that transforms it from a collection of timestamps to a sorted timestamps array with values.
-Values can be assigned based on the metadata <code class="docutils literal notranslate"><span class="pre">to_tsd(&quot;pref_ang&quot;)</span></code>.</p>
-<div class="cell docutils container">
+<p>This index maps a neuron to a preferred angular direction between 0 and 2pi.
+Let’s visualize the spiking activity of the neurons based on their preferred direction
+as well as the head-direction of the animal. To make it easier to see, we will restrict the data to a small epoch.</p>
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ex_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">212</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">)</span><span class="o">.</span><span class="n">to_tsd</span><span class="p">(</span><span class="s2">&quot;pref_ang&quot;</span><span class="p">),</span> <span class="s1">&#39;|&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
 <section id="compute-correlograms">
-<h2>Compute correlograms<a class="headerlink" href="#compute-correlograms" title="Link to this heading">#</a></h2>
-<p>We see that some neurons have a correlated activity. Can we measure it with the function <code class="docutils literal notranslate"><span class="pre">nap.compute_crosscorrelogram</span></code>?</p>
+<h3>Compute correlograms<a class="headerlink" href="#compute-correlograms" title="Link to this heading">#</a></h3>
+<p>We see that some neurons have a correlated activity meaning they tend to fire together, while others have an anti-correlated activity meaning when one neuron fires, the other does not.
+Can we quantify this correlation between pairs of neurons? To do this, we can compute cross-correlograms between pairs of neurons.
+A cross-correlogram measures the correlation between the spike trains of two neurons as a function of time lag. It counts how often spikes from one neuron occur at different time lags relative to spikes from another neuron.
+In pynapple, we use the function <code class="docutils literal notranslate"><span class="pre">nap.compute_crosscorrelogram</span></code> to compute cross-correlograms between pairs of neurons.</p>
 <p><strong>Question:</strong> Can you compute cross-correlograms during wake for all pairs of neurons and call it <code class="docutils literal notranslate"><span class="pre">cc_wake</span></code>?</p>
-<p>Here are the parameters of the function to fill :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">group</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># The neural activity as a TsGroup</span>
-<span class="n">binsize</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="c1"># 200 ms bin</span>
-<span class="n">windowsize</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># 20 s window</span>
-<span class="n">ep</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.</span>
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc_wake</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">binsize</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># I suggest 200 ms bin</span>
+    <span class="n">windowsize</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Let&#39;s do a 20 s window</span>
+    <span class="n">ep</span><span class="o">=...</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
-The index shows the time lag.</p>
-<p><strong>Question:</strong> can you plot the cross-correlogram during wake of 2 neurons firing for the same direction?</p>
-<p><em>Hint : Take neurons 7 and 20</em></p>
+The index shows the time lag.
+Let’s visualize some cross-correlograms.
+To make things easier, we will focus on two pairs of neurons: one pair that fires for the same direction and one pair that fires for opposite directions.</p>
+<p>The pair (7, 20) fires for the same direction while the pair (7, 26) fires for opposite directions.</p>
 <p>To index pandas columns, you can do <code class="docutils literal notranslate"><span class="pre">cc[(7,</span> <span class="pre">20)]</span></code>.</p>
 <p>To index xarray tuning curves, you can do <code class="docutils literal notranslate"><span class="pre">tuning_curves.sel(unit=[7,20])</span></code></p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cross-corr.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">26</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Cross-corr.&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> can you plot the cross-correlogram during wake of 2 neurons firing for opposite directions?</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>As you can see, the pair of neurons that fire for the same direction have a positive correlation at time lag 0, meaning they tend to fire together.
+The pair of neurons that fire for opposite directions have a negative correlation at time lag 0, meaning when one neuron fires, the other does not.</p>
 <p>Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.</p>
 <p><strong>Question:</strong> can you compute the cross-correlograms during sleep?</p>
-<p><em>Hint: change the argument ep of nap.compute_crosscorrelogram to <code class="docutils literal notranslate"><span class="pre">sleep_ep</span></code></em></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc_sleep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">binsize</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># I suggest 20 ms bin</span>
+    <span class="n">windowsize</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Let&#39;s do a 1 s window</span>
+    <span class="n">ep</span><span class="o">=...</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be sleep.</span>
+    <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> can you display the cross-correlogram for wakefulness and sleep of the same pairs of neurons?</p>
-<div class="cell docutils container">
+<p>Let’s visualize the cross-correlograms during wake and sleep for the pair of neurons that fire for the same direction
+and the pair of neurons that fire for opposite directions.</p>
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">232</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Wake&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">233</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_sleep</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">20</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Sleep&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">234</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">26</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">235</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_wake</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">236</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">cc_sleep</span><span class="p">[(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">26</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time lag (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now let’s see what happen if you take neurons with opposite tunig curves.</p>
-<p><strong>Question : Can you plot the cross-correlograms of 2 neurons firing for opposite directions during wake and sleep?</strong></p>
-<p><em>Hint : take neurons 7 and 26. <code class="docutils literal notranslate"><span class="pre">tuning_curves.sel(unit=[7,26])</span></code>, <code class="docutils literal notranslate"><span class="pre">cc_wake[(7,</span> <span class="pre">26)]</span></code>, <code class="docutils literal notranslate"><span class="pre">cc_sleep[(7,</span> <span class="pre">26)]</span></code></em></p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>What does it mean for the relationship between cells here?</p>
+<p>What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.</p>
+</section>
 </section>
 <section id="fitting-a-glm-model-with-nemos">
 <h2>Fitting a GLM model with Nemos<a class="headerlink" href="#fitting-a-glm-model-with-nemos" title="Link to this heading">#</a></h2>
@@ -786,7 +842,7 @@ the figure).</p>
 One may think of padding the window (with zeros for example) but this may generate weird border artifacts.
 To avoid that, we can simply restrict our analysis to times <span class="math notranslate nohighlight">\(t\)</span> larger than the window and NaN-pad earlier
 time-points;</p>
-<p>You can construct this feature matrix with the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.HistoryConv.html#nemos.basis.HistoryConv" title="nemos 0.2.4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code></span></a> basis.</p>
+<p>You can construct this feature matrix with the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.HistoryConv.html#nemos.basis.HistoryConv" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code></span></a> basis.</p>
 <p><strong>Question: Can you:</strong>
 - Convert the window size in number of bins (call it <code class="docutils literal notranslate"><span class="pre">window_size</span></code>)
 - Define an <code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> basis covering this window size (call it <code class="docutils literal notranslate"><span class="pre">history_basis</span></code>).
@@ -1139,7 +1195,7 @@ This can be done by passing the population counts to the <code class="docutils l
 <section id="id1">
 <h3>Fitting the Model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
 <p>This is an all-to-all neurons model.
-We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.4"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> to fit the whole population at once.</p>
+We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> to fit the whole population at once.</p>
 <p>Once we condition on past activity, log-likelihood of the population is the sum of the log-likelihood
 of individual neurons. Maximizing the sum (i.e. the population log-likelihood) is equivalent to
 maximizing each individual term separately (i.e. fitting one neuron at the time).</p>
@@ -1303,10 +1359,13 @@ all the coupling filters.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-a-nwb-file">Loading a NWB file</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-head-direction-cells-with-pynapple">Part 1 : Analyzing head-direction cells with Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-and-load-data">Fetch and load data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 </ul>
