@@ -607,54 +607,50 @@ visualize_model_predictions(best_estim, transformer_input)
 
 
 
-Let's move on to feature selection. Our goal is comparing alternative models, for this example we will consider: position + speed, position only or speed only.
+Let's move on to feature selection. Our goal is to compare alternative models: position + speed, position only, or speed only.
 
-Problem: scikit-learn's cross-validation assumes that the input to the pipeline does not change, while each model will have a different input. What can we do? 
+Problem: scikit-learn's cross-validation assumes the pipeline input stays constant, but each model needs different features. How do we solve this?
 
-Let's see how to circumvent this with a neat basis trick.
+Solution: Use a "null" basis that produces zero features!
 
-- Create a "null" basis that produces zero features using [`CustomBasis`](https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis), which defines a basis from a list of functions.
+- We'll create this null basis using [`CustomBasis`](https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis), which defines a basis from custom functions.
 
 
 
 ```{code-cell} ipython3
-# this function creates an empty array (n_sample, 0)
+# define a function that creates an empty array (n_samples, 0)
 def func(x):
     return np.zeros((x.shape[0], 0))
 
-# Create a null basis using the custom basis class
+# create a null transformer basis using the custom basis class
 null_basis = nmo.basis.CustomBasis([func]).to_transformer()
 
-# this creates an empty feature
+# verify: this creates an empty feature array
 null_basis.compute_features(position).shape
 ```
 
 
 
-- First we can note that the original "position + speed" additive basis is the `basis` attribute of the transformer.
+Why is this useful? We can combine `null_basis` with actual bases to create different models that all accept the same input!
 
+Let's define the bases for our three models:
+- Position + speed: combine position and speed bases
+- Position only: combine position basis with null basis (speed features is empty)
+- Speed only: combine null basis with speed basis (position features is empty)
 
-```{code-cell} ipython3
-
-pipe["basis"].basis
-```
-
-
-
-- Add the null basis to the speed or position basis to generate a composite basis for the position-only and speed-only model that receives the same 2D input as the model including all predictors!
 
 
 ```{code-cell} ipython3
-# define the 1D transformer bases with no label
+# define the 1D transformer bases (note: no labels needed here)
 position_bas = nmo.basis.MSplineEval(n_basis_funcs=10).to_transformer()
 speed_bas = nmo.basis.MSplineEval(n_basis_funcs=15).to_transformer()
 
-# combine them with each other or with the null basis to define each model.
+# combine them to define each model
 basis_all = position_bas + speed_bas
 basis_position = position_bas + null_basis
 basis_speed = null_basis + speed_bas
 
-# assign label (not necessary but nice)
+# assign labels (optional but helpful for readability)
 basis_all.label = "position + speed"
 basis_position.label = "position"
 basis_speed.label = "speed"
@@ -662,55 +658,92 @@ basis_speed.label = "speed"
 
 
 
-- Create a parameter grid for each model of interest. 
-- The attribute to cross-validate over is `"basis__basis"`, where the first "basis" is the name of the pipeline step, the second one is the attribute of the transformer.
+These bases can all transform the same `transformer_input` (a `TsdFrame` with columns for position and speed), but they generate design matrices with different numbers of features:
+
 
 
 ```{code-cell} ipython3
-# then we create a parameter grid defining a grid of 2D basis for each model of interest
+:tags: [render-all]
+
+# "position + speed" design: 25 features (10 + 15)
+print("position + speed design matrix shape:")
+print(basis_all.transform(transformer_input).shape)
+
+# "position" design: 10 features (10 + 0)
+print("\nposition design matrix shape:")
+print(basis_position.transform(transformer_input).shape)
+
+# "speed" design: 15 features (0 + 15)
+print("\nspeed design matrix shape:")
+print(basis_speed.transform(transformer_input).shape)
+```
+
+
+
+To cross-validate over different basis compositions, we need to understand how they're stored in our pipeline. The additive basis is stored as a `basis` attribute inside the [`TransformerBasis`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html) object:
+
+
+
+```{code-cell} ipython3
+:tags: [render-user, render-presenter]
+
+# the "basis" step in our pipeline contains a TransformerBasis
+# which has a "basis" attribute storing the actual additive basis
+pipe["basis"].basis
+```
+
+
+
+Now we can create a parameter grid for cross-validation. The key is the string `"basis__basis"`:
+- First `basis`: the name of the pipeline step
+- Second `basis`: the attribute of the TransformerBasis object
+- This double-underscore notation is how scikit-learn accesses nested parameters
+
+
+
+```{code-cell} ipython3
+# create parameter grid with our three basis compositions
 param_grid = {
-    "basis__basis": 
-    [
-        basis_all,  
-        basis_position, 
-        basis_speed 
+    "basis__basis": [
+        basis_all,      # position + speed
+        basis_position, # position only
+        basis_speed     # speed only
     ],
 }
 ```
 
 ```{code-cell} ipython3
-# finally we define and fit our CV
+# define and fit GridSearchCV
 cv = model_selection.GridSearchCV(pipe, param_grid, cv=cv_folds)
 cv.fit(transformer_input, count)
 ```
+
+
+Let's examine the model comparison results:
+
 
 ```{code-cell} ipython3
 :tags: [render-all]
 
 cv_df = pd.DataFrame(cv.cv_results_)
 
-# let's just plot a minimal subset of cols
+# display the key columns: which basis was used, its score, and ranking
 cv_df[["param_basis__basis", "mean_test_score", "rank_test_score"]]
 ```
 
-## Conclusion
+
+Unsurprisingly, position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
+
+
+### Next Steps
 
 
 
-Various combinations of features can lead to different results. From this quick demo it looks like the position-only model is only marginally worst compared to the full model. 
+For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons. 
 
-  - [Hardcastle, Kiah, et al. "A multiplexed, heterogeneous, and adaptive code for navigation in medial entorhinal cortex." Neuron 94.2 (2017): 375-387](https://www.cell.com/neuron/pdf/S0896-6273(17)30237-4.pdf)
-
-  - [McClain, Kathryn, et al. "Position–theta-phase model of hippocampal place cell activity applied to quantification of running speed modulation of firing rate." Proceedings of the National Academy of Sciences 116.52 (2019): 27035-27042](https://www.pnas.org/doi/abs/10.1073/pnas.1912792116)
-
-  - [Peyrache, Adrien, Natalie Schieferstein, and Gyorgy Buzsáki. "Transformation of the head-direction signal into a spatial code." Nature communications 8.1 (2017): 1752.](https://www.nature.com/articles/s41467-017-01908-3)
-
-## Project Ideas
-
-Use what you learned here and compare models including the theta phase. You can model phase precession as an interaction term between position and theta phase; You can include an interaction term by using the basis multiplication operator, for more information see,
-
-- [Background on basis composition](https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html)
-
+Suggestions:
+- Extend the model by including theta phase as a predictor
+- Use the NeMoS [MultiplicativeBasis](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html) to capture interactions between theta phase and position
 
 ## References
 

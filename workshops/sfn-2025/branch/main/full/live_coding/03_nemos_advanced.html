@@ -403,9 +403,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-ideas">Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -503,7 +504,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-05 16:30:46,642:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-05 16:40:25,027:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1266,7 +1267,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1408,7 +1409,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -2000,7 +2001,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2142,7 +2143,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -2293,10 +2294,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
   <tbody>
     <tr>
       <th>0</th>
-      <td>4.885523</td>
-      <td>1.335771</td>
-      <td>0.339694</td>
-      <td>0.411248</td>
+      <td>4.405686</td>
+      <td>1.099777</td>
+      <td>0.358680</td>
+      <td>0.435236</td>
       <td>0.0001</td>
       <td>{'regularizer_strength': 0.0001}</td>
       <td>-0.128512</td>
@@ -2310,10 +2311,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>1</th>
-      <td>1.707080</td>
-      <td>0.146221</td>
-      <td>0.003805</td>
-      <td>0.000856</td>
+      <td>1.863139</td>
+      <td>0.086724</td>
+      <td>0.003774</td>
+      <td>0.000245</td>
       <td>1.0000</td>
       <td>{'regularizer_strength': 1.0}</td>
       <td>-0.137128</td>
@@ -4290,7 +4291,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                 (&#x27;glm&#x27;,
-                 PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+                 PopulationGLM(inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -4483,7 +4484,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -5103,7 +5104,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.],
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -5296,7 +5297,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -6019,7 +6020,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.]...
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
              param_grid={&#x27;basis__position__n_basis_funcs&#x27;: [5, 10, 20],
                          &#x27;basis__speed&#x27;: [MSplineEval(n_basis_funcs=15),
                                           BSplineEval(n_basis_funcs=15),
@@ -6276,7 +6277,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -6426,10 +6427,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.998577</td>
-      <td>0.305526</td>
-      <td>0.183357</td>
-      <td>0.205336</td>
+      <td>2.038922</td>
+      <td>0.357544</td>
+      <td>0.206519</td>
+      <td>0.234477</td>
       <td>5</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6444,10 +6445,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>1</th>
-      <td>1.697434</td>
-      <td>0.123222</td>
-      <td>0.017598</td>
-      <td>0.000413</td>
+      <td>1.747807</td>
+      <td>0.093998</td>
+      <td>0.017680</td>
+      <td>0.002204</td>
       <td>5</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6462,10 +6463,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>2</th>
-      <td>1.668650</td>
-      <td>0.091654</td>
-      <td>0.013174</td>
-      <td>0.000967</td>
+      <td>1.755613</td>
+      <td>0.090105</td>
+      <td>0.012762</td>
+      <td>0.000540</td>
       <td>5</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -6480,10 +6481,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>3</th>
-      <td>1.950570</td>
-      <td>0.232981</td>
-      <td>0.020353</td>
-      <td>0.003291</td>
+      <td>1.936480</td>
+      <td>0.153244</td>
+      <td>0.016728</td>
+      <td>0.000560</td>
       <td>10</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6498,10 +6499,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>4</th>
-      <td>1.788635</td>
-      <td>0.119870</td>
-      <td>0.020053</td>
-      <td>0.000788</td>
+      <td>1.738286</td>
+      <td>0.063584</td>
+      <td>0.017669</td>
+      <td>0.000602</td>
       <td>10</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6516,10 +6517,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>5</th>
-      <td>1.747572</td>
-      <td>0.119637</td>
-      <td>0.016618</td>
-      <td>0.002057</td>
+      <td>1.720245</td>
+      <td>0.082740</td>
+      <td>0.014517</td>
+      <td>0.000745</td>
       <td>10</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -6534,10 +6535,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>6</th>
-      <td>2.026021</td>
-      <td>0.309419</td>
-      <td>0.118998</td>
-      <td>0.120355</td>
+      <td>2.126164</td>
+      <td>0.275721</td>
+      <td>0.113454</td>
+      <td>0.116181</td>
       <td>20</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -6552,10 +6553,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>7</th>
-      <td>1.933354</td>
-      <td>0.313268</td>
-      <td>0.022930</td>
-      <td>0.002087</td>
+      <td>1.796187</td>
+      <td>0.104584</td>
+      <td>0.024173</td>
+      <td>0.005452</td>
       <td>20</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -6570,10 +6571,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
     </tr>
     <tr>
       <th>8</th>
-      <td>1.757197</td>
-      <td>0.116934</td>
-      <td>0.024462</td>
-      <td>0.008006</td>
+      <td>1.831307</td>
+      <td>0.111202</td>
+      <td>0.024482</td>
+      <td>0.008214</td>
       <td>20</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -7117,7 +7118,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
        [1., 1., 1.],
        [1., 1., 1.],
        [1., 1., 1.],
-       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f2a1fe5afc0&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+       [1., 1., 1.]], dtype=float32), inverse_link_function=&lt;PjitFunction of &lt;function exp at 0x7f94c7c52e80&gt;&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.7/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -7310,7 +7311,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -7430,37 +7431,37 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </section>
 <section id="feature-selection">
 <span id="sklearn-feature-selection"></span><h2>Feature selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h2>
-<p>Now, finally, we understand almost enough about how scikit-learn works to figure out whether both position and speed are necessary inputs, i.e., to do feature selection.</p>
-<p>What we would like to do here is comparing alternative models: position + speed, position only or speed only. However, scikit-learn’s cross-validation assumes that the input to the pipeline does not change, only the hyperparameters do. So, how do we go about model selection since we require different input for different model we want to compare?</p>
-<p>Here is a neat NeMoS trick to circumvent that. scikit-learn’s GridSearchCV assumes the INPUT stays the same across all models, but for feature selection, we want to compare models with different features (position + speed, position only, speed only). The solution: create a “null” basis that produces zero features, so all models take the same 2D input (position, speed) but some features become empty. First we need to define this “null” basis taking advantage of <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from a list of functions.</p>
+<p>Now that we understand how scikit-learn works with NeMoS, we can determine whether both position and speed are necessary inputs by performing feature selection.</p>
+<p>Our goal is to compare alternative models: position + speed, position only, or speed only. However, scikit-learn’s cross-validation assumes that the input to the pipeline stays constant—only the hyperparameters change. So how can we compare models that require different features?</p>
+<p>Here’s a clever NeMoS trick: we’ll create a “null” basis that produces zero features. This way, all models take the same 2-D input (position, speed), but some features become empty arrays. We can define this null basis using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which creates a basis from a list of functions.</p>
 <div class="render-user render-presenter">
-<p>Let’s move on to feature selection. Our goal is comparing alternative models, for this example we will consider: position + speed, position only or speed only.</p>
-<p>Problem: scikit-learn’s cross-validation assumes that the input to the pipeline does not change, while each model will have a different input. What can we do?</p>
-<p>Let’s see how to circumvent this with a neat basis trick.</p>
+<p>Let’s move on to feature selection. Our goal is to compare alternative models: position + speed, position only, or speed only.</p>
+<p>Problem: scikit-learn’s cross-validation assumes the pipeline input stays constant, but each model needs different features. How do we solve this?</p>
+<p>Solution: Use a “null” basis that produces zero features!</p>
 <ul class="simple">
-<li><p>Create a “null” basis that produces zero features using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from a list of functions.</p></li>
+<li><p>We’ll create this null basis using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from custom functions.</p></li>
 </ul>
 </div>
 <div class="render-user">
 ```{code-cell} ipython3
-# this function creates an empty array (n_sample, 0)
+# define a function that creates an empty array (n_samples, 0)
 def func(x):
     return np.zeros((x.shape[0], 0))
-# Create a null transformer basis using the custom basis class
-null_basis = 
-# this creates an empty feature
+# create a null transformer basis using the custom basis class
+null_basis =
+# verify: this creates an empty feature array
 null_basis.compute_features(position).shape
 ```
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># this function creates an empty array (n_sample, 0)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function that creates an empty array (n_samples, 0)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
 
-<span class="c1"># Create a null basis using the custom basis class</span>
+<span class="c1"># create a null transformer basis using the custom basis class</span>
 <span class="n">null_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">CustomBasis</span><span class="p">([</span><span class="n">func</span><span class="p">])</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
 
-<span class="c1"># this creates an empty feature</span>
+<span class="c1"># verify: this creates an empty feature array</span>
 <span class="n">null_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
@@ -7471,14 +7472,88 @@ null_basis.compute_features(position).shape
 </div>
 </div>
 </div>
-<p>Why is this useful? Because we can use this <code class="docutils literal notranslate"><span class="pre">null_basis</span></code> and basis composition to do model selection. As a first step, we can notice that the original additive basis is stored as a <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute in the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html"><code class="docutils literal notranslate"><span class="pre">TransformerBasis</span></code></a>.</p>
 <div class="render-user render-presenter">
+<p>Why is this useful? We can combine <code class="docutils literal notranslate"><span class="pre">null_basis</span></code> with actual bases to create different models that all accept the same input!</p>
+<p>Let’s define the bases for our three models:</p>
 <ul class="simple">
-<li><p>First we can note that the original “position + speed” additive basis is the <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute of the transformer.</p></li>
+<li><p>Position + speed: combine position and speed bases</p></li>
+<li><p>Position only: combine position basis with null basis (speed features is empty)</p></li>
+<li><p>Speed only: combine null basis with speed basis (position features is empty)</p></li>
 </ul>
+</div>
+<div class="render-user">
+```{code-cell} ipython3
+# define the 1D transformer bases (note: no labels needed here)
+position_bas = 
+speed_bas =
+# combine them to define each model
+basis_all = 
+basis_position = 
+basis_speed =
+# assign labels (optional but helpful for readability)
+basis_all.label = 
+basis_position.label = 
+basis_speed.label = 
+```
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">basis</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the 1D transformer bases (note: no labels needed here)</span>
+<span class="n">position_bas</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
+<span class="n">speed_bas</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
+
+<span class="c1"># combine them to define each model</span>
+<span class="n">basis_all</span> <span class="o">=</span> <span class="n">position_bas</span> <span class="o">+</span> <span class="n">speed_bas</span>
+<span class="n">basis_position</span> <span class="o">=</span> <span class="n">position_bas</span> <span class="o">+</span> <span class="n">null_basis</span>
+<span class="n">basis_speed</span> <span class="o">=</span> <span class="n">null_basis</span> <span class="o">+</span> <span class="n">speed_bas</span>
+
+<span class="c1"># assign labels (optional but helpful for readability)</span>
+<span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position + speed&quot;</span>
+<span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position&quot;</span>
+<span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;speed&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-user render-presenter">
+<p>These bases can all transform the same <code class="docutils literal notranslate"><span class="pre">transformer_input</span></code> (a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> with columns for position and speed), but they generate design matrices with different numbers of features:</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;position + speed&quot; design: 25 features (10 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;position + speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_all</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;position&quot; design: 10 features (10 + 0)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">position design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_position</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;speed&quot; design: 15 features (0 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_speed</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>position + speed design matrix shape:
+(19237, 25)
+
+position design matrix shape:
+(19237, 10)
+
+speed design matrix shape:
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(19237, 15)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-user render-presenter">
+<p>To cross-validate over different basis compositions, we need to understand how they’re stored in our pipeline. The additive basis is stored as a <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute inside the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html"><code class="docutils literal notranslate"><span class="pre">TransformerBasis</span></code></a> object:</p>
+</div><div class="cell tag_render-user tag_render-presenter docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the &quot;basis&quot; step in our pipeline contains a TransformerBasis</span>
+<span class="c1"># which has a &quot;basis&quot; attribute storing the actual additive basis</span>
+<span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">basis</span>
 </pre></div>
 </div>
 </div>
@@ -8128,62 +8203,26 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </script></body></div></div>
 </div>
 <div class="render-user render-presenter">
+<p>Now we can create a parameter grid for cross-validation. The key is the string <code class="docutils literal notranslate"><span class="pre">&quot;basis__basis&quot;</span></code>:</p>
 <ul class="simple">
-<li><p>Add the null basis to the speed or position basis to generate a composite basis for the position-only and speed-only model that receives the same 2D input as the model including all predictors!</p></li>
+<li><p>First <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the name of the pipeline step</p></li>
+<li><p>Second <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the attribute of the TransformerBasis object</p></li>
+<li><p>This double-underscore notation is how scikit-learn accesses nested parameters</p></li>
 </ul>
 </div>
 <div class="render-user">
 ```{code-cell} ipython3
-# define the 1D transformer bases with no label
-position_bas = 
-speed_bas = 
-# combine them with each other or with the null basis to define each model.
-basis_all = 
-basis_position = 
-basis_speed = 
-# assign label (not necessary but nice)
-basis_all.label = 
-basis_position.label = 
-basis_speed.label = 
+# create parameter grid with our three basis compositions
+param_grid = 
 ```
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the 1D transformer bases with no label</span>
-<span class="n">position_bas</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
-<span class="n">speed_bas</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
-
-<span class="c1"># combine them with each other or with the null basis to define each model.</span>
-<span class="n">basis_all</span> <span class="o">=</span> <span class="n">position_bas</span> <span class="o">+</span> <span class="n">speed_bas</span>
-<span class="n">basis_position</span> <span class="o">=</span> <span class="n">position_bas</span> <span class="o">+</span> <span class="n">null_basis</span>
-<span class="n">basis_speed</span> <span class="o">=</span> <span class="n">null_basis</span> <span class="o">+</span> <span class="n">speed_bas</span>
-
-<span class="c1"># assign label (not necessary but nice)</span>
-<span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position + speed&quot;</span>
-<span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position&quot;</span>
-<span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;speed&quot;</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="render-user render-presenter">
-<ul class="simple">
-<li><p>Create a parameter grid for each model of interest.</p></li>
-<li><p>The attribute to cross-validate over is <code class="docutils literal notranslate"><span class="pre">&quot;basis__basis&quot;</span></code>, where the first “basis” is the name of the pipeline step, the second one is the attribute of the transformer.</p></li>
-</ul>
-</div>
-<div class="render-user">
-```{code-cell} ipython3
-param_grid =
-```
-</div><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># then we create a parameter grid defining a grid of 2D basis for each model of interest</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># create parameter grid with our three basis compositions</span>
 <span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;basis__basis&quot;</span><span class="p">:</span> 
-    <span class="p">[</span>
-        <span class="n">basis_all</span><span class="p">,</span>  
-        <span class="n">basis_position</span><span class="p">,</span> 
-        <span class="n">basis_speed</span> 
+    <span class="s2">&quot;basis__basis&quot;</span><span class="p">:</span> <span class="p">[</span>
+        <span class="n">basis_all</span><span class="p">,</span>      <span class="c1"># position + speed</span>
+        <span class="n">basis_position</span><span class="p">,</span> <span class="c1"># position only</span>
+        <span class="n">basis_speed</span>     <span class="c1"># speed only</span>
     <span class="p">],</span>
 <span class="p">}</span>
 </pre></div>
@@ -8192,12 +8231,12 @@ param_grid =
 </div>
 <div class="render-user">
 ```{code-cell} ipython3
-# finally we define and fit our CV
-cv =
+# define and fit GridSearchCV
+cv = 
 ```
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># finally we define and fit our CV</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># define and fit GridSearchCV</span>
 <span class="n">cv</span> <span class="o">=</span> <span class="n">model_selection</span><span class="o">.</span><span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">cv_folds</span><span class="p">)</span>
 <span class="n">cv</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
 </pre></div>
@@ -8972,7 +9011,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f2a1fe5afc0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f94c7c52e80&gt;&gt;</td>
         </tr>
     
 
@@ -9073,12 +9112,13 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 });
 </script></body></div></div>
 </div>
-<p>Let’s now take a look to the model results.</p>
-<div class="cell tag_render-all docutils container">
+<div class="render-all">
+Let's examine the model comparison results:
+</div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cv_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 
-<span class="c1"># let&#39;s just plot a minimal subset of cols</span>
+<span class="c1"># display the key columns: which basis was used, its score, and ranking</span>
 <span class="n">cv_df</span><span class="p">[[</span><span class="s2">&quot;param_basis__basis&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
@@ -9130,30 +9170,19 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 </table>
 </div></div></div>
 </div>
-<p>Unsurprisingly, position comes up as the predictor with the larger explnatory power and speed adds marginal benefits.</p>
-<p>For the next project, you can use all the tools showcased here to find a better encoding model model for these hyppocampal neurons.</p>
+<div class="render-all">
+Unsurprisingly, position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
+</div>
+<section id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
+<div class="render-all">
+<p>For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons.</p>
 <p>Suggestions:</p>
 <ul class="simple">
-<li><p>Extend the model including the theta phase as predictor.</p></li>
-<li><p>Use the NeMoS <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html">multiplicative basis</a> to capture model the interaction between theta phase and position.</p></li>
+<li><p>Extend the model by including theta phase as a predictor</p></li>
+<li><p>Use the NeMoS <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html">MultiplicativeBasis</a> to capture interactions between theta phase and position</p></li>
 </ul>
 </section>
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<div class="render-all">
-<p>Various combinations of features can lead to different results. From this quick demo it looks like the position-only model is only marginally worst compared to the full model.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.cell.com/neuron/pdf/S0896-6273(17)30237-4.pdf">Hardcastle, Kiah, et al. “A multiplexed, heterogeneous, and adaptive code for navigation in medial entorhinal cortex.” Neuron 94.2 (2017): 375-387</a></p></li>
-<li><p><a class="reference external" href="https://www.pnas.org/doi/abs/10.1073/pnas.1912792116">McClain, Kathryn, et al. “Position–theta-phase model of hippocampal place cell activity applied to quantification of running speed modulation of firing rate.” Proceedings of the National Academy of Sciences 116.52 (2019): 27035-27042</a></p></li>
-<li><p><a class="reference external" href="https://www.nature.com/articles/s41467-017-01908-3">Peyrache, Adrien, Natalie Schieferstein, and Gyorgy Buzsáki. “Transformation of the head-direction signal into a spatial code.” Nature communications 8.1 (2017): 1752.</a></p></li>
-</ul>
-</section>
-<section id="project-ideas">
-<h2>Project Ideas<a class="headerlink" href="#project-ideas" title="Link to this heading">#</a></h2>
-<p>Use what you learned here and compare models including the theta phase. You can model phase precession as an interaction term between position and theta phase; You can include an interaction term by using the basis multiplication operator, for more information see,</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html">Background on basis composition</a></p></li>
-</ul>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
@@ -9221,9 +9250,10 @@ document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-ideas">Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>

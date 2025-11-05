@@ -403,9 +403,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-ideas">Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
             </nav>
@@ -966,48 +967,42 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </section>
 <section id="feature-selection">
 <h2>Feature selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h2>
-<p>Let’s move on to feature selection. Our goal is comparing alternative models, for this example we will consider: position + speed, position only or speed only.</p>
-<p>Problem: scikit-learn’s cross-validation assumes that the input to the pipeline does not change, while each model will have a different input. What can we do?</p>
-<p>Let’s see how to circumvent this with a neat basis trick.</p>
+<p>Let’s move on to feature selection. Our goal is to compare alternative models: position + speed, position only, or speed only.</p>
+<p>Problem: scikit-learn’s cross-validation assumes the pipeline input stays constant, but each model needs different features. How do we solve this?</p>
+<p>Solution: Use a “null” basis that produces zero features!</p>
 <ul class="simple">
-<li><p>Create a “null” basis that produces zero features using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from a list of functions.</p></li>
+<li><p>We’ll create this null basis using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from custom functions.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># this function creates an empty array (n_sample, 0)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function that creates an empty array (n_samples, 0)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
-<span class="c1"># Create a null transformer basis using the custom basis class</span>
-<span class="n">null_basis</span> <span class="o">=</span> 
-<span class="c1"># this creates an empty feature</span>
+<span class="c1"># create a null transformer basis using the custom basis class</span>
+<span class="n">null_basis</span> <span class="o">=</span>
+<span class="c1"># verify: this creates an empty feature array</span>
 <span class="n">null_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
 </pre></div>
 </div>
 </div>
 </div>
+<p>Why is this useful? We can combine <code class="docutils literal notranslate"><span class="pre">null_basis</span></code> with actual bases to create different models that all accept the same input!</p>
+<p>Let’s define the bases for our three models:</p>
 <ul class="simple">
-<li><p>First we can note that the original “position + speed” additive basis is the <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute of the transformer.</p></li>
+<li><p>Position + speed: combine position and speed bases</p></li>
+<li><p>Position only: combine position basis with null basis (speed features is empty)</p></li>
+<li><p>Speed only: combine null basis with speed basis (position features is empty)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<ul class="simple">
-<li><p>Add the null basis to the speed or position basis to generate a composite basis for the position-only and speed-only model that receives the same 2D input as the model including all predictors!</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the 1D transformer bases with no label</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the 1D transformer bases (note: no labels needed here)</span>
 <span class="n">position_bas</span> <span class="o">=</span> 
-<span class="n">speed_bas</span> <span class="o">=</span> 
-<span class="c1"># combine them with each other or with the null basis to define each model.</span>
+<span class="n">speed_bas</span> <span class="o">=</span>
+<span class="c1"># combine them to define each model</span>
 <span class="n">basis_all</span> <span class="o">=</span> 
 <span class="n">basis_position</span> <span class="o">=</span> 
-<span class="n">basis_speed</span> <span class="o">=</span> 
-<span class="c1"># assign label (not necessary but nice)</span>
+<span class="n">basis_speed</span> <span class="o">=</span>
+<span class="c1"># assign labels (optional but helpful for readability)</span>
 <span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
 <span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
 <span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
@@ -1015,51 +1010,75 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </div>
+<p>These bases can all transform the same <code class="docutils literal notranslate"><span class="pre">transformer_input</span></code> (a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> with columns for position and speed), but they generate design matrices with different numbers of features:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;position + speed&quot; design: 25 features (10 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;position + speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_all</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;position&quot; design: 10 features (10 + 0)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">position design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_position</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;speed&quot; design: 15 features (0 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_speed</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To cross-validate over different basis compositions, we need to understand how they’re stored in our pipeline. The additive basis is stored as a <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute inside the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html"><code class="docutils literal notranslate"><span class="pre">TransformerBasis</span></code></a> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create a parameter grid for cross-validation. The key is the string <code class="docutils literal notranslate"><span class="pre">&quot;basis__basis&quot;</span></code>:</p>
 <ul class="simple">
-<li><p>Create a parameter grid for each model of interest.</p></li>
-<li><p>The attribute to cross-validate over is <code class="docutils literal notranslate"><span class="pre">&quot;basis__basis&quot;</span></code>, where the first “basis” is the name of the pipeline step, the second one is the attribute of the transformer.</p></li>
+<li><p>First <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the name of the pipeline step</p></li>
+<li><p>Second <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the attribute of the TransformerBasis object</p></li>
+<li><p>This double-underscore notation is how scikit-learn accesses nested parameters</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create parameter grid with our three basis compositions</span>
+<span class="n">param_grid</span> <span class="o">=</span> 
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># finally we define and fit our CV</span>
-<span class="n">cv</span> <span class="o">=</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define and fit GridSearchCV</span>
+<span class="n">cv</span> <span class="o">=</span> 
 </pre></div>
 </div>
 </div>
 </div>
+<p>Let’s examine the model comparison results:</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cv_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
 
-<span class="c1"># let&#39;s just plot a minimal subset of cols</span>
+<span class="c1"># display the key columns: which basis was used, its score, and ranking</span>
 <span class="n">cv_df</span><span class="p">[[</span><span class="s2">&quot;param_basis__basis&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
 </div>
-</section>
-<section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h2>
-<p>Various combinations of features can lead to different results. From this quick demo it looks like the position-only model is only marginally worst compared to the full model.</p>
+<p>Unsurprisingly, position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.</p>
+<section id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
+<p>For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons.</p>
+<p>Suggestions:</p>
 <ul class="simple">
-<li><p><a class="reference external" href="https://www.cell.com/neuron/pdf/S0896-6273(17)30237-4.pdf">Hardcastle, Kiah, et al. “A multiplexed, heterogeneous, and adaptive code for navigation in medial entorhinal cortex.” Neuron 94.2 (2017): 375-387</a></p></li>
-<li><p><a class="reference external" href="https://www.pnas.org/doi/abs/10.1073/pnas.1912792116">McClain, Kathryn, et al. “Position–theta-phase model of hippocampal place cell activity applied to quantification of running speed modulation of firing rate.” Proceedings of the National Academy of Sciences 116.52 (2019): 27035-27042</a></p></li>
-<li><p><a class="reference external" href="https://www.nature.com/articles/s41467-017-01908-3">Peyrache, Adrien, Natalie Schieferstein, and Gyorgy Buzsáki. “Transformation of the head-direction signal into a spatial code.” Nature communications 8.1 (2017): 1752.</a></p></li>
+<li><p>Extend the model by including theta phase as a predictor</p></li>
+<li><p>Use the NeMoS <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html">MultiplicativeBasis</a> to capture interactions between theta phase and position</p></li>
 </ul>
 </section>
-<section id="project-ideas">
-<h2>Project Ideas<a class="headerlink" href="#project-ideas" title="Link to this heading">#</a></h2>
-<p>Use what you learned here and compare models including the theta phase. You can model phase precession as an interaction term between position and theta phase; You can include an interaction term by using the basis multiplication operator, for more information see,</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html">Background on basis composition</a></p></li>
-</ul>
 </section>
 <section id="references">
 <h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
@@ -1109,9 +1128,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-ideas">Project Ideas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
 </ul>
   </nav></div>
