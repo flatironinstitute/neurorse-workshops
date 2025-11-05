@@ -437,7 +437,7 @@ What does it mean for the relationship between cells here? Remember that during 
 
 
 
-## Fitting a GLM model with Nemos
+## Part 2 : Fitting a GLM model with Nemos
 
 
 
@@ -450,6 +450,8 @@ To fit the GLM faster, we will use only the first 3 min of wake.
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+# restrict wake epoch to first 3 minutes
 wake_ep = nap.IntervalSet(
     start=wake_ep.start[0], end=wake_ep.start[0] + 3 * 60
 )
@@ -471,20 +473,20 @@ print(count.shape)
 
 
 
-**Question: can you reorder the columns of `count` based on the preferred direction of each neuron?**
-
 Above we defined `pref_ang` as the preferred direction of each neuron. `np.argsort(pref_ang.values)` gives you the order to sort the columns of count.
+This is useful to visualize the activity of neurons based on their preferred direction.
 
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 count = count[:, np.argsort(pref_ang.values)]
 ```
 
 
-It's time to use NeMoS. Our goal is to estimate the pairwise interaction between neurons.
-This can be quantified with a GLM if we use the recent population spike history to predict the current time step.
 
+It's time to use NeMoS. Our end goal is to estimate the pairwise interaction between neurons.
+This can be quantified with a GLM if we use the recent population spike history to predict the current time step.
 
 To simplify our life, let's see first how we can model spike history effects in a single neuron.
 The simplest approach is to use counts in fixed length window $i$, $y_{t-i}, \dots, y_{t-1}$ to predict the next
@@ -492,12 +494,13 @@ count $y_{t}$.
 
 Before starting the analysis, let's 
 
-- **select a neuron (firt column is good) from the `count` object (call the variable `neuron_count`)** 
+- **select a neuron (first column is good) from the `count` object (call the variable `neuron_count`)** 
 - **Select the first 1.2 seconds of wake_ep for visualization. (call the epoch `epoch_one_spk`).**
 
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 # select a neuron's spike count time series
 neuron_count = count[:, 0]
 
@@ -507,19 +510,20 @@ epoch_one_spk = nap.IntervalSet(
 )
 ```
 
-#### Features Construction
+### Features Construction
 
 
 
-Let's fix the spike history window size that we will use as predictor.
+Let's fix the spike history window size that we will use as predictor meaning how far back in time we want to look to predict the current rate.
 
-**Question: Can you:**
+Let's :
 - Fix a history window of 800ms (0.8 seconds).
 - Plot the result using `doc_plots.plot_history_window`
 
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 # set the size of the spike history window in seconds
 window_size_sec = 0.8
 
@@ -583,11 +587,10 @@ print("NaN indices:\n", np.where(np.isnan(input_feature[:, 0]))[0])
 The binned counts originally have shape "number of samples", we should check that the
 dimension are matching our expectation
 
-**Question: Can you check the shape of the counts and features?**
-
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 print(f"Time bins in counts: {neuron_count.shape[0]}")
 print(f"Convolution window size in bins: {window_size}")
 print(f"Feature shape: {input_feature.shape}")
@@ -618,7 +621,7 @@ We can learn these weights by maximum likelihood by fitting a GLM.
 
 
 
-## Fitting the Model
+### Fitting a single neuron model
 
 
 
@@ -650,6 +653,8 @@ second_half = nap.IntervalSet(start + duration / 2, end)
 
 
 **Question: Can you fit the glm to the first half of the recording and visualize the maximum likelihood weights?**
+
+The model used should be a `nmo.glm.GLM` with the solver `LBFGS`.
 
 
 
@@ -692,11 +697,9 @@ If we are correct, what would happen if we re-fit the weights on the other half 
 
 
 
-### Inspecting the results
 
 
-
-**Question: Can you fit the model on the second half of the data and compare the results?**
+**Question: Can you fit a new model on the second half of the data and call it `model_second_half`?**
 
 
 
@@ -712,7 +715,7 @@ model_second_half.fit(
 
 
 
-- Compare results.
+Let's plot the weights learned on the second half of the data and compare them to those learned on the first half.
 
 
 
@@ -743,8 +746,7 @@ worst if we needed a finer temporal resolution, such 1ms time bins
 (which would require 800 coefficients instead of 80).
 What can we do to mitigate over-fitting now?
 
-(head_direction_reducing_dimensionality)=
-#### Reducing feature dimensionality
+### Reducing feature dimensionality
 
 Let's see how to use NeMoS' `basis` module to reduce dimensionality and avoid over-fitting!
 For history-type inputs, we'll use again the raised cosine log-stretched basis,
@@ -824,11 +826,11 @@ epoch_multi_spk = nap.IntervalSet(8979.2, 8980.2)
 doc_plots.plot_convolved_counts(neuron_count, conv_spk, epoch_one_spk, epoch_multi_spk);
 ```
 
-#### Fit and compare the models
+### Fit a GLM with basis features with reduced dimensionality
 
 
 
-Now that we have our "compressed" history feature matrix, we can fit the ML parameters for a GLM.
+Now that we have our "compressed" history feature matrix, we can fit the parameters for a new GLM model using these features.
 
 **Question: Can you fit the model using the compressed features? Call it `model_basis`.**
 
@@ -856,24 +858,19 @@ print(model_basis.coef_)
 
 
 
-In order to get the response we need to multiply the coefficients by their corresponding
+In order to get the response of a neuron in response to its history, we need to multiply the coefficients by their corresponding
 basis function, and sum them.
 
-**Question: Can you:**
-- Reconstruct the history filter:
-    - Extract the basis kernels with `_, basis_kernels = basis.evaluate_on_grid(window_size)`.
-    - Multiply the `basis_kernel` with the coefficient using `np.matmul`.
-- Check the shape of `self_connection`.
+Let's do that now. We can reconstruct the history filter by multiplying the basis kernels with the learned coefficients.
 
-```
-_, basis_kernels = ... # get the basis function kernels
-self_connection = ... # multiply with the weights
-print(self_connection.shape)
-```
+We can get the basis kernels by calling the `evaluate_on_grid` method of the basis object.
+
+Then we can multiply the basis kernels with the coefficients using `np.matmul`.
 
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 # get the basis function kernels
 _, basis_kernels = basis.evaluate_on_grid(window_size)
 
@@ -888,31 +885,20 @@ print(self_connection.shape)
 Let's check if our new estimate does a better job in terms of over-fitting. We can do that
 by visual comparison, as we did previously. Let's fit the second half of the dataset.
 
-**Question: Can you fit the other half of the data. Name it `model_basis_second_half`.**
-
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
+# fit on the other half of the data
 model_basis_second_half = nmo.glm.GLM(solver_name="LBFGS").fit(
     conv_spk.restrict(second_half), neuron_count.restrict(second_half)
 )
-```
-
-
-
-**Question: Can you:**
-- Get the response filters? Multiply the `basis_kernels` with the weights from `model_basis_second_half`.
-- Call the output `self_connection_second_half`.
-
-
-
-```{code-cell} ipython3
 self_connection_second_half = np.matmul(basis_kernels, model_basis_second_half.coef_)
 ```
 
 
 
-And plot the results.
+Let's plot the weights learned on the second half of the data and compare them to those learned on the first half.
 
 
 
@@ -934,9 +920,11 @@ plt.legend()
 
 
 
+Let's see if the basis model improves prediction of the firing rate. Here we will compare the firing rate predicted
+by the two models on the whole dataset. The model should be called `model` and `model_basis` from the previous cells.
+
 **Question: Can you:**
 - Predict the rates from `model` and `model_basis`? Call it `rate_history` and `rate_basis`.
-- Convert the rate from spike/bin to spike/sec by multiplying with `conv_spk.rate`?
 
 
 
@@ -947,7 +935,7 @@ rate_history = model.predict(input_feature) * conv_spk.rate
 
 
 
-And plot it.
+Let's plot the predicted rates over a short window not used for training.
 
 
 
@@ -958,11 +946,11 @@ ep = nap.IntervalSet(start=8819.4, end=8821)
 # plot the rates
 doc_plots.plot_rates_and_smoothed_counts(
     neuron_count,
-    {"Self-connection raw history":rate_history, "Self-connection bsais": rate_basis}
+    {"Self-connection raw history":rate_history, "Self-connection basis": rate_basis}
 );
 ```
 
-## All-to-all Connectivity
+### All-to-all Connectivity
 
 
 
@@ -971,7 +959,7 @@ is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, `(num_time_points, num_neurons * num_basis_funcs)`.
 
-### Preparing the features
+#### Preparing the features
 
 **Question: Can you:**
 - Re-define the basis?
@@ -981,11 +969,15 @@ to get an array of predictors of shape, `(num_time_points, num_neurons * num_bas
 Since this time we are convolving more than one neuron, we need to reset the expected input shape. 
 This can be done by passing the population counts to the `set_input_shape` method.
 
-```
-basis = ... # reset the input shape by passing the population count
-convolved_count = ... # convolve all the neurons
-```
 
+```{code-cell} ipython3
+# reset the input shape by passing the pop. count
+print(count.shape)
+print(152/8)
+basis.set_input_shape(count)
+# convolve all the neurons
+convolved_count = basis.compute_features(...) # Parameter is the binned spike count time series
+```
 
 
 ```{code-cell} ipython3
@@ -1008,10 +1000,11 @@ Shape should be `(n_samples, n_basis_func * n_neurons)`
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 print(f"Convolved count shape: {convolved_count.shape}")
 ```
 
-### Fitting the Model
+#### Fitting the Model
 
 
 
@@ -1024,7 +1017,7 @@ Once we condition on past activity, log-likelihood of the population is the sum 
 
 
 **Question: Can you:**
-- Fit a `PopulationGLM`? Call the object `model`
+- Fit a `PopulationGLM`? Call the object `model`. Solver should be `LBFGS`.
 - Use Ridge regularization with a `regularizer_strength=0.1`?
 - Print the shape of the estimated coefficients.
 
@@ -1050,8 +1043,6 @@ Predict the rate (counts are already sorted by tuning prefs)
 - Predict the firing rate of each neuron? Call it `predicted_firing_rate`.
 - Convert the rate from spike/bin to spike/sec?
 
-`predicted_firing_rate = ... # predict the rate from the model`
-
 
 
 ```{code-cell} ipython3
@@ -1060,7 +1051,7 @@ predicted_firing_rate = model.predict(convolved_count) * conv_spk.rate
 
 
 
-Plot fit predictions over a short window not used for training.
+Now we can visualize the tuning curves predicted by the model as well as the real tuning curves and the predicted firing rate.
 
 
 
@@ -1101,23 +1092,16 @@ Finally, we can extract and visualize the pairwise interactions between neurons.
 
 
 ```{code-cell} ipython3
+:tags: [render-all]
 # original shape of the weights
 print(f"GLM coeff: {model.coef_.shape}")
 ```
 
 
 
-You can use the `split_by_feature` method of `basis` for this. 
+You can use the `split_by_feature` method of `basis` for this. It will reshape the coefficient vector into a 3D array.
 
 ![Reshape coefficients](../../_static/coeff_reshape.png)
-
-
-```
-# split the coefficient vector along the feature axis (axis=0)
-weights_dict = basis.split_by_feature(...)
-# visualize the content
-weights = weights_dict["RaisedCosineLogConv"]
-```
 
 
 
@@ -1135,7 +1119,10 @@ print(f"Re-shaped coeff: {weights.shape}")
 
 The shape is `(sender_neuron, num_basis, receiver_neuron)`.
 
-Let's reconstruct the coupling filters by multiplying the weights with the basis functions.
+Let's reconstruct the coupling filters by multiplying the weights with the basis functions. 
+Here we use `np.einsum` for that. It's a powerful function for summing products of arrays over specified axes.
+In this case, the operation is :
+(sender_neuron, num_basis, receiver_neuron) x (time lag, num_basis) -> (sender_neuron, receiver_neuron, time lag)
 
 
 
@@ -1169,3 +1156,11 @@ predicted_tuning_curves = nap.compute_tuning_curves(
                                                  
 fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
 ```
+
+### Conclusion
+
+
+These coupling filters represent the influence of one neuron on another over time. 
+They have been sorted based on the preferred head-direction of each neuron.
+Note that those neurons are not synaptically connected, but they have a functional relationship based on their tuning 
+to head-direction.

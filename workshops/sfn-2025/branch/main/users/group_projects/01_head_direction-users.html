@@ -397,25 +397,19 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-fitting-a-glm-model-with-nemos">Part 2 : Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-results">Inspecting the results</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-and-compare-the-models">Fit and compare the models</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fitting the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -766,14 +760,17 @@ and the pair of neurons that fire for opposite directions.</p>
 <p>What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.</p>
 </section>
 </section>
-<section id="fitting-a-glm-model-with-nemos">
-<h2>Fitting a GLM model with Nemos<a class="headerlink" href="#fitting-a-glm-model-with-nemos" title="Link to this heading">#</a></h2>
+<section id="part-2-fitting-a-glm-model-with-nemos">
+<h2>Part 2 : Fitting a GLM model with Nemos<a class="headerlink" href="#part-2-fitting-a-glm-model-with-nemos" title="Link to this heading">#</a></h2>
 <p>In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep. Cells that fire together during wake also fire together during sleep and cells that don’t fire together during wake don’t fire together during sleep. The goal here is to characterized this relationship with generalized linear model. Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.</p>
 <p><strong>Question : are neurons constantly tuned to head-direction and can we use it to predict the spiking activity of each neuron based only on the activity of other neurons?</strong></p>
 <p>To fit the GLM faster, we will use only the first 3 min of wake.</p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># restrict wake epoch to first 3 minutes</span>
+<span class="n">wake_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">wake_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="n">wake_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="mi">60</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -782,48 +779,59 @@ and the pair of neurons that fire for opposite directions.</p>
 <p><strong>Question: can you bin the spike trains in 10 ms bins during the <code class="docutils literal notranslate"><span class="pre">wake_ep</span></code> and call the variable <code class="docutils literal notranslate"><span class="pre">count</span></code>?</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bin_size</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">count</span> <span class="o">=</span> <span class="o">...</span>  <span class="c1"># Bin spike trains during wake_ep</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Question: can you reorder the columns of <code class="docutils literal notranslate"><span class="pre">count</span></code> based on the preferred direction of each neuron?</strong></p>
-<p>Above we defined <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> as the preferred direction of each neuron. <code class="docutils literal notranslate"><span class="pre">np.argsort(pref_ang.values)</span></code> gives you the order to sort the columns of count.</p>
-<div class="cell docutils container">
+<p>Above we defined <code class="docutils literal notranslate"><span class="pre">pref_ang</span></code> as the preferred direction of each neuron. <code class="docutils literal notranslate"><span class="pre">np.argsort(pref_ang.values)</span></code> gives you the order to sort the columns of count.
+This is useful to visualize the activity of neurons based on their preferred direction.</p>
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pref_ang</span><span class="o">.</span><span class="n">values</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>It’s time to use NeMoS. Our goal is to estimate the pairwise interaction between neurons.
+<p>It’s time to use NeMoS. Our end goal is to estimate the pairwise interaction between neurons.
 This can be quantified with a GLM if we use the recent population spike history to predict the current time step.</p>
 <p>To simplify our life, let’s see first how we can model spike history effects in a single neuron.
 The simplest approach is to use counts in fixed length window <span class="math notranslate nohighlight">\(i\)</span>, <span class="math notranslate nohighlight">\(y_{t-i}, \dots, y_{t-1}\)</span> to predict the next
 count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 <p>Before starting the analysis, let’s</p>
 <ul class="simple">
-<li><p><strong>select a neuron (firt column is good) from the <code class="docutils literal notranslate"><span class="pre">count</span></code> object (call the variable <code class="docutils literal notranslate"><span class="pre">neuron_count</span></code>)</strong></p></li>
+<li><p><strong>select a neuron (first column is good) from the <code class="docutils literal notranslate"><span class="pre">count</span></code> object (call the variable <code class="docutils literal notranslate"><span class="pre">neuron_count</span></code>)</strong></p></li>
 <li><p><strong>Select the first 1.2 seconds of wake_ep for visualization. (call the epoch <code class="docutils literal notranslate"><span class="pre">epoch_one_spk</span></code>).</strong></p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># select a neuron&#39;s spike count time series</span>
+<span class="n">neuron_count</span> <span class="o">=</span> <span class="n">count</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># restrict to a smaller time interval</span>
+<span class="n">epoch_one_spk</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span>
+    <span class="n">start</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">time_support</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">end</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">time_support</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.2</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="features-construction">
 <h3>Features Construction<a class="headerlink" href="#features-construction" title="Link to this heading">#</a></h3>
-<p>Let’s fix the spike history window size that we will use as predictor.</p>
-<p><strong>Question: Can you:</strong></p>
+<p>Let’s fix the spike history window size that we will use as predictor meaning how far back in time we want to look to predict the current rate.</p>
+<p>Let’s :</p>
 <ul class="simple">
 <li><p>Fix a history window of 800ms (0.8 seconds).</p></li>
 <li><p>Plot the result using <code class="docutils literal notranslate"><span class="pre">doc_plots.plot_history_window</span></code></p></li>
 </ul>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the size of the spike history window in seconds</span>
+<span class="n">window_size_sec</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+<span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_history_window</span><span class="p">(</span><span class="n">neuron_count</span><span class="p">,</span> <span class="n">epoch_one_spk</span><span class="p">,</span> <span class="n">window_size_sec</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -849,7 +857,12 @@ time-points;</p>
 - Create the feature matrix with <code class="docutils literal notranslate"><span class="pre">history_basis.compute_features</span></code> (call it <code class="docutils literal notranslate"><span class="pre">input_feature</span></code>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert the prediction window to bins (by multiplying with the sampling rate)</span>
+<span class="n">window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">window_size_sec</span> <span class="o">*</span> <span class="n">neuron_count</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
+<span class="c1"># define the history bases</span>
+<span class="n">history_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">HistoryConv</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter indicate the window size in bins</span>
+<span class="c1"># create the feature matrix</span>
+<span class="n">input_feature</span> <span class="o">=</span> <span class="n">history_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the binned spike count time series</span>
 </pre></div>
 </div>
 </div>
@@ -865,10 +878,12 @@ time-points;</p>
 </div>
 <p>The binned counts originally have shape “number of samples”, we should check that the
 dimension are matching our expectation</p>
-<p><strong>Question: Can you check the shape of the counts and features?</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time bins in counts: </span><span class="si">{</span><span class="n">neuron_count</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolution window size in bins: </span><span class="si">{</span><span class="n">window_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -889,9 +904,8 @@ In the previous tutorial our feature was 1-dimensional (just the current), now
 instead the feature dimension is 80, because our bin size was 0.01 sec and the window size is 0.8 sec.
 We can learn these weights by maximum likelihood by fitting a GLM.</p>
 </section>
-</section>
-<section id="fitting-the-model">
-<h2>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h2>
+<section id="fitting-a-single-neuron-model">
+<h3>Fitting a single neuron model<a class="headerlink" href="#fitting-a-single-neuron-model" title="Link to this heading">#</a></h3>
 <p>When working a real dataset, it is good practice to train your models on a chunk of the data and
 use the other chunk to assess the model performance. This process is known as “cross-validation”.
 There is no unique strategy on how to cross-validate your model; What works best
@@ -916,9 +930,16 @@ examples.</p>
 </div>
 </div>
 <p><strong>Question: Can you fit the glm to the first half of the recording and visualize the maximum likelihood weights?</strong></p>
+<p>The model used should be a <code class="docutils literal notranslate"><span class="pre">nmo.glm.GLM</span></code> with the solver <code class="docutils literal notranslate"><span class="pre">LBFGS</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the GLM object</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the solver name</span>
+<span class="c1"># Fit over the training epochs</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">input_feature</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="o">...</span><span class="p">),</span> <span class="c1"># Parameter is the feature matrix restricted to the first half</span>
+    <span class="n">neuron_count</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the binned spike count time series restricted to the first half</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -942,19 +963,20 @@ The model should be called <code class="docutils literal notranslate"><span clas
 can be described with fewer degrees of freedom. In other words, it looks like we
 are using way too many weights to describe a simple response.
 If we are correct, what would happen if we re-fit the weights on the other half of the data?</p>
-<section id="inspecting-the-results">
-<h3>Inspecting the results<a class="headerlink" href="#inspecting-the-results" title="Link to this heading">#</a></h3>
-<p><strong>Question: Can you fit the model on the second half of the data and compare the results?</strong></p>
+<p><strong>Question: Can you fit a new model on the second half of the data and call it <code class="docutils literal notranslate"><span class="pre">model_second_half</span></code>?</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit on the other half of the data</span>
+<span class="n">model_second_half</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the solver name</span>
+<span class="n">model_second_half</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span> <span class="c1"># Parameter is the feature matrix restricted to the second half</span>
+    <span class="o">...</span> <span class="c1"># Parameter is the binned spike count time series restricted to the second half</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>Compare results.</p></li>
-</ul>
+<p>Let’s plot the weights learned on the second half of the data and compare them to those learned on the first half.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -979,8 +1001,9 @@ our estimate is noisy. You can imagine how things could get
 worst if we needed a finer temporal resolution, such 1ms time bins
 (which would require 800 coefficients instead of 80).
 What can we do to mitigate over-fitting now?</p>
+</section>
 <section id="reducing-feature-dimensionality">
-<span id="head-direction-reducing-dimensionality"></span><h4>Reducing feature dimensionality<a class="headerlink" href="#reducing-feature-dimensionality" title="Link to this heading">#</a></h4>
+<h3>Reducing feature dimensionality<a class="headerlink" href="#reducing-feature-dimensionality" title="Link to this heading">#</a></h3>
 <p>Let’s see how to use NeMoS’ <code class="docutils literal notranslate"><span class="pre">basis</span></code> module to reduce dimensionality and avoid over-fitting!
 For history-type inputs, we’ll use again the raised cosine log-stretched basis,
 <a class="reference external" href="https://www.jneurosci.org/content/25/47/11003">Pillow et al., 2005</a>.</p>
@@ -1002,7 +1025,11 @@ the effect of the corresponding input with the higher precision, at the cost of 
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a basis object can be instantiated in &quot;conv&quot; mode for convolving the input.</span>
+<span class="n">basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Number of basis functions</span>
+    <span class="n">window_size</span><span class="o">=...</span> <span class="c1"># Window size in bins</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1024,7 +1051,11 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># equivalent to</span>
+<span class="c1"># `nmo.convolve.create_convolutional_predictor(basis_kernels, neuron_count)`</span>
+<span class="n">conv_spk</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the binned spike count time series</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Raw count history as feature: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Compressed count history as feature: </span><span class="si">{</span><span class="n">conv_spk</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1042,13 +1073,18 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 </div>
 </div>
 </section>
-<section id="fit-and-compare-the-models">
-<h4>Fit and compare the models<a class="headerlink" href="#fit-and-compare-the-models" title="Link to this heading">#</a></h4>
-<p>Now that we have our “compressed” history feature matrix, we can fit the ML parameters for a GLM.</p>
+<section id="fit-a-glm-with-basis-features-with-reduced-dimensionality">
+<h3>Fit a GLM with basis features with reduced dimensionality<a class="headerlink" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality" title="Link to this heading">#</a></h3>
+<p>Now that we have our “compressed” history feature matrix, we can fit the parameters for a new GLM model using these features.</p>
 <p><strong>Question: Can you fit the model using the compressed features? Call it <code class="docutils literal notranslate"><span class="pre">model_basis</span></code>.</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># use restrict on interval set training</span>
+<span class="n">model_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the solver name</span>
+<span class="n">model_basis</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="o">...</span><span class="p">,</span> <span class="c1"># Parameter is the convolved feature matrix restricted to the first half</span>
+    <span class="o">...</span> <span class="c1"># Parameter is the binned spike count time series restricted to the first half</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1063,53 +1099,38 @@ We have now 8 coefficients,</p>
 </div>
 </div>
 </div>
-<p>In order to get the response we need to multiply the coefficients by their corresponding
+<p>In order to get the response of a neuron in response to its history, we need to multiply the coefficients by their corresponding
 basis function, and sum them.</p>
-<p><strong>Question: Can you:</strong></p>
-<ul class="simple">
-<li><p>Reconstruct the history filter:</p>
-<ul>
-<li><p>Extract the basis kernels with <code class="docutils literal notranslate"><span class="pre">_,</span> <span class="pre">basis_kernels</span> <span class="pre">=</span> <span class="pre">basis.evaluate_on_grid(window_size)</span></code>.</p></li>
-<li><p>Multiply the <code class="docutils literal notranslate"><span class="pre">basis_kernel</span></code> with the coefficient using <code class="docutils literal notranslate"><span class="pre">np.matmul</span></code>.</p></li>
-</ul>
-</li>
-<li><p>Check the shape of <code class="docutils literal notranslate"><span class="pre">self_connection</span></code>.</p></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">basis_kernels</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># get the basis function kernels</span>
-<span class="n">self_connection</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># multiply with the weights</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">self_connection</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
-</pre></div>
-</div>
-<div class="cell docutils container">
+<p>Let’s do that now. We can reconstruct the history filter by multiplying the basis kernels with the learned coefficients.</p>
+<p>We can get the basis kernels by calling the <code class="docutils literal notranslate"><span class="pre">evaluate_on_grid</span></code> method of the basis object.</p>
+<p>Then we can multiply the basis kernels with the coefficients using <code class="docutils literal notranslate"><span class="pre">np.matmul</span></code>.</p>
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># get the basis function kernels</span>
+<span class="n">_</span><span class="p">,</span> <span class="n">basis_kernels</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">evaluate_on_grid</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span>
+
+<span class="c1"># multiply with the weights</span>
+<span class="n">self_connection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">basis_kernels</span><span class="p">,</span> <span class="n">model_basis</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">self_connection</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Let’s check if our new estimate does a better job in terms of over-fitting. We can do that
 by visual comparison, as we did previously. Let’s fit the second half of the dataset.</p>
-<p><strong>Question: Can you fit the other half of the data. Name it <code class="docutils literal notranslate"><span class="pre">model_basis_second_half</span></code>.</strong></p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># fit on the other half of the data</span>
+<span class="n">model_basis_second_half</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">GLM</span><span class="p">(</span><span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">conv_spk</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">second_half</span><span class="p">),</span> <span class="n">neuron_count</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">second_half</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">self_connection_second_half</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">basis_kernels</span><span class="p">,</span> <span class="n">model_basis_second_half</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><strong>Question: Can you:</strong></p>
-<ul class="simple">
-<li><p>Get the response filters? Multiply the <code class="docutils literal notranslate"><span class="pre">basis_kernels</span></code> with the weights from <code class="docutils literal notranslate"><span class="pre">model_basis_second_half</span></code>.</p></li>
-<li><p>Call the output <code class="docutils literal notranslate"><span class="pre">self_connection_second_half</span></code>.</p></li>
-</ul>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>And plot the results.</p>
+<p>Let’s plot the weights learned on the second half of the data and compare them to those learned on the first half.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span>
@@ -1127,42 +1148,45 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 </div>
 </div>
 </div>
+<p>Let’s see if the basis model improves prediction of the firing rate. Here we will compare the firing rate predicted
+by the two models on the whole dataset. The model should be called <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">model_basis</span></code> from the previous cells.</p>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
 <li><p>Predict the rates from <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">model_basis</span></code>? Call it <code class="docutils literal notranslate"><span class="pre">rate_history</span></code> and <code class="docutils literal notranslate"><span class="pre">rate_basis</span></code>.</p></li>
-<li><p>Convert the rate from spike/bin to spike/sec by multiplying with <code class="docutils literal notranslate"><span class="pre">conv_spk.rate</span></code>?</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rate_basis</span> <span class="o">=</span> <span class="n">model_basis</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the convolved feature matrix</span>
+<span class="n">rate_history</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the original feature</span>
+<span class="c1"># convert the rate from spike/bin to spike/sec by multiplying with neuron_count.rate</span>
+<span class="n">rate_basis</span> <span class="o">=</span> <span class="n">rate_basis</span> <span class="o">*</span> <span class="n">conv_spk</span><span class="o">.</span><span class="n">rate</span>
+<span class="n">rate_history</span> <span class="o">=</span> <span class="n">rate_history</span> <span class="o">*</span> <span class="n">conv_spk</span><span class="o">.</span><span class="n">rate</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>And plot it.</p>
+<p>Let’s plot the predicted rates over a short window not used for training.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">8819.4</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8821</span><span class="p">)</span>
 <span class="c1"># plot the rates</span>
 <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
-    <span class="p">{</span><span class="s2">&quot;Self-connection raw history&quot;</span><span class="p">:</span><span class="n">rate_history</span><span class="p">,</span> <span class="s2">&quot;Self-connection bsais&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">}</span>
+    <span class="p">{</span><span class="s2">&quot;Self-connection raw history&quot;</span><span class="p">:</span><span class="n">rate_history</span><span class="p">,</span> <span class="s2">&quot;Self-connection basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-</section>
-</section>
 <section id="all-to-all-connectivity">
-<h2>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h2>
+<h3>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h3>
 <p>The same approach can be applied to the whole population. Now the firing rate of a neuron
 is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, <code class="docutils literal notranslate"><span class="pre">(num_time_points,</span> <span class="pre">num_neurons</span> <span class="pre">*</span> <span class="pre">num_basis_funcs)</span></code>.</p>
 <section id="preparing-the-features">
-<h3>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h3>
+<h4>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h4>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
 <li><p>Re-define the basis?</p></li>
@@ -1171,29 +1195,30 @@ to get an array of predictors of shape, <code class="docutils literal notranslat
 </ul>
 <p>Since this time we are convolving more than one neuron, we need to reset the expected input shape.
 This can be done by passing the population counts to the <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code> method.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">basis</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># reset the input shape by passing the population count</span>
-<span class="n">convolved_count</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># convolve all the neurons</span>
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># reset the input shape by passing the pop. count</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="mi">152</span><span class="o">/</span><span class="mi">8</span><span class="p">)</span>
+<span class="n">basis</span><span class="o">.</span><span class="n">set_input_shape</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+<span class="c1"># convolve all the neurons</span>
+<span class="n">convolved_count</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the binned spike count time series</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Check the dimension to make sure it make sense.</p>
 <p>Shape should be <code class="docutils literal notranslate"><span class="pre">(n_samples,</span> <span class="pre">n_basis_func</span> <span class="pre">*</span> <span class="pre">n_neurons)</span></code></p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolved count shape: </span><span class="si">{</span><span class="n">convolved_count</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="id1">
-<h3>Fitting the Model<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<section id="fitting-the-model">
+<h4>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h4>
 <p>This is an all-to-all neurons model.
 We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> to fit the whole population at once.</p>
 <p>Once we condition on past activity, log-likelihood of the population is the sum of the log-likelihood
@@ -1201,17 +1226,23 @@ of individual neurons. Maximizing the sum (i.e. the population log-likelihood) i
 maximizing each individual term separately (i.e. fitting one neuron at the time).</p>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
-<li><p>Fit a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code>? Call the object <code class="docutils literal notranslate"><span class="pre">model</span></code></p></li>
+<li><p>Fit a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code>? Call the object <code class="docutils literal notranslate"><span class="pre">model</span></code>. Solver should be <code class="docutils literal notranslate"><span class="pre">LBFGS</span></code>.</p></li>
 <li><p>Use Ridge regularization with a <code class="docutils literal notranslate"><span class="pre">regularizer_strength=0.1</span></code>?</p></li>
 <li><p>Print the shape of the estimated coefficients.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+    <span class="n">regularizer</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularizer type</span>
+    <span class="n">solver_name</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Solver name</span>
+    <span class="n">regularizer_strength</span><span class="o">=...</span> <span class="c1"># Regularization strength</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the binned spike count time series</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model coefficients shape: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
+</section>
 <section id="comparing-model-predictions">
 <h4>Comparing model predictions.<a class="headerlink" href="#comparing-model-predictions" title="Link to this heading">#</a></h4>
 <p>Predict the rate (counts are already sorted by tuning prefs)</p>
@@ -1220,15 +1251,16 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 <li><p>Predict the firing rate of each neuron? Call it <code class="docutils literal notranslate"><span class="pre">predicted_firing_rate</span></code>.</p></li>
 <li><p>Convert the rate from spike/bin to spike/sec?</p></li>
 </ul>
-<p><code class="docutils literal notranslate"><span class="pre">predicted_firing_rate</span> <span class="pre">=</span> <span class="pre">...</span> <span class="pre">#</span> <span class="pre">predict</span> <span class="pre">the</span> <span class="pre">rate</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">model</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_firing_rate</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the convolved feature matrix</span>
+<span class="c1"># convert the rate from spike/bin to spike/sec by multiplying with conv_spk.rate</span>
+<span class="n">predicted_firing_rate</span> <span class="o">=</span> <span class="n">predicted_firing_rate</span> <span class="o">*</span> <span class="n">conv_spk</span><span class="o">.</span><span class="n">rate</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Plot fit predictions over a short window not used for training.</p>
+<p>Now we can visualize the tuning curves predicted by the model as well as the real tuning curves and the predicted firing rate.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># use pynapple for time axis for all variables plotted for tick labels in imshow</span>
@@ -1257,30 +1289,33 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 <h4>Visualizing the connectivity<a class="headerlink" href="#visualizing-the-connectivity" title="Link to this heading">#</a></h4>
 <p>Finally, we can extract and visualize the pairwise interactions between neurons.</p>
 <p>**Question: Can you extract the weights and store it in a <code class="docutils literal notranslate"><span class="pre">(n_neurons,</span> <span class="pre">n_neurons,</span> <span class="pre">n_basis_funcs)</span></code> array?</p>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># original shape of the weights</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GLM coeff: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>You can use the <code class="docutils literal notranslate"><span class="pre">split_by_feature</span></code> method of <code class="docutils literal notranslate"><span class="pre">basis</span></code> for this.</p>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">split_by_feature</span></code> method of <code class="docutils literal notranslate"><span class="pre">basis</span></code> for this. It will reshape the coefficient vector into a 3D array.</p>
 <p><img alt="Reshape coefficients" src="../../_images/coeff_reshape.png" /></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># split the coefficient vector along the feature axis (axis=0)</span>
-<span class="n">weights_dict</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">split_by_feature</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="c1"># visualize the content</span>
-<span class="n">weights</span> <span class="o">=</span> <span class="n">weights_dict</span><span class="p">[</span><span class="s2">&quot;RaisedCosineLogConv&quot;</span><span class="p">]</span>
-</pre></div>
-</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># split the coefficient vector along the feature axis (axis=0)</span>
+<span class="n">weights_dict</span> <span class="o">=</span> <span class="n">basis</span><span class="o">.</span><span class="n">split_by_feature</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the model coefficients. Axis is 0</span>
+<span class="c1"># The output is a dict with key the basis label, </span>
+<span class="c1"># and value the reshaped coefficients</span>
+<span class="n">weights</span> <span class="o">=</span> <span class="n">weights_dict</span><span class="p">[</span><span class="s2">&quot;RaisedCosineLogConv&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Re-shaped coefficients: </span><span class="si">{</span><span class="n">weights</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>The shape is <code class="docutils literal notranslate"><span class="pre">(sender_neuron,</span> <span class="pre">num_basis,</span> <span class="pre">receiver_neuron)</span></code>.</p>
-<p>Let’s reconstruct the coupling filters by multiplying the weights with the basis functions.</p>
+<p>Let’s reconstruct the coupling filters by multiplying the weights with the basis functions.
+Here we use <code class="docutils literal notranslate"><span class="pre">np.einsum</span></code> for that. It’s a powerful function for summing products of arrays over specified axes.
+In this case, the operation is :
+(sender_neuron, num_basis, receiver_neuron) x (time lag, num_basis) -&gt; (sender_neuron, receiver_neuron, time lag)</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;jki,tk-&gt;ijt&quot;</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">basis_kernels</span><span class="p">)</span>
@@ -1310,6 +1345,13 @@ all the coupling filters.</p>
 </div>
 </div>
 </section>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
+<p>These coupling filters represent the influence of one neuron on another over time.
+They have been sorted based on the preferred head-direction of each neuron.
+Note that those neurons are not synaptically connected, but they have a functional relationship based on their tuning
+to head-direction.</p>
 </section>
 </section>
 </section>
@@ -1366,25 +1408,19 @@ all the coupling filters.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-model-with-nemos">Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-fitting-a-glm-model-with-nemos">Part 2 : Fitting a GLM model with Nemos</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#inspecting-the-results">Inspecting the results</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-and-compare-the-models">Fit and compare the models</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Fitting the Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
