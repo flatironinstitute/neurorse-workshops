@@ -127,7 +127,7 @@ position = data["position"]
 ```
 
 For today, we're only going to focus on the times when the animal was traversing the linear track. 
-This is a pynapple `IntervalSet`, so we can use it to restrict our other variables:
+This is a pynapple [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html), so we can use it to restrict our other variables:
 
 <div class="render-user render-presenter">
 
@@ -259,13 +259,13 @@ workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 
 The first new concept we will introduce will be that of basis composition. NeMoS basis can be composed using the "+" (and "*", see [NeMoS docs](https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html) of more info) operator, to define more complex predictor. 
 
-Adding two 1D basis, will result in a 2D additive basis. The `compute_features` of the additive basis requires 2 inputs, and the output will be the concatenation of the design matrices of the basis components.
+Adding two 1D basis, will result in a 2D additive basis. The [`compute_features`](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.compute_features.html#nemos.basis._basis.AdditiveBasis.compute_features) of the additive basis requires 2 inputs, and the output will be the concatenation of the design matrices of the basis components.
 
 
 <div class="render-user render-presenter">
 
 - Adding the position and speed bases together defines a 2D basis.
-- Call `compute_features` to define a design matrix that concatenates both features.
+- Call [`compute_features`](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.compute_features.html#nemos.basis._basis.AdditiveBasis.compute_features) to define a design matrix that concatenates both features.
 
 </div>
 
@@ -299,7 +299,7 @@ print("Are the design matrices equivalent?", np.all(X.d == X_numpy.d))
 (sklearn-cv)=
 ### How to know when to regularize?
 
-In the [head direction](./head_direction.md) notebook, we fit the all-to-all connectivity of the head-tuning dataset using the Ridge regularizer, and we learned that regularization can combat overfitting. What we didn't show is how to choose a proper regularizer. Generally, too much regularization leads to underfitting, i.e. the model is too simple and doesn't capture the neural variability well. To little regularization may overfit, especially when we have a large number of parameters, i.e. out model will capture both signal and noise. This is what we saw in the head direction notebook when we used the raw spike history as predictor. 
+In the [head direction](../group_projects/01_head_direction.md) project, we fit the all-to-all connectivity of the head-tuning dataset using the Ridge regularizer, and we learned that regularization can combat overfitting. What we didn't show is how to choose a proper regularizer. Generally, too much regularization leads to underfitting, i.e. the model is too simple and doesn't capture the neural variability well. To little regularization may overfit, especially when we have a large number of parameters, i.e. out model will capture both signal and noise. This is what we saw in the head direction notebook when we used the raw spike history as predictor. 
 
 What we are looking for is a regularization strength that balances out the bias towards simpler models with the variance necessary to explain the data. However, how do we know how much we should regularize? One thing we can do is use cross-validation to see whether model performance on unseen data improves with regularization (behind the scenes, this is what we did!). We'll walk through how to do that now.
 
@@ -398,7 +398,7 @@ The most informative for us is the `'mean_test_score'` key, which shows the aver
 
 We can do something similar to select the basis. In the above example, I just told you which basis function to use and how many of each. But, in general, you want to select those in a reasonable manner. Cross-validation to the rescue!
 
-Unlike the glm objects, our basis objects are not scikit-learn compatible right out of the box. However, they can be made compatible by using the `.to_transformer()` method (or, equivalently, by using the `TransformerBasis` class)
+Unlike the glm objects, our basis objects are not scikit-learn compatible right out of the box. However, they can be made compatible by using the [`.to_transformer()`](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.to_transformer.html#nemos.basis._basis.AdditiveBasis.to_transformer) method (or, equivalently, by using the [`TransformerBasis`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html#nemos.basis._transformer_basis.TransformerBasis) class)
 
 <div class="render-user render-presenter">
 
@@ -426,11 +426,11 @@ position_basis
 ```
 
 
-This gives the basis object the `transform` method, which is equivalent to `compute_features`. However, transformers have some limits:
+This gives the basis object the [`transform`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform) method, which is equivalent to `compute_features`. However, transformers have some limits:
 
 <div class="render-user render-presenter">
 
-- This gives the basis object the `transform` method, which is equivalent to `compute_features`.
+- This gives the basis object the [`transform`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform) method, which is equivalent to `compute_features`.
 - However, transformers have some limits:
 
 </div>
@@ -479,7 +479,7 @@ result = basis_2d.transform(X)
 **Case 2)** Multiple inputs per component.
 
 
-- If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the `tranform` method directly will lead to an error. 
+- If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the [`transform`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform) method directly will lead to an error. 
 - This is because the basis doesn't know which component should process which column. 
 
 
@@ -558,8 +558,7 @@ transformer_input = nap.TsdFrame(
 
 <div class="render-user render-presenter">
 
-- Pass this input to our transformed additive basis. 
-- Note that we do not need to call `set_input_shape` here because each basis element processes one column of the 2D input.
+- Pass this input to our transformed additive basis.
 
 </div>
 
@@ -770,7 +769,7 @@ Now, finally, we understand almost enough about how scikit-learn works to figure
 
 What we would like to do here is comparing alternative models: position + speed, position only or speed only. However, scikit-learn's cross-validation assumes that the input to the pipeline does not change, only the hyperparameters do. So, how do we go about model selection since we require different input for different model we want to compare?
 
-Here is a neat NeMoS trick to circumvent that. scikit-learn's GridSearchCV assumes the INPUT stays the same across all models, but for feature selection, we want to compare models with different features (position + speed, position only, speed only). The solution: create a "null" basis that produces zero features, so all models take the same 2D input (position, speed) but some features become empty. First we need to define this "null" basis taking advantage of `CustomBasis`, which defines a basis from a list of functions.
+Here is a neat NeMoS trick to circumvent that. scikit-learn's GridSearchCV assumes the INPUT stays the same across all models, but for feature selection, we want to compare models with different features (position + speed, position only, speed only). The solution: create a "null" basis that produces zero features, so all models take the same 2D input (position, speed) but some features become empty. First we need to define this "null" basis taking advantage of [`CustomBasis`](https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis), which defines a basis from a list of functions.
 
 <div class="render-user render-presenter">
 
@@ -780,7 +779,7 @@ Problem: scikit-learn's cross-validation assumes that the input to the pipeline 
 
 Let's see how to circumvent this with a neat basis trick.
 
-- Create a "null" basis that produces zero features using `CustomBasis`, which defines a basis from a list of functions.
+- Create a "null" basis that produces zero features using [`CustomBasis`](https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis), which defines a basis from a list of functions.
 
 </div>
 
@@ -810,7 +809,7 @@ null_basis.compute_features(position).shape
 
 
 
-Why is this useful? Because we can use this `null_basis` and basis composition to do model selection. As a first step, we can notice that the original additive basis is stored as a `basis` attribute in the `TransformerBasis`.
+Why is this useful? Because we can use this `null_basis` and basis composition to do model selection. As a first step, we can notice that the original additive basis is stored as a `basis` attribute in the [`TransformerBasis`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html).
 
 <div class="render-user render-presenter">
 

@@ -218,7 +218,7 @@ workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 
 
 - Adding the position and speed bases together defines a 2D basis.
-- Call `compute_features` to define a design matrix that concatenates both features.
+- Call [`compute_features`](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.compute_features.html#nemos.basis._basis.AdditiveBasis.compute_features) to define a design matrix that concatenates both features.
 
 
 
@@ -298,7 +298,7 @@ position_basis
 
 
 
-- This gives the basis object the `transform` method, which is equivalent to `compute_features`.
+- This gives the basis object the [`transform`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform) method, which is equivalent to `compute_features`.
 - However, transformers have some limits:
 
 
@@ -341,7 +341,7 @@ result = basis_2d.transform(X)
 **Case 2)** Multiple inputs per component.
 
 
-- If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the `tranform` method directly will lead to an error. 
+- If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the [`transform`](https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform) method directly will lead to an error. 
 - This is because the basis doesn't know which component should process which column. 
 
 
@@ -403,8 +403,7 @@ transformer_input = nap.TsdFrame(
 ```
 
 
-- Pass this input to our transformed additive basis. 
-- Note that we do not need to call `set_input_shape` here because each basis element processes one column of the 2D input.
+- Pass this input to our transformed additive basis.
 
 
 ```{code-cell}
@@ -542,7 +541,7 @@ Problem: scikit-learn's cross-validation assumes that the input to the pipeline 
 
 Let's see how to circumvent this with a neat basis trick.
 
-- Create a "null" basis that produces zero features using `CustomBasis`, which defines a basis from a list of functions.
+- Create a "null" basis that produces zero features using [`CustomBasis`](https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis), which defines a basis from a list of functions.
 
 
 

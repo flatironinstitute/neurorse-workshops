@@ -641,7 +641,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <h2>Basis Composition<a class="headerlink" href="#basis-composition" title="Link to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Adding the position and speed bases together defines a 2D basis.</p></li>
-<li><p>Call <code class="docutils literal notranslate"><span class="pre">compute_features</span></code> to define a design matrix that concatenates both features.</p></li>
+<li><p>Call <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.compute_features.html#nemos.basis._basis.AdditiveBasis.compute_features"><code class="docutils literal notranslate"><span class="pre">compute_features</span></code></a> to define a design matrix that concatenates both features.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -740,7 +740,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 <ul class="simple">
-<li><p>This gives the basis object the <code class="docutils literal notranslate"><span class="pre">transform</span></code> method, which is equivalent to <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>.</p></li>
+<li><p>This gives the basis object the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform"><code class="docutils literal notranslate"><span class="pre">transform</span></code></a> method, which is equivalent to <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>.</p></li>
 <li><p>However, transformers have some limits:</p></li>
 </ul>
 <div class="cell tag_raises-exception docutils container">
@@ -779,7 +779,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 <p class="sd-card-text"><strong>Case 2)</strong> Multiple inputs per component.</p>
 <ul class="simple">
-<li><p class="sd-card-text">If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the <code class="docutils literal notranslate"><span class="pre">tranform</span></code> method directly will lead to an error.</p></li>
+<li><p class="sd-card-text">If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform"><code class="docutils literal notranslate"><span class="pre">transform</span></code></a> method directly will lead to an error.</p></li>
 <li><p class="sd-card-text">This is because the basis doesn’t know which component should process which column.</p></li>
 </ul>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume 2 input for the first component and 3 for the second.</span>
@@ -832,7 +832,6 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 <ul class="simple">
 <li><p>Pass this input to our transformed additive basis.</p></li>
-<li><p>Note that we do not need to call <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code> here because each basis element processes one column of the 2D input.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -986,7 +985,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <p>Problem: scikit-learn’s cross-validation assumes that the input to the pipeline does not change, while each model will have a different input. What can we do?</p>
 <p>Let’s see how to circumvent this with a neat basis trick.</p>
 <ul class="simple">
-<li><p>Create a “null” basis that produces zero features using <code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code>, which defines a basis from a list of functions.</p></li>
+<li><p>Create a “null” basis that produces zero features using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from a list of functions.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
