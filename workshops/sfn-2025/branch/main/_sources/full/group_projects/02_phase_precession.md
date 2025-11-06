@@ -9,9 +9,32 @@ kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
   name: python3
+no-search: true
+orphan: true
 ---
 
-# Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS
+```{code-cell} ipython3
+:tags: [hide-input, render-all]
+
+%matplotlib inline
+%load_ext autoreload
+%autoreload 2
+import warnings
+
+warnings.filterwarnings(
+    "ignore",
+    message="plotting functions contained within `_documentation_utils` are intended for nemos's documentation.",
+    category=UserWarning,
+)
+```
+
+:::{admonition} Download
+:class: important render-all
+
+This notebook can be downloaded as **{nb-download}`02_phase_precession.ipynb`**. See the button at the top right to download as markdown or pdf.
+:::
+
+# Analyzing hippocampal place cells with Pynapple and NeMoS
 
 <div class="render-all">
     
@@ -41,9 +64,6 @@ For part 2, we will by applying NeMoS to explore the dataset further by:
 ```{code-cell} ipython3
 :tags: [render-all]
 
-# suppress warnings
-import warnings
-warnings.simplefilter("ignore")
 
 # imports
 import math
@@ -61,6 +81,9 @@ import workshop_utils
 # necessary for animation
 import nemos as nmo
 plt.style.use(nmo.styles.plot_style)
+
+# configure pynapple to ignore conversion warning
+nap.nap_config.suppress_conversion_warnings = True
 ```
 
 ## Part 1: Using Pynapple to identify phase precession and hippocampal sequences
@@ -268,7 +291,7 @@ For the following exercises, we'll only focus on periods when the animal is awak
 
 </div>
 
-#### 1. Save out the time support of position, giving us the epoch during which the animal is awake.
+#### 1. Save out the time support of `position`, giving us the epoch during which the animal is awake.
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -335,7 +358,7 @@ Finally, we can use `run_ep` and `forward_ep` to extract epochs when the animal 
 
 </div>
 
-#### 4. Use the [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) method [`set_diff`](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html) to get `backward_ep` from `run_ep` and `forward_ep`
+#### 4. Use the `IntervalSet` method [`set_diff`](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html) to get `backward_ep` from `run_ep` and `forward_ep`
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -352,11 +375,11 @@ backward_ep
     
 Now, when extracting the LFP, spikes, and position, we can use `restrict()` with any of these epochs to restrict the data to our movement period of interest.
 
-To get a sense of what the LFP looks like while the animal runs down the linear track, we can plot each variable, `lfp_run` and `position`, side-by-side. Let's do this for an example run; specifically, we'll look at forward run 9.
+To get a sense of what the LFP looks like while the animal runs down the linear track, we can plot each variable, `lfp` and `position`, side-by-side. Let's do this for an example run; specifically, we'll look at forward run 9.
 
 </div>
 
-#### 5. Create an interval set for forward run 9, adding 2 seconds to the end of the interval. Restrict LFP and position to this epoch.
+#### 5. Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict `lfp` and `position` to this epoch.
 
 <div class="render-user">
 ```{code-cell} ipython3
@@ -395,6 +418,19 @@ axs[1].set_ylabel("Position (cm)") # LOOK UP UNITS
 axs[1].set_xlabel("Time (s)");
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-01.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-01.png)
+:::
+</div>
+
 <div class="render-all"> 
 
 As we would expect, there is a strong theta oscillation dominating the LFP while the animal runs down the track. This oscillation is weaker after the run is complete.
@@ -429,11 +465,11 @@ freqs = np.geomspace(5, 200, 100)
 
 <div class="render-all">
 
-We can now compute the wavelet transform on our LFP data during the example run using [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform) by passing both `ex_lfp_run` and `freqs`. We'll also pass the optional argument `fs`, which is known to be 1250Hz from the study methods.
+We can now compute the wavelet transform on our LFP data during the example run using [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform) by passing both `ex_lfp` and `freqs`. We'll also pass the optional argument `fs`, which is known to be 1250Hz from the study methods.
 
 </div>
 
-#### 7. Compute the wavelet transform.
+#### 7. Compute the wavelet transform of `ex_lfp` using `freqs` defined above.
 
 <div class="render-all">
 
@@ -486,6 +522,19 @@ ax.set_ylabel("Position (cm)")
 ax.legend([p1[0], p2[0]],["raw LFP","animal position"])
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-02.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-02.png)
+:::
+</div>
+
 <div class="render-all">
     
 You should see a strong presence of theta in the 6-12Hz frequency band while the animal runs down the track, which dampens during rest.
@@ -500,7 +549,7 @@ For the remaining exercises, we'll reduce our example epoch to the portion when 
 
 </div>
 
-#### 8. Restrict the LFP and position to epochs when the animal is running forward, and create a new [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) for forward run 9 with no padding.
+#### 8. Restrict the `lfp` and `position` to `forward_ep` and create a new `IntervalSet` for forward run index 9 with no padding.
 
 <div class="render-user">  
 ```{code-cell} ipython3
@@ -522,7 +571,7 @@ We can extract the theta oscillation by applying a bandpass filter on the raw LF
 
 </div>
 
-#### 9. Using [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter), filter the LFP for theta within a 6-12 Hz range.
+#### 9. Using [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter), filter `lfp` for theta within a 6-12 Hz range.
 
 <div class="render-all">
 
@@ -550,7 +599,7 @@ We can visualize the output by plotting the filtered signal with the original si
 ```{code-cell} ipython3
 :tags: [render-all]
 
-plt.figure(constrained_layout=True, figsize=(10, 3))
+fig = plt.figure(constrained_layout=True, figsize=(10, 3))
 plt.plot(lfp.restrict(ex_run_ep), label="raw")
 plt.plot(theta_band.restrict(ex_run_ep), label="filtered")
 plt.xlabel("Time (s)")
@@ -559,13 +608,26 @@ plt.title("Bandpass filter for theta oscillations (6-12 Hz)")
 plt.legend();
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-03.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-03.png)
+:::
+</div>
+
 ### Computing theta phase
 
 <div class="render-all">
 
 In order to examine phase precession in place cells, we need to extract the phase of theta from the filtered signal. We can do this by taking the angle of the [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform).
 
-#### 10. Use `sp.signal.hilbert` to perform the Hilbert transform, and  the numpy function `np.angle` to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
+#### 10. Use [`sp.signal.hilbert`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.hilbert.html) to perform the Hilbert transform of `theta_band`, using [`np.angle`](https://numpy.org/doc/2.3/reference/generated/numpy.angle.html) to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
 
 - TIP: don't forget to pass the time support!
   
@@ -609,9 +671,23 @@ ax.set_ylabel("Filtered LFP (a.u.)")
 ax.legend([p1[0],p2[0]],["theta phase","filtered LFP"])
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-04.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-04.png)
+:::
+</div>
+
+
 <div class="render-all">
 
-We can see that cycle "resets" (i.e. goes from $2\pi$ to $0$) at peaks of the theta oscillation.
+You should be able to see that each cycle "resets" (i.e. goes from $2\pi$ to $0$) at peaks of the theta oscillation.
 
 </div>
 
@@ -638,7 +714,7 @@ good_spikes =
 good_spikes = spikes[(spikes.restrict(forward_ep).rate >= 1) & (spikes.restrict(forward_ep).rate <= 10)]
 ```
 
-#### 12. Compute tuning curves for units in `good_spikes` with respect to forward running position, using 50 position bins.
+#### 12. Compute tuning curves for units in `good_spikes` with respect to `position`
 
 <div class="render-all">
 
@@ -687,9 +763,22 @@ p = place_fields.plot(x="position", col="unit", col_wrap=5, size=1.2, sharey=Fal
 p.set_ylabels("firing rate (Hz)")
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+p.fig.savefig("../../_static/_check_figs/02-05.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-05.png)
+:::
+</div>
+
 <div class="render-all">
     
-We can see spatial selectivity in each of the units; across the population, we have firing fields tiling the entire linear track. 
+We can see spatial selectivity in many of the units; across the population, we have firing fields tiling the entire linear track. 
 
 </div>
 
@@ -737,6 +826,19 @@ axs[1].set(ylabel="Position (cm)", xlabel="Time (s)")
 axs[1].legend()
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-06.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-06.png)
+:::
+</div>
+
 <div class="render-all">
     
 As the animal runs through unit 177's place field (thick green), the unit spikes (orange dots) at specific points along the theta cycle dependent on position: starting at the rising edge, moving towards the trough, and ending at the falling edge.
@@ -783,6 +885,19 @@ axs[2].set(ylabel="Position (cm)", xlabel="Time (s)", title="Animal position")
 axs[2].legend()
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-07.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-07.png)
+:::
+</div>
+
 <div class="render-all">
     
 We now see a negative trend in the spike phase as the animal moves through unit 177's place field. This phemomena is known as phase precession: the phase at which a unit spikes *precesses* (gets earlier) as the animal runs through that unit's place field. Explicitly, that unit will spike at *late* phases of theta (higher radians) in *earlier* positions in the field, and fire at *early* phases of theta (lower radians) in *late* positions in the field.
@@ -812,11 +927,25 @@ Now we can plot the spike phase against the spike position in a scatter plot.
 ```{code-cell} ipython3
 :tags: [render-all]
 
-plt.subplots(figsize=(5,3))
-plt.plot(spike_position, spike_phase, 'o')
-plt.ylabel("Phase (rad)")
-plt.xlabel("Position (cm)")
+fig, axs = plt.subplots(figsize=(5,3))
+axs.plot(spike_position, spike_phase, 'o')
+axs.set_ylabel("Phase (rad)")
+axs.set_xlabel("Position (cm)")
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-08.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-08.png)
+:::
+</div>
+
 
 <div class="render-all">
     
@@ -862,7 +991,21 @@ axs[1].plot(upsampled_pos.restrict(ex_run_ep),'.')
 axs[1].set(ylabel="Position (cm)", xlabel="Time (s)", title="Upsampled position points")
 ```
 
-#### 17. Stack `upsampled_pos` and `theta_phase` together into a single `TsdFrame`
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-09.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-09.png)
+:::
+</div>
+
+
+#### 17. Stack `upsampled_pos` and `theta_phase` together into a single [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html)
 
 <div class="render-all">
     
@@ -888,7 +1031,7 @@ features = nap.TsdFrame(
 features
 ```
 
-#### 18. Apply [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) for `features` on our subselected group of units, `good_spikes`
+#### 18. Apply [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) with `features` on our subselected group of units, `good_spikes`
 
 <div class="render-all">
 
@@ -915,12 +1058,26 @@ We can plot 2D tuning curves for each unit and visualize how many of these units
 ```{code-cell} ipython3
 :tags: [render-all]
 
-tuning_curves.plot(x="position", y="phase", col="unit", col_wrap=5, size=1.5, aspect=1.5)
+tc_norm = tuning_curves / tuning_curves.max(axis=(1,2))
+p = tc_norm.plot(x="position", y="phase", col="unit", col_wrap=5, size=1.2, aspect=2)
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+p.fig.savefig("../../_static/_check_figs/02-10.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-10.png)
+:::
+</div>
 
 <div class="render-all">
 
-Many of the units display a negative relationship between position and phase, characteristic of phase precession.
+We can see a number of units that display a negative relationship between position and phase, characteristic of phase precession. In addition to 177, units 23, 33, and 146 are good examples of this phenomena. In contrast, units 125 and 258 don't appear to be phase precessing.
 
 </div>
 
@@ -930,10 +1087,8 @@ Many of the units display a negative relationship between position and phase, ch
 
 Next we'll do a popular analysis in the rat hippocampus sphere: Bayesian decoding. This analysis is an elegent application of Bayes' rule in predicting the animal's location (or other behavioral variables) given neural activity at some point in time. Refer to the dropdown box below for a more in-depth explanation.
 
-</div>
-
 :::{admonition} Background: Bayesian decoding
-:class: render-all dropdown
+:class: dropdown
 Recall Bayes' rule, written here in terms of our relevant variables:
 
 $$P(position|spikes) = \frac{P(position)P(spikes|position)}{P(spikes)}$$
@@ -971,9 +1126,9 @@ Another way of putting it is $P(spikes)$ is the normalization factor such that $
 If this method looks daunting, we have some good news: pynapple has it implemented already in the function `nap.decode_bayes`. All we'll need are the spikes, the tuning curves, and the width of the time window $\tau$.
 :::
 
+(phase-precess-cv-full)=
 :::{admonition} Aside: Cross-validation
-:class: tip render-all
-:name: phase-precess-cv
+:class: tip 
     
 Generally this method is cross-validated, which means you train the model on one set of data and test the model on a different, held-out data set. For Bayesian decoding, the "model" refers to the model *likelihood*, which is computed from the tuning curves. 
 
@@ -981,6 +1136,8 @@ If we want to decode an example run down the track, our training set should omit
 
 The code cell below will do these steps for you.
 :::
+
+</div>
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -998,8 +1155,23 @@ place_fields.data = gaussian_filter1d(place_fields.data, 1, axis=-1)
 idx = place_fields.argmax(axis=1)
 place_fields_sorted = place_fields.sortby(idx)
 place_fields_sorted["unit"] = np.arange(place_fields_sorted.shape[0])
-(place_fields_sorted / place_fields_sorted.max(axis=1)).plot()
+p = (place_fields_sorted / place_fields_sorted.max(axis=1)).plot()
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+p.figure.savefig("../../_static/_check_figs/02-11.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-11.png)
+:::
+</div>
+
+
 
 <div class="render-all">
 
@@ -1038,6 +1210,20 @@ ax.legend()
 fig.colorbar(c, label="decoded probability")
 ax.set(xlabel="Time (s)", ylabel="Position (cm)", );
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-12.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-12.png)
+:::
+</div>
+
 
 <div class="render-all">
     
@@ -1090,6 +1276,19 @@ fig.colorbar(c, label="decoded probability")
 ax.set(xlabel="Time (s)", ylabel="Position (cm)", );
 ```
 
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-13.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-13.png)
+:::
+</div>
+
 <div class="render-all">
     
 This gives us a much closer approximation of the animal's true position.
@@ -1133,6 +1332,19 @@ axs[1].set_ylabel("LFP (a.u.)")
 
 fig.supxlabel("Time (s)");
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-14.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-14.png)
+:::
+</div>
 
 <div class="render-all">
     
@@ -1224,7 +1436,7 @@ The goal of this project is to fit a PopulationGLM including both position and s
 
 </div>
 
-(basis_eval_place_cells)=
+(basis-eval-place-cells-full)=
 ### Basis evaluation
 
 <div class="all">
@@ -1266,8 +1478,21 @@ workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 ```{code-cell} ipython3
 position_basis = nmo.basis.BSplineEval(n_basis_funcs=10, label="position")
 speed_basis = nmo.basis.BSplineEval(n_basis_funcs=10, label="speed")
-workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
+fig = workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-15.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-15.png)
+:::
+</div>
 
 <div class="render-all">
     
@@ -1415,8 +1640,21 @@ We can plot the results to compare the model and data tuning curves.
 ```{code-cell} ipython3
 :tags: [render-all]
 
-workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_tuning_pos, glm_tuning_speed);
+fig = workshop_utils.plot_position_speed_tuning(place_fields, tc_speed, glm_tuning_pos, glm_tuning_speed);
 ```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+
+fig.savefig("../../_static/_check_figs/02-16.png", bbox_inches="tight")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-16.png)
+:::
+</div>
 
 <div class="render-all">
 

@@ -43,10 +43,10 @@ warnings.filterwarnings(
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`current_injection.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`02_current_injection-presenters.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
 
-# Introduction to GLM
+# Introduction to GLM and NeMoS
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
@@ -237,6 +237,7 @@ ax.set_ylabel("Current (pA)")
 ax.set_xlabel("Time (s)")
 ```
 
+(current-inj-basic-presenters)=
 ### Basic analyses
 
 
@@ -308,6 +309,7 @@ doc_plots.tuning_curve_plot(tuning_curve);
 
 ## NeMoS 
 
+(current-inj-prep-presenters)=
 ### Preparing data
 
 
@@ -339,6 +341,7 @@ print(f"predictor shape: {predictor.shape}")
 print(f"count shape: {count.shape}")
 ```
 
+(current-inj-glm-presenters)=
 ### Fitting the model
 
 
@@ -412,6 +415,7 @@ tuning_curve_model.plot(color="tomato", label="glm")
 fig.axes[0].legend()
 ```
 
+(current-inj-basis-presenters)=
 ### Extending the model to use injection history
 
 
@@ -490,6 +494,7 @@ print(history_model.intercept_.shape)
 
 
 
+(visualize-filter-presenters)=
 - Visualize the current history model's learned filter.
 - This filter is convolved with the input current and used to predict the firing
   rate.
@@ -554,6 +559,7 @@ log_likelihood = history_model.score(current_history, count, score_type="log-lik
 print(f"log-likelihood (current history): {log_likelihood}")
 ```
 
+(current-inj-score-presenters)=
 ### Finishing up
 
 

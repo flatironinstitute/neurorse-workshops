@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Introduction to GLM &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Introduction to GLM and NeMoS &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -216,17 +216,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to GLM</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -380,7 +399,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to GLM</h1>
+    <h1>Introduction to GLM and NeMoS</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -457,10 +476,10 @@ document.write(`
 </div>
 <div class="important render-all admonition">
 <p class="admonition-title">Download</p>
-<p>This notebook can be downloaded as <strong><code class="xref download myst-nb docutils literal notranslate"><span class="pre">current_injection.ipynb</span></code></strong>. See the button at the top right to download as markdown or pdf.</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/e5e7f4345d52ab3b88fbcf1b00da646a/02_current_injection.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">02_current_injection.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-glm">
-<h1>Introduction to GLM<a class="headerlink" href="#introduction-to-glm" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="introduction-to-glm-and-nemos">
+<h1>Introduction to GLM and NeMoS<a class="headerlink" href="#introduction-to-glm-and-nemos" title="Link to this heading">#</a></h1>
 <p>For our first example, we will look at a very simple dataset: patch-clamp
 recordings from a single neuron in layer 4 of mouse primary visual cortex. This
 data is from the <a class="reference external" href="https://celltypes.brain-map.org/experiment/electrophysiology/478498617">Allen Brain
@@ -522,7 +541,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-05 16:56:02,901:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-06 21:46:53,183:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -554,158 +573,6 @@ data.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;allen_478498617.nwb&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;allen_478498617.nwb&#39; from &#39;https://osf.io/download/vf2nj/&#39; to &#39;/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/data&#39;.
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                               | 0.00/363M [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                       | 671k/363M [00:00&lt;00:54, 6.71MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  2%|▊                                     | 7.61M/363M [00:00&lt;00:08, 43.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  4%|█▋                                    | 15.8M/363M [00:00&lt;00:05, 60.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  7%|██▌                                   | 24.0M/363M [00:00&lt;00:04, 69.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  9%|███▍                                  | 32.3M/363M [00:00&lt;00:04, 74.3MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 11%|████▏                                 | 40.6M/363M [00:00&lt;00:04, 77.2MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 13%|█████                                 | 48.3M/363M [00:00&lt;00:04, 75.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 15%|█████▊                                | 55.9M/363M [00:00&lt;00:04, 69.3MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 18%|██████▋                               | 64.1M/363M [00:00&lt;00:04, 73.1MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 20%|███████▌                              | 72.4M/363M [00:01&lt;00:03, 75.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 22%|████████▍                             | 80.7M/363M [00:01&lt;00:03, 77.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 24%|█████████▎                            | 88.9M/363M [00:01&lt;00:03, 79.2MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 27%|██████████▏                           | 97.1M/363M [00:01&lt;00:03, 80.2MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 29%|███████████▎                           | 105M/363M [00:01&lt;00:03, 80.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 31%|████████████▏                          | 114M/363M [00:01&lt;00:03, 81.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 34%|█████████████                          | 122M/363M [00:01&lt;00:02, 81.8MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 36%|█████████████▉                         | 130M/363M [00:01&lt;00:02, 82.2MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 38%|██████████████▉                        | 139M/363M [00:01&lt;00:02, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 40%|███████████████▊                       | 147M/363M [00:01&lt;00:02, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 43%|████████████████▋                      | 155M/363M [00:02&lt;00:02, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 45%|█████████████████▌                     | 163M/363M [00:02&lt;00:02, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 47%|██████████████████▍                    | 172M/363M [00:02&lt;00:02, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 50%|███████████████████▎                   | 180M/363M [00:02&lt;00:02, 82.0MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 52%|████████████████████▏                  | 188M/363M [00:02&lt;00:02, 82.1MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 54%|█████████████████████                  | 196M/363M [00:02&lt;00:02, 82.3MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 56%|█████████████████████▉                 | 205M/363M [00:02&lt;00:01, 82.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 59%|██████████████████████▊                | 213M/363M [00:02&lt;00:01, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 61%|███████████████████████▋               | 221M/363M [00:02&lt;00:01, 82.7MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 63%|████████████████████████▋              | 230M/363M [00:02&lt;00:01, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 65%|█████████████████████████▌             | 238M/363M [00:03&lt;00:01, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 68%|██████████████████████████▍            | 246M/363M [00:03&lt;00:01, 82.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 70%|███████████████████████████▎           | 254M/363M [00:03&lt;00:01, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 72%|████████████████████████████▏          | 263M/363M [00:03&lt;00:01, 82.6MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 75%|█████████████████████████████          | 271M/363M [00:03&lt;00:01, 82.3MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 77%|█████████████████████████████▉         | 279M/363M [00:03&lt;00:01, 82.2MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 79%|██████████████████████████████▊        | 287M/363M [00:03&lt;00:00, 82.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 81%|███████████████████████████████▋       | 296M/363M [00:03&lt;00:00, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 84%|████████████████████████████████▌      | 304M/363M [00:03&lt;00:00, 82.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 86%|█████████████████████████████████▌     | 312M/363M [00:03&lt;00:00, 82.4MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 88%|██████████████████████████████████▍    | 320M/363M [00:04&lt;00:00, 82.5MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 90%|███████████████████████████████████▎   | 329M/363M [00:04&lt;00:00, 82.8MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 93%|████████████████████████████████████▏  | 337M/363M [00:04&lt;00:00, 82.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 95%|█████████████████████████████████████  | 345M/363M [00:04&lt;00:00, 82.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> 97%|█████████████████████████████████████▉ | 354M/363M [00:04&lt;00:00, 82.8MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████████████████████████████████▊| 362M/363M [00:04&lt;00:00, 82.9MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  0%|                                               | 0.00/363M [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|████████████████████████████████████████| 363M/363M [00:00&lt;00:00, 709GB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
 </pre></div>
 </div>
 </div>
@@ -1031,7 +898,7 @@ Let's visualize the data from this trial:
 </div>
 </section>
 <section id="basic-analyses">
-<span id="current-inj-basic"></span><h3>Basic analyses<a class="headerlink" href="#basic-analyses" title="Link to this heading">#</a></h3>
+<span id="current-inj-basic-full"></span><h3>Basic analyses<a class="headerlink" href="#basic-analyses" title="Link to this heading">#</a></h3>
 <p>Before using the Generalized Linear Model, or any model, it’s worth taking
 some time to examine our data and think about what features are interesting
 and worth capturing. As Edoardo explained earlier today,
@@ -1683,11 +1550,11 @@ Coordinates:
 Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
-    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-b20930a9-3ce7-4122-80be-79f4071cce38' class='xr-array-in' type='checkbox' checked><label for='section-b20930a9-3ce7-4122-80be-79f4071cce38' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-af5d2f55-513a-465e-a219-467a14a48013' class='xr-array-in' type='checkbox' checked><label for='section-af5d2f55-513a-465e-a219-467a14a48013' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-3ec28003-6150-4e10-a96e-f5ba269a8e59' class='xr-section-summary-in' type='checkbox'  checked><label for='section-3ec28003-6150-4e10-a96e-f5ba269a8e59' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-bb3b7feb-7870-4887-b96c-8d035ade1644' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bb3b7feb-7870-4887-b96c-8d035ade1644' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4904c934-f674-4772-a287-1de514c2307e' class='xr-var-data-in' type='checkbox'><label for='data-4904c934-f674-4772-a287-1de514c2307e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-f70f78f3-0c0e-4e9c-8f63-dce7bad63d46' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-f70f78f3-0c0e-4e9c-8f63-dce7bad63d46' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4f107a59-2397-40ca-a301-b9c7c58220af' class='xr-var-data-in' type='checkbox'><label for='data-4f107a59-2397-40ca-a301-b9c7c58220af' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-3fc252d6-bf3a-4898-b610-2fabca5f8e0e' class='xr-section-summary-in' type='checkbox'  checked><label for='section-3fc252d6-bf3a-4898-b610-2fabca5f8e0e' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-fd3f4020-5f33-41c8-bfa6-4cbc2d6f0eb6' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-fd3f4020-5f33-41c8-bfa6-4cbc2d6f0eb6' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9eb7fcf2-69c7-451c-8f08-e736f878188e' class='xr-var-data-in' type='checkbox'><label for='data-9eb7fcf2-69c7-451c-8f08-e736f878188e' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-b7d523ed-2f9e-4205-a87a-40d643c566c9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-b7d523ed-2f9e-4205-a87a-40d643c566c9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-169cebf2-6337-4ef7-ab9b-6861d6edb1f9' class='xr-var-data-in' type='checkbox'><label for='data-169cebf2-6337-4ef7-ab9b-6861d6edb1f9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-0647377a-f868-404f-ae96-8bd54ff6633c' class='xr-section-summary-in' type='checkbox'  checked><label for='section-0647377a-f868-404f-ae96-8bd54ff6633c' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c8203433-22f2-4af9-8a81-a54478ea626d' class='xr-section-summary-in' type='checkbox'  checked><label for='section-c8203433-22f2-4af9-8a81-a54478ea626d' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -1724,7 +1591,7 @@ explain:</p>
 <section id="nemos">
 <h2>NeMoS<a class="headerlink" href="#nemos" title="Link to this heading">#</a></h2>
 <section id="preparing-data">
-<span id="current-inj-prep"></span><h3>Preparing data<a class="headerlink" href="#preparing-data" title="Link to this heading">#</a></h3>
+<span id="current-inj-prep-full"></span><h3>Preparing data<a class="headerlink" href="#preparing-data" title="Link to this heading">#</a></h3>
 <p>Now that we understand our data, we’re almost ready to put the model together.
 Before we construct it, however, we need to get the data into the right format.</p>
 <p>When fitting a single neuron, NeMoS requires that the predictors and spike
@@ -1814,20 +1681,19 @@ count shape: (28020,)
 <p>In this example, we’re only fitting data for a single neuron, but you
 might wonder how the data should be shaped if you have more than one
 neuron.</p>
-<p>We will discuss this in more detail in the <a class="reference internal" href="#head_direction.md"><span class="xref myst">following
-tutorial</span></a>, but briefly: NeMoS has a separate
-<a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> object for fitting a population of
-neurons. It operates very similarly to the <code class="docutils literal notranslate"><span class="pre">GLM</span></code> object we use here: it still
-expects a 2d input, with neurons concatenated along the second dimension. (NeMoS
-provides some helper functions for splitting the design matrix and model
-parameter arrays to make them more interpretable.)</p>
+<p>NeMoS has a separate
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></a>
+object for fitting a population of neurons. It operates very similarly to the
+<code class="docutils literal notranslate"><span class="pre">GLM</span></code> object we use here: it still expects a 2d input, with neurons concatenated
+along the second dimension. (NeMoS provides some helper functions for splitting
+the design matrix and model parameter arrays to make them more interpretable.)</p>
 <p>Note that, with a generalized linear model, fitting each neuron separately is
 equivalent to fitting the entire population at once. Fitting them separately can
 make your life easier by e.g., allowing you to parallelize more easily.</p>
 </div>
 </section>
 <section id="fitting-the-model">
-<span id="current-inj-glm"></span><h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h3>
+<span id="current-inj-glm-full"></span><h3>Fitting the model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h3>
 <p>Now we’re ready to fit our model!</p>
 <p>First, we need to define our GLM model object. We intend for users
 to interact with our models like
@@ -1842,8 +1708,9 @@ model. All of these are optional.</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">solver_name</span></code>: this string specifies the solver algorithm. The default
 behavior depends on the regularizer, as each regularization scheme is only
-compatible with a subset of possible solvers. View the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.html#nemos.glm.GLM" title="nemos 0.2.5"><span class="xref myst">GLM
-docstring</span></a> for more details.</p></li>
+compatible with a subset of possible solvers. View the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.html#nemos.glm.GLM">GLM
+docstring</a>
+for more details.</p></li>
 </ul>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
@@ -1857,16 +1724,16 @@ solutions compare.</p>
 Regularization modifies the objective function to reflect your prior beliefs
 about the parameters, such as sparsity. Regularization becomes more important
 as the number of input features, and thus model parameters, grows. NeMoS’s
-solvers can be found within the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/api_reference.html#regularizers" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nemos.regularizer</span></code>
-module</span></a>. If you pass a string matching the name
-of one of our solvers, we initialize the solver with the default arguments. If
-you need more control, you will need to initialize and pass the object
-yourself.</p></li>
+solvers can be found within the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/api_reference.html#the-nemos-regularizer-module"><code class="docutils literal notranslate"><span class="pre">nemos.regularizer</span></code>
+module</a>.
+If you pass a string matching the name of one of our solvers, we initialize
+the solver with the default arguments. If you need more control, you will need
+to initialize and pass the object yourself.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">observation_model</span></code>: this object links the firing rate and the observed data
 (in this case spikes), describing the distribution of neural activity (and
 thus changing the log-likelihood). For spiking data, we use the Poisson
 observation model, but we discuss other options for continuous data in our
-<a class="reference external" href="https://nemos.readthedocs.io/en/latest/tutorials/plot_06_calcium_imaging.html#tutorial-calcium-imaging" title="nemos 0.2.5"><span class="xref myst">documentation</span></a>.</p></li>
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/tutorials/plot_06_calcium_imaging.html">documentation</a>.</p></li>
 </ul>
 <p>For this example, we’ll use an un-regularized LBFGS solver. We’ll discuss
 regularization in a later tutorial.</p>
@@ -2408,7 +2275,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f05ab496b60&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7fd51fce3560&gt;&gt;</td>
         </tr>
     
 
@@ -2533,10 +2400,11 @@ intercept_ shape: (1,)
 </div>
 <p>It’s nice to get the parameters above, but we can’t tell how well our model
 is doing by looking at them. So how should we evaluate our model?</p>
-<p>First, we can use the model to predict the firing rates and compare that to
-the smoothed spike train. By calling <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></span></a> we can get the model’s
-predicted firing rate for this data. Note that this is just the output of the
-model’s linear-nonlinear step, as described earlier!</p>
+<p>First, we can use the model to predict the firing rates and compare that to the
+smoothed spike train. By calling
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html"><code class="docutils literal notranslate"><span class="pre">predict()</span></code></a>
+we can get the model’s predicted firing rate for this data. Note that this is
+just the output of the model’s linear-nonlinear step, as described earlier!</p>
 <div class="render-user render-presenter">
 - generate and examine model predictions.
 </div><div class="cell docutils container">
@@ -2559,7 +2427,7 @@ model’s linear-nonlinear step, as described earlier!</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main@2/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -2621,7 +2489,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f04f028c8f0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd4002451f0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" src="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" />
@@ -2636,7 +2504,7 @@ approximately exponential. We already knew that! That’s what it means to be a
 LNP model of a single input. But it’s nice to see it made explicit.</p>
 </section>
 <section id="extending-the-model-to-use-injection-history">
-<span id="current-inj-basis"></span><h3>Extending the model to use injection history<a class="headerlink" href="#extending-the-model-to-use-injection-history" title="Link to this heading">#</a></h3>
+<span id="current-inj-basis-full"></span><h3>Extending the model to use injection history<a class="headerlink" href="#extending-the-model-to-use-injection-history" title="Link to this heading">#</a></h3>
 <p>We can try extending the model in order to improve its performance. There are many
 ways one can do this: the iterative refinement and improvement of your model is an
 important part of the scientific process! In this tutorial, we’ll discuss one such
@@ -2707,10 +2575,11 @@ bin shift!), which will make the model more sensitive to noise in the data.</p>
 parametrizing them using <strong>basis functions</strong>. These will allow us to capture
 interesting non-linear effects with a relatively low-dimensional parametrization
 that preserves convexity. NeMoS has a whole library of basis objects available
-at <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/README.html#table-basis" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">nmo.basis</span></code></span></a>, and choosing which set of basis functions and
-their parameters, like choosing the duration of the current history predictor,
-requires knowledge of your problem, but can later be examined using model
-comparison tools.</p>
+at
+<a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/README.html"><code class="docutils literal notranslate"><span class="pre">nmo.basis</span></code></a>,
+and choosing which set of basis functions and their parameters, like choosing
+the duration of the current history predictor, requires knowledge of your
+problem, but can later be examined using model comparison tools.</p>
 <p>For history-type inputs like we’re discussing, the raised cosine log-stretched basis
 first described in Pillow et al., 2005 <a class="footnote-reference brackets" href="#pillow" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> is a good fit. This basis set has the nice
 property that their precision drops linearly with distance from event, which is a
@@ -2802,7 +2671,7 @@ order to create plots like the type seen above.</p>
 dtype: float32, shape: (28020, 8)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main@2/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -3367,7 +3236,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7f05ab496b60&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7fd51fce3560&gt;&gt;</td>
         </tr>
     
 
@@ -3497,7 +3366,7 @@ this model learns a filter, which gets convolved with the input before having
 the intercept added and being exponentiated to give us the predicted firing
 rate.</p>
 <div class="render-user render-presenter">
-<ul class="simple">
+<ul class="simple" id="visualize-filter-full">
 <li><p>Visualize the current history model’s learned filter.</p></li>
 <li><p>This filter is convolved with the input current and used to predict the firing
 rate.</p></li>
@@ -3531,7 +3400,7 @@ rate.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main@2/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
   warnings.warn(
 </pre></div>
 </div>
@@ -3577,7 +3446,7 @@ Predicted mean firing rate (current history): 1.5012256160535864 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f04b4383770&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fd3a4123620&gt;
 </pre></div>
 </div>
 <img alt="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" src="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" />
@@ -3629,13 +3498,12 @@ overfitting and so, while the difference is small here, it’s possible that
 including the extra parameters has made us more sensitive to noise. To properly
 investigate whether that’s the case, one should split the dataset into test and
 train sets, training the model on one subset of the data and testing it on
-another to test the model’s generalizability. We’ll see a simple version of this
-in the <a class="reference internal" href="#./head_direction.md"><span class="xref myst">next notebook</span></a>, and a more streamlined version,
+another to test the model’s generalizability. We’ll see a version of this
 using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>’s pipelining and cross-validation machinery, will be shown
-in the <a class="reference internal" href="#./place_cells_part_2"><span class="xref myst">final notebook</span></a>.</p>
+in the <a class="reference internal" href="03_nemos_advanced.html#sklearn-nb-full"><span class="std std-ref">NeMoS Advanced notebook</span></a>.</p>
 </section>
 <section id="finishing-up">
-<span id="current-inj-score"></span><h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
+<span id="current-inj-score-full"></span><h3>Finishing up<a class="headerlink" href="#finishing-up" title="Link to this heading">#</a></h3>
 <p>Note that, because the log-likelihood is un-normalized, it should not be compared
 across datasets (because e.g., it won’t account for difference in noise levels). We
 provide the ability to compute the pseudo-<span class="math notranslate nohighlight">\(R^2\)</span> for this purpose:</p>
@@ -3697,7 +3565,7 @@ model explored here quite accurately captures the relationship between the
 current and the firing rate. Can we improve that somehow? We saw that adding
 the current history changed this relationship, but we can also change it
 without including the history by using an <code class="docutils literal notranslate"><span class="pre">Eval</span></code> basis object. We’ll see how
-to do this in more detail in the <a class="reference internal" href="#./place_cells_part_2"><span class="xref myst">final notebook</span></a></p></li>
+to do this in more detail in the <a class="reference internal" href="03_nemos_advanced.html#sklearn-basis-full"><span class="std std-ref">final notebook</span></a></p></li>
 </ul>
 <div class="render-all">
 <section id="data-citation">

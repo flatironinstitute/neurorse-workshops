@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Analyzing hippocampal place cells with Pynapple and NeMoS &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -214,17 +214,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../live_coding/02_current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -378,7 +397,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</h1>
+    <h1>Analyzing hippocampal place cells with Pynapple and NeMoS</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -398,30 +417,30 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-and-visualizing-the-data">Restricting and visualizing the data</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake">1. Save out the time support of position, giving us the epoch during which the animal is awake.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake">1. Save out the time support of <code class="docutils literal notranslate"><span class="pre">position</span></code>, giving us the epoch during which the animal is awake.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-that-when-restricting-position-to-forward-ep-there-are-no-nan-values-in-position">2. Confirm that when restricting position to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code>, there are no <code class="docutils literal notranslate"><span class="pre">nan</span></code> values in position.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-time-intervals-from-position-using-the-dropna-and-find-support-methods">3. Extract time intervals from <code class="docutils literal notranslate"><span class="pre">position</span></code> using the <code class="docutils literal notranslate"><span class="pre">dropna</span></code> and <code class="docutils literal notranslate"><span class="pre">find_support</span></code> methods.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-intervalset-method-set-diff-to-get-backward-ep-from-run-ep-and-forward-ep">4. Use the <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> method <code class="docutils literal notranslate"><span class="pre">set_diff</span></code> to get <code class="docutils literal notranslate"><span class="pre">backward_ep</span></code> from <code class="docutils literal notranslate"><span class="pre">run_ep</span></code> and <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">5. Create an interval set for forward run 9, adding 2 seconds to the end of the interval. Restrict LFP and position to this epoch.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">5. Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to this epoch.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">6. Define 100 log-spaced samples between 5 and 200 Hz using <code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform">7. Compute the wavelet transform.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above">7. Compute the wavelet transform of <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> using <code class="docutils literal notranslate"><span class="pre">freqs</span></code> defined above.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-for-theta">Filtering for theta</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-the-lfp-and-position-to-epochs-when-the-animal-is-running-forward-and-create-a-new-intervalset-for-forward-run-9-with-no-padding">8. Restrict the LFP and position to epochs when the animal is running forward, and create a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> for forward run 9 with no padding.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range">9. Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter the LFP for theta within a 6-12 Hz range.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-the-lfp-and-position-to-forward-ep-and-create-a-new-intervalset-for-forward-run-index-9-with-no-padding">8. Restrict the <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and create a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> for forward run index 9 with no padding.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range">9. Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter <code class="docutils literal notranslate"><span class="pre">lfp</span></code> for theta within a 6-12 Hz range.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code>, using <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz">11. Restrict <code class="docutils literal notranslate"><span class="pre">spikes</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and select for units whose rate is at least 1 Hz and at most 10 Hz</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins">12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to forward running position, using 50 position bins.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-position">12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">position</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="nav section-nav flex-column">
@@ -433,7 +452,7 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">16. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">18. Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes">18. Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> with <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">
@@ -476,8 +495,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="group-project-2-analyzing-hippocampal-place-cells-with-pynapple-and-nemos">
-<h1>Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS<a class="headerlink" href="#group-project-2-analyzing-hippocampal-place-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="o">%</span><span class="k">load_ext</span> autoreload
+<span class="o">%</span><span class="k">autoreload</span> 2
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/96814a815fb2ea309d4f1c2252577501/02_phase_precession.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">02_phase_precession.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="analyzing-hippocampal-place-cells-with-pynapple-and-nemos">
+<h1>Analyzing hippocampal place cells with Pynapple and NeMoS<a class="headerlink" href="#analyzing-hippocampal-place-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
 <div class="render-all">
 <p>In this tutorial we will learn how to use more advanced applications of pynapple: signal processing and decoding. We’ll apply these methods to demonstrate and visualize some well-known physiological properties of hippocampal activity, specifically phase presession of place cells and sequential coordination of place cell activity during theta oscillations.</p>
 </div>
@@ -501,11 +546,7 @@ document.write(`
 </ol>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># suppress warnings</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
-
-<span class="c1"># imports</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
@@ -521,11 +562,14 @@ document.write(`
 <span class="c1"># necessary for animation</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
+
+<span class="c1"># configure pynapple to ignore conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-05 16:54:27,789:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-06 21:45:25,528:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -550,9 +594,6 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading file &#39;Achilles_10252013_EEG.nwb&#39; from &#39;https://osf.io/download/2dfvp&#39; to &#39;/home/agent/workspace/rorse_ccn-software-sfn-2025_main/lib/python3.12/data&#39;.
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Achilles_10252013_EEG
 ┍━━━━━━━━━━━━━┯━━━━━━━━━━━━━┑
 │ Keys        │ Type        │
@@ -865,7 +906,7 @@ shape: (1, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7febbc0f8b60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f34403e1130&gt;
 </pre></div>
 </div>
 <img alt="../../_images/338e8858cf0778996ed97a0226a5c30fbb21e42934c1c590e19d0b58e8e2d075.png" src="../../_images/338e8858cf0778996ed97a0226a5c30fbb21e42934c1c590e19d0b58e8e2d075.png" />
@@ -892,7 +933,7 @@ shape: (1, 2), time unit: sec.
 <p>For the following exercises, we’ll only focus on periods when the animal is awake and running. We can get this information from <code class="docutils literal notranslate"><span class="pre">position</span></code>.</p>
 </div>
 <section id="save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake">
-<h4>1. Save out the time support of position, giving us the epoch during which the animal is awake.<a class="headerlink" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake" title="Link to this heading">#</a></h4>
+<h4>1. Save out the time support of <code class="docutils literal notranslate"><span class="pre">position</span></code>, giving us the epoch during which the animal is awake.<a class="headerlink" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake" title="Link to this heading">#</a></h4>
 <div class="render-user">
 ```{code-cell} ipython3
 awake_ep = 
@@ -988,7 +1029,7 @@ shape: (114, 2), time unit: sec.
 </div>
 </section>
 <section id="use-the-intervalset-method-set-diff-to-get-backward-ep-from-run-ep-and-forward-ep">
-<h4>4. Use the <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet"><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> method <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html"><code class="docutils literal notranslate"><span class="pre">set_diff</span></code></a> to get <code class="docutils literal notranslate"><span class="pre">backward_ep</span></code> from <code class="docutils literal notranslate"><span class="pre">run_ep</span></code> and <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code><a class="headerlink" href="#use-the-intervalset-method-set-diff-to-get-backward-ep-from-run-ep-and-forward-ep" title="Link to this heading">#</a></h4>
+<h4>4. Use the <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> method <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html"><code class="docutils literal notranslate"><span class="pre">set_diff</span></code></a> to get <code class="docutils literal notranslate"><span class="pre">backward_ep</span></code> from <code class="docutils literal notranslate"><span class="pre">run_ep</span></code> and <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code><a class="headerlink" href="#use-the-intervalset-method-set-diff-to-get-backward-ep-from-run-ep-and-forward-ep" title="Link to this heading">#</a></h4>
 <div class="render-user">
 ```{code-cell} ipython3
 backward_ep = 
@@ -1024,11 +1065,11 @@ shape: (144, 2), time unit: sec.
 </div>
 <div class="render-all">
 <p>Now, when extracting the LFP, spikes, and position, we can use <code class="docutils literal notranslate"><span class="pre">restrict()</span></code> with any of these epochs to restrict the data to our movement period of interest.</p>
-<p>To get a sense of what the LFP looks like while the animal runs down the linear track, we can plot each variable, <code class="docutils literal notranslate"><span class="pre">lfp_run</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code>, side-by-side. Let’s do this for an example run; specifically, we’ll look at forward run 9.</p>
+<p>To get a sense of what the LFP looks like while the animal runs down the linear track, we can plot each variable, <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code>, side-by-side. Let’s do this for an example run; specifically, we’ll look at forward run 9.</p>
 </div>
 </section>
-<section id="create-an-interval-set-for-forward-run-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">
-<h4>5. Create an interval set for forward run 9, adding 2 seconds to the end of the interval. Restrict LFP and position to this epoch.<a class="headerlink" href="#create-an-interval-set-for-forward-run-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch" title="Link to this heading">#</a></h4>
+<section id="create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">
+<h4>5. Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to this epoch.<a class="headerlink" href="#create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch" title="Link to this heading">#</a></h4>
 <div class="render-user">
 ```{code-cell} ipython3
 ex_ep =
@@ -1067,6 +1108,25 @@ ex_position =
 <img alt="../../_images/603402011f9fd3883b7a624e00c695ec249af2edacb776bc3aa555742f739514.png" src="../../_images/603402011f9fd3883b7a624e00c695ec249af2edacb776bc3aa555742f739514.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-01.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-01.png)
+:::
+</div>
 <div class="render-all"> 
 <p>As we would expect, there is a strong theta oscillation dominating the LFP while the animal runs down the track. This oscillation is weaker after the run is complete.</p>
 </div>
@@ -1095,11 +1155,11 @@ freqs =
 </div>
 </div>
 <div class="render-all">
-<p>We can now compute the wavelet transform on our LFP data during the example run using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform"><code class="docutils literal notranslate"><span class="pre">nap.compute_wavelet_transform</span></code></a> by passing both <code class="docutils literal notranslate"><span class="pre">ex_lfp_run</span></code> and <code class="docutils literal notranslate"><span class="pre">freqs</span></code>. We’ll also pass the optional argument <code class="docutils literal notranslate"><span class="pre">fs</span></code>, which is known to be 1250Hz from the study methods.</p>
+<p>We can now compute the wavelet transform on our LFP data during the example run using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform"><code class="docutils literal notranslate"><span class="pre">nap.compute_wavelet_transform</span></code></a> by passing both <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">freqs</span></code>. We’ll also pass the optional argument <code class="docutils literal notranslate"><span class="pre">fs</span></code>, which is known to be 1250Hz from the study methods.</p>
 </div>
 </section>
-<section id="compute-the-wavelet-transform">
-<h4>7. Compute the wavelet transform.<a class="headerlink" href="#compute-the-wavelet-transform" title="Link to this heading">#</a></h4>
+<section id="compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above">
+<h4>7. Compute the wavelet transform of <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> using <code class="docutils literal notranslate"><span class="pre">freqs</span></code> defined above.<a class="headerlink" href="#compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above" title="Link to this heading">#</a></h4>
 <div class="render-all">
 <ul class="simple">
 <li><p>Supply the known sampling rate, 1250 Hz, as the optional argument <code class="docutils literal notranslate"><span class="pre">fs</span></code></p></li>
@@ -1146,11 +1206,30 @@ ex_cwt =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7feba032ba10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f34082b7110&gt;
 </pre></div>
 </div>
 <img alt="../../_images/a81accda5bfce252b3bd73ccb6b94d4336878e16046ca1b7c56cd0ca19d11c67.png" src="../../_images/a81accda5bfce252b3bd73ccb6b94d4336878e16046ca1b7c56cd0ca19d11c67.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-02.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-02.png)
+:::
 </div>
 <div class="render-all">
 <p>You should see a strong presence of theta in the 6-12Hz frequency band while the animal runs down the track, which dampens during rest.</p>
@@ -1162,8 +1241,8 @@ ex_cwt =
 <div class="render-all">
 <p>For the remaining exercises, we’ll reduce our example epoch to the portion when the animal is running forward along the linear track.</p>
 </div>
-<section id="restrict-the-lfp-and-position-to-epochs-when-the-animal-is-running-forward-and-create-a-new-intervalset-for-forward-run-9-with-no-padding">
-<h4>8. Restrict the LFP and position to epochs when the animal is running forward, and create a new <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet"><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> for forward run 9 with no padding.<a class="headerlink" href="#restrict-the-lfp-and-position-to-epochs-when-the-animal-is-running-forward-and-create-a-new-intervalset-for-forward-run-9-with-no-padding" title="Link to this heading">#</a></h4>
+<section id="restrict-the-lfp-and-position-to-forward-ep-and-create-a-new-intervalset-for-forward-run-index-9-with-no-padding">
+<h4>8. Restrict the <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and create a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> for forward run index 9 with no padding.<a class="headerlink" href="#restrict-the-lfp-and-position-to-forward-ep-and-create-a-new-intervalset-for-forward-run-index-9-with-no-padding" title="Link to this heading">#</a></h4>
 <div class="render-user">  
 ```{code-cell} ipython3
 lfp = 
@@ -1183,8 +1262,8 @@ ex_run_ep =
 <p>We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></a>. Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don’t have to worry about passing signals that have been split in time.</p>
 </div>
 </section>
-<section id="using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range">
-<h4>9. Using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></a>, filter the LFP for theta within a 6-12 Hz range.<a class="headerlink" href="#using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range" title="Link to this heading">#</a></h4>
+<section id="using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range">
+<h4>9. Using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter"><code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code></a>, filter <code class="docutils literal notranslate"><span class="pre">lfp</span></code> for theta within a 6-12 Hz range.<a class="headerlink" href="#using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range" title="Link to this heading">#</a></h4>
 <div class="render-all">
 <ul class="simple">
 <li><p>Same as before, pass the sampling rate</p></li>
@@ -1205,7 +1284,7 @@ theta_band =
 <p>We can visualize the output by plotting the filtered signal with the original signal.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">lfp</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_run_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;raw&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">theta_band</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_run_ep</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;filtered&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
@@ -1219,14 +1298,33 @@ theta_band =
 <img alt="../../_images/d6a726a4e7805779abb6891ab01f56ce684962cfaf1d38e0cb2e58f8784d7ee9.png" src="../../_images/d6a726a4e7805779abb6891ab01f56ce684962cfaf1d38e0cb2e58f8784d7ee9.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-03.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-03.png)
+:::
+</div>
 </section>
 </section>
 <section id="computing-theta-phase">
 <h3>Computing theta phase<a class="headerlink" href="#computing-theta-phase" title="Link to this heading">#</a></h3>
 <div class="render-all">
 <p>In order to examine phase precession in place cells, we need to extract the phase of theta from the filtered signal. We can do this by taking the angle of the <a class="reference external" href="https://en.wikipedia.org/wiki/Hilbert_transform">Hilbert transform</a>.</p>
-<section id="use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">
-<h4>10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.<a class="headerlink" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object" title="Link to this heading">#</a></h4>
+<section id="use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">
+<h4>10. Use <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.hilbert.html"><code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code></a> to perform the Hilbert transform of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code>, using <a class="reference external" href="https://numpy.org/doc/2.3/reference/generated/numpy.angle.html"><code class="docutils literal notranslate"><span class="pre">np.angle</span></code></a> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.<a class="headerlink" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p>TIP: don’t forget to pass the time support!</p></li>
 </ul>
@@ -1289,14 +1387,33 @@ dtype: float64, shape: (240384,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7feb7c113a10&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f3468167a70&gt;
 </pre></div>
 </div>
 <img alt="../../_images/767598ac4e66e43c1d0737d1f84fff5c8123d78395f4202c747206cef4f2a2af.png" src="../../_images/767598ac4e66e43c1d0737d1f84fff5c8123d78395f4202c747206cef4f2a2af.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-04.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-04.png)
+:::
+</div>
 <div class="render-all">
-<p>We can see that cycle “resets” (i.e. goes from <span class="math notranslate nohighlight">\(2\pi\)</span> to <span class="math notranslate nohighlight">\(0\)</span>) at peaks of the theta oscillation.</p>
+<p>You should be able to see that each cycle “resets” (i.e. goes from <span class="math notranslate nohighlight">\(2\pi\)</span> to <span class="math notranslate nohighlight">\(0\)</span>) at peaks of the theta oscillation.</p>
 </div>
 </section>
 </section>
@@ -1321,8 +1438,8 @@ good_spikes =
 </div>
 </div>
 </section>
-<section id="compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins">
-<h4>12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to forward running position, using 50 position bins.<a class="headerlink" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins" title="Link to this heading">#</a></h4>
+<section id="compute-tuning-curves-for-units-in-good-spikes-with-respect-to-position">
+<h4>12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">position</span></code><a class="headerlink" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-position" title="Link to this heading">#</a></h4>
 <div class="render-all">
 <ul class="simple">
 <li><p>Use 50 position bins</p></li>
@@ -1365,8 +1482,27 @@ place_fields =
 <img alt="../../_images/cc9e09ab1f37f204ce68c24d286d23b2598a6970080aaddcf79e32d1955936f8.png" src="../../_images/cc9e09ab1f37f204ce68c24d286d23b2598a6970080aaddcf79e32d1955936f8.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-05.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-05.png)
+:::
+</div>
 <div class="render-all">
-<p>We can see spatial selectivity in each of the units; across the population, we have firing fields tiling the entire linear track.</p>
+<p>We can see spatial selectivity in many of the units; across the population, we have firing fields tiling the entire linear track.</p>
 </div>
 </section>
 </section>
@@ -1409,11 +1545,30 @@ spike_theta =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fead43bc800&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f3420284050&gt;
 </pre></div>
 </div>
 <img alt="../../_images/d161411b3ca4e639271a942623e0951989ee9f51dc0096886ce2170647eccb66.png" src="../../_images/d161411b3ca4e639271a942623e0951989ee9f51dc0096886ce2170647eccb66.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-06.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-06.png)
+:::
 </div>
 <div class="render-all">
 <p>As the animal runs through unit 177’s place field (thick green), the unit spikes (orange dots) at specific points along the theta cycle dependent on position: starting at the rising edge, moving towards the trough, and ending at the falling edge.</p>
@@ -1456,11 +1611,30 @@ spike_phase =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7feac42ad9d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f33601e2b40&gt;
 </pre></div>
 </div>
 <img alt="../../_images/c29431543c951edc0a61ac23c20beb3ac0fdad7bbe2a8f748c3d844f24306263.png" src="../../_images/c29431543c951edc0a61ac23c20beb3ac0fdad7bbe2a8f748c3d844f24306263.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-07.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-07.png)
+:::
 </div>
 <div class="render-all">
 <p>We now see a negative trend in the spike phase as the animal moves through unit 177’s place field. This phemomena is known as phase precession: the phase at which a unit spikes <em>precesses</em> (gets earlier) as the animal runs through that unit’s place field. Explicitly, that unit will spike at <em>late</em> phases of theta (higher radians) in <em>earlier</em> positions in the field, and fire at <em>early</em> phases of theta (lower radians) in <em>late</em> positions in the field.</p>
@@ -1484,10 +1658,10 @@ spike_position =
 <p>Now we can plot the spike phase against the spike position in a scatter plot.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spike_position</span><span class="p">,</span> <span class="n">spike_phase</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Phase (rad)&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Position (cm)&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">axs</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">spike_position</span><span class="p">,</span> <span class="n">spike_phase</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+<span class="n">axs</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Phase (rad)&quot;</span><span class="p">)</span>
+<span class="n">axs</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Position (cm)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1497,6 +1671,25 @@ spike_position =
 </div>
 <img alt="../../_images/d2f697e7cf72c351c18d69fb3657cf874874561b9bcef18ff64942ae9f4a165f.png" src="../../_images/d2f697e7cf72c351c18d69fb3657cf874874561b9bcef18ff64942ae9f4a165f.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-08.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-08.png)
+:::
 </div>
 <div class="render-all">
 <p>Similar to what we saw in a single run, there is a negative relationship between theta phase and field position, characteristic of phase precession.</p>
@@ -1543,9 +1736,28 @@ upsampled_pos =
 <img alt="../../_images/f67b24c38679de4a0981a902aeaadb4b981dfe615770684f31dac5fe2eb7d5fa.png" src="../../_images/f67b24c38679de4a0981a902aeaadb4b981dfe615770684f31dac5fe2eb7d5fa.png" />
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-09.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-09.png)
+:::
+</div>
 </section>
 <section id="stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">
-<h4>17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code><a class="headerlink" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe" title="Link to this heading">#</a></h4>
+<h4>17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <a class="reference external" href="https://pynapple.org/generated/pynapple.TsdFrame.html"><code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a><a class="headerlink" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe" title="Link to this heading">#</a></h4>
 <div class="render-all">
 <ul class="simple">
 <li><p>Make sure to name your <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> columns <code class="docutils literal notranslate"><span class="pre">&quot;position&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;phase&quot;</span></code></p></li>
@@ -1593,8 +1805,8 @@ dtype: float64, shape: (240384, 2)
 </div>
 </div>
 </section>
-<section id="apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">
-<h4>18. Apply <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code><a class="headerlink" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes" title="Link to this heading">#</a></h4>
+<section id="apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes">
+<h4>18. Apply <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a> with <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code><a class="headerlink" href="#apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes" title="Link to this heading">#</a></h4>
 <div class="render-all">
 <ul class="simple">
 <li><p>Use 50 bins for position and 20 bins for theta phase</p></li>
@@ -1615,19 +1827,36 @@ tuning_curves =
 <p>We can plot 2D tuning curves for each unit and visualize how many of these units are phase precessing.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tc_norm</span> <span class="o">=</span> <span class="n">tuning_curves</span> <span class="o">/</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">tc_norm</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mf">1.2</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;xarray.plot.facetgrid.FacetGrid at 0x7fea9c368e90&gt;
+<img alt="../../_images/a8a08d8eceaa334fcb2d8ed1c0dba5774199bdf884eeeff13b9688b02b2878ec.png" src="../../_images/a8a08d8eceaa334fcb2d8ed1c0dba5774199bdf884eeeff13b9688b02b2878ec.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-10.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../../_images/16be7fad8d412a7fe52bc8802ab5fda0bc2001dbf51f0e975ecdcd73ca5d8b32.png" src="../../_images/16be7fad8d412a7fe52bc8802ab5fda0bc2001dbf51f0e975ecdcd73ca5d8b32.png" />
 </div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-10.png)
+:::
 </div>
 <div class="render-all">
-<p>Many of the units display a negative relationship between position and phase, characteristic of phase precession.</p>
+<p>We can see a number of units that display a negative relationship between position and phase, characteristic of phase precession. In addition to 177, units 23, 33, and 146 are good examples of this phenomena. In contrast, units 125 and 258 don’t appear to be phase precessing.</p>
 </div>
 </section>
 </section>
@@ -1635,8 +1864,7 @@ tuning_curves =
 <h3>Decoding position from spiking activity<a class="headerlink" href="#decoding-position-from-spiking-activity" title="Link to this heading">#</a></h3>
 <div class="render-all">
 <p>Next we’ll do a popular analysis in the rat hippocampus sphere: Bayesian decoding. This analysis is an elegent application of Bayes’ rule in predicting the animal’s location (or other behavioral variables) given neural activity at some point in time. Refer to the dropdown box below for a more in-depth explanation.</p>
-</div>
-<div class="render-all dropdown admonition">
+<div class="dropdown admonition">
 <p class="admonition-title">Background: Bayesian decoding</p>
 <p>Recall Bayes’ rule, written here in terms of our relevant variables:</p>
 <div class="math notranslate nohighlight">
@@ -1666,13 +1894,13 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <p>Another way of putting it is <span class="math notranslate nohighlight">\(P(spikes)\)</span> is the normalization factor such that <span class="math notranslate nohighlight">\(\sum_{position} P(position|spikes) = 1\)</span>, which is achived by dividing the numerator by its sum.</p>
 <p>If this method looks daunting, we have some good news: pynapple has it implemented already in the function <code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code>. All we’ll need are the spikes, the tuning curves, and the width of the time window <span class="math notranslate nohighlight">\(\tau\)</span>.</p>
 </div>
-<div class="tip render-all admonition" id="phase-precess-cv">
+<div class="tip admonition" id="phase-precess-cv-full">
 <p class="admonition-title">Aside: Cross-validation</p>
 <p>Generally this method is cross-validated, which means you train the model on one set of data and test the model on a different, held-out data set. For Bayesian decoding, the “model” refers to the model <em>likelihood</em>, which is computed from the tuning curves.</p>
 <p>If we want to decode an example run down the track, our training set should omit this run before computing the tuning curves. We can do this by using the IntervalSet method <code class="docutils literal notranslate"><span class="pre">set_diff</span></code>, to take out the example run epoch from all run epochs. Next, we’ll restrict our data to these training epochs and re-compute the place fields using <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>. We’ll also apply a Gaussian smoothing filter to the place fields, which will smooth our decoding results down the line.</p>
 <p>The code cell below will do these steps for you.</p>
 </div>
-<div class="cell tag_render-all docutils container">
+</div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># hold out trial from place field computation</span>
 <span class="n">run_train</span> <span class="o">=</span> <span class="n">forward_ep</span><span class="o">.</span><span class="n">set_diff</span><span class="p">(</span><span class="n">ex_run_ep</span><span class="p">)</span>
@@ -1687,16 +1915,32 @@ P(spikes|position) = \prod_i P(spikes_i|position)
 <span class="n">idx</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">place_fields_sorted</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">sortby</span><span class="p">(</span><span class="n">idx</span><span class="p">)</span>
 <span class="n">place_fields_sorted</span><span class="p">[</span><span class="s2">&quot;unit&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">place_fields_sorted</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-<span class="p">(</span><span class="n">place_fields_sorted</span> <span class="o">/</span> <span class="n">place_fields_sorted</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">p</span> <span class="o">=</span> <span class="p">(</span><span class="n">place_fields_sorted</span> <span class="o">/</span> <span class="n">place_fields_sorted</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.QuadMesh at 0x7fe9f81b3890&gt;
-</pre></div>
-</div>
 <img alt="../../_images/fc4fe37cd11a676f5a7339898564ace7734b1a8c5956cba6a1134b81c58ed17d.png" src="../../_images/fc4fe37cd11a676f5a7339898564ace7734b1a8c5956cba6a1134b81c58ed17d.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">figure</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-11.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-11.png)
+:::
 </div>
 <div class="render-all">
 <p>We can decode any number of features using the function <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></a>, which will decode any number of features given by the input <code class="docutils literal notranslate"><span class="pre">tuning_curves</span></code>, computed by <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a>.</p>
@@ -1734,6 +1978,25 @@ decoded_position, decoded_prob =
 <div class="cell_output docutils container">
 <img alt="../../_images/3c972fc7fc22200b9c84c3c8b78e116e44d55e013fc9bf48c3452bcce539903e.png" src="../../_images/3c972fc7fc22200b9c84c3c8b78e116e44d55e013fc9bf48c3452bcce539903e.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-12.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-12.png)
+:::
 </div>
 <div class="render-all">
 <p>While the decoder generally follows the animal’s true position, there is still a lot of error in the decoder, especially later in the run. We can improve the decoder error by smoothing the spike counts. <a class="reference external" href="https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes"><code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code></a> provides the option to do this for you by specifying <code class="docutils literal notranslate"><span class="pre">sliding_window_size</span></code>, which specifies the width, in number of bins, of a uniform (all ones) kernel to convolve with the spike counts. This is equivalent to applying a moving sum to adjacent bins, where the width of the kernel is the number of adjacent bins being added together. This is equivalent to counting spikes in a <em>sliding window</em> that shifts in shorter increments than the window’s width, resulting in bins that overlap. This combines the accuracy of using a wider time bin with the temporal resolution of a shorter time bin.</p>
@@ -1931,42 +2194,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img20c207baf5fc419b9df0804d6e3f2c15">
+  <img id="_anim_img9bfbed386ace4af48b3138cc54d25034">
   <div class="anim-controls">
-    <input id="_anim_slider20c207baf5fc419b9df0804d6e3f2c15" type="range" class="anim-slider"
+    <input id="_anim_slider9bfbed386ace4af48b3138cc54d25034" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim20c207baf5fc419b9df0804d6e3f2c15.set_frame(parseInt(this.value));">
+           oninput="anim9bfbed386ace4af48b3138cc54d25034.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim9bfbed386ace4af48b3138cc54d25034.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim9bfbed386ace4af48b3138cc54d25034.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim9bfbed386ace4af48b3138cc54d25034.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim9bfbed386ace4af48b3138cc54d25034.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim9bfbed386ace4af48b3138cc54d25034.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim9bfbed386ace4af48b3138cc54d25034.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim9bfbed386ace4af48b3138cc54d25034.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim9bfbed386ace4af48b3138cc54d25034.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim20c207baf5fc419b9df0804d6e3f2c15.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim9bfbed386ace4af48b3138cc54d25034.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select20c207baf5fc419b9df0804d6e3f2c15"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select9bfbed386ace4af48b3138cc54d25034"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_20c207baf5fc419b9df0804d6e3f2c15"
+      <input type="radio" name="state" value="once" id="_anim_radio1_9bfbed386ace4af48b3138cc54d25034"
              >
-      <label for="_anim_radio1_20c207baf5fc419b9df0804d6e3f2c15">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_20c207baf5fc419b9df0804d6e3f2c15"
+      <label for="_anim_radio1_9bfbed386ace4af48b3138cc54d25034">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_9bfbed386ace4af48b3138cc54d25034"
              checked>
-      <label for="_anim_radio2_20c207baf5fc419b9df0804d6e3f2c15">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_20c207baf5fc419b9df0804d6e3f2c15"
+      <label for="_anim_radio2_9bfbed386ace4af48b3138cc54d25034">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_9bfbed386ace4af48b3138cc54d25034"
              >
-      <label for="_anim_radio3_20c207baf5fc419b9df0804d6e3f2c15">Reflect</label>
+      <label for="_anim_radio3_9bfbed386ace4af48b3138cc54d25034">Reflect</label>
     </form>
   </div>
 </div>
@@ -1976,9 +2239,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img20c207baf5fc419b9df0804d6e3f2c15";
-    var slider_id = "_anim_slider20c207baf5fc419b9df0804d6e3f2c15";
-    var loop_select_id = "_anim_loop_select20c207baf5fc419b9df0804d6e3f2c15";
+    var img_id = "_anim_img9bfbed386ace4af48b3138cc54d25034";
+    var slider_id = "_anim_slider9bfbed386ace4af48b3138cc54d25034";
+    var loop_select_id = "_anim_loop_select9bfbed386ace4af48b3138cc54d25034";
     var frames = new Array(54);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAABQRZlvAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -26043,7 +26306,7 @@ iIiIiIgdUIEuIiIiIiIiYgf+H9o2XYpoPiu0AAAAAElFTkSuQmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim20c207baf5fc419b9df0804d6e3f2c15 = new Animation(frames, img_id, slider_id, 100.0,
+        anim9bfbed386ace4af48b3138cc54d25034 = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -26084,6 +26347,25 @@ smth_decoded_position, smth_decoded_prob =
 <div class="cell_output docutils container">
 <img alt="../../_images/ba2712322b70233a5777bf86e2d320de7dfa00f39ba9eace004f2dbf92fc7be8.png" src="../../_images/ba2712322b70233a5777bf86e2d320de7dfa00f39ba9eace004f2dbf92fc7be8.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-13.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-13.png)
+:::
 </div>
 <div class="render-all">
 <p>This gives us a much closer approximation of the animal’s true position.</p>
@@ -26126,6 +26408,25 @@ smth_decoded_position, smth_decoded_prob =
 <div class="cell_output docutils container">
 <img alt="../../_images/12f1cf7a2fb1036c3d849791d6514c8689dc1449edd728297cfa7456de4d744c.png" src="../../_images/12f1cf7a2fb1036c3d849791d6514c8689dc1449edd728297cfa7456de4d744c.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-14.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-14.png)
+:::
 </div>
 <div class="render-all">
 <p>The estimated position oscillates with cycles of theta, where each “sweep” is referred to as a “theta sequence”. Fully understanding the properties of theta sequences and their role in learning, memory, and planning is an active topic of research in Neuroscience!</p>
@@ -26212,7 +26513,7 @@ smth_decoded_position, smth_decoded_prob =
 </div>
 </section>
 <section id="basis-evaluation">
-<span id="basis-eval-place-cells"></span><h3>Basis evaluation<a class="headerlink" href="#basis-evaluation" title="Link to this heading">#</a></h3>
+<span id="basis-eval-place-cells-full"></span><h3>Basis evaluation<a class="headerlink" href="#basis-evaluation" title="Link to this heading">#</a></h3>
 <div class="all">
 <p>As we’ve seen before, we will use basis objects to represent the input values.  In previous tutorials, we’ve used the <code class="docutils literal notranslate"><span class="pre">Conv</span></code> basis objects to represent the time-dependent effects we were looking to capture. Here, we’re trying to capture the non-linear relationship between our input variables and firing rate, so we want the <code class="docutils literal notranslate"><span class="pre">Eval</span></code> objects. In these circumstances, you should look at the tuning you’re trying to capture and compare to the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/README.html#">basis kernels (visualized in NeMoS docs)</a>: you want your tuning to be capturable by a linear combination of them.</p>
 <p>In this case, several of these would probably work; we will use <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.MSplineEval.html#nemos.basis.MSplineEval"><code class="docutils literal notranslate"><span class="pre">MSplineEval</span></code></a> for both, though with different numbers of basis functions.</p>
@@ -26242,13 +26543,32 @@ workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">position_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">BSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
 <span class="n">speed_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">BSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">)</span>
-<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <img alt="../../_images/0822c5cb05a9ef0087c8c815926789bcc92c9334c8bd5d65a9c44a0c6fc1b7fd.png" src="../../_images/0822c5cb05a9ef0087c8c815926789bcc92c9334c8bd5d65a9c44a0c6fc1b7fd.png" />
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-15.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-15.png)
+:::
 </div>
 <div class="render-all">
 <p>However, now we have an issue: in all our previous examples, we had a single basis object, which took a single input to produce a single array which we then passed to the <code class="docutils literal notranslate"><span class="pre">GLM</span></code> object as the design matrix. What do we do when we have multiple basis objects?</p>
@@ -26885,7 +27205,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7fec495e6c00&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f34e8d668e0&gt;&gt;</td>
         </tr>
     
 
@@ -27032,13 +27352,44 @@ glm_tuning_speed =
 <p>We can plot the results to compare the model and data tuning curves.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed_tuning</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">glm_tuning_pos</span><span class="p">,</span> <span class="n">glm_tuning_speed</span><span class="p">);</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed_tuning</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">glm_tuning_pos</span><span class="p">,</span> <span class="n">glm_tuning_speed</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/47f561cf53ee98a59d29d3deb95ad196d711a261f42e467b92e7c9e5931217c9.png" src="../../_images/47f561cf53ee98a59d29d3deb95ad196d711a261f42e467b92e7c9e5931217c9.png" />
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main@2/.venv/lib/python3.12/site-packages/IPython/core/events.py:82: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  func(*args, **kwargs)
+/home/agent/workspace/rorse_ccn-software-sfn-2025_main@2/.venv/lib/python3.12/site-packages/IPython/core/pylabtools.py:170: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.canvas.print_figure(bytes_io, **kw)
+</pre></div>
 </div>
+<img alt="../../_images/2374b02805237971918f58f7029ca7fc7bb33f648341cf83040a44cb719b45e7.png" src="../../_images/2374b02805237971918f58f7029ca7fc7bb33f648341cf83040a44cb719b45e7.png" />
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-16.png&quot;</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_920/858484980.py:1: UserWarning: This figure includes Axes that are not compatible with tight_layout, so results might be incorrect.
+  fig.savefig(&quot;../../_static/_check_figs/02-16.png&quot;, bbox_inches=&quot;tight&quot;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-16.png)
+:::
 </div>
 <div class="render-all">
 <p>We can see that this model does a good job capturing both the position and the speed.</p>
@@ -27111,30 +27462,30 @@ glm_tuning_speed =
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-and-visualizing-the-data">Restricting and visualizing the data</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake">1. Save out the time support of position, giving us the epoch during which the animal is awake.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#save-out-the-time-support-of-position-giving-us-the-epoch-during-which-the-animal-is-awake">1. Save out the time support of <code class="docutils literal notranslate"><span class="pre">position</span></code>, giving us the epoch during which the animal is awake.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#confirm-that-when-restricting-position-to-forward-ep-there-are-no-nan-values-in-position">2. Confirm that when restricting position to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code>, there are no <code class="docutils literal notranslate"><span class="pre">nan</span></code> values in position.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-time-intervals-from-position-using-the-dropna-and-find-support-methods">3. Extract time intervals from <code class="docutils literal notranslate"><span class="pre">position</span></code> using the <code class="docutils literal notranslate"><span class="pre">dropna</span></code> and <code class="docutils literal notranslate"><span class="pre">find_support</span></code> methods.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-intervalset-method-set-diff-to-get-backward-ep-from-run-ep-and-forward-ep">4. Use the <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> method <code class="docutils literal notranslate"><span class="pre">set_diff</span></code> to get <code class="docutils literal notranslate"><span class="pre">backward_ep</span></code> from <code class="docutils literal notranslate"><span class="pre">run_ep</span></code> and <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">5. Create an interval set for forward run 9, adding 2 seconds to the end of the interval. Restrict LFP and position to this epoch.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">5. Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to this epoch.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">6. Define 100 log-spaced samples between 5 and 200 Hz using <code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform">7. Compute the wavelet transform.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above">7. Compute the wavelet transform of <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> using <code class="docutils literal notranslate"><span class="pre">freqs</span></code> defined above.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filtering-for-theta">Filtering for theta</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-the-lfp-and-position-to-epochs-when-the-animal-is-running-forward-and-create-a-new-intervalset-for-forward-run-9-with-no-padding">8. Restrict the LFP and position to epochs when the animal is running forward, and create a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> for forward run 9 with no padding.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-the-lfp-for-theta-within-a-6-12-hz-range">9. Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter the LFP for theta within a 6-12 Hz range.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-the-lfp-and-position-to-forward-ep-and-create-a-new-intervalset-for-forward-run-index-9-with-no-padding">8. Restrict the <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and create a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> for forward run index 9 with no padding.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range">9. Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter <code class="docutils literal notranslate"><span class="pre">lfp</span></code> for theta within a 6-12 Hz range.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-and-the-numpy-function-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform, and  the numpy function <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">10. Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code>, using <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz">11. Restrict <code class="docutils literal notranslate"><span class="pre">spikes</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and select for units whose rate is at least 1 Hz and at most 10 Hz</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-forward-running-position-using-50-position-bins">12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to forward running position, using 50 position bins.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-for-units-in-good-spikes-with-respect-to-position">12. Compute tuning curves for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code> with respect to <code class="docutils literal notranslate"><span class="pre">position</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="nav section-nav flex-column">
@@ -27146,7 +27497,7 @@ glm_tuning_speed =
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">16. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">17. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-for-features-on-our-subselected-group-of-units-good-spikes">18. Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> for <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes">18. Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> with <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">

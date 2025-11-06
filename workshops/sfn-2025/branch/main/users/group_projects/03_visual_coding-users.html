@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Exploring the Visual Coding Dataset &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Exploring the Allen Institute’s Visual Coding dataset &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -57,7 +57,8 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="prev" title="Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS" href="02_phase_precession-users.html" />
+    <link rel="next" title="For users (some code, some text)" href="../index.html" />
+    <link rel="prev" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="02_phase_precession-users.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -213,17 +214,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -377,7 +397,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Exploring the Visual Coding Dataset</h1>
+    <h1>Exploring the Allen Institute’s Visual Coding dataset</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -394,6 +414,8 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data">Prepare data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct design matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-and-fit-your-model">Construct and fit your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-model-psth">Visualize model PSTH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-learned-model-filters">Visualize learned model filters</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-your-model">Score your model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-to-improve-your-model">Try to improve your model?</a></li>
 </ul>
@@ -426,12 +448,6 @@ document.write(`
     <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
     <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
 <span class="p">)</span>
-
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
-    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
-    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Converting &#39;d&#39; to numpy.array&quot;</span><span class="p">,</span>
-    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
-<span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -439,14 +455,13 @@ document.write(`
 </div>
 <div class="important render-all admonition">
 <p class="admonition-title">Download</p>
-<p>This notebook can be downloaded as <strong><code class="xref download myst-nb docutils literal notranslate"><span class="pre">visual_coding.ipynb</span></code></strong>. See the button at the top right to download as markdown or pdf.</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/3bcf72328ac6b74a5b95e3ef3fb60940/03_visual_coding-users.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">03_visual_coding-users.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="exploring-the-visual-coding-dataset">
-<h1>Exploring the Visual Coding Dataset<a class="headerlink" href="#exploring-the-visual-coding-dataset" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="exploring-the-allen-institute-s-visual-coding-dataset">
+<h1>Exploring the Allen Institute’s Visual Coding dataset<a class="headerlink" href="#exploring-the-allen-institute-s-visual-coding-dataset" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
-It is intended to be downloaded and run locally (or on the provided binder)
-while listening to the presenter’s explanation. In order to see the fully
-rendered of this notebook, go <a class="reference internal" href="../../full/group_projects/03_visual_coding.html"><span class="std std-doc">here</span></a></p>
+It is intended to be downloaded and run locally (or on the provided binder),
+working through the questions with your small group.</p>
 <p>This notebook serves as a group project: in groups of 4 or 5, you will analyze data from the <a class="reference external" href="https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels">Visual Coding - Neuropixels dataset</a>, published by the Allen Institute. This dataset uses <a class="reference external" href="https://www.nature.com/articles/nature24636">extracellular electrophysiology probes</a> to record spikes from multiple regions in the brain during passive visual stimulation.</p>
 <p>To start, we will focus on the activity of neurons in the visual cortex (VISp) during passive exposure to full-field flashes of color either black (coded as “-1.0”) or white (coded as “1.0”) in a gray background. If you have time, you can apply the same procedure to other stimuli or brain areas.</p>
 <p>In this notebook, the pre-filled section will first select visually responsive neurons in area VISp. Then, you will fit GLMs to the selected neurons using <code class="docutils literal notranslate"><span class="pre">nemos</span></code>.</p>
@@ -466,6 +481,9 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+
+<span class="c1"># configure pynapple to ignore conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
 
@@ -491,7 +509,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;visual_coding_data.zip&quot;</span><span class="p">)</span>
-<span class="n">flashes</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+<span class="n">flashes</span><span class="p">,</span> <span class="n">units</span> <span class="o">=</span> <span class="p">[</span><span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -544,7 +562,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="preliminary-analyses-and-neuron-selection">
 <h2>Preliminary analyses and neuron selection<a class="headerlink" href="#preliminary-analyses-and-neuron-selection" title="Link to this heading">#</a></h2>
 <p>In this section, we will select a subset of the neurons that are visually responsive, which we will fit our GLM to.</p>
-<p>First, we’ll construct a <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet" title="(in pynapple v0.10.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">IntervalSet</span></code></a> called <code class="docutils literal notranslate"><span class="pre">extended_flashes</span></code> which contains the peristimulus time. Right now, our <code class="docutils literal notranslate"><span class="pre">flashes</span></code> <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.</p>
+<p>First, we’ll construct a <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.html">IntervalSet</a> called <code class="docutils literal notranslate"><span class="pre">extended_flashes</span></code> which contains the peristimulus time. Right now, our <code class="docutils literal notranslate"><span class="pre">flashes</span></code> <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.</p>
 <p>This <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> will be the same shape as <code class="docutils literal notranslate"><span class="pre">flashes</span></code> and have the same metadata columns.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
@@ -588,9 +606,9 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </div>
 </div>
-<p>Now, in order to determine the responsiveness of the units, it’s helpful to use the <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent" title="(in pynapple v0.10.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent()</span></code></a> function: this will align units’ spiking timestamps with the onset of the stimulus repetitions and take an average over them.</p>
+<p>Now, in order to determine the responsiveness of the units, it’s helpful to use the <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent">compute_perievent</a> function: this will align units’ spiking timestamps with the onset of the stimulus repetitions and take an average over them.</p>
 <p>Let’s use that function to construct two separate perievent dictionaries, one aligned to the start of the white stimuli, one aligned to the start of the black, and they should run from 250 msec before to 500 msec after the event.</p>
-<div class="cell tag_render-all docutils container">
+<div class="cell tag_render-all docutils container" id="compute-perievent-users">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set window of perievent 500 ms before and after the start of the event</span>
 <span class="n">window_size</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mf">.250</span><span class="p">,</span> <span class="mf">.500</span><span class="p">)</span> 
@@ -795,7 +813,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="avoiding-overfitting">
 <h2>Avoiding overfitting<a class="headerlink" href="#avoiding-overfitting" title="Link to this heading">#</a></h2>
 <p>As we’ve seen throughout this workshop, it is important to avoid overfitting your model. We’ve covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.</p>
-<p>You might find it helpful to refer back to the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">advanced nemos</span></a> notebook and / or to use the following pynapple functions: <code class="xref py py-func docutils literal notranslate"><span class="pre">set_diff()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">union()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">restrict()</span></code> (see <a class="reference internal" href="02_phase_precession-users.html#phase-precess-cv"><span class="std std-ref">phase precession notebook</span></a>).</p>
+<p>You might find it helpful to refer back to the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">advanced nemos (“How to know when to regularize” header)</span></a> notebook and / or to use the following pynapple functions: <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html">IntervalSet.set_diff</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.union.html">IntervalSet.union</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.restrict.html">TsGroup.restrict</a> (see <a class="reference internal" href="02_phase_precession-users.html#phase-precess-cv-users"><span class="std std-ref">phase precession notebook (“Aside: Cross-validation” admonition)</span></a>).</p>
 <div class="hint admonition">
 <p class="admonition-title">Hints</p>
 <p>Throughout the rest of the notebook we’ll include hints. They’ll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint like this, which you can expand to get a hint.</p>
@@ -809,18 +827,19 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </section>
 <section id="fit-a-glm">
-<h2>Fit a GLM<a class="headerlink" href="#fit-a-glm" title="Link to this heading">#</a></h2>
-<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-feature-selection"><span class="std std-ref">the advanced nemos notebook</span></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
+<span id="visual-glm-users"></span><h2>Fit a GLM<a class="headerlink" href="#fit-a-glm" title="Link to this heading">#</a></h2>
+<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-feature-selection-full"><span class="std std-ref">the advanced nemos notebook (“Feature selection” header)</span></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
 <p>You don’t have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.</p>
 <p>Good luck and we look forward to seeing what you come up with!</p>
 <section id="prepare-data">
 <h3>Prepare data<a class="headerlink" href="#prepare-data" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Create spike count data. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basic"><span class="std std-ref">current injection notebook</span></a>.)</p></li>
+<li><p>Decide on bin size and create spike count data. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basic-full"><span class="std std-ref">current injection notebook (“Extending the model to use injection history” header)</span></a>.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bin_size</span> <span class="o">=</span> 
+<span class="n">units_counts</span> <span class="o">=</span> 
 </pre></div>
 </div>
 </div>
@@ -829,28 +848,46 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="construct-design-matrix">
 <h3>Construct design matrix<a class="headerlink" href="#construct-design-matrix" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Decide on feature(s).</p></li>
-<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basis"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-basis"><span class="std std-ref">place cell</span></a> notebooks.)</p>
+<li><p>Decide on feature(s).</p>
+<ul>
+<li><p>The code block below constructs <code class="docutils literal notranslate"><span class="pre">stim</span></code>, a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> containing 1s whenever the stimulus is being presented (in separate columns for white and black).</p></li>
+<li><p>You can use this, but you may also want to perform additional computations on <code class="docutils literal notranslate"><span class="pre">stim</span></code> to construct other features.</p></li>
+</ul>
+</li>
+<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basis-full"><span class="std std-ref">current injection (“Extending the model to use injection history”)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-basis-full"><span class="std std-ref">place cell (“Select basis” header)</span></a> notebooks.)</p>
 <ul>
 <li><p>If you set the <code class="docutils literal notranslate"><span class="pre">label</span></code> argument for your basis objects, interpreting the output will be easier.</p></li>
 </ul>
 </li>
-<li><p>Construct design matrix. (Hint: review the <a class="reference internal" href="../../full/group_projects/02_phase_precession.html#basis-eval-place-cells"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
+<li><p>Construct design matrix. (Hint: review the <a class="reference internal" href="02_phase_precession-users.html#basis-eval-place-cells-users"><span class="std std-ref">place cell (“Basis evaluation” header)</span></a> notebook.)</p></li>
 </ul>
 <div class="hint dropdown admonition">
 <p class="admonition-title">What features should I include?</p>
 <p>If you’re having trouble coming up with features to include, here are some possibilities:</p>
 <ul class="simple">
-<li><p>Stimulus. (Review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-prep"><span class="std std-ref">current injection</span></a> notebook.)</p></li>
-<li><p>Stimulus onset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.diff()</span></code></a> to find when the stimulus transitions from off to on.)</p></li>
-<li><p>Stimulus offset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html#numpy.diff" title="(in NumPy v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.diff()</span></code></a> to find when the stimulus transitions from on to off.)</p></li>
-<li><p>For multiple neurons: neuron-to-neuron coupling. (Refer back to the <a class="reference internal" href="#head_direction_fit"><span class="xref myst">the head direction notebook from the first day</span></a> to see an example of fitting coupling filters.)</p></li>
+<li><p>Stimulus, using <code class="docutils literal notranslate"><span class="pre">stim</span></code>. (Review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-prep-full"><span class="std std-ref">current injection (“Preparing data” header)</span></a> notebook.)</p></li>
+<li><p>Stimulus onset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html">numpy.diff</a> to find when the stimulus transitions from off to on.)</p></li>
+<li><p>Stimulus offset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html">numpy.diff</a> to find when the stimulus transitions from on to off.)</p></li>
+<li><p>For multiple neurons: neuron-to-neuron coupling, using <code class="docutils literal notranslate"><span class="pre">units_counts</span></code>. (Refer back to the <a class="reference internal" href="01_head_direction-users.html#head-direction-fit-users"><span class="std std-ref">the head direction notebook from the first day (“Fitting the Model” header)</span></a> to see an example of fitting coupling filters.)</p></li>
 </ul>
 <p>For the stimuli predictors, you probably want to model white and black separately.</p>
 </div>
-<div class="cell docutils container">
+<div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a TsdFrame filled by zeros, for the size of units_counts</span>
+<span class="n">stim</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">units_counts</span><span class="o">.</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">units_counts</span><span class="p">),</span> <span class="mi">2</span><span class="p">)),</span> 
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="s1">&#39;black&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Check whether there is a flash within a given bin of spikes</span>
+<span class="n">idx_white</span> <span class="o">=</span> <span class="n">flashes_white</span><span class="o">.</span><span class="n">in_interval</span><span class="p">(</span><span class="n">units_counts</span><span class="p">)</span>
+<span class="n">idx_black</span> <span class="o">=</span> <span class="n">flashes_black</span><span class="o">.</span><span class="n">in_interval</span><span class="p">(</span><span class="n">units_counts</span><span class="p">)</span>
+
+<span class="c1"># Put a 1 at those locations</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">idx_white</span><span class="p">),</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">stim</span><span class="o">.</span><span class="n">d</span><span class="p">[</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">idx_black</span><span class="p">),</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -859,12 +896,26 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="construct-and-fit-your-model">
 <h3>Construct and fit your model<a class="headerlink" href="#construct-and-fit-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Decide on regularization. (Hint: review Edoardo’s presentation and the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
-<li><p>Initialize GLM. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
-<li><p>Call fit. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebooks.)</p></li>
-<li><p>Visualize result on PSTHs. (Note that you should use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent_continuous" title="(in pynapple v0.10.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">compute_perievent_continuous()</span></code></a> and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)</p></li>
+<li><p>Decide on regularization. (Hint: review <a class="reference external" href="https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf">Edoardo’s presentation</a> and the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebook.)</p></li>
+<li><p>Initialize GLM. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebooks.)</p></li>
+<li><p>Call fit.  (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebooks.)</p></li>
 </ul>
-<p>When you go to plot the PSTH from model predictions and compare them against regular data, the following helper function should help (it works for one or multiple neurons).</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-model-psth">
+<h3>Visualize model PSTH<a class="headerlink" href="#visualize-model-psth" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Generate model predictions (remember to compute to spikes / sec!). (Hint: )</p></li>
+<li><p>Compute model PSTHs. (Note that you should use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent_continuous">compute_perievent_continuous</a> here! Otherwise, this looks very similar to our PSTH calculation <a class="reference internal" href="#compute-perievent-users"><span class="std std-ref">above</span></a>.)</p></li>
+<li><p>Visualize these PSTHs.</p></li>
+</ul>
+<p>The following helper function should help with the visualization step (it works for one or multiple neurons).</p>
 <div class="cell tag_render-all tag_hide-input docutils container">
 <details class="admonition hide above-input">
 <summary aria-label="Toggle hidden content">
@@ -950,7 +1001,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </details>
 </div>
-<p>The following cell shows you how to call this visualization function. Its arguments are:</p>
+<p>The following cell shows you how to call this visualization function for a PSTH computed from a <code class="docutils literal notranslate"><span class="pre">GLM</span></code> (i.e., single neuron fit). Its arguments are:</p>
 <ul class="simple">
 <li><p>The PSTH object computed from the data. This should only contain the responses to either the black or white flashes, but can contain the PSTHs from one or more-than-one neurons.</p></li>
 <li><p>A string, either <code class="docutils literal notranslate"><span class="pre">&quot;white&quot;</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;black&quot;</span></code>, which determines some of the styling.</p></li>
@@ -968,11 +1019,51 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </div>
 </div>
 </section>
+<section id="visualize-learned-model-filters">
+<h3>Visualize learned model filters<a class="headerlink" href="#visualize-learned-model-filters" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>“Expand” model coefficients into filters.</p></li>
+<li><p>Visualize these filters.</p></li>
+</ul>
+<p>When using basis functions, GLM coefficients are hard to interpret directly. Recall in the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#visualize-filter-full"><span class="std std-ref">current injection (search for “Visualize the current history model’s learned filter”)</span></a> and <a class="reference internal" href="01_head_direction-users.html#head-direction-basis-users"><span class="std std-ref">head direction (search for “We can plot the resluting response,”)</span></a> notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html">numpy.matmul</a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.einsum.html">numpy.einsum</a>.</p>
+<p>If you get stuck here, you can expand the following dropdown to see a hint and then expand the one after that to see a possible way of doing this.</p>
+<div class="hint dropdown admonition">
+<p class="admonition-title">How to compute the filters?</p>
+<p>There are two components here:</p>
+<ol class="arabic">
+<li><p>If you’ve used a single basis object, your <code class="docutils literal notranslate"><span class="pre">GLM</span></code> will have weights of shape <code class="docutils literal notranslate"><span class="pre">(n_basis_funcs,)</span></code> (equivalently, a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> will have weights of shape <code class="docutils literal notranslate"><span class="pre">(n_basis_funcs,</span> <span class="pre">n_neurons)</span></code>). If you call your basis’s <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.RaisedCosineLogConv.evaluate_on_grid.html#nemos.basis.RaisedCosineLogConv.evaluate_on_grid"><code class="docutils literal notranslate"><span class="pre">evaluate_on_grid</span></code></a> method, you’ll get back an array of shape <code class="docutils literal notranslate"><span class="pre">(window_size,</span> <span class="pre">n_basis_funcs)</span></code> containing the basis functions. You can then use either <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html">numpy.matmul</a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.einsum.html">numpy.einsum</a> to multiply the weights by the functions, computing the filter.</p></li>
+<li><p>If you’ve used more than one basis object, how do you know which weights correspond to which basis?</p>
+<p>You can slice the weights yourselves: each basis will have <code class="docutils literal notranslate"><span class="pre">n_basis_funcs</span></code> weights associated with it (where this is the argument passed on initialization and also an attribute of the object), and so you can do some algebra to figure out which weights correspond to which basis.</p>
+<p>However, if you have used a single <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.html">AdditiveBasis</a> object to construct your GLM, you can take advantage of its <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.split_by_feature.html#nemos.basis._basis.AdditiveBasis.split_by_feature"><code class="docutils literal notranslate"><span class="pre">split_by_feature</span></code> method</a> to do the splitting for you.</p>
+</li>
+</ol>
+</div>
+<div class="hint dropdown admonition">
+<p class="admonition-title">Code to compute the filters</p>
+<p>If you have used a single <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.html">AdditiveBasis</a> object to construct your GLM (called <code class="docutils literal notranslate"><span class="pre">additive_basis</span></code> in the following), you can take advantage of its <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.split_by_feature.html#nemos.basis._basis.AdditiveBasis.split_by_feature"><code class="docutils literal notranslate"><span class="pre">split_by_feature</span></code> method</a>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">weights</span> <span class="o">=</span> <span class="n">additive_basis</span><span class="o">.</span><span class="n">split_by_feature</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">filters</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">weights</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">this_basis</span> <span class="o">=</span> <span class="n">additive_basis</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">this_basis</span> <span class="o">=</span> <span class="n">this_basis</span><span class="o">.</span><span class="n">evaluate_on_grid</span><span class="p">(</span><span class="n">this_basis</span><span class="o">.</span><span class="n">window_size</span><span class="p">)</span>
+    <span class="n">filters</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">this_basis</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">filters</span></code> is then a dictionary whose keys match the <code class="docutils literal notranslate"><span class="pre">label</span></code> of each basis object and whose values are numpy arrays.</p>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
 <section id="score-your-model">
 <h3>Score your model<a class="headerlink" href="#score-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>We trained on the train set, so now we score on the test set. (Or use cross-validation.)</p></li>
-<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-score"><span class="std std-ref">current injection</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">place cell</span></a> notebook.)</p></li>
+<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebook.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -985,10 +1076,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="try-to-improve-your-model">
 <h3>Try to improve your model?<a class="headerlink" href="#try-to-improve-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Go back to the beginning of <a class="reference internal" href="../../full/group_projects/03_visual_coding.html#visual-glm"><span class="std std-ref">this section</span></a> and try to improve your model’s performance (as reflected by increased score).</p></li>
+<li><p>Go back to the beginning of <a class="reference internal" href="#visual-glm-users"><span class="std std-ref">this section</span></a> and try to improve your model’s performance (as reflected by increased score).</p></li>
 <li><p>Keep track of what you’ve tried and their respective scores.</p>
 <ul>
-<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv"><span class="std std-ref">advanced nemos notebook</span></a>, is useful:</p></li>
+<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a>, is useful:</p></li>
 </ul>
 </li>
 </ul>
@@ -1045,8 +1136,17 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</p>
+        <p class="prev-next-title">Analyzing hippocampal place cells with Pynapple and NeMoS</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="../index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">For users (some code, some text)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -1071,6 +1171,8 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prepare-data">Prepare data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-design-matrix">Construct design matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#construct-and-fit-your-model">Construct and fit your model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-model-psth">Visualize model PSTH</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-learned-model-filters">Visualize learned model filters</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#score-your-model">Score your model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#try-to-improve-your-model">Try to improve your model?</a></li>
 </ul>

@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos &#8212; CCN software workshop, SfN 2025  documentation</title>
+    <title>Analyzing head-direction cells with Pynapple and Nemos &#8212; CCN software workshop, SfN 2025  documentation</title>
   
   
   
@@ -216,17 +216,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -380,7 +399,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</h1>
+    <h1>Analyzing head-direction cells with Pynapple and Nemos</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -423,8 +442,34 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="group-project-1-analyzing-head-direction-cells-with-pynapple-and-nemos">
-<h1>Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos<a class="headerlink" href="#group-project-1-analyzing-head-direction-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/321ba12dbede0d5e4eb26f08e6a604c9/01_head_direction-presenters.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">01_head_direction-presenters.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="analyzing-head-direction-cells-with-pynapple-and-nemos">
+<h1>Analyzing head-direction cells with Pynapple and Nemos<a class="headerlink" href="#analyzing-head-direction-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder)
 while listening to the presenter’s explanation. In order to see the fully
@@ -450,8 +495,7 @@ Finally, we will fit a generalized linear model (GLM) to quantify the functional
 <li><p>Fit a GLM model with basis functions to reduce over-fitting</p></li>
 <li><p>Fit a GLM model to all neurons to learn functional connectivity</p></li>
 </ol>
-<p>Let’s start by importing all the packages.
-If an import fails, you can do <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pynapple</span> <span class="pre">nemos</span> <span class="pre">matplotlib</span></code> in a cell to fix it.</p>
+<p>Let’s start by importing all the packages.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
@@ -516,7 +560,15 @@ In NWB files, spike times are stored in the <code class="docutils literal notran
 </div>
 </div>
 <p>There are a lot of neurons. The neurons that interest us are the neurons labeled <code class="docutils literal notranslate"><span class="pre">adn</span></code>.</p>
-<p><strong>Question:</strong> Using the <a class="reference external" href="https://pynapple.org/user_guide/03_metadata.html#using-metadata-to-slice-objects">slicing method</a> of your choice, can you select only the neurons in <code class="docutils literal notranslate"><span class="pre">adn</span></code> that are above 2 Hz firing rate?</p>
+<p><strong>Question:</strong> Using the slicing method of your choice, can you select only the neurons in <code class="docutils literal notranslate"><span class="pre">adn</span></code> that are above 2 Hz firing rate?</p>
+<p>THere multiple options here. As a reminder, metadatas can be accessed like a dictionary or as attributes. There are also
+functions that can help you filter neurons based on metadata.</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">spikes.label</span></code> returns a pandas Series with the metadata of the neurons.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">spikes['label']</span></code> returns a pandas Series with the metadata of the neurons.</p></li>
+<li><p>Functions like <a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.getby_category.html#pynapple.TsGroup.getby_category"><code class="docutils literal notranslate"><span class="pre">spikes.getby_category</span></code></a>
+or <a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.getby_threshold.html#pynapple.TsGroup.getby_threshold"><code class="docutils literal notranslate"><span class="pre">spikes.getby_threshold</span></code></a> can help you filter neurons based on metadata.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="p">[(</span><span class="n">spikes</span><span class="o">.</span><span class="n">location</span><span class="o">==</span><span class="s1">&#39;adn&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">rate</span><span class="o">&gt;</span><span class="mf">2.0</span><span class="p">)]</span>
@@ -536,7 +588,7 @@ In NWB files, spike times are stored in the <code class="docutils literal notran
 </div>
 </div>
 </div>
-<p>But are the data actually loaded … or not?
+<p>But are the data actually loaded  or not?
 If you look at the type of <code class="docutils literal notranslate"><span class="pre">angle</span></code>, you will see that it is a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
 But what about the underlying data array?
 The underlying data array is stored in the property <code class="docutils literal notranslate"><span class="pre">d</span></code> of the <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
@@ -603,7 +655,7 @@ We want to know how the firing rate of each neuron changes as a function of the 
 the second to angular bins, and additional metadata fields are included.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
 <span class="n">tuning_curves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 <span class="c1"># plt.plot(tuning_curves[0])</span>
@@ -617,6 +669,19 @@ the second to angular bins, and additional metadata fields are included.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-00.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>Most of those neurons are head-directions neurons.</p>
 <p>The next cell allows us to get a quick estimate of the neurons’s preferred direction.
@@ -657,7 +722,7 @@ as well as the head-direction of the animal. To make it easier to see, we will r
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ex_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">211</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ex_ep</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
@@ -667,6 +732,19 @@ as well as the head-direction of the animal. To make it easier to see, we will r
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-01.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 </section>
 <section id="compute-correlograms">
@@ -695,7 +773,7 @@ To make things easier, we will focus on two pairs of neurons: one pair that fire
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">index</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
 
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
 <span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
@@ -715,6 +793,19 @@ To make things easier, we will focus on two pairs of neurons: one pair that fire
 </div>
 </div>
 </div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-02.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
 <p>As you can see, the pair of neurons that fire for the same direction have a positive correlation at time lag 0, meaning they tend to fire together.
 The pair of neurons that fire for opposite directions have a negative correlation at time lag 0, meaning when one neuron fires, the other does not.</p>
 <p>Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.</p>
@@ -730,7 +821,7 @@ The pair of neurons that fire for opposite directions have a negative correlatio
 and the pair of neurons that fire for opposite directions.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">231</span><span class="p">)</span>
 <span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">20</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;unit&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Tuning curves&quot;</span><span class="p">)</span>
@@ -754,6 +845,19 @@ and the pair of neurons that fire for opposite directions.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-03.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.</p>
 </section>
@@ -830,10 +934,23 @@ count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the size of the spike history window in seconds</span>
 <span class="n">window_size_sec</span> <span class="o">=</span> <span class="mf">0.8</span>
 
-<span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_history_window</span><span class="p">(</span><span class="n">neuron_count</span><span class="p">,</span> <span class="n">epoch_one_spk</span><span class="p">,</span> <span class="n">window_size_sec</span><span class="p">);</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_history_window</span><span class="p">(</span><span class="n">neuron_count</span><span class="p">,</span> <span class="n">epoch_one_spk</span><span class="p">,</span> <span class="n">window_size_sec</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-04.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>For each time point, we shift our window one bin at the time and vertically stack the spike count history in a matrix.
 Each row of the matrix will be used as the predictors for the rate in the next bin (red narrow rectangle in
@@ -849,7 +966,7 @@ the figure).</p>
 One may think of padding the window (with zeros for example) but this may generate weird border artifacts.
 To avoid that, we can simply restrict our analysis to times <span class="math notranslate nohighlight">\(t\)</span> larger than the window and NaN-pad earlier
 time-points;</p>
-<p>You can construct this feature matrix with the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.HistoryConv.html#nemos.basis.HistoryConv" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code></span></a> basis.</p>
+<p>You can construct this feature matrix with the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.HistoryConv.html#nemos.basis.HistoryConv"><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code></a> basis.</p>
 <p><strong>Question: Can you:</strong>
 - Convert the window size in number of bins (call it <code class="docutils literal notranslate"><span class="pre">window_size</span></code>)
 - Define an <code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> basis covering this window size (call it <code class="docutils literal notranslate"><span class="pre">history_basis</span></code>).
@@ -892,10 +1009,23 @@ dimension are matching our expectation</p>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">suptitle</span> <span class="o">=</span> <span class="s2">&quot;Input feature: Count History&quot;</span>
 <span class="n">neuron_id</span> <span class="o">=</span> <span class="mi">0</span>
-<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_features</span><span class="p">(</span><span class="n">input_feature</span><span class="p">,</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">suptitle</span><span class="p">);</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_features</span><span class="p">(</span><span class="n">input_feature</span><span class="p">,</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">suptitle</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-05.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>As you may see, the time axis is backward, this happens because under the hood, the basis is using the convolution operator which flips the time axis.
 This is equivalent, as we can interpret the result as how much a spike will affect the future rate.
@@ -909,7 +1039,7 @@ We can learn these weights by maximum likelihood by fitting a GLM.</p>
 use the other chunk to assess the model performance. This process is known as “cross-validation”.
 There is no unique strategy on how to cross-validate your model; What works best
 depends on the characteristic of your data (time series or independent samples,
-presence or absence of trials…), and that of your model. Here, for simplicity use the first
+presence or absence of trials), and that of your model. Here, for simplicity use the first
 half of the wake epochs for training and the second half for testing. This is a reasonable
 choice if the statistics of the neural activity does not change during the course of
 the recording. We will learn about better cross-validation strategies with other
@@ -948,7 +1078,7 @@ examples.</p>
 The model should be called <code class="docutils literal notranslate"><span class="pre">model</span></code> from the previous cell.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Spike History Weights&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">),</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GLM raw history 1st Half&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
@@ -958,6 +1088,19 @@ The model should be called <code class="docutils literal notranslate"><span clas
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-06.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>The response in the previous figure seems noise added to a decay, therefore the response
 can be described with fewer degrees of freedom. In other words, it looks like we
@@ -980,7 +1123,7 @@ If we are correct, what would happen if we re-fit the weights on the other half 
 <p>Let’s plot the weights learned on the second half of the data and compare them to those learned on the first half.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Spike History Weights&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">),</span>
          <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GLM raw history 1st Half&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -993,6 +1136,19 @@ If we are correct, what would happen if we re-fit the weights on the other half 
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-07.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>What can we conclude?</p>
 <p>The fast fluctuations are inconsistent across fits, indicating that
@@ -1010,10 +1166,23 @@ For history-type inputs, we’ll use again the raised cosine log-stretched basis
 <a class="reference external" href="https://www.jneurosci.org/content/25/47/11003">Pillow et al., 2005</a>.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_basis</span><span class="p">();</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_basis</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-08.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>We can initialize the <code class="docutils literal notranslate"><span class="pre">RaisedCosineLogConv</span></code> by providing the number of basis functions
 and the window size for the convolution. With more basis functions, we’ll be able to represent
@@ -1068,10 +1237,23 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 <span class="n">epoch_one_spk</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="mf">8917.5</span><span class="p">,</span> <span class="mf">8918.5</span><span class="p">)</span>
 <span class="n">epoch_multi_spk</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="mf">8979.2</span><span class="p">,</span> <span class="mf">8980.2</span><span class="p">)</span>
 
-<span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_convolved_counts</span><span class="p">(</span><span class="n">neuron_count</span><span class="p">,</span> <span class="n">conv_spk</span><span class="p">,</span> <span class="n">epoch_one_spk</span><span class="p">,</span> <span class="n">epoch_multi_spk</span><span class="p">);</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_convolved_counts</span><span class="p">(</span><span class="n">neuron_count</span><span class="p">,</span> <span class="n">conv_spk</span><span class="p">,</span> <span class="n">epoch_one_spk</span><span class="p">,</span> <span class="n">epoch_multi_spk</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-09.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 </section>
 <section id="fit-a-glm-with-basis-features-with-reduced-dimensionality">
@@ -1087,7 +1269,7 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 </div>
 </div>
 </div>
-<p>We can plot the resulting response, noting that the weights we just learned needs to be “expanded” back
+<p id="head-direction-basis-presenters">We can plot the resulting response, noting that the weights we just learned needs to be “expanded” back
 to the original <code class="docutils literal notranslate"><span class="pre">window_size</span></code> dimension by multiplying them with the basis kernels.
 We have now 8 coefficients,</p>
 <div class="cell tag_render-all docutils container">
@@ -1132,7 +1314,7 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">window_size</span><span class="p">)</span> <span class="o">/</span> <span class="n">count</span><span class="o">.</span><span class="n">rate</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Spike History Weights&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">),</span> <span class="s2">&quot;k&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GLM raw history 1st half&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">model_second_half</span><span class="o">.</span><span class="n">coef_</span><span class="p">),</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;GLM raw history 2nd half&quot;</span><span class="p">)</span>
@@ -1145,6 +1327,19 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-10.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>Let’s see if the basis model improves prediction of the firing rate. Here we will compare the firing rate predicted
 by the two models on the whole dataset. The model should be called <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">model_basis</span></code> from the previous cells.</p>
@@ -1165,13 +1360,26 @@ by the two models on the whole dataset. The model should be called <code class="
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">8819.4</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8821</span><span class="p">)</span>
 <span class="c1"># plot the rates</span>
-<span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
     <span class="p">{</span><span class="s2">&quot;Self-connection raw history&quot;</span><span class="p">:</span><span class="n">rate_history</span><span class="p">,</span> <span class="s2">&quot;Self-connection basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">}</span>
 <span class="p">);</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-11.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 </section>
 <section id="all-to-all-connectivity">
@@ -1215,9 +1423,9 @@ This can be done by passing the population counts to the <code class="docutils l
 </div>
 </section>
 <section id="fitting-the-model">
-<h4>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h4>
+<span id="head-direction-fit-presenters"></span><h4>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h4>
 <p>This is an all-to-all neurons model.
-We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM" title="nemos 0.2.5"><span class="xref myst"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></span></a> to fit the whole population at once.</p>
+We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></a> to fit the whole population at once.</p>
 <p>Once we condition on past activity, log-likelihood of the population is the sum of the log-likelihood</p>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
@@ -1258,12 +1466,25 @@ We are using the class <a class="reference external" href="https://nemos.readthe
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># use pynapple for time axis for all variables plotted for tick labels in imshow</span>
-<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_head_direction_tuning_model</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> 
+<span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_head_direction_tuning_model</span><span class="p">(</span><span class="n">tuning_curves</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">angle</span><span class="p">,</span> 
                                                 <span class="n">predicted_firing_rate</span><span class="p">,</span> <span class="n">threshold_hz</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
                                                 <span class="n">start</span><span class="o">=</span><span class="mi">8910</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8960</span><span class="p">,</span> <span class="n">cmap_label</span><span class="o">=</span><span class="s2">&quot;hsv&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-12.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 <p>Let’s see if our firing rate predictions improved and in what sense.</p>
 <div class="cell tag_render-all docutils container">
@@ -1277,6 +1498,19 @@ We are using the class <a class="reference external" href="https://nemos.readthe
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-13.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 </section>
 <section id="visualizing-the-connectivity">
@@ -1338,6 +1572,19 @@ all the coupling filters.</p>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-14.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
 </div>
 </section>
 </section>

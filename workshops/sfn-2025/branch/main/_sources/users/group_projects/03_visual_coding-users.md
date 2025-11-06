@@ -10,6 +10,7 @@ kernelspec:
   language: python
   name: python3
 
+
 ---
 ```{code-cell} ipython3
 :tags: [hide-input, render-all]
@@ -24,23 +25,16 @@ warnings.filterwarnings(
     message="plotting functions contained within `_documentation_utils` are intended for nemos's documentation.",
     category=UserWarning,
 )
-
-warnings.filterwarnings(
-    "ignore",
-    message="Converting 'd' to numpy.array",
-    category=UserWarning,
-)
 ```
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`visual_coding.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`03_visual_coding-users.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
-# Exploring the Visual Coding Dataset
+# Exploring the Allen Institute's Visual Coding dataset
 This notebook has had all its explanatory text removed and has not been run.
- It is intended to be downloaded and run locally (or on the provided binder)
- while listening to the presenter's explanation. In order to see the fully
- rendered of this notebook, go [here](../../full/group_projects/03_visual_coding.md)
+ It is intended to be downloaded and run locally (or on the provided binder),
+ working through the questions with your small group.
 
 
 This notebook serves as a group project: in groups of 4 or 5, you will analyze data from the [Visual Coding - Neuropixels dataset](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels), published by the Allen Institute. This dataset uses [extracellular electrophysiology probes](https://www.nature.com/articles/nature24636) to record spikes from multiple regions in the brain during passive visual stimulation.
@@ -68,6 +62,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pynapple as nap
 
+# configure pynapple to ignore conversion warning
+nap.nap_config.suppress_conversion_warnings = True
+
 import nemos as nmo
 
 # some helper plotting functions
@@ -92,7 +89,7 @@ First we download and load the data into pynapple.
 :tags: [render-all]
 
 data = workshop_utils.fetch_data("visual_coding_data.zip")
-flashes, units = [nap.load_file(d) for d in data]
+flashes, units = [nap.load_file(d) for d in sorted(data)]
 ```
 
 
@@ -143,7 +140,7 @@ plt.xlim(start-.1,end)
 
 In this section, we will select a subset of the neurons that are visually responsive, which we will fit our GLM to.
 
-First, we'll construct a {class}`~pynapple.IntervalSet` called `extended_flashes` which contains the peristimulus time. Right now, our `flashes` `IntervalSet` defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.
+First, we'll construct a [IntervalSet](https://pynapple.org/generated/pynapple.IntervalSet.html) called `extended_flashes` which contains the peristimulus time. Right now, our `flashes` `IntervalSet` defines the start and end time for the flashes. In order to make sure we can model the pre-stimulus baseline and any responses to the stimulus being turned off, we would like to expand these intervals to go from 500 msecs before the start of the stimuli to 500 msecs after the end.
 
 This `IntervalSet` will be the same shape as `flashes` and have the same metadata columns.
 
@@ -194,9 +191,11 @@ selected_units = selected_units[(selected_units["rate"]>2.0)]
 ```
 
 
-Now, in order to determine the responsiveness of the units, it's helpful to use the {func}`~pynapple.process.perievent.compute_perievent` function: this will align units' spiking timestamps with the onset of the stimulus repetitions and take an average over them.
+Now, in order to determine the responsiveness of the units, it's helpful to use the [compute_perievent](https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent) function: this will align units' spiking timestamps with the onset of the stimulus repetitions and take an average over them.
 
 Let's use that function to construct two separate perievent dictionaries, one aligned to the start of the white stimuli, one aligned to the start of the black, and they should run from 250 msec before to 500 msec after the event.
+
+(compute-perievent-users)=
 
 
 ```{code-cell} ipython3
@@ -395,7 +394,7 @@ plot_raster_psth(peri_white, selected_units, "white", n_units=len(peri_white))
 
 As we've seen throughout this workshop, it is important to avoid overfitting your model. We've covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.
 
-You might find it helpful to refer back to the [advanced nemos](sklearn-cv) notebook and / or to use the following pynapple functions: {func}`~pynapple.IntervalSet.set_diff`, {func}`~pynapple.IntervalSet.union`, {func}`~pynapple.TsGroup.restrict` (see [phase precession notebook](phase-precess-cv)).
+You might find it helpful to refer back to the [advanced nemos ("How to know when to regularize" header)](sklearn-cv-full) notebook and / or to use the following pynapple functions: [IntervalSet.set_diff](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html), [IntervalSet.union](https://pynapple.org/generated/pynapple.IntervalSet.union.html), [TsGroup.restrict](https://pynapple.org/generated/pynapple.TsGroup.restrict.html) (see [phase precession notebook ("Aside: Cross-validation" admonition)](phase-precess-cv-users)).
 
 :::{admonition} Hints
 :class: hint
@@ -409,10 +408,11 @@ Throughout the rest of the notebook we'll include hints. They'll either be links
 # enter code here
 ```
 
+(visual-glm-users)=
 ## Fit a GLM
 
 
-In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in [the advanced nemos notebook](sklearn-feature-selection) to evaluate whether which predictors are necessary for your model, which are the most important.
+In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in [the advanced nemos notebook ("Feature selection" header)](sklearn-feature-selection-full) to evaluate whether which predictors are necessary for your model, which are the most important.
 
 You don't have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.
 
@@ -423,48 +423,76 @@ Good luck and we look forward to seeing what you come up with!
 ### Prepare data
 
 
-- Create spike count data. (Hint: review the [current injection notebook](current-inj-basic).)
+- Decide on bin size and create spike count data. (Hint: review the [current injection notebook ("Extending the model to use injection history" header)](current-inj-basic-full).)
 
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+bin_size = 
+units_counts = 
 ```
 
 ### Construct design matrix
 
 
 - Decide on feature(s).
-- Decide on basis. (Hint: review the [current injection](current-inj-basis) or [place cell](sklearn-basis) notebooks.)
+    - The code block below constructs `stim`, a `TsdFrame` containing 1s whenever the stimulus is being presented (in separate columns for white and black).
+    - You can use this, but you may also want to perform additional computations on `stim` to construct other features.
+- Decide on basis. (Hint: review the [current injection ("Extending the model to use injection history")](current-inj-basis-full) or [place cell ("Select basis" header)](sklearn-basis-full) notebooks.)
     - If you set the `label` argument for your basis objects, interpreting the output will be easier.
-- Construct design matrix. (Hint: review the [place cell](basis_eval_place_cells) notebook.)
+- Construct design matrix. (Hint: review the [place cell ("Basis evaluation" header)](basis-eval-place-cells-users) notebook.)
 
 :::{admonition} What features should I include?
 :class: hint dropdown
 
 If you're having trouble coming up with features to include, here are some possibilities:
-- Stimulus. (Review the [current injection](current-inj-prep) notebook.)
-- Stimulus onset. (Hint: you can use {func}`numpy.diff` to find when the stimulus transitions from off to on.)
-- Stimulus offset. (Hint: you can use {func}`numpy.diff` to find when the stimulus transitions from on to off.)
-- For multiple neurons: neuron-to-neuron coupling. (Refer back to the [the head direction notebook from the first day](head_direction_fit) to see an example of fitting coupling filters.)
+- Stimulus, using `stim`. (Review the [current injection ("Preparing data" header)](current-inj-prep-full) notebook.)
+- Stimulus onset. (Hint: you can use [numpy.diff](https://numpy.org/doc/stable/reference/generated/numpy.diff.html) to find when the stimulus transitions from off to on.)
+- Stimulus offset. (Hint: you can use [numpy.diff](https://numpy.org/doc/stable/reference/generated/numpy.diff.html) to find when the stimulus transitions from on to off.)
+- For multiple neurons: neuron-to-neuron coupling, using `units_counts`. (Refer back to the [the head direction notebook from the first day ("Fitting the Model" header)](head-direction-fit-users) to see an example of fitting coupling filters.)
 
 For the stimuli predictors, you probably want to model white and black separately.
 
 :::
 
 
+```{code-cell} ipython3
+:tags: [render-all]
+
+# Create a TsdFrame filled by zeros, for the size of units_counts
+stim = nap.TsdFrame(
+    t=units_counts.t,
+    d=np.zeros((len(units_counts), 2)), 
+    columns = ['white', 'black']
+)
+
+# Check whether there is a flash within a given bin of spikes
+idx_white = flashes_white.in_interval(units_counts)
+idx_black = flashes_black.in_interval(units_counts)
+
+# Put a 1 at those locations
+stim.d[~np.isnan(idx_white), 0] = 1
+stim.d[~np.isnan(idx_black), 1] = 1
+```
+### Construct and fit your model
+
+
+- Decide on regularization. (Hint: review [Edoardo's presentation](https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf) and the [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebook.)
+- Initialize GLM. (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full) or [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebooks.)
+- Call fit.  (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full) or [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebooks.)
+
+
 ```{code-cell}
 # enter code here
 ```
 
-### Construct and fit your model
+### Visualize model PSTH
 
+- Generate model predictions (remember to compute to spikes / sec!). (Hint: )
+- Compute model PSTHs. (Note that you should use [compute_perievent_continuous](https://pynapple.org/generated/pynapple.process.perievent.html#pynapple.process.perievent.compute_perievent_continuous) here! Otherwise, this looks very similar to our PSTH calculation [above](compute-perievent-users).)
+- Visualize these PSTHs. 
 
-- Decide on regularization. (Hint: review Edoardo's presentation and the [place cell](sklearn-cv) notebook.)
-- Initialize GLM. (Hint: review the [current injection](current-inj-glm) or [place cell](sklearn-cv) notebooks.)
-- Call fit. (Hint: review the [current injection](current-inj-glm) or [place cell](sklearn-cv) notebooks.)
-- Visualize result on PSTHs. (Note that you should use {func}`~pynapple.process.perievent.compute_perievent_continuous` and the model predictions here! Otherwise, this looks very similar to our PSTH calculation above.)
-
-When you go to plot the PSTH from model predictions and compare them against regular data, the following helper function should help (it works for one or multiple neurons).
+The following helper function should help with the visualization step (it works for one or multiple neurons).
 
 
 ```{code-cell} ipython3
@@ -546,7 +574,7 @@ def plot_pop_psth(
 ```
 
 
-The following cell shows you how to call this visualization function. Its arguments are:
+The following cell shows you how to call this visualization function for a PSTH computed from a `GLM` (i.e., single neuron fit). Its arguments are:
 - The PSTH object computed from the data. This should only contain the responses to either the black or white flashes, but can contain the PSTHs from one or more-than-one neurons.
 - A string, either `"white"` or `"black"`, which determines some of the styling.
 - Any number of keyword arguments (e.g., `predictions=` shown below) whose values are a tuple of `(style, peri)`, where `style` is a valid matplotlib style (e.g., `"red"`) and `peri` is additional PSTHs to plot. Expected use is, as below, to plot the predictions in a different color on top of the actual data.
@@ -562,11 +590,59 @@ plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_
 # enter code here
 ```
 
+### Visualize learned model filters
+
+
+- "Expand" model coefficients into filters.
+- Visualize these filters.
+
+When using basis functions, GLM coefficients are hard to interpret directly. Recall in the [current injection (search for "Visualize the current history model's learned filter")](visualize-filter-full) and [head direction (search for "We can plot the resluting response,")](head-direction-basis-users) notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using [numpy.matmul](https://numpy.org/doc/stable/reference/generated/numpy.matmul.html) or [numpy.einsum](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html).
+
+If you get stuck here, you can expand the following dropdown to see a hint and then expand the one after that to see a possible way of doing this.
+
+:::{admonition} How to compute the filters?
+:class: hint dropdown
+
+There are two components here:
+
+1. If you've used a single basis object, your `GLM` will have weights of shape `(n_basis_funcs,)` (equivalently, a `PopulationGLM` will have weights of shape `(n_basis_funcs, n_neurons)`). If you call your basis's [`evaluate_on_grid`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.RaisedCosineLogConv.evaluate_on_grid.html#nemos.basis.RaisedCosineLogConv.evaluate_on_grid) method, you'll get back an array of shape `(window_size, n_basis_funcs)` containing the basis functions. You can then use either [numpy.matmul](https://numpy.org/doc/stable/reference/generated/numpy.matmul.html) or [numpy.einsum](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html) to multiply the weights by the functions, computing the filter.
+
+2. If you've used more than one basis object, how do you know which weights correspond to which basis? 
+
+    You can slice the weights yourselves: each basis will have `n_basis_funcs` weights associated with it (where this is the argument passed on initialization and also an attribute of the object), and so you can do some algebra to figure out which weights correspond to which basis.
+
+    However, if you have used a single [AdditiveBasis](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.html) object to construct your GLM, you can take advantage of its [`split_by_feature` method](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.split_by_feature.html#nemos.basis._basis.AdditiveBasis.split_by_feature) to do the splitting for you.
+
+:::
+
+:::{admonition} Code to compute the filters
+:class: hint dropdown
+
+If you have used a single [AdditiveBasis](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.html) object to construct your GLM (called `additive_basis` in the following), you can take advantage of its [`split_by_feature` method](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.split_by_feature.html#nemos.basis._basis.AdditiveBasis.split_by_feature):
+
+```{code-block} python
+weights = additive_basis.split_by_feature(model.coef_, 0)
+filters = {}
+for k, v in weights.items():
+    this_basis = additive_basis[k]
+    _, this_basis = this_basis.evaluate_on_grid(this_basis.window_size)
+    filters[k] = np.matmul(this_basis, v)
+```
+
+`filters` is then a dictionary whose keys match the `label` of each basis object and whose values are numpy arrays.
+
+:::
+
+
+```{code-cell}
+# enter code here
+```
+
 ### Score your model
 
 
 - We trained on the train set, so now we score on the test set. (Or use cross-validation.)
-- Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the [current injection](current-inj-score) or [place cell](sklearn-cv) notebook.)
+- Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebook.)
 
 
 ```{code-cell}
@@ -576,9 +652,9 @@ plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_
 ### Try to improve your model?
 
 
-- Go back to the beginning of [this section](visual-glm) and try to improve your model's performance (as reflected by increased score).
+- Go back to the beginning of [this section](visual-glm-users) and try to improve your model's performance (as reflected by increased score).
 - Keep track of what you've tried and their respective scores. 
-    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), as we've seen in the [advanced nemos notebook](sklearn-cv), is useful:
+    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), as we've seen in the [place cell ("How to know when to regularize?" header)](sklearn-cv-full), is useful:
 
 
 ```{code-cell} ipython3

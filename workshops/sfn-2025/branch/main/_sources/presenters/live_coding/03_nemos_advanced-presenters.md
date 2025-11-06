@@ -44,10 +44,11 @@ warnings.filterwarnings(
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`nemos_advanced.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`03_nemos_advanced-presenters.ipynb`**. See the button at the top right to download as markdown or pdf.
 
 :::
 
+(sklearn-nb-presenters)=
 # NeMoS Advanced: Cross-Validation and Model Selection
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
@@ -269,6 +270,7 @@ print("Are the design matrices equivalent?", np.all(X.d == X_numpy.d))
 
 ## Scikit-learn
 
+(sklearn-cv-presenters)=
 ### How to know when to regularize?
 
 
@@ -326,6 +328,7 @@ cv.fit(X, count)
 pd.DataFrame(cv.cv_results_)
 ```
 
+(sklearn-basis-presenters)=
 ### Select basis
 
 
@@ -379,7 +382,7 @@ If the basis has more than one component (for example, if it is the addition of 
 
 **Case 1)** One input per component:
 
-```{code-block} ipython3
+```{code-block} python
 # generate a composite basis
 basis_2d = nmo.basis.MSplineEval(5) + nmo.basis.MSplineEval(5)
 basis_2d = basis_2d.to_transformer()
@@ -397,8 +400,7 @@ result = basis_2d.transform(X)
 - This is because the basis doesn't know which component should process which column. 
 
 
-```{code-block} ipython3
-:tags: [raises-exception, render-all]
+```{code-block} python
 
 # Assume 2 input for the first component and 3 for the second.
 x, y = np.random.randn(10, 2), np.random.randn(10, 3)
@@ -409,7 +411,7 @@ res = basis_2d.transform(X)  # This will raise an exception!
 
 To prevent that, use `set_input_shape` to define how many inputs each component should process.
 
-```{code-block} ipython3
+```{code-block} python
 # Set the expected input shape instead, different options:
 
 # array
@@ -603,6 +605,7 @@ best_estim
 visualize_model_predictions(best_estim, transformer_input)
 ```
 
+(sklearn-feature-selection-presenters)=
 ## Feature selection
 
 
@@ -745,7 +748,9 @@ Suggestions:
 - Extend the model by including theta phase as a predictor
 - Use the NeMoS [MultiplicativeBasis](https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html) to capture interactions between theta phase and position
 
+
 ## References
+
 
 The data in this tutorial comes from [Grosmark, Andres D., and György Buzsáki. "Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences." Science 351.6280 (2016): 1440-1443](https://www.science.org/doi/full/10.1126/science.aad1935).
 

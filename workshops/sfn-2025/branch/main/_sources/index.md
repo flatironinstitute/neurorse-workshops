@@ -10,7 +10,7 @@ We are excited to see everyone at the Flatiron Center for Computational Neurosci
 
 Over the course of this two-day workshop, we will walk you through the notebooks included on this site in order to demonstrate how to use pynapple and NeMoS to analyze and visualize your data.
 
-Before the workshop, please try to follow the [setup](#setup) instructions below to install everything on your personal laptop. If you run into issues, first check the [](#troubleshooting) section on this page to see if there's a solution for your problem and then, if you are unable to solve the problem, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
+Before the workshop, please try to follow the [setup](setup) instructions below to install everything on your personal laptop. If you run into issues, first check the [troubleshooting](troubleshooting) section on this page to see if there's a solution for your problem and then, if you are unable to solve the problem, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
 
 We will use [jupyter lab](https://jupyterlab.readthedocs.io/en/latest/) throughout the workshop. If you are unfamiliar with jupyter lab, please come to our "Intro to Jupyter Lab" session at 4:30pm in the Omni San Diego Hotel, Gallery 1, at 4:30pm on Wednesday, November 12.
 
@@ -18,12 +18,21 @@ The presentations and schedule for this workshop can be found at [this page](htt
 
 ## This website
 
-This website contains rendered versions of the notebooks we will be working through during this workshop. During the workshop, attendees should look at the versions found under the `For users` section. These notebooks have some code pre-filled, as well as brief notes to help orient you. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.
+This website contains rendered versions of the notebooks we will be working through during this workshop. Several different versions of the notebooks are presented in the sidebar:
 
-If you miss something or fall behind, you can look into the `For presenters` section, which includes the completed code blocks (along with some notes), so you can catch up.
+- The `Full notebooks` section shows versions of the live coding notebook that include explanatory text, code, and plots. These are intended for you to check out after the workshop or to send to your labmates, so you can see everything that we covered.
 
-After the workshop, we encourage you to return and check out the `Full notebooks` section, which, as the name implies, includes everything: explanatory text, code, and plots.
+- The `Group projects` section contains the notebooks you will be working through during the group project sections of the workshop. They contain some pre-filled code, some notes, and a lot of problems that you will be solving as a group. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.
 
+- The `Limited live coding notebooks` section contains two different versions of the live coding notebooks:
+   
+   - `For users` contains the notebooks you attendees should be working though. These notebooks have some code pre-filled, as well as brief notes to help orient you. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.
+   
+   - `For presenters` is there to help if you miss something or fall behind. These notebooks includes the completed code blocks (along with some notes), so you can catch up.
+
+We also have completed versions of the group projects notebooks; if you are interested, ask us after the workshop and we will send them to you.
+
+(setup)=
 ## Setup
 
 Before the workshop, please try to complete the following steps. If you are unable to do so, we have an installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12. Please come by!
@@ -159,7 +168,7 @@ Open up `powershell`, then:
     python scripts/check_setup.py
     ```
 
-If `check_setup.py` tells you setup was successful, check that you can run `jupyter lab notebooks/day2/current_injection-users.ipynb` and run the first few cells (up until the one containing `path = workshop_utils.fetch_data("allen_478498617.nwb")`). If that all works, then you're good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.
+If `check_setup.py` tells you setup was successful, check that you can run `jupyter lab notebooks/live_coding/02_current_injection-users.ipynb` and run the first few cells (up until the one containing `path = workshop_utils.fetch_data("allen_478498617.nwb")`). If that all works, then you're good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.
 
 After doing the above, the `data/` and `notebooks/` directories within your local copy of the `ccn-software-sfn-2025` repository will contain the NWB files and jupyter notebooks for the workshop.
 
@@ -211,9 +220,9 @@ jupyter lab
 
 ### **Optional**: Install pynaviz
 
-During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.io/pynaviz/) a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.
+During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.io/pynaviz/), a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.
 
-**This section is optional.** If you would like to run pynaviz on your machine, follow the steps outlined here, but if you do not, you will still be able to watch and follow along. As `pynaviz` is under active development, there is a higher chance that you will have installation issues here (especially if you have a Windows machine). If this installation fails and you would like help trying to get it working, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
+**This installation section is optional.** If you would like to run pynaviz on your machine, follow the steps outlined here, but if you do not, you will still be able to watch and follow along. As `pynaviz` is under active development, there is a higher chance that you will have installation issues here (especially if you have a Windows machine). If this installation fails and you would like help trying to get it working, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.
 
 1. Install pynaviz with the pyqt backend:
     ::::::{tab-set}
@@ -269,6 +278,7 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
     
     ![pynaviz window](pynaviz.png)
 
+(troubleshooting)=
 ## Troubleshooting
 
 - If you are on Mac and get an error related to `ruamel.yaml` (or `clang`) when running `pip install -e .`, we think this can be fixed by updating your Xcode Command Line Tools.
@@ -327,6 +337,12 @@ Some usage notes:
 - This is important because if you restart the image, **you will lose all data and progress**.
 - The binder will be shutdown automatically after 1 day of inactivity or 7 days of total usage. Data will not persist after the binder instance shuts down, so **please download any notebooks** you want to keep.
 - I will destroy this instance in 2 weeks. You can download your notebooks to keep them after the fact.
+
+```{toctree}
+:titlesonly:
+cheatsheet.md
+can_you_read.md
+```
 
 ```{toctree}
 :glob:

@@ -1,5 +1,6 @@
 ---
 no-search:
+orphan:
 ---
 
 # Super secret group project reference

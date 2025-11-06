@@ -43,10 +43,10 @@ warnings.filterwarnings(
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`current_injection.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`02_current_injection.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
 
-# Introduction to GLM
+# Introduction to GLM and NeMoS
 
 For our first example, we will look at a very simple dataset: patch-clamp
 recordings from a single neuron in layer 4 of mouse primary visual cortex. This
@@ -338,7 +338,7 @@ ax.set_ylabel("Current (pA)")
 ax.set_xlabel("Time (s)")
 ```
 
-(current-inj-basic)=
+(current-inj-basic-full)=
 ### Basic analyses
 
 Before using the Generalized Linear Model, or any model, it's worth taking
@@ -520,7 +520,7 @@ explain:
 
 ## NeMoS 
 
-(current-inj-prep)=
+(current-inj-prep-full)=
 ### Preparing data
 
 Now that we understand our data, we're almost ready to put the model together.
@@ -604,13 +604,12 @@ In this example, we're only fitting data for a single neuron, but you
 might wonder how the data should be shaped if you have more than one
 neuron.
 
-We will discuss this in more detail in the [following
-tutorial](head_direction.md), but briefly: NeMoS has a separate
-[`PopulationGLM`](nemos.glm.PopulationGLM) object for fitting a population of
-neurons. It operates very similarly to the `GLM` object we use here: it still
-expects a 2d input, with neurons concatenated along the second dimension. (NeMoS
-provides some helper functions for splitting the design matrix and model
-parameter arrays to make them more interpretable.)
+NeMoS has a separate
+[`PopulationGLM`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html#nemos.glm.PopulationGLM)
+object for fitting a population of neurons. It operates very similarly to the
+`GLM` object we use here: it still expects a 2d input, with neurons concatenated
+along the second dimension. (NeMoS provides some helper functions for splitting
+the design matrix and model parameter arrays to make them more interpretable.)
 
 Note that, with a generalized linear model, fitting each neuron separately is
 equivalent to fitting the entire population at once. Fitting them separately can
@@ -618,7 +617,7 @@ make your life easier by e.g., allowing you to parallelize more easily.
 
 :::
 
-(current-inj-glm)=
+(current-inj-glm-full)=
 ### Fitting the model
 
 Now we're ready to fit our model!
@@ -638,7 +637,8 @@ model. All of these are optional.
 - `solver_name`: this string specifies the solver algorithm. The default
   behavior depends on the regularizer, as each regularization scheme is only
   compatible with a subset of possible solvers. View the [GLM
-  docstring](nemos.glm.GLM) for more details.
+  docstring](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.html#nemos.glm.GLM)
+  for more details.
 
 :::{warning}
 
@@ -653,16 +653,16 @@ solutions compare.
   about the parameters, such as sparsity. Regularization becomes more important
   as the number of input features, and thus model parameters, grows. NeMoS's
   solvers can be found within the [`nemos.regularizer`
-  module](regularizers). If you pass a string matching the name
-  of one of our solvers, we initialize the solver with the default arguments. If
-  you need more control, you will need to initialize and pass the object
-  yourself.
+  module](https://nemos.readthedocs.io/en/latest/api_reference.html#the-nemos-regularizer-module).
+  If you pass a string matching the name of one of our solvers, we initialize
+  the solver with the default arguments. If you need more control, you will need
+  to initialize and pass the object yourself.
 
 - `observation_model`: this object links the firing rate and the observed data
   (in this case spikes), describing the distribution of neural activity (and
   thus changing the log-likelihood). For spiking data, we use the Poisson
   observation model, but we discuss other options for continuous data in our
-  [documentation](tutorial-calcium-imaging).
+  [documentation](https://nemos.readthedocs.io/en/latest/tutorials/plot_06_calcium_imaging.html).
 
 For this example, we'll use an un-regularized LBFGS solver. We'll discuss
 regularization in a later tutorial.
@@ -721,10 +721,11 @@ print(f"intercept_ shape: {model.intercept_.shape}")
 It's nice to get the parameters above, but we can't tell how well our model
 is doing by looking at them. So how should we evaluate our model?
 
-First, we can use the model to predict the firing rates and compare that to
-the smoothed spike train. By calling [`predict()`](nemos.glm.GLM.predict) we can get the model's
-predicted firing rate for this data. Note that this is just the output of the
-model's linear-nonlinear step, as described earlier!
+First, we can use the model to predict the firing rates and compare that to the
+smoothed spike train. By calling
+[`predict()`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html)
+we can get the model's predicted firing rate for this data. Note that this is
+just the output of the model's linear-nonlinear step, as described earlier!
 
 <div class="render-user render-presenter">
 - generate and examine model predictions.
@@ -810,7 +811,7 @@ Viewing this plot also makes it clear that the model's tuning curve is
 approximately exponential. We already knew that! That's what it means to be a
 LNP model of a single input. But it's nice to see it made explicit.
 
-(current-inj-basis)=
+(current-inj-basis-full)=
 ### Extending the model to use injection history
 
 We can try extending the model in order to improve its performance. There are many
@@ -863,10 +864,11 @@ A better idea is to do some dimensionality reduction on these predictors, by
 parametrizing them using **basis functions**. These will allow us to capture
 interesting non-linear effects with a relatively low-dimensional parametrization
 that preserves convexity. NeMoS has a whole library of basis objects available
-at [`nmo.basis`](table_basis), and choosing which set of basis functions and
-their parameters, like choosing the duration of the current history predictor,
-requires knowledge of your problem, but can later be examined using model
-comparison tools.
+at
+[`nmo.basis`](https://nemos.readthedocs.io/en/latest/background/basis/README.html),
+and choosing which set of basis functions and their parameters, like choosing
+the duration of the current history predictor, requires knowledge of your
+problem, but can later be examined using model comparison tools.
 
 For history-type inputs like we're discussing, the raised cosine log-stretched basis
 first described in Pillow et al., 2005 [^pillow] is a good fit. This basis set has the nice
@@ -1030,6 +1032,7 @@ rate.
 
 <div class="render-user render-presenter">
 
+(visualize-filter-full)=
 - Visualize the current history model's learned filter.
 - This filter is convolved with the input current and used to predict the firing
   rate.
@@ -1137,12 +1140,11 @@ overfitting and so, while the difference is small here, it's possible that
 including the extra parameters has made us more sensitive to noise. To properly
 investigate whether that's the case, one should split the dataset into test and
 train sets, training the model on one subset of the data and testing it on
-another to test the model's generalizability. We'll see a simple version of this
-in the [next notebook](./head_direction.md), and a more streamlined version,
+another to test the model's generalizability. We'll see a version of this
 using `scikit-learn`'s pipelining and cross-validation machinery, will be shown
-in the [final notebook](./place_cells_part_2).
+in the [NeMoS Advanced notebook](sklearn-nb-full).
 
-(current-inj-score)=
+(current-inj-score-full)=
 ### Finishing up
 
 Note that, because the log-likelihood is un-normalized, it should not be compared
@@ -1208,7 +1210,7 @@ We could try adding the following inputs to the model, alone or together:
   current and the firing rate. Can we improve that somehow? We saw that adding
   the current history changed this relationship, but we can also change it
   without including the history by using an `Eval` basis object. We'll see how
-  to do this in more detail in the [final notebook](./place_cells_part_2)
+  to do this in more detail in the [final notebook](sklearn-basis-full)
 
 <div class="render-all">
 

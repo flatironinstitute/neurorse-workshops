@@ -20,7 +20,7 @@ kernelspec:
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`fundamentals_of_pynapple.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`01_fundamentals_of_pynapple.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
 
 

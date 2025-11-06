@@ -41,9 +41,9 @@ warnings.filterwarnings(
 :::{admonition} Download
 :class: important render-all
 
-This notebook can be downloaded as **{nb-download}`current_injection.ipynb`**. See the button at the top right to download as markdown or pdf.
+This notebook can be downloaded as **{nb-download}`02_current_injection-users.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
-# Introduction to GLM
+# Introduction to GLM and NeMoS
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
@@ -203,6 +203,7 @@ ax.plot(spikes.to_tsd([-5]), "|", color="k", ms = 10)
 ax.set_ylabel("Current (pA)")
 ax.set_xlabel("Time (s)")
 ```
+(current-inj-basic-users)=
 ### Basic analyses
 
 The Generalized Linear Model gives a predicted firing rate. First we can use pynapple to visualize this firing rate for a single trial.
@@ -262,6 +263,7 @@ Let's plot the tuning curve of the neuron.
 doc_plots.tuning_curve_plot(tuning_curve);
 ```
 ## NeMoS 
+(current-inj-prep-users)=
 ### Preparing data
 
 Get data from pynapple to NeMoS-ready format:
@@ -279,6 +281,7 @@ Get data from pynapple to NeMoS-ready format:
 # enter code here
 ```
 
+(current-inj-glm-users)=
 ### Fitting the model
 
 - GLM objects need regularizers and observation models
@@ -315,6 +318,7 @@ Get data from pynapple to NeMoS-ready format:
 # enter code here
 ```
 
+(current-inj-basis-users)=
 ### Extending the model to use injection history
 
   - choose a length of time over which the neuron integrates the input current
@@ -367,6 +371,7 @@ print(f"firing_rate(t) = exp({history_model.coef_} * current(t) + {history_model
 ```
 
 
+(visualize-filter-users)=
 - Visualize the current history model's learned filter.
 - This filter is convolved with the input current and used to predict the firing
   rate.
@@ -418,6 +423,7 @@ fig.axes[0].legend()
 # enter code here
 ```
 
+(current-inj-score-users)=
 ### Finishing up
 
   - what if you want to compare models across datasets?

@@ -57,7 +57,7 @@
     <link rel="icon" href="_static/ccn_small.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Learning the fundamentals of pynapple" href="full/live_coding/01_fundamentals_of_pynapple.html" />
+    <link rel="next" title="Cheatsheet and reference" href="cheatsheet.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -215,17 +215,36 @@
                 </a>
             </li>
         </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="full/live_coding/02_current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
 </ul>
 
     </div>
@@ -425,17 +444,26 @@ document.write(`
 <h1>CCN Software Workshop, SfN 2025<a class="headerlink" href="#ccn-software-workshop-sfn-2025" title="Link to this heading">#</a></h1>
 <p>We are excited to see everyone at the Flatiron Center for Computational Neuroscience workshop on using open source packages to analyze and visualize neural data! You should have received an email with logistical information, including the schedule and link to the slack channel where we will be communicating the workshop. If you did not receive this email, please let us know!</p>
 <p>Over the course of this two-day workshop, we will walk you through the notebooks included on this site in order to demonstrate how to use pynapple and NeMoS to analyze and visualize your data.</p>
-<p>Before the workshop, please try to follow the <a class="reference internal" href="#setup"><span class="xref myst">setup</span></a> instructions below to install everything on your personal laptop. If you run into issues, first check the <a class="reference internal" href="#troubleshooting"><code class="xref myst docutils literal notranslate"><span class="pre">troubleshooting</span></code></a> section on this page to see if there’s a solution for your problem and then, if you are unable to solve the problem, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.</p>
+<p>Before the workshop, please try to follow the <a class="reference internal" href="#setup"><span class="std std-ref">setup</span></a> instructions below to install everything on your personal laptop. If you run into issues, first check the <a class="reference internal" href="#troubleshooting"><span class="std std-ref">troubleshooting</span></a> section on this page to see if there’s a solution for your problem and then, if you are unable to solve the problem, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.</p>
 <p>We will use <a class="reference external" href="https://jupyterlab.readthedocs.io/en/latest/">jupyter lab</a> throughout the workshop. If you are unfamiliar with jupyter lab, please come to our “Intro to Jupyter Lab” session at 4:30pm in the Omni San Diego Hotel, Gallery 1, at 4:30pm on Wednesday, November 12.</p>
 <p>The presentations and schedule for this workshop can be found at <a class="reference external" href="https://neurorse.flatironinstitute.org/workshops/sfn-2025.html">this page</a>.</p>
 <section id="this-website">
 <h2>This website<a class="headerlink" href="#this-website" title="Link to this heading">#</a></h2>
-<p>This website contains rendered versions of the notebooks we will be working through during this workshop. During the workshop, attendees should look at the versions found under the <code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">users</span></code> section. These notebooks have some code pre-filled, as well as brief notes to help orient you. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.</p>
-<p>If you miss something or fall behind, you can look into the <code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">presenters</span></code> section, which includes the completed code blocks (along with some notes), so you can catch up.</p>
-<p>After the workshop, we encourage you to return and check out the <code class="docutils literal notranslate"><span class="pre">Full</span> <span class="pre">notebooks</span></code> section, which, as the name implies, includes everything: explanatory text, code, and plots.</p>
+<p>This website contains rendered versions of the notebooks we will be working through during this workshop. Several different versions of the notebooks are presented in the sidebar:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Full</span> <span class="pre">notebooks</span></code> section shows versions of the live coding notebook that include explanatory text, code, and plots. These are intended for you to check out after the workshop or to send to your labmates, so you can see everything that we covered.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Group</span> <span class="pre">projects</span></code> section contains the notebooks you will be working through during the group project sections of the workshop. They contain some pre-filled code, some notes, and a lot of problems that you will be solving as a group. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">Limited</span> <span class="pre">live</span> <span class="pre">coding</span> <span class="pre">notebooks</span></code> section contains two different versions of the live coding notebooks:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">users</span></code> contains the notebooks you attendees should be working though. These notebooks have some code pre-filled, as well as brief notes to help orient you. If you follow the setup instructions below, you will have editable copies of these notebooks on your laptop, and you are expected to follow along using these notebooks.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">For</span> <span class="pre">presenters</span></code> is there to help if you miss something or fall behind. These notebooks includes the completed code blocks (along with some notes), so you can catch up.</p></li>
+</ul>
+</li>
+</ul>
+<p>We also have completed versions of the group projects notebooks; if you are interested, ask us after the workshop and we will send them to you.</p>
 </section>
 <section id="setup">
-<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<span id="id1"></span><h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
 <p>Before the workshop, please try to complete the following steps. If you are unable to do so, we have an installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12. Please come by!</p>
 <ol class="arabic" start="0">
 <li><p>Make sure you have <code class="docutils literal notranslate"><span class="pre">git</span></code> installed. It is installed by default on most Mac and Linux machines, but you may need to install it if you are on Windows. <a class="reference external" href="https://github.com/git-guides/install-git">These instructions</a> should help.</p></li>
@@ -567,7 +595,7 @@ conda</label><div class="sd-tab-content docutils">
 </div>
 </li>
 </ol>
-<p>If <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> tells you setup was successful, check that you can run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span> <span class="pre">notebooks/day2/current_injection-users.ipynb</span></code> and run the first few cells (up until the one containing <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">workshop_utils.fetch_data(&quot;allen_478498617.nwb&quot;)</span></code>). If that all works, then you’re good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">check_setup.py</span></code> tells you setup was successful, check that you can run <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span> <span class="pre">notebooks/live_coding/02_current_injection-users.ipynb</span></code> and run the first few cells (up until the one containing <code class="docutils literal notranslate"><span class="pre">path</span> <span class="pre">=</span> <span class="pre">workshop_utils.fetch_data(&quot;allen_478498617.nwb&quot;)</span></code>). If that all works, then you’re good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.</p>
 <p>After doing the above, the <code class="docutils literal notranslate"><span class="pre">data/</span></code> and <code class="docutils literal notranslate"><span class="pre">notebooks/</span></code> directories within your local copy of the <code class="docutils literal notranslate"><span class="pre">ccn-software-sfn-2025</span></code> repository will contain the NWB files and jupyter notebooks for the workshop.</p>
 <p>On the day of the workshop, we will run through the notebooks in the order they’re listed on this website. To open them, navigate to the <code class="docutils literal notranslate"><span class="pre">notebooks/</span></code> directory, activate your virtual environment and start <code class="docutils literal notranslate"><span class="pre">jupyter</span> <span class="pre">lab</span></code>:</p>
 <div class="sd-tab-set docutils">
@@ -609,8 +637,8 @@ jupyter<span class="w"> </span>lab
 </section>
 <section id="optional-install-pynaviz">
 <h3><strong>Optional</strong>: Install pynaviz<a class="headerlink" href="#optional-install-pynaviz" title="Link to this heading">#</a></h3>
-<p>During the first day, we will demonstrate <a class="reference external" href="https://pynapple-org.github.io/pynaviz/">pynaviz</a> a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.</p>
-<p><strong>This section is optional.</strong> If you would like to run pynaviz on your machine, follow the steps outlined here, but if you do not, you will still be able to watch and follow along. As <code class="docutils literal notranslate"><span class="pre">pynaviz</span></code> is under active development, there is a higher chance that you will have installation issues here (especially if you have a Windows machine). If this installation fails and you would like help trying to get it working, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.</p>
+<p>During the first day, we will demonstrate <a class="reference external" href="https://pynapple-org.github.io/pynaviz/">pynaviz</a>, a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.</p>
+<p><strong>This installation section is optional.</strong> If you would like to run pynaviz on your machine, follow the steps outlined here, but if you do not, you will still be able to watch and follow along. As <code class="docutils literal notranslate"><span class="pre">pynaviz</span></code> is under active development, there is a higher chance that you will have installation issues here (especially if you have a Windows machine). If this installation fails and you would like help trying to get it working, come to our installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12.</p>
 <ol class="arabic">
 <li><p>Install pynaviz with the pyqt backend:</p>
 <div class="sd-tab-set docutils">
@@ -660,7 +688,7 @@ pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot
 </section>
 </section>
 <section id="troubleshooting">
-<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
+<span id="id2"></span><h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading">#</a></h2>
 <ul>
 <li><p>If you are on Mac and get an error related to <code class="docutils literal notranslate"><span class="pre">ruamel.yaml</span></code> (or <code class="docutils literal notranslate"><span class="pre">clang</span></code>) when running <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-e</span> <span class="pre">.</span></code>, we think this can be fixed by updating your Xcode Command Line Tools.</p></li>
 <li><p>On Windows, you may receive an error saying “running scripts is disabled on this system” when trying to activate the virtual environment. If so, run <code class="docutils literal notranslate"><span class="pre">Set-ExecutionPolicy</span> <span class="pre">-Scope</span> <span class="pre">CurrentUser</span></code> and enter <code class="docutils literal notranslate"><span class="pre">Unrestricted</span></code>, then press <code class="docutils literal notranslate"><span class="pre">Y</span></code>. (You may have to do this every time you open powershell.)</p></li>
@@ -727,22 +755,33 @@ To avoid this problem, either make sure you only have one virtual environment ac
 <li><p>I will destroy this instance in 2 weeks. You can download your notebooks to keep them after the fact.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="full/live_coding/02_current_injection.html">Introduction to GLM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/01_head_direction-users.html">Group Project 1 : Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/02_phase_precession-users.html">Group Project 2: Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="users/group_projects/03_visual_coding-users.html">Exploring the Visual Coding Dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="users/index.html">For users (some code, some text)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="presenters/index.html">For presenter reference (all code, no text)</a></li>
+</ul>
 </div>
 </section>
 </section>
@@ -759,11 +798,11 @@ To avoid this problem, either make sure you only have one virtual environment ac
                   
 <div class="prev-next-area">
     <a class="right-next"
-       href="full/live_coding/01_fundamentals_of_pynapple.html"
+       href="cheatsheet.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Learning the fundamentals of pynapple</p>
+        <p class="prev-next-title">Cheatsheet and reference</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
