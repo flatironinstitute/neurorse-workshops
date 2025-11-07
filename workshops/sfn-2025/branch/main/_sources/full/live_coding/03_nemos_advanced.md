@@ -199,11 +199,12 @@ print(position.shape)
 
 ### Extract Speed per Epoch
 
-In the next block, we compute the speed of the animal for each epoch (i.e. crossing of the linear track) by doing the difference of two consecutive position multiplied by the sampling rate of the position.
+In the next block, we compute the speed of the animal for each epoch (i.e. crossing of the linear track) by taking the temporal derivative of the position. You can use the pynapple method [`derivative`](https://pynapple.org/generated/pynapple.Tsd.derivative.html) that computes an approximate derivative.
 
 <div class="render-user render-presenter">
 
 - Compute the animal's speed.
+- Visualize tuning curves to speed and position.
 
 </div>
 
@@ -211,23 +212,12 @@ In the next block, we compute the speed of the animal for each epoch (i.e. cross
 ```{code-cell} ipython3
 :tags: [render-all]
 
-speed = []
-# Analyzing each epoch separately avoids edge effects.
-for s, e in position.time_support.values: 
-    pos_ep = position.get(s, e)
-    # Absolute difference of two consecutive points
-    speed_ep = np.abs(np.diff(pos_ep)) 
-    # Padding the edge so that the size is the same as the position/spike counts
-    speed_ep = np.pad(speed_ep, [0, 1], mode="edge") 
-    # Converting to cm/s 
-    speed_ep = speed_ep * position.rate
-    speed.append(speed_ep)
-
-speed = nap.Tsd(t=position.t, d=np.hstack(speed), time_support=position.time_support)
+speed = position.derivative()
 print(speed.shape)
 
 # utility function to visualize predictions
 tc_speed = nap.compute_tuning_curves(spikes, speed, bins=20, epochs=speed.time_support, feature_names=["speed"])
+fig = workshop_utils.plot_position_speed(position, speed, place_fields, tc_speed, neurons);
 
 def visualize_model_predictions(glm, X):
     # predict the model's firing rate
@@ -253,7 +243,7 @@ def visualize_model_predictions(glm, X):
 
 position_basis = nmo.basis.MSplineEval(n_basis_funcs=10, label="position")
 speed_basis = nmo.basis.MSplineEval(n_basis_funcs=15, label="speed")
-workshop_utils.plot_pos_speed_bases(position_basis, speed_basis)
+workshop_utils.plot_pos_speed_bases(position_basis, speed_basis);
 ```
 
 ## Basis Composition
@@ -325,15 +315,13 @@ This object requires an estimator, our `glm` object here, and `param_grid`, a di
 # configurations of the PopulationGLM
 solver_kwargs={"tol": 1e-12}
 solver_name="LBFGS"
-# define a Ridge regularized GLM
-glm = 
-# get the design matrix
-X = 
+# define a Ridge regularized PopulationGLM
+glm =
 ```
 </div>
 
 ```{code-cell} ipython3
-# define a Ridge GLM
+# define a Ridge PopulationGLM
 glm = nmo.glm.PopulationGLM(
     regularizer="Ridge",
     solver_kwargs={"tol": 1e-12},
@@ -347,7 +335,7 @@ param_grid = {
 
 <div class="render-user render-presenter">
 
-- Initialize scikit-learn's [`GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) object.
+- Initialize scikit-learn's [`model_selection.GridSearchCV`](https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV) object. 
 
 </div>
 
@@ -820,34 +808,27 @@ Let's define the bases for our three models:
 
 <div class="render-user">
 ```{code-cell} ipython3
-# define the 1D transformer bases (note: no labels needed here)
-position_bas = 
-speed_bas =
 # combine them to define each model
 basis_all = 
 basis_position = 
 basis_speed =
 # assign labels (optional but helpful for readability)
-basis_all.label = 
-basis_position.label = 
-basis_speed.label = 
+basis_all.label = "position + speed"
+basis_position.label = "position only"
+basis_speed.label = "speed only"
 ```
 </div>
 
 ```{code-cell} ipython3
-# define the 1D transformer bases (note: no labels needed here)
-position_bas = nmo.basis.MSplineEval(n_basis_funcs=10).to_transformer()
-speed_bas = nmo.basis.MSplineEval(n_basis_funcs=15).to_transformer()
-
 # combine them to define each model
-basis_all = position_bas + speed_bas
-basis_position = position_bas + null_basis
-basis_speed = null_basis + speed_bas
+basis_all = (position_basis + speed_basis).to_transformer()
+basis_position = (position_basis + null_basis).to_transformer()
+basis_speed = (null_basis + speed_basis).to_transformer()
 
 # assign labels (optional but helpful for readability)
 basis_all.label = "position + speed"
-basis_position.label = "position"
-basis_speed.label = "speed"
+basis_position.label = "position only"
+basis_speed.label = "speed only"
 ```
 
 <div class="render-user render-presenter">
@@ -940,7 +921,7 @@ cv_df[["param_basis__basis", "mean_test_score", "rank_test_score"]]
 ```
 
 <div class="render-all">
-Unsurprisingly, position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
+Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
 </div>
 
 ### Next Steps

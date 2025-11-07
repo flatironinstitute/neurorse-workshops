@@ -607,26 +607,16 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <h3>Extract Speed per Epoch<a class="headerlink" href="#extract-speed-per-epoch" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Compute the animal’s speed.</p></li>
+<li><p>Visualize tuning curves to speed and position.</p></li>
 </ul>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">speed</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="c1"># Analyzing each epoch separately avoids edge effects.</span>
-<span class="k">for</span> <span class="n">s</span><span class="p">,</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="o">.</span><span class="n">values</span><span class="p">:</span> 
-    <span class="n">pos_ep</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-    <span class="c1"># Absolute difference of two consecutive points</span>
-    <span class="n">speed_ep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">pos_ep</span><span class="p">))</span> 
-    <span class="c1"># Padding the edge so that the size is the same as the position/spike counts</span>
-    <span class="n">speed_ep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">speed_ep</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">mode</span><span class="o">=</span><span class="s2">&quot;edge&quot;</span><span class="p">)</span> 
-    <span class="c1"># Converting to cm/s </span>
-    <span class="n">speed_ep</span> <span class="o">=</span> <span class="n">speed_ep</span> <span class="o">*</span> <span class="n">position</span><span class="o">.</span><span class="n">rate</span>
-    <span class="n">speed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">speed_ep</span><span class="p">)</span>
-
-<span class="n">speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">Tsd</span><span class="p">(</span><span class="n">t</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">t</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">speed</span><span class="p">),</span> <span class="n">time_support</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">speed</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">derivative</span><span class="p">()</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">speed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 
 <span class="c1"># utility function to visualize predictions</span>
 <span class="n">tc_speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">speed</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">neurons</span><span class="p">);</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">visualize_model_predictions</span><span class="p">(</span><span class="n">glm</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
     <span class="c1"># predict the model&#39;s firing rate</span>
@@ -651,7 +641,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">position_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
 <span class="n">speed_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">)</span>
-<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">)</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -691,16 +681,14 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># configurations of the PopulationGLM</span>
 <span class="n">solver_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="mf">1e-12</span><span class="p">}</span>
 <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span>
-<span class="c1"># define a Ridge regularized GLM</span>
-<span class="n">glm</span> <span class="o">=</span> 
-<span class="c1"># get the design matrix</span>
-<span class="n">X</span> <span class="o">=</span> 
+<span class="c1"># define a Ridge regularized PopulationGLM</span>
+<span class="n">glm</span> <span class="o">=</span>
 </pre></div>
 </div>
 </div>
 </div>
 <ul class="simple">
-<li><p>Initialize scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV"><code class="docutils literal notranslate"><span class="pre">GridSearchCV</span></code></a> object.</p></li>
+<li><p>Initialize scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV"><code class="docutils literal notranslate"><span class="pre">model_selection.GridSearchCV</span></code></a> object.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1015,17 +1003,14 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the 1D transformer bases (note: no labels needed here)</span>
-<span class="n">position_bas</span> <span class="o">=</span> 
-<span class="n">speed_bas</span> <span class="o">=</span>
-<span class="c1"># combine them to define each model</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># combine them to define each model</span>
 <span class="n">basis_all</span> <span class="o">=</span> 
 <span class="n">basis_position</span> <span class="o">=</span> 
 <span class="n">basis_speed</span> <span class="o">=</span>
 <span class="c1"># assign labels (optional but helpful for readability)</span>
-<span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
-<span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
-<span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> 
+<span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position + speed&quot;</span>
+<span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position only&quot;</span>
+<span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;speed only&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1089,7 +1074,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </div>
-<p>Unsurprisingly, position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.</p>
+<p>Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.</p>
 <section id="next-steps">
 <h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
 <p>For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons.</p>
