@@ -65,21 +65,18 @@ There are many ways to set up a python virtual environment. You can use your fav
    ```
    
 2. Restart your terminal to make sure `uv` is available.
+
 3. Install python 3.12:
    ```shell
    uv python install 3.12
    ```
    
-4. Navigate to your cloned repo and create a new virtual environment:
+4. Navigate to your cloned repo:
    ```shell
    cd ccn-software-sfn-2025
-   uv venv -p 3.12
    ```
    
-5. Activate your new virtual environment by running:
-   ```shell
-   source .venv/bin/activate
-   ```
+There's no need to create a virtual environment, since `uv` will handle that for you!
 ::::
 
 ::::{tab-item} Windows
@@ -91,21 +88,18 @@ Open up `powershell`, then:
    ```powershell
    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
    ```
+
 2. Install python 3.12:
    ```powershell
    uv python install 3.12
    ```
    
-3. Navigate to your cloned repo and create a new virtual environment:
+3. Navigate to your cloned repo:
    ```powershell
    cd ccn-software-sfn-2025
-   uv venv -p 3.12
    ```
    
-4. Activate your new virtual environment by running:
-   ```powershell
-   .venv\Scripts\activate
-   ```
+There's no need to create a virtual environment, since `uv` will handle that for you!
 
    :::{warning}
    You may receive an error saying "running scripts is disabled on this system". If so, run `Set-ExecutionPolicy -Scope CurrentUser` and enter `Unrestricted`, then press `Y`.
@@ -122,7 +116,7 @@ Open up `powershell`, then:
 :sync: conda
 
 1. Install [miniforge](https://github.com/conda-forge/miniforge) if you do not have some version of `conda` or `mamba` installed already.
-2. Create the new virtual environment by running:
+2. Open up a terminal and create the new virtual environment by running (**WINDOWS USERS**: use the `Miniforge Prompt` or `Anaconda Prompt` that comes packaged with the miniforge/anaconda/miniconda install):
     ```shell
     conda create --name ccn-sfn2025 pip python=3.12
     ```
@@ -137,42 +131,54 @@ Open up `powershell`, then:
 :::::::
 
 #### Install dependencies and setup notebooks
+
+The following instructions will make sure everything is installed correctly, and will download the data and notebooks used during the workshop.
     
+::::{tab-set}
+:sync-group: category
+
+:::{tab-item} uv
+:sync: uv
+
+1. Run our setup script to download data and prepare the notebooks. With `uv`, this will download all the required packages and dependencies as well:
+```shell
+uv run scripts/setup.py
+```
+
+2. Confirm the installation and setup completed correctly by running:
+```shell
+uv run scripts/check_setup.py
+```
+:::
+
+:::{tab-item} conda
+:sync: conda
+
 1. Install the required dependencies. This will install pynapple and nemos, as well as jupyter and several other packages.
-    ::::{tab-set}
-    :sync-group: category
-    
-    :::{tab-item} uv
-    :sync: uv
-
-    ```shell
-    uv pip install -e .
-    ```
-    :::
-
-    :::{tab-item} conda
-    :sync: conda
-
-    ```shell
-    pip install -e .
-    ```
-    :::
-    ::::
+```shell
+pip install -e .
+```
 
 2. Run our setup script to download data and prepare the notebooks:
-    ```shell
-    python scripts/setup.py
-    ```
+```shell
+python scripts/setup.py
+```
+
 3. Confirm the installation and setup completed correctly by running:
-    ```shell
-    python scripts/check_setup.py
-    ```
+```shell
+python scripts/check_setup.py
+```
+
+:::
+::::
+
+
 
 If `check_setup.py` tells you setup was successful, check that you can run `jupyter lab notebooks/live_coding/02_current_injection-users.ipynb` and run the first few cells (up until the one containing `path = workshop_utils.fetch_data("allen_478498617.nwb")`). If that all works, then you're good to go. Otherwise, please come to the installation help session on Wednesday, so everyone is ready to get started Thursday morning.
 
 After doing the above, the `data/` and `notebooks/` directories within your local copy of the `ccn-software-sfn-2025` repository will contain the NWB files and jupyter notebooks for the workshop.
 
-On the day of the workshop, we will run through the notebooks in the order they're listed on this website. To open them, navigate to the `notebooks/` directory, activate your virtual environment and start `jupyter lab`:
+On the day of the workshop, we will run through the notebooks in the order they're listed on this website. To open them, navigate to the `notebooks/` directory, activate your virtual environment (if using conda/mamba), and start `jupyter lab`:
 
 ::::::{tab-set}
 :sync-group: category
@@ -180,28 +186,10 @@ On the day of the workshop, we will run through the notebooks in the order they'
 :::::{tab-item} uv
 :sync: uv
 
-::::{tab-set}
-:sync-group: os
-
-:::{tab-item} Mac/Linux
-:sync: posix
-
 ```shell
 cd path/to/ccn-software-sfn-2025/notebooks
-source ../.venv/bin/activate
-jupyter lab
+uv run jupyter lab
 ```
-:::
-
-:::{tab-item} Windows
-:sync: windows
-
-```powershell
-cd path\to\ccn-software-sfn-2025\notebooks
-..\.venv\Scripts\activate
-jupyter lab
-```
-:::
 
 :::::
 
@@ -231,28 +219,15 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
     :::::{tab-item} uv
     :sync: uv
     
-    ::::{tab-set}
-    :sync-group: os
-    
-    :::{tab-item} Mac/Linux
-    :sync: posix
-    
     ```shell
     cd path/to/ccn-software-sfn-2025
-    source .venv/bin/activate
     uv pip install "pynaviz[qt]"
     ```
-    :::
-    
-    :::{tab-item} Windows
-    :sync: windows
-    
-    ```powershell
-    cd path\to\ccn-software-sfn-2025
-    .venv\Scripts\activate
-    uv pip install "pynaviz[qt]"
+
+    2. Run `scripts/test_pynaviz.py`.
+    ```shell
+    uv run scripts/test_pynaviz.py
     ```
-    :::
     
     :::::
     
@@ -264,15 +239,15 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
     conda activate ccn-sfn25
     pip install "pynaviz[qt]"
     ```
+
+    2. Run `scripts/test_pynaviz.py`.
+    ```shell
+    python scripts/test_pynaviz.py
+    ```
     
     :::::
     
     ::::::
-    
-2. Run `scripts/test_pynaviz.py`.
-    ```shell
-    python scripts/test_pynaviz.py
-    ```
     
     You should see a window that looks like the following pop up, display for about 5 seconds, and then close.
     
@@ -296,7 +271,7 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
    ```
    conda : The term 'conda' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was included, verify that the path is correct and try again.
    ```
-  In this case, you can try the following steps:
+  First, make sure you're running all `conda` commands in either `Miniforge Prompt` or `Anaconda Prompt`, depending on which is installed. Otherwise, if you want to use powershell, you can try the following steps:
   - Locate the path to the `condabin` folder. The path should look like: `some-folder-path\Miniforge3\condabin`. 
   
     The following powershell command could be useful (note that i am starting form C: as a root, but you can change that): 
