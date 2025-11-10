@@ -301,6 +301,9 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
 - On an ARM-based (newer) Mac using `conda`, during `check_setup.py`, if you get `This version of jaxlib was built using AVX instructions,` uninstall using pip and install using conda: `pip uninstall jax jaxlib`; `conda install -c conda-forge jax jaxlib`.
     - If not using `conda`, not sure how to avoid this issue, you may have to switch.
 - If you see a `ModuleNotFoundError: No module named '_sqlite3'` or `ModuleNotFoundError: No module named pysqlite2` when running `scripts/setup.py` or `jupyter lab`, [this is likely a sign that your python installation was not properly built](https://github.com/jupyterhub/jupyterhub/issues/1594). Reinstalling the python interpreter may help. How to do this depends on whether you are using uv or conda; come to the installation help session for assistance.
+(jax-out-of-memory)=
+- If you have an NVIDIA GPU and jax is configured to use it, when running the import blocks you may get a warning about being out of memory and then a big scary-looking error that says `XlaRuntimeError: INTERNAL: No supported devices found for platofrm CUDA`. This happens because the GPU has run out of memory: if you re-run the import block, it will run without a problem and then you can run the rest of the notebook (jax will just use the CPU and so be slightly slower). Alternatively, you can free up space on your GPU, probably by [shutting down the kernels of notebooks you are no longer using](https://jupyterlab.readthedocs.io/en/stable/user/running.html) (**NOTE**: this is not the same thing as just closing the notebook).
+    - By default, jax [pre-allocates memory](https://docs.jax.dev/en/latest/gpu_memory_allocation.html) aggressively. We have tried to disable this behavior (by setting the environmental variable `XLA_PYTHON_CLIENT_PREALLOCATE=false`), but that depends on running `import workshop_utils` before `import jax` or `import nemos` (this has been done in our notebooks, but you may run into this issue on your own).
 
 
 ## Binder
@@ -315,6 +318,7 @@ Some usage notes:
 - This is important because if you restart the image, **you will lose all data and progress**.
 - The binder will be shutdown automatically after 1 day of inactivity or 7 days of total usage. Data will not persist after the binder instance shuts down, so **please download any notebooks** you want to keep.
 - I will destroy this instance in 2 weeks. You can download your notebooks to keep them after the fact.
+- You may run out of memory, see [comment above](jax-out-of-memory).
 
 ```{toctree}
 :titlesonly:
