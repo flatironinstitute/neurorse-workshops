@@ -51,10 +51,10 @@ If an import fails, you can do `!pip install pynapple matplotlib` in a cell to f
 ```{code-cell} ipython3
 :tags: [render-all]
 
+import workshop_utils
 import pynapple as nap
 import matplotlib.pyplot as plt
 import numpy as np
-import workshop_utils
 ```
 
 For this notebook we will work with fake data. The following cells generate a set of variables that we will use to create the different pynapple objects.

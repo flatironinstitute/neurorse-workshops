@@ -65,6 +65,7 @@ For part 2, we will by applying NeMoS to explore the dataset further by:
 :tags: [render-all]
 
 
+import workshop_utils
 # imports
 import math
 import os
@@ -76,7 +77,6 @@ import scipy as sp
 import seaborn as sns
 import tqdm
 import pynapple as nap
-import workshop_utils
 
 # necessary for animation
 import nemos as nmo

@@ -75,9 +75,9 @@ Let's start by importing all the packages.
 ```{code-cell} ipython3
 :tags: [render-all]
 
+import workshop_utils
 import pynapple as nap
 import matplotlib.pyplot as plt
-import workshop_utils
 import numpy as np
 import nemos as nmo
 

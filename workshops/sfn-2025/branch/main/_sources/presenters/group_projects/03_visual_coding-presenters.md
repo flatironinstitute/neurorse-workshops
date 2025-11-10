@@ -62,6 +62,7 @@ At the end of this session, we will regroup to discuss the decisions people made
 ```{code-cell} ipython3
 :tags: [render-all]
 
+import workshop_utils
 # Import everything
 import jax
 import matplotlib.pyplot as plt
@@ -75,7 +76,6 @@ import nemos as nmo
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
-import workshop_utils
 
 import matplotlib as mpl
 from matplotlib.ticker import MaxNLocator

@@ -76,6 +76,7 @@ Data for this notebook is a patch clamp experiment with a mouse V1 neuron, from 
 ```{code-cell} ipython3
 :tags: [render-all]
 
+import workshop_utils
 # Import everything
 import jax
 import matplotlib.pyplot as plt
@@ -86,7 +87,6 @@ import nemos as nmo
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
-import workshop_utils
 
 # configure plots some
 plt.style.use(nmo.styles.plot_style)

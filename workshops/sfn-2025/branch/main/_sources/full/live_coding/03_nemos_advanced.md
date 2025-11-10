@@ -79,6 +79,7 @@ Let's first load and wrangle the data with pynapple and NeMoS. You can run the f
 ```{code-cell} ipython3
 :tags: [render-all]
 
+import workshop_utils
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -88,7 +89,6 @@ import nemos as nmo
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
-import workshop_utils
 
 # configure plots some
 plt.style.use(nmo.styles.plot_style)
