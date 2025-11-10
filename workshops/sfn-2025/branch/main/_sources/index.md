@@ -118,7 +118,7 @@ There's no need to create a virtual environment, since `uv` will handle that for
 1. Install [miniforge](https://github.com/conda-forge/miniforge) if you do not have some version of `conda` or `mamba` installed already.
 2. Open up a terminal and create the new virtual environment by running (**WINDOWS USERS**: use the `Miniforge Prompt` or `Anaconda Prompt` that comes packaged with the miniforge/anaconda/miniconda install):
     ```shell
-    conda create --name ccn-sfn2025 pip python=3.12
+    conda create --name ccn-sfn25 pip python=3.12
     ```
 
 3. Activate your new environment and navigate to the cloned repo: 
