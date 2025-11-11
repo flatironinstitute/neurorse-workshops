@@ -533,6 +533,9 @@ intrepetation.</p></li>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
 
+<span class="c1"># configure pynapple to ignore conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
 
@@ -542,7 +545,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-10 18:40:36,270:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2025-11-11 18:34:17,855:jax._src.xla_bridge:850: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1551,11 +1554,11 @@ Coordinates:
 Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
-    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-c1e422ce-9e89-4d53-a2ac-e53b20c5c785' class='xr-array-in' type='checkbox' checked><label for='section-c1e422ce-9e89-4d53-a2ac-e53b20c5c785' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    fs:         20000.00000499643</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-bb24abc6-d385-446c-830a-368d4ad42680' class='xr-array-in' type='checkbox' checked><label for='section-bb24abc6-d385-446c-830a-368d4ad42680' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-16af33c4-23eb-4495-8920-0417dccbc988' class='xr-section-summary-in' type='checkbox'  checked><label for='section-16af33c4-23eb-4495-8920-0417dccbc988' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-5c0c61e3-c213-49cd-955a-90f76d0814f8' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-5c0c61e3-c213-49cd-955a-90f76d0814f8' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c5106e9f-45a8-4655-8b12-64881a92e99a' class='xr-var-data-in' type='checkbox'><label for='data-c5106e9f-45a8-4655-8b12-64881a92e99a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-94fd7e1e-508f-49ec-bae0-4d02b27f4d78' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-94fd7e1e-508f-49ec-bae0-4d02b27f4d78' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c5b3c738-d339-463f-bfcc-09d88349dc91' class='xr-var-data-in' type='checkbox'><label for='data-c5b3c738-d339-463f-bfcc-09d88349dc91' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-bbaf09db-097f-4e2a-b32a-31223b9349b4' class='xr-section-summary-in' type='checkbox'  checked><label for='section-bbaf09db-097f-4e2a-b32a-31223b9349b4' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-00d0850b-9ab5-4b53-bd13-b9e8b2fe2427' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-00d0850b-9ab5-4b53-bd13-b9e8b2fe2427' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-7d3db2f6-d1ba-47bf-8f0f-331acadb1041' class='xr-var-data-in' type='checkbox'><label for='data-7d3db2f6-d1ba-47bf-8f0f-331acadb1041' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-92ee6805-63e4-4915-9d2c-16696be95d3d' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-92ee6805-63e4-4915-9d2c-16696be95d3d' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-c513ee15-235a-41e3-b930-b0c213f284bc' class='xr-var-data-in' type='checkbox'><label for='data-c513ee15-235a-41e3-b930-b0c213f284bc' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-277df7e4-4400-42ae-b43a-7d64cc0ce68b' class='xr-section-summary-in' type='checkbox'  checked><label for='section-277df7e4-4400-42ae-b43a-7d64cc0ce68b' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-b50c1154-3ded-4d71-a12c-196d9d7c1f5b' class='xr-section-summary-in' type='checkbox'  checked><label for='section-b50c1154-3ded-4d71-a12c-196d9d7c1f5b' class='xr-section-summary' >Attributes: <span>(3)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -2276,7 +2279,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7fa2de2b2c00&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f28e6916b60&gt;&gt;</td>
         </tr>
     
 
@@ -2407,7 +2410,7 @@ smoothed spike train. By calling
 we can get the model’s predicted firing rate for this data. Note that this is
 just the output of the model’s linear-nonlinear step, as described earlier!</p>
 <div class="render-user render-presenter">
-- generate and examine model predictions.
+- generate model predictions.
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_fr</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">predictor</span><span class="p">)</span>
@@ -2417,8 +2420,15 @@ just the output of the model’s linear-nonlinear step, as described earlier!</p
 
 <span class="c1"># and let&#39;s smooth the firing rate the same way that we smoothed the firing rate</span>
 <span class="n">smooth_predicted_fr</span> <span class="o">=</span> <span class="n">predicted_fr</span><span class="o">.</span><span class="n">smooth</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">size_factor</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-
-<span class="c1"># and plot!</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-user render-presenter">
+- and visualize!
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># and plot!</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">current_injection_plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">firing_rate</span><span class="p">,</span>
                                  <span class="c1"># plot the predicted firing rate that has</span>
                                  <span class="c1"># been smoothed the same way as the</span>
@@ -2428,10 +2438,6 @@ just the output of the model’s linear-nonlinear step, as described earlier!</p
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
-  warnings.warn(
-</pre></div>
-</div>
 <img alt="../../_images/7ab701d13290ec766b25ecfc5d9b2422219a76a78e83f83d00383c4567724d34.png" src="../../_images/7ab701d13290ec766b25ecfc5d9b2422219a76a78e83f83d00383c4567724d34.png" />
 </div>
 </div>
@@ -2458,7 +2464,7 @@ period:</p>
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># compare observed mean firing rate with the model predicted one</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observed mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">count</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">bin_size</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Observed mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">firing_rate</span><span class="p">)</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Predicted mean firing rate: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">)</span><span class="si">}</span><span class="s2"> Hz&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -2480,20 +2486,18 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 - examine tuning curve &mdash; what do we see?
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># pynapple expects the input to this function to be 2d,</span>
-<span class="c1"># so let&#39;s add a singleton dimension</span>
-<span class="n">tuning_curve_model</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span> <span class="n">current</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curve_model</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_fr</span><span class="p">,</span> <span class="n">current</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;current&quot;</span><span class="p">])</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">tuning_curve_plot</span><span class="p">(</span><span class="n">tuning_curve</span><span class="p">)</span>
 <span class="n">tuning_curve_model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">&quot;tomato&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;glm&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa19c265250&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f278c10db20&gt;
 </pre></div>
 </div>
-<img alt="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" src="../../_images/aa6122f978044609f83dd4799dc1836ed284fd688fd502d64bb1292144f359a8.png" />
+<img alt="../../_images/e864e13d254289fa8a5db3d812c48d224d70a35a5ffd06b08f9e12778869d327.png" src="../../_images/e864e13d254289fa8a5db3d812c48d224d70a35a5ffd06b08f9e12778869d327.png" />
 </div>
 </div>
 <p>In addition to making that mismatch discussed earlier a little more obvious,
@@ -2670,10 +2674,6 @@ order to create plots like the type seen above.</p>
 488.7865      0    0    0    0    0  ...
 488.7875      0    0    0    0    0  ...
 dtype: float32, shape: (28020, 8)
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
-  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -3237,7 +3237,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function&nbsp;</td>
-            <td class="value">&lt;PjitFunction...7fa2de2b2c00&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f28e6916b60&gt;&gt;</td>
         </tr>
     
 
@@ -3401,10 +3401,6 @@ rate.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-sfn-2025_main/.venv/lib/python3.12/site-packages/pynapple/core/utils.py:198: UserWarning: Converting &#39;d&#39; to numpy.array. The provided array was of type &#39;ArrayImpl&#39;.
-  warnings.warn(
-</pre></div>
-</div>
 <img alt="../../_images/4895966e7f40fb6e8893cf825482a585fb18f5282cf27a0b2fee71309ecf4556.png" src="../../_images/4895966e7f40fb6e8893cf825482a585fb18f5282cf27a0b2fee71309ecf4556.png" />
 </div>
 </div>
@@ -3447,7 +3443,7 @@ Predicted mean firing rate (current history): 1.5012256160535864 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fa1c8217110&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f27cc131310&gt;
 </pre></div>
 </div>
 <img alt="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" src="../../_images/07a117923204b3e4b5c82ce7d0da45543930b95e815ca491f108b0b215aa3340.png" />

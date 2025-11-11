@@ -505,6 +505,9 @@ intrepetation.</p></li>
 
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
 
+<span class="c1"># configure pynapple to ignore conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
 
@@ -771,11 +774,26 @@ intrepetation.</p></li>
 </div>
 </div>
 <ul class="simple">
-<li><p>generate and examine model predictions.</p></li>
+<li><p>generate model predictions.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>and visualize!</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># and plot!</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">current_injection_plot</span><span class="p">(</span><span class="n">current</span><span class="p">,</span> <span class="n">spikes</span><span class="p">,</span> <span class="n">firing_rate</span><span class="p">,</span>
+                                 <span class="c1"># plot the predicted firing rate that has</span>
+                                 <span class="c1"># been smoothed the same way as the</span>
+                                 <span class="c1"># smoothed spike train</span>
+                                 <span class="n">predicted_firing_rates</span><span class="o">=</span><span class="n">smooth_predicted_fr</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

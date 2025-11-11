@@ -85,6 +85,9 @@ import pynapple as nap
 
 import nemos as nmo
 
+# configure pynapple to ignore conversion warning
+nap.nap_config.suppress_conversion_warnings = True
+
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
 
@@ -372,7 +375,7 @@ print(f"intercept_ shape: {model.intercept_.shape}")
 ```
 
 
-- generate and examine model predictions.
+- generate model predictions.
 
 
 ```{code-cell} ipython3
@@ -383,7 +386,14 @@ predicted_fr = predicted_fr / bin_size
 
 # and let's smooth the firing rate the same way that we smoothed the firing rate
 smooth_predicted_fr = predicted_fr.smooth(0.05, size_factor=20)
+```
 
+
+- and visualize!
+
+
+```{code-cell} ipython3
+:tags: [render-all]
 # and plot!
 fig = doc_plots.current_injection_plot(current, spikes, firing_rate,
                                  # plot the predicted firing rate that has
@@ -398,7 +408,7 @@ fig = doc_plots.current_injection_plot(current, spikes, firing_rate,
 
 ```{code-cell} ipython3
 # compare observed mean firing rate with the model predicted one
-print(f"Observed mean firing rate: {np.mean(count) / bin_size} Hz")
+print(f"Observed mean firing rate: {np.mean(firing_rate)} Hz")
 print(f"Predicted mean firing rate: {np.mean(predicted_fr)} Hz")
 ```
 
@@ -407,12 +417,10 @@ print(f"Predicted mean firing rate: {np.mean(predicted_fr)} Hz")
 
 
 ```{code-cell} ipython3
-# pynapple expects the input to this function to be 2d,
-# so let's add a singleton dimension
-tuning_curve_model = nap.compute_tuning_curves(predicted_fr[:, np.newaxis], current, bins=15, feature_names=["current"])
+tuning_curve_model = nap.compute_tuning_curves(predicted_fr, current, bins=15, feature_names=["current"])
 fig = doc_plots.tuning_curve_plot(tuning_curve)
 tuning_curve_model.plot(color="tomato", label="glm")
-fig.axes[0].legend()
+fig.legend()
 ```
 
 (current-inj-basis-presenters)=

@@ -78,6 +78,9 @@ import pynapple as nap
 
 import nemos as nmo
 
+# configure pynapple to ignore conversion warning
+nap.nap_config.suppress_conversion_warnings = True
+
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
 
@@ -298,12 +301,24 @@ Get data from pynapple to NeMoS-ready format:
 ```
 
 
-- generate and examine model predictions.
+- generate model predictions.
 
 ```{code-cell}
 # enter code here
 ```
 
+
+- and visualize!
+
+```{code-cell} ipython3
+:tags: [render-all]
+# and plot!
+fig = doc_plots.current_injection_plot(current, spikes, firing_rate,
+                                 # plot the predicted firing rate that has
+                                 # been smoothed the same way as the
+                                 # smoothed spike train
+                                 predicted_firing_rates=smooth_predicted_fr)
+```
 
 - what do we see?
 
