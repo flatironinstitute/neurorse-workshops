@@ -339,7 +339,7 @@ In pynapple, we use the function `nap.compute_crosscorrelogram` to compute cross
 
 ```{code-cell} ipython3
 cc_wake = nap.compute_crosscorrelogram(
-    data=, # The neural activity as a TsGroup
+    group=, # The neural activity as a TsGroup
     binsize=, # I suggest 200 ms bin
     windowsize=, # Let's do a 20 s window
     ep= # Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.
@@ -402,7 +402,7 @@ Pairwise correlation were computed during wakefulness. The activity of the neuro
 
 ```{code-cell} ipython3
 cc_sleep = nap.compute_crosscorrelogram(
-    data=, # The neural activity as a TsGroup
+    group=, # The neural activity as a TsGroup
     binsize=, # I suggest 20 ms bin
     windowsize=, # Let's do a 1 s window
     ep= # Which epoch to restrict the cross-correlograms. Here is it should be sleep.

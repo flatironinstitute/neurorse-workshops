@@ -732,7 +732,7 @@ In pynapple, we use the function <code class="docutils literal notranslate"><spa
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc_wake</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">group</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
     <span class="n">binsize</span><span class="o">=</span><span class="p">,</span> <span class="c1"># I suggest 200 ms bin</span>
     <span class="n">windowsize</span><span class="o">=</span><span class="p">,</span> <span class="c1"># Let&#39;s do a 20 s window</span>
     <span class="n">ep</span><span class="o">=</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be wakefulness.</span>
@@ -784,7 +784,7 @@ The pair of neurons that fire for opposite directions have a negative correlatio
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cc_sleep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_crosscorrelogram</span><span class="p">(</span>
-    <span class="n">data</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">group</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
     <span class="n">binsize</span><span class="o">=</span><span class="p">,</span> <span class="c1"># I suggest 20 ms bin</span>
     <span class="n">windowsize</span><span class="o">=</span><span class="p">,</span> <span class="c1"># Let&#39;s do a 1 s window</span>
     <span class="n">ep</span><span class="o">=</span> <span class="c1"># Which epoch to restrict the cross-correlograms. Here is it should be sleep.</span>
