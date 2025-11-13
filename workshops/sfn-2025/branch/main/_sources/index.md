@@ -37,7 +37,7 @@ We also have completed versions of the group projects notebooks; if you are inte
 
 Before the workshop, please try to complete the following steps. If you are unable to do so, we have an installation help session in the Omni San Diego Hotel, Gallery 1, from noon to 6pm on Wednesday, November 12. Please come by!
 
-0. Make sure you have `git` installed. It is installed by default on most Mac and Linux machines, but you may need to install it if you are on Windows. [These instructions](https://github.com/git-guides/install-git) should help.
+0. Make sure you have `git` installed. It is installed by default on most Mac and Linux machines, but you may need to install it if you are on Windows. [These instructions](https://git-scm.com/install/) should help.
 1. Clone the github repo for this workshop:
    ```shell
    git clone https://github.com/flatironinstitute/ccn-software-sfn-2025.git
@@ -304,7 +304,9 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
 (jax-out-of-memory)=
 - If you have an NVIDIA GPU and jax is configured to use it, when running the import blocks you may get a warning about being out of memory and then a big scary-looking error that says `XlaRuntimeError: INTERNAL: No supported devices found for platofrm CUDA`. This happens because the GPU has run out of memory: if you re-run the import block, it will run without a problem and then you can run the rest of the notebook (jax will just use the CPU and so be slightly slower). Alternatively, you can free up space on your GPU, probably by [shutting down the kernels of notebooks you are no longer using](https://jupyterlab.readthedocs.io/en/stable/user/running.html) (**NOTE**: this is not the same thing as just closing the notebook).
     - By default, jax [pre-allocates memory](https://docs.jax.dev/en/latest/gpu_memory_allocation.html) aggressively. We have tried to disable this behavior (by setting the environmental variable `XLA_PYTHON_CLIENT_PREALLOCATE=false`), but that depends on running `import workshop_utils` before `import jax` or `import nemos` (this has been done in our notebooks, but you may run into this issue on your own).
-
+- If you run an import cell in our notebooks and it hangs for a long time, and then you hit "Stop" and the error says something about permission denied, you have a permission issue with your virtual environment. You should either modify the permissions of the folder containing your environment variable (where this folder is and how this should be done depends on which tool you used and your Operating System), or run `jupyter lab` with elevated permissions:
+    - On Windows: Open the start menu and right click on "Anaconda Prompt" or "Powershell" (whichever you use) and click "Run as Administrator". You may also need to open the browser as administrator.
+    - On Mac/Linux: run `sudo jupyter lab` instead of `jupyter lab`.
 
 ## Binder
 
