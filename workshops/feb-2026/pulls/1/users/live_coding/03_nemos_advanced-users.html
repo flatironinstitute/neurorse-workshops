@@ -1,0 +1,1243 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>NeMoS Advanced: Cross-Validation and Model Selection &#8212; CCN software workshop, Feb 2026  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'users/live_coding/03_nemos_advanced-users';</script>
+    <link rel="icon" href="../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="For presenter reference (all code, no text)" href="../../presenters/index.html" />
+    <link rel="prev" title="Introduction to GLM and NeMoS" href="02_current_injection-users.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <script>document.write(`<img src="../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark" alt="Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-feb-2026" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/feb2026?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../jupyter.html">Intro to Jupyter Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../index.html">For users (some code, some text)</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-feb-2026" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/users/live_coding/03_nemos_advanced-users.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>NeMoS Advanced: Cross-Validation and Model Selection</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-Processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#place-fields">Place fields</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-speed-per-epoch">Extract Speed per Epoch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-1d-nemos-bases">Define 1D NeMoS Bases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-composition">Basis Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">Scikit-learn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-know-when-to-regularize">How to know when to regularize?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-basis">Select basis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelines">Pipelines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Ignoring cached namespace &#39;core&#39;&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="p">(</span>
+        <span class="s2">&quot;invalid value encountered in div &quot;</span>
+    <span class="p">),</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">RuntimeWarning</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/89a8e05c8ece48ccaa0ecfdb92cfcc1e/03_nemos_advanced-users.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">03_nemos_advanced-users.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="nemos-advanced-cross-validation-and-model-selection">
+<span id="sklearn-nb-users"></span><h1>NeMoS Advanced: Cross-Validation and Model Selection<a class="headerlink" href="#nemos-advanced-cross-validation-and-model-selection" title="Link to this heading">#</a></h1>
+<p>This notebook has had all its explanatory text removed and has not been run.
+It is intended to be downloaded and run locally (or on the provided binder)
+while listening to the presenter’s explanation. In order to see the fully
+rendered of this notebook, go <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html"><span class="std std-doc">here</span></a></p>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
+<p>In this tutorial we will keep working on the hippocampal place field recordings with the goal of learning how to combine NeMoS and scikit-learn to perform cross-validation and model selection. In particular we will:</p>
+<ul class="simple">
+<li><p>Learn how to use NeMoS objects with <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a> for cross-validation</p></li>
+<li><p>Learn how to use NeMoS objects with scikit-learn <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">pipelines</a></p></li>
+<li><p>Learn how to use cross-validation to perform model and feature selection. More specifically, we will compare models including position and speed as predictors with model including only speed or only position.</p></li>
+</ul>
+</section>
+<section id="pre-processing">
+<h2>Pre-Processing<a class="headerlink" href="#pre-processing" title="Link to this heading">#</a></h2>
+<p>Let’s first load and wrangle the data with pynapple and NeMoS. You can run the following cells for preparing the variables that we are going to use in the notebook and recapitulate the content of this dataset with a few visualizations.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+
+<span class="c1"># some helper plotting functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
+
+<span class="c1"># configure plots some</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">model_selection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn</span><span class="w"> </span><span class="kn">import</span> <span class="n">pipeline</span>
+
+<span class="c1"># shut down jax to numpy conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Load the data using pynapple.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;Achilles_10252013_EEG.nwb&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Extract the spike times and mouse position.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
+<span class="n">position</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Restrict data to when animal was traversing the linear track.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;forward_ep&quot;</span><span class="p">])</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;forward_ep&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Restrict neurons to only excitatory neurons, discarding neurons with a low-firing rate.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">getby_category</span><span class="p">(</span><span class="s2">&quot;cell_type&quot;</span><span class="p">)[</span><span class="s2">&quot;pE&quot;</span><span class="p">]</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">getby_threshold</span><span class="p">(</span><span class="s2">&quot;rate&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="place-fields">
+<h3>Place fields<a class="headerlink" href="#place-fields" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Visualize the <em>place fields</em>: neuronal firing rate as a function of position.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">place_fields</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;distance&quot;</span><span class="p">])</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_place_fields</span><span class="p">(</span><span class="n">place_fields</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>For speed, we’re only going to investigate the three neurons highlighted above.</p></li>
+<li><p>Bin spikes to counts at 100 Hz.</p></li>
+<li><p>Interpolate position to match spike resolution.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">neurons</span> <span class="o">=</span> <span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">220</span><span class="p">]</span>
+<span class="n">place_fields</span> <span class="o">=</span> <span class="n">place_fields</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">neurons</span><span class="p">)</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="p">[</span><span class="n">neurons</span><span class="p">]</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">.01</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">spikes</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+<span class="n">position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">count</span><span class="o">.</span><span class="n">time_support</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="extract-speed-per-epoch">
+<h3>Extract Speed per Epoch<a class="headerlink" href="#extract-speed-per-epoch" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Compute the animal’s speed.</p></li>
+<li><p>Visualize tuning curves to speed and position.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">speed</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">derivative</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">speed</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># utility function to visualize predictions</span>
+<span class="n">tc_speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">speed</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">neurons</span><span class="p">);</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">visualize_model_predictions</span><span class="p">(</span><span class="n">glm</span><span class="p">,</span> <span class="n">X</span><span class="p">):</span>
+    <span class="c1"># predict the model&#39;s firing rate</span>
+    <span class="n">predicted_rate</span> <span class="o">=</span> <span class="n">glm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span>
+
+    <span class="c1"># compute the position and speed tuning curves using the predicted firing rate.</span>
+    <span class="n">glm_pos</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_rate</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+    <span class="n">glm_speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_rate</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+
+    <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_position_speed_tuning</span><span class="p">(</span><span class="n">place_fields</span><span class="p">,</span> <span class="n">tc_speed</span><span class="p">,</span> <span class="n">glm_pos</span><span class="p">,</span> <span class="n">glm_speed</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="define-1d-nemos-bases">
+<h3>Define 1D NeMoS Bases<a class="headerlink" href="#define-1d-nemos-bases" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Define the position and speed bases, and visualize them.</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">position_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
+<span class="n">speed_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">)</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_pos_speed_bases</span><span class="p">(</span><span class="n">position_basis</span><span class="p">,</span> <span class="n">speed_basis</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="basis-composition">
+<h2>Basis Composition<a class="headerlink" href="#basis-composition" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Adding the position and speed bases together defines a 2D basis.</p></li>
+<li><p>Call <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.AdditiveBasis.compute_features.html#nemos.basis._basis.AdditiveBasis.compute_features"><code class="docutils literal notranslate"><span class="pre">compute_features</span></code></a> to define a design matrix that concatenates both features.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># add the bases</span>
+<span class="n">basis</span> <span class="o">=</span> 
+<span class="c1"># get the design matrix</span>
+<span class="n">X</span> <span class="o">=</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="scikit-learn">
+<h2>Scikit-learn<a class="headerlink" href="#scikit-learn" title="Link to this heading">#</a></h2>
+<section id="how-to-know-when-to-regularize">
+<span id="sklearn-cv-users"></span><h3>How to know when to regularize?<a class="headerlink" href="#how-to-know-when-to-regularize" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>How do we decide when to use regularization?</p></li>
+<li><p>Cross-validation allows you to fairly compare different models on the same dataset.</p></li>
+<li><p>NeMoS makes use of <a class="reference external" href="https://scikit-learn.org/">scikit-learn</a>, the standard machine learning library in python.</p></li>
+<li><p>Define <a class="reference external" href="https://scikit-learn.org/stable/modules/grid_search.html#grid-search">parameter grid</a> to search over.</p></li>
+<li><p>Anything not specified in grid will be kept constant.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># configurations of the PopulationGLM</span>
+<span class="n">solver_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;tol&quot;</span><span class="p">:</span> <span class="mf">1e-12</span><span class="p">}</span>
+<span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span>
+<span class="c1"># define a Ridge regularized PopulationGLM</span>
+<span class="n">glm</span> <span class="o">=</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Initialize scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html#sklearn.model_selection.GridSearchCV"><code class="docutils literal notranslate"><span class="pre">model_selection.GridSearchCV</span></code></a> object.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cv_folds</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">cv</span> <span class="o">=</span> 
+<span class="n">cv</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>We interact with this in a very similar way to the glm object.</p></li>
+<li><p>In particular, call <code class="docutils literal notranslate"><span class="pre">fit</span></code> with same arguments:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Let’s investigate results:</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best regularization strength!</p>
+<p>As an exercise, spend 10 minutes trying to find the best regularization strength!</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">glm</span></code> model we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, selecting different values for <code class="docutils literal notranslate"><span class="pre">&quot;regularizer_strength&quot;</span></code>.</p></li>
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+</ul>
+<p>Who can find the best regularization strength?</p>
+<p>If you finish early, try out different regularizers and try to find the best regularization strength for each of them.</p>
+</div>
+</section>
+<section id="select-basis">
+<span id="sklearn-basis-users"></span><h3>Select basis<a class="headerlink" href="#select-basis" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>You can (and should) do something similar to determine how many basis functions you need for each input.</p></li>
+<li><p>NeMoS basis objects are not scikit-learn-compatible right out of the box.</p></li>
+<li><p>But we have provided a simple method to make them so:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># convert basis to transformer</span>
+<span class="n">position_basis</span> <span class="o">=</span> 
+<span class="n">position_basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>This gives the basis object the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform"><code class="docutils literal notranslate"><span class="pre">transform</span></code></a> method, which is equivalent to <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>.</p></li>
+<li><p>However, transformers have some limits:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Transformers only accept 2d inputs, whereas nemos basis objects can accept inputs of any dimensionality.</p></li>
+<li><p>In order to use a basis as a transformer, you’ll need to concatenate all your input in a single 2D array.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header sd-bg-info sd-bg-text-info">
+<span class="sd-summary-icon"><svg version="1.1" width="1.0em" height="1.0em" class="sd-octicon sd-octicon-info" viewBox="0 0 16 16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg></span><span class="sd-summary-text">Other Caveats</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">If the basis has more than one component (for example, if it is the addition of two 1D bases), the transformer will expect an input shape of <code class="docutils literal notranslate"><span class="pre">(n_sampels,</span> <span class="pre">1)</span></code> pre component. If that’s not the case, you’ll provide a different input shape by calling <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code>.</p>
+<p class="sd-card-text"><strong>Case 1)</strong> One input per component:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate a composite basis</span>
+<span class="n">basis_2d</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">+</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">basis_2d</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">to_transformer</span><span class="p">()</span>
+
+<span class="c1"># this will work: 1 input per component</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sd-card-text"><strong>Case 2)</strong> Multiple inputs per component.</p>
+<ul class="simple">
+<li><p class="sd-card-text">If one or more basis process multiple inputs (multiple columns of the 2D array), trying to call the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.transform.html#nemos.basis._transformer_basis.TransformerBasis.transform"><code class="docutils literal notranslate"><span class="pre">transform</span></code></a> method directly will lead to an error.</p></li>
+<li><p class="sd-card-text">This is because the basis doesn’t know which component should process which column.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Assume 2 input for the first component and 3 for the second.</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># This will raise an exception!</span>
+</pre></div>
+</div>
+<p class="sd-card-text">To prevent that, use <code class="docutils literal notranslate"><span class="pre">set_input_shape</span></code> to define how many inputs each component should process.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set the expected input shape instead, different options:</span>
+
+<span class="c1"># array</span>
+<span class="n">res1</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">set_input_shape</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># int</span>
+<span class="n">res2</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">set_input_shape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+<span class="c1"># tuple</span>
+<span class="n">res3</span> <span class="o">=</span> <span class="n">basis_2d</span><span class="o">.</span><span class="n">set_input_shape</span><span class="p">((</span><span class="mi">2</span><span class="p">,),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,))</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details><ul class="simple">
+<li><p>Let’s now create the composite basis for speed and position.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># redefine the basis with label=&quot;position&quot;</span>
+<span class="n">position_basis</span> <span class="o">=</span>
+<span class="c1"># redefine the basis with label=&quot;speed&quot;</span>
+<span class="n">speed_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">MSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">)</span>
+<span class="n">basis</span> <span class="o">=</span> <span class="n">position_basis</span> <span class="o">+</span> <span class="n">speed_basis</span>
+<span class="c1"># convert to transformer</span>
+<span class="n">basis</span> <span class="o">=</span> 
+<span class="n">basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Stack position and speed in a single TsdFrame to hold all our inputs:</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transformer_input</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">position</span><span class="p">,</span> <span class="n">speed</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">,</span>
+    <span class="n">time_support</span><span class="o">=</span><span class="n">position</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;speed&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Pass this input to our transformed additive basis.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="pipelines">
+<h3>Pipelines<a class="headerlink" href="#pipelines" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If we want to cross-validate over the basis, we need more one more step: combining the basis and the GLM into a single scikit-learn estimator.</p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.pipeline.Pipeline.html">Pipelines</a> to the rescue!</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># set the reg strength to the optimal</span>
+<span class="n">glm</span> <span class="o">=</span> 
+<span class="c1"># pipe the basis and the glm</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span>
+<span class="n">pipe</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Pipeline runs <code class="docutils literal notranslate"><span class="pre">basis.transform</span></code>, then passes that output to <code class="docutils literal notranslate"><span class="pre">glm</span></code>, so we can do everything in a single line:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Visualize model predictions!</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_model_predictions</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">transformer_input</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="cross-validating-on-the-basis">
+<h3>Cross-validating on the basis<a class="headerlink" href="#cross-validating-on-the-basis" title="Link to this heading">#</a></h3>
+<p>Now that we have our pipeline estimator, we can cross-validate on any of its parameters!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s cross-validate on:</p>
+<ul class="simple">
+<li><p>The number of the basis functions of the position basis</p></li>
+<li><p>The functional form of the basis for speed</p></li>
+<li><p>Let’s retrieve the those attributes from the pipeline</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># the label of the pipeline step retrieves the basis</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">])</span>
+
+<span class="c1"># the position basis can by retreived by its label</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+
+<span class="c1"># the n_basis_funcs is an attribute</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">n_basis_funcs</span><span class="p">)</span>
+
+<span class="c1"># with the same syntax we can retreive the speed basis</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;basis&quot;</span><span class="p">][</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Construct <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, using <code class="docutils literal notranslate"><span class="pre">__</span></code> to stand in for <code class="docutils literal notranslate"><span class="pre">.</span></code></p></li>
+<li><p>In scikit-learn pipelines, we access nested parameters using double underscores:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">pipe[&quot;basis&quot;][&quot;position&quot;].n_basis_funcs</span></code> - normal Python syntax</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;basis__position__n_basis_funcs&quot;</span></code> - scikit-learn parameter grid syntax</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Cross-validate as before:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the grid search and fit</span>
+<span class="n">cv</span> <span class="o">=</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Investigate results:</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Can easily grab the best estimator, the pipeline that did the best:</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the grid search and fit</span>
+<span class="n">best_estim</span> <span class="o">=</span>
+<span class="n">best_estim</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Visualize model predictions!</p></li>
+</ul>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">visualize_model_predictions</span><span class="p">(</span><span class="n">best_estim</span><span class="p">,</span> <span class="n">transformer_input</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best basis!</p>
+<p>As an exercise, spend 10 minutes exploring the possible basis objects and seeing which performs the best.</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">pipe</span></code> object we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, setting <code class="docutils literal notranslate"><span class="pre">basis__speed</span></code> and <code class="docutils literal notranslate"><span class="pre">basis__position</span></code> (or their attributes, e.g., <code class="docutils literal notranslate"><span class="pre">basis__position__n_basis_funcs</span></code>) to a range of values. Remember that all combinations are tested, so if you e.g., select 5 choices for each, you’ll be testing 25 different combinations!</p></li>
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+<li><p>Finally, visualize the best estimator with <code class="docutils literal notranslate"><span class="pre">visualize_model_predictions(cv.best_estimator_,</span> <span class="pre">transformer_input)</span></code></p></li>
+</ul>
+<p>Who can find the best set of basis objects?</p>
+</div>
+</section>
+</section>
+<section id="feature-selection">
+<span id="sklearn-feature-selection-users"></span><h2>Feature selection<a class="headerlink" href="#feature-selection" title="Link to this heading">#</a></h2>
+<p>Let’s move on to feature selection. Our goal is to compare alternative models: position + speed, position only, or speed only.</p>
+<p>Problem: scikit-learn’s cross-validation assumes the pipeline input stays constant, but each model needs different features. How do we solve this?</p>
+<p>Solution: Use a “null” basis that produces zero features!</p>
+<ul class="simple">
+<li><p>We’ll create this null basis using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_custom_basis/nemos.basis._custom_basis.CustomBasis.html#nemos.basis._custom_basis.CustomBasis"><code class="docutils literal notranslate"><span class="pre">CustomBasis</span></code></a>, which defines a basis from custom functions.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define a function that creates an empty array (n_samples, 0)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">0</span><span class="p">))</span>
+<span class="c1"># create a null transformer basis using the custom basis class</span>
+<span class="n">null_basis</span> <span class="o">=</span>
+<span class="c1"># verify: this creates an empty feature array</span>
+<span class="n">null_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Why is this useful? We can combine <code class="docutils literal notranslate"><span class="pre">null_basis</span></code> with actual bases to create different models that all accept the same input!</p>
+<p>Let’s define the bases for our three models:</p>
+<ul class="simple">
+<li><p>Position + speed: combine position and speed bases</p></li>
+<li><p>Position only: combine position basis with null basis (speed features is empty)</p></li>
+<li><p>Speed only: combine null basis with speed basis (position features is empty)</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># combine them to define each model</span>
+<span class="n">basis_all</span> <span class="o">=</span> 
+<span class="n">basis_position</span> <span class="o">=</span> 
+<span class="n">basis_speed</span> <span class="o">=</span>
+<span class="c1"># assign labels (optional but helpful for readability)</span>
+<span class="n">basis_all</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position + speed&quot;</span>
+<span class="n">basis_position</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;position only&quot;</span>
+<span class="n">basis_speed</span><span class="o">.</span><span class="n">label</span> <span class="o">=</span> <span class="s2">&quot;speed only&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>These bases can all transform the same <code class="docutils literal notranslate"><span class="pre">transformer_input</span></code> (a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> with columns for position and speed), but they generate design matrices with different numbers of features:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># &quot;position + speed&quot; design: 25 features (10 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;position + speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_all</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;position&quot; design: 10 features (10 + 0)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">position design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_position</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># &quot;speed&quot; design: 15 features (0 + 15)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">speed design matrix shape:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">basis_speed</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">transformer_input</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To cross-validate over different basis compositions, we need to understand how they’re stored in our pipeline. The additive basis is stored as a <code class="docutils literal notranslate"><span class="pre">basis</span></code> attribute inside the <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_transformer_basis/nemos.basis._transformer_basis.TransformerBasis.html"><code class="docutils literal notranslate"><span class="pre">TransformerBasis</span></code></a> object:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can create a parameter grid for cross-validation. The key is the string <code class="docutils literal notranslate"><span class="pre">&quot;basis__basis&quot;</span></code>:</p>
+<ul class="simple">
+<li><p>First <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the name of the pipeline step</p></li>
+<li><p>Second <code class="docutils literal notranslate"><span class="pre">basis</span></code>: the attribute of the TransformerBasis object</p></li>
+<li><p>This double-underscore notation is how scikit-learn accesses nested parameters</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># create parameter grid with our three basis compositions</span>
+<span class="n">param_grid</span> <span class="o">=</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define and fit GridSearchCV</span>
+<span class="n">cv</span> <span class="o">=</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s examine the model comparison results:</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cv_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">cv</span><span class="o">.</span><span class="n">cv_results_</span><span class="p">)</span>
+
+<span class="c1"># display the key columns: which basis was used, its score, and ranking</span>
+<span class="n">cv_df</span><span class="p">[[</span><span class="s2">&quot;param_basis__basis&quot;</span><span class="p">,</span> <span class="s2">&quot;mean_test_score&quot;</span><span class="p">,</span> <span class="s2">&quot;rank_test_score&quot;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.</p>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the model!</p>
+<p>In this section, we only compared a single choice of regularization strength and basis objects for each feature. As an exercise, spend 10 minutes combining what we learned here with the earlier sections: for each feature combination (position, speed, position + speed), try several different basis objects and, optionally, different regularization strengths.</p>
+<p>Don’t forget to visualize your model’s predictions!</p>
+<p>Who can find the best model?</p>
+</div>
+<section id="next-steps">
+<h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
+<p>For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons.</p>
+<p>Suggestions:</p>
+<ul class="simple">
+<li><p>Extend the model by including theta phase as a predictor</p></li>
+<li><p>Use the NeMoS <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/_basis/nemos.basis._basis.MultiplicativeBasis.html">MultiplicativeBasis</a> to capture interactions between theta phase and position</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<p>The data in this tutorial comes from <a class="reference external" href="https://www.science.org/doi/full/10.1126/science.aad1935">Grosmark, Andres D., and György Buzsáki. “Diversity in neural firing dynamics supports both rigid and learned hippocampal sequences.” Science 351.6280 (2016): 1440-1443</a>.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="02_current_injection-users.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to GLM and NeMoS</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../../presenters/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">For presenter reference (all code, no text)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning Objectives</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pre-processing">Pre-Processing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#place-fields">Place fields</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extract-speed-per-epoch">Extract Speed per Epoch</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#define-1d-nemos-bases">Define 1D NeMoS Bases</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-composition">Basis Composition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn">Scikit-learn</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-know-when-to-regularize">How to know when to regularize?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#select-basis">Select basis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipelines">Pipelines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validating-on-the-basis">Cross-validating on the basis</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-selection">Feature selection</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
