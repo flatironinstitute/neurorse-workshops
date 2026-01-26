@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
   
@@ -42,14 +42,14 @@
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
@@ -229,6 +229,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
@@ -880,7 +881,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <li><p>Stimulus, using <code class="docutils literal notranslate"><span class="pre">stim</span></code>. (Review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-prep-full"><span class="std std-ref">current injection (“Preparing data” header)</span></a> notebook.)</p></li>
 <li><p>Stimulus onset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html">numpy.diff</a> to find when the stimulus transitions from off to on.)</p></li>
 <li><p>Stimulus offset. (Hint: you can use <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.diff.html">numpy.diff</a> to find when the stimulus transitions from on to off.)</p></li>
-<li><p>For multiple neurons: neuron-to-neuron coupling, using <code class="docutils literal notranslate"><span class="pre">units_counts</span></code>. (Refer back to the <a class="reference internal" href="../../users/group_projects/01_head_direction-users.html#head-direction-fit-users"><span class="std std-ref">the head direction notebook from the first day (“Fitting the Model” header)</span></a> to see an example of fitting coupling filters.)</p></li>
+<li><p>For multiple neurons: neuron-to-neuron coupling, using <code class="docutils literal notranslate"><span class="pre">units_counts</span></code>. (Refer back to the <a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html#head-direction-fit-users"><span class="std std-ref">the head direction notebook from the first day (“Fitting the Model” header)</span></a> to see an example of fitting coupling filters.)</p></li>
 </ul>
 <p>For the stimuli predictors, you probably want to model white and black separately.</p>
 </div>
@@ -1204,7 +1205,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <li><p>“Expand” model coefficients into filters.</p></li>
 <li><p>Visualize these filters.</p></li>
 </ul>
-<p>When using basis functions, GLM coefficients are hard to interpret directly. Recall in the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#visualize-filter-full"><span class="std std-ref">current injection (search for “Visualize the current history model’s learned filter”)</span></a> and <a class="reference internal" href="../../users/group_projects/01_head_direction-users.html#head-direction-basis-users"><span class="std std-ref">head direction (search for “We can plot the resluting response,”)</span></a> notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html">numpy.matmul</a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.einsum.html">numpy.einsum</a>.</p>
+<p>When using basis functions, GLM coefficients are hard to interpret directly. Recall in the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#visualize-filter-full"><span class="std std-ref">current injection (search for “Visualize the current history model’s learned filter”)</span></a> and <a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html#head-direction-basis-users"><span class="std std-ref">head direction (search for “We can plot the resluting response,”)</span></a> notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.matmul.html">numpy.matmul</a> or <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.einsum.html">numpy.einsum</a>.</p>
 <p>If you get stuck here, you can expand the following dropdown to see a hint and then expand the one after that to see a possible way of doing this.</p>
 <div class="hint dropdown admonition">
 <p class="admonition-title">How to compute the filters?</p>

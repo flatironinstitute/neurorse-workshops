@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=eba8b062" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
     <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
   
@@ -42,19 +42,19 @@
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
     <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js?v=1ae7504c"></script>
     <script src="../../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'full/group_projects/02_phase_precession';</script>
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -229,6 +229,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
@@ -570,7 +571,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-13 21:35:10,943:jax._src.xla_bridge:852: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-26 22:26:05,304:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -907,7 +908,7 @@ shape: (1, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f6107b64fb0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff6426f7320&gt;
 </pre></div>
 </div>
 <img alt="../../_images/05cada38655d0d3123694e5497fe489052af4c78f8f21f5edb9ba234eb52c20c.png" src="../../_images/05cada38655d0d3123694e5497fe489052af4c78f8f21f5edb9ba234eb52c20c.png" />
@@ -1207,7 +1208,7 @@ ex_cwt =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f61075d4e60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff62be24fb0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/4b3c0fdb13264a2ba2172eb4db6f38adc3496428236c109a3e03175c336078db.png" src="../../_images/4b3c0fdb13264a2ba2172eb4db6f38adc3496428236c109a3e03175c336078db.png" />
@@ -1388,7 +1389,7 @@ dtype: float64, shape: (240384,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f6107539af0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff62bea1040&gt;
 </pre></div>
 </div>
 <img alt="../../_images/0214f25a0ca64d7c210c1c2e689730414f4f4541b78eacfc959a84e3b4cfc974.png" src="../../_images/0214f25a0ca64d7c210c1c2e689730414f4f4541b78eacfc959a84e3b4cfc974.png" />
@@ -1546,7 +1547,7 @@ spike_theta =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f60faa516a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff62942c980&gt;
 </pre></div>
 </div>
 <img alt="../../_images/e3840c5b3d748d95bc6f8a00df0ef1c0c62f5b5fee36b024e9b68454343a3ee8.png" src="../../_images/e3840c5b3d748d95bc6f8a00df0ef1c0c62f5b5fee36b024e9b68454343a3ee8.png" />
@@ -1612,7 +1613,7 @@ spike_phase =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f60fa9864e0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff6293ed0d0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/1e1845b396dea1b5c8bffff1acaa1cb0760e49eb85b01ee97fcf235324d6c4cf.png" src="../../_images/1e1845b396dea1b5c8bffff1acaa1cb0760e49eb85b01ee97fcf235324d6c4cf.png" />
@@ -2195,42 +2196,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img836f7274875d41588f1e894d3326df46">
+  <img id="_anim_img85256c2b8059416fa3a675e40e06c7e5">
   <div class="anim-controls">
-    <input id="_anim_slider836f7274875d41588f1e894d3326df46" type="range" class="anim-slider"
+    <input id="_anim_slider85256c2b8059416fa3a675e40e06c7e5" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim836f7274875d41588f1e894d3326df46.set_frame(parseInt(this.value));">
+           oninput="anim85256c2b8059416fa3a675e40e06c7e5.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim836f7274875d41588f1e894d3326df46.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim85256c2b8059416fa3a675e40e06c7e5.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim836f7274875d41588f1e894d3326df46.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim85256c2b8059416fa3a675e40e06c7e5.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim836f7274875d41588f1e894d3326df46.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim85256c2b8059416fa3a675e40e06c7e5.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim836f7274875d41588f1e894d3326df46.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim85256c2b8059416fa3a675e40e06c7e5.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim836f7274875d41588f1e894d3326df46.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim85256c2b8059416fa3a675e40e06c7e5.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim836f7274875d41588f1e894d3326df46.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim85256c2b8059416fa3a675e40e06c7e5.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim836f7274875d41588f1e894d3326df46.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim85256c2b8059416fa3a675e40e06c7e5.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim836f7274875d41588f1e894d3326df46.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim85256c2b8059416fa3a675e40e06c7e5.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim836f7274875d41588f1e894d3326df46.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim85256c2b8059416fa3a675e40e06c7e5.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select836f7274875d41588f1e894d3326df46"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select85256c2b8059416fa3a675e40e06c7e5"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_836f7274875d41588f1e894d3326df46"
+      <input type="radio" name="state" value="once" id="_anim_radio1_85256c2b8059416fa3a675e40e06c7e5"
              >
-      <label for="_anim_radio1_836f7274875d41588f1e894d3326df46">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_836f7274875d41588f1e894d3326df46"
+      <label for="_anim_radio1_85256c2b8059416fa3a675e40e06c7e5">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_85256c2b8059416fa3a675e40e06c7e5"
              checked>
-      <label for="_anim_radio2_836f7274875d41588f1e894d3326df46">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_836f7274875d41588f1e894d3326df46"
+      <label for="_anim_radio2_85256c2b8059416fa3a675e40e06c7e5">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_85256c2b8059416fa3a675e40e06c7e5"
              >
-      <label for="_anim_radio3_836f7274875d41588f1e894d3326df46">Reflect</label>
+      <label for="_anim_radio3_85256c2b8059416fa3a675e40e06c7e5">Reflect</label>
     </form>
   </div>
 </div>
@@ -2240,9 +2241,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img836f7274875d41588f1e894d3326df46";
-    var slider_id = "_anim_slider836f7274875d41588f1e894d3326df46";
-    var loop_select_id = "_anim_loop_select836f7274875d41588f1e894d3326df46";
+    var img_id = "_anim_img85256c2b8059416fa3a675e40e06c7e5";
+    var slider_id = "_anim_slider85256c2b8059416fa3a675e40e06c7e5";
+    var loop_select_id = "_anim_loop_select85256c2b8059416fa3a675e40e06c7e5";
     var frames = new Array(54);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAABQRZlvAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -26307,7 +26308,7 @@ iIiIiIgdUIEuIiIiIiIiYgf+H9o2XYpoPiu0AAAAAElFTkSuQmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim836f7274875d41588f1e894d3326df46 = new Animation(frames, img_id, slider_id, 100.0,
+        anim85256c2b8059416fa3a675e40e06c7e5 = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -27279,7 +27280,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f614abf0f40&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7ff675805300&gt;&gt;</td>
         </tr>
     
 

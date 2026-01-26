@@ -212,6 +212,13 @@ jupyter lab
 
 ::::::
 
+:::{admonition} Jupyter Lab settings
+:class: important
+
+In older versions of Jupyter Lab, there was an issue within (especially long) notebooks where scrolling within a notebook might cause erratic jumps. This problem has been addressed in newer versions of Jupyter Lab, but this fix might not be enabled if you installed Jupyter Lab for the first time (in any environment) before the fix was implemented. To ensure that the setting is enabled, from within Jupyter Lab, navigate to `Settings > Settings Editor`, and within the left sidebar, navigate to `Notebook`. Towards the bottom of this page, you will want the setting `Windowing mode` set to `contentVisibility`. If you're installing Jupyter Lab for the first time during this workshop, this should be set by default.
+:::
+
+
 ### **Optional**: Install pynaviz
 
 During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.io/pynaviz/), a new package under development which provides interactive, high-performance visualizations designed to work seamlessly with Pynapple time series and video data. It allows synchronized exploration of neural signals and behavioral recordings.
