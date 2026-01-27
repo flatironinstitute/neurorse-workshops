@@ -59,8 +59,8 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Exploring the Allen Institute’s Visual Coding dataset" href="03_visual_coding-users.html" />
-    <link rel="prev" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="02_phase_precession-users.html" />
+    <link rel="next" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="03_phase_precession-users.html" />
+    <link rel="prev" title="Analyzing head-direction cells with Pynapple" href="01_head_direction-users.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -229,10 +229,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Fitting a population GLM model with Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -411,7 +411,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-0-fetching-the-data">Part 0 : Fetching the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
@@ -471,9 +471,9 @@ It is intended to be downloaded and run locally (or on the provided binder),
 working through the questions with your small group.</p>
 <p>In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep.
 Cells that fire together during wake also fire together during sleep and cells that don’t fire together during wake don’t fire
-together during sleep. The goal here is to characterized this relationship with generalized linear model.
+together during sleep. The goal here is to characterize this relationship with generalized linear model.
 Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.</p>
-<p>For part 2 of the tutorial, we will use nemos to do the following tasks:</p>
+<p>In this group project, we will use nemos to do the following tasks:</p>
 <ol class="arabic simple">
 <li><p>Create spike history features</p></li>
 <li><p>Fit a GLM model to a single neuron</p></li>
@@ -491,19 +491,18 @@ Since cells have a functional relationship to each other, the activity of one ce
 
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
 
 <span class="c1"># configure pynapple to ignore conversion warning</span>
 <span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="c1"># configure plots some</span>
+<span class="c1"># configure plot style</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
-<section id="part-0-fetching-the-data">
-<h2>Part 0 : Fetching the data<a class="headerlink" href="#part-0-fetching-the-data" title="Link to this heading">#</a></h2>
+<section id="fetching-the-data">
+<h2>Fetching the data<a class="headerlink" href="#fetching-the-data" title="Link to this heading">#</a></h2>
 <p>We will use the same dataset as in the previous tutorial, which can be downloaded with the helper function <code class="docutils literal notranslate"><span class="pre">fetch_data</span></code>.
 To speed up the session, the following code cell will download the data, load it with pynapple and extract the relevant
 variables:</p>
@@ -610,7 +609,7 @@ count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-04.png" /></p>
+<p><img alt="" src="../../_images/02-04.png" /></p>
 </div>
 <p>For each time point, we shift our window one bin at the time and vertically stack the spike count history in a matrix.
 Each row of the matrix will be used as the predictors for the rate in the next bin (red narrow rectangle in
@@ -659,7 +658,6 @@ dimension are matching our expectation</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time bins in counts: </span><span class="si">{</span><span class="n">neuron_count</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolution window size in bins: </span><span class="si">{</span><span class="n">window_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -676,7 +674,7 @@ dimension are matching our expectation</p>
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-05.png" /></p>
+<p><img alt="" src="../../_images/02-05.png" /></p>
 </div>
 <p>As you may see, the time axis is backward, this happens because under the hood, the basis is using the convolution operator which flips the time axis.
 This is equivalent, as we can interpret the result as how much a spike will affect the future rate.
@@ -741,7 +739,7 @@ The model should be called <code class="docutils literal notranslate"><span clas
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-06.png" /></p>
+<p><img alt="" src="../../_images/02-06.png" /></p>
 </div>
 <p>The response in the previous figure seems noise added to a decay, therefore the response
 can be described with fewer degrees of freedom. In other words, it looks like we
@@ -779,7 +777,7 @@ If we are correct, what would happen if we re-fit the weights on the other half 
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-07.png" /></p>
+<p><img alt="" src="../../_images/02-07.png" /></p>
 </div>
 <p>What can we conclude?</p>
 <p>The fast fluctuations are inconsistent across fits, indicating that
@@ -804,7 +802,7 @@ For history-type inputs, we’ll use again the raised cosine log-stretched basis
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-08.png" /></p>
+<p><img alt="" src="../../_images/02-08.png" /></p>
 </div>
 <p>We can initialize the <code class="docutils literal notranslate"><span class="pre">RaisedCosineLogConv</span></code> by providing the number of basis functions
 and the window size for the convolution. With more basis functions, we’ll be able to represent
@@ -866,7 +864,7 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-09.png" /></p>
+<p><img alt="" src="../../_images/02-09.png" /></p>
 </div>
 </section>
 <section id="fit-a-glm-with-basis-features-with-reduced-dimensionality">
@@ -946,7 +944,7 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-10.png" /></p>
+<p><img alt="" src="../../_images/02-10.png" /></p>
 </div>
 <p>Let’s see if the basis model improves prediction of the firing rate. Here we will compare the firing rate predicted
 by the two models on the whole dataset. The model should be called <code class="docutils literal notranslate"><span class="pre">model</span></code> and <code class="docutils literal notranslate"><span class="pre">model_basis</span></code> from the previous cells.</p>
@@ -968,8 +966,7 @@ by the two models on the whole dataset. The model should be called <code class="
 <p>Let’s plot the predicted rates over a short window not used for training.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">8819.4</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8821</span><span class="p">)</span>
-<span class="c1"># plot the rates</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the rates</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
     <span class="p">{</span><span class="s2">&quot;Self-connection raw history&quot;</span><span class="p">:</span><span class="n">rate_history</span><span class="p">,</span> <span class="s2">&quot;Self-connection basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">}</span>
@@ -980,7 +977,7 @@ by the two models on the whole dataset. The model should be called <code class="
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-11.png" /></p>
+<p><img alt="" src="../../_images/02-11.png" /></p>
 </div>
 </section>
 <section id="all-to-all-connectivity">
@@ -1077,7 +1074,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-12.png" /></p>
+<p><img alt="" src="../../_images/02-12.png" /></p>
 </div>
 <p>Let’s see if our firing rate predictions improved and in what sense.</p>
 <div class="cell tag_render-all docutils container">
@@ -1085,7 +1082,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
     <span class="p">{</span><span class="s2">&quot;Self-connection: raw history&quot;</span><span class="p">:</span> <span class="n">rate_history</span><span class="p">,</span>
-     <span class="s2">&quot;Self-connection: bsais&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">,</span>
+     <span class="s2">&quot;Self-connection: basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">,</span>
      <span class="s2">&quot;All-to-all: basis&quot;</span><span class="p">:</span> <span class="n">predicted_firing_rate</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]}</span>
 <span class="p">)</span>
 </pre></div>
@@ -1094,7 +1091,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-13.png" /></p>
+<p><img alt="" src="../../_images/02-13.png" /></p>
 </div>
 </section>
 <section id="visualizing-the-connectivity">
@@ -1158,7 +1155,7 @@ all the coupling filters.</p>
 </div>
 <div class="dropdown admonition">
 <p class="admonition-title">Figure check</p>
-<p><img alt="" src="../../_images/01-14.png" /></p>
+<p><img alt="" src="../../_images/02-14.png" /></p>
 </div>
 </section>
 </section>
@@ -1184,20 +1181,20 @@ to head-direction.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="02_phase_precession-users.html"
+       href="01_head_direction-users.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Analyzing hippocampal place cells with Pynapple and NeMoS</p>
+        <p class="prev-next-title">Analyzing head-direction cells with Pynapple</p>
       </div>
     </a>
     <a class="right-next"
-       href="03_visual_coding-users.html"
+       href="03_phase_precession-users.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Exploring the Allen Institute’s Visual Coding dataset</p>
+        <p class="prev-next-title">Analyzing hippocampal place cells with Pynapple and NeMoS</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1217,7 +1214,7 @@ to head-direction.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-0-fetching-the-data">Part 0 : Fetching the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>

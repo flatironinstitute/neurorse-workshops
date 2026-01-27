@@ -39,10 +39,10 @@ This notebook has had all its explanatory text removed and has not been run.
 
 In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep. 
 Cells that fire together during wake also fire together during sleep and cells that don't fire together during wake don't fire 
-together during sleep. The goal here is to characterized this relationship with generalized linear model. 
+together during sleep. The goal here is to characterize this relationship with generalized linear model. 
 Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.
 
-For part 2 of the tutorial, we will use nemos to do the following tasks:
+In this group project, we will use nemos to do the following tasks:
 1. Create spike history features
 2. Fit a GLM model to a single neuron
 3. Fit a GLM model with basis functions to reduce over-fitting
@@ -62,15 +62,14 @@ import nemos as nmo
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
-import workshop_utils
 
 # configure pynapple to ignore conversion warning
 nap.nap_config.suppress_conversion_warnings = True
 
-# configure plots some
+# configure plot style
 plt.style.use(nmo.styles.plot_style)
 ```
-## Part 0 : Fetching the data
+## Fetching the data
 
 
 We will use the same dataset as in the previous tutorial, which can be downloaded with the helper function `fetch_data`.
@@ -189,7 +188,7 @@ fig = doc_plots.plot_history_window(neuron_count, epoch_one_spk, window_size_sec
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-04.png)
+![](../../_static/_check_figs/02-04.png)
 :::
 
 
@@ -252,7 +251,6 @@ dimension are matching our expectation
 print(f"Time bins in counts: {neuron_count.shape[0]}")
 print(f"Convolution window size in bins: {window_size}")
 print(f"Feature shape: {input_feature.shape}")
-print(f"Feature shape: {input_feature.shape}")
 ```
 
 
@@ -269,7 +267,7 @@ fig = workshop_utils.plot_features(input_feature, count.rate, suptitle)
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-05.png)
+![](../../_static/_check_figs/02-05.png)
 :::
 
 
@@ -345,7 +343,7 @@ plt.legend()
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-06.png)
+![](../../_static/_check_figs/02-06.png)
 :::
 
 
@@ -393,7 +391,7 @@ plt.legend()
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-07.png)
+![](../../_static/_check_figs/02-07.png)
 :::
 
 
@@ -424,7 +422,7 @@ fig = doc_plots.plot_basis()
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-08.png)
+![](../../_static/_check_figs/02-08.png)
 :::
 
 
@@ -494,7 +492,7 @@ fig = doc_plots.plot_convolved_counts(neuron_count, conv_spk, epoch_one_spk, epo
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-09.png)
+![](../../_static/_check_figs/02-09.png)
 :::
 
 ### Fit a GLM with basis features with reduced dimensionality
@@ -590,7 +588,7 @@ plt.legend()
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-10.png)
+![](../../_static/_check_figs/02-10.png)
 :::
 
 
@@ -619,7 +617,6 @@ Let's plot the predicted rates over a short window not used for training.
 ```{code-cell} ipython3
 :tags: [render-all]
 
-ep = nap.IntervalSet(start=8819.4, end=8821)
 # plot the rates
 fig = doc_plots.plot_rates_and_smoothed_counts(
     neuron_count,
@@ -629,7 +626,7 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-11.png)
+![](../../_static/_check_figs/02-11.png)
 :::
 
 ### All-to-all Connectivity
@@ -736,7 +733,7 @@ fig = workshop_utils.plot_head_direction_tuning_model(tuning_curves, spikes, ang
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-12.png)
+![](../../_static/_check_figs/02-12.png)
 :::
 
 
@@ -750,14 +747,14 @@ Let's see if our firing rate predictions improved and in what sense.
 fig = doc_plots.plot_rates_and_smoothed_counts(
     neuron_count,
     {"Self-connection: raw history": rate_history,
-     "Self-connection: bsais": rate_basis,
+     "Self-connection: basis": rate_basis,
      "All-to-all: basis": predicted_firing_rate[:, 0]}
 )
 ```
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-13.png)
+![](../../_static/_check_figs/02-13.png)
 :::
 
 #### Visualizing the connectivity
@@ -832,7 +829,7 @@ fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-14.png)
+![](../../_static/_check_figs/02-14.png)
 :::
 
 ### Conclusion

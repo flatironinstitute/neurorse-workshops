@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Analyzing head-direction cells with Pynapple and Nemos &#8212; CCN software workshop, Feb 2026  documentation</title>
+    <title>Analyzing head-direction cells with Pynapple &#8212; CCN software workshop, Feb 2026  documentation</title>
   
   
   
@@ -57,7 +57,7 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="02_phase_precession-users.html" />
+    <link rel="next" title="Fitting a population GLM model with Nemos" href="02_population_analysis_with_nemos-users.html" />
     <link rel="prev" title="NeMoS Advanced: Cross-Validation and Model Selection" href="../../full/live_coding/03_nemos_advanced.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -227,10 +227,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -399,7 +399,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Analyzing head-direction cells with Pynapple and Nemos</h1>
+    <h1>Analyzing head-direction cells with Pynapple</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -409,11 +409,17 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-head-direction-cells-with-pynapple">Part 1 : Analyzing head-direction cells with Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-extracellular-recordings-of-head-direction-cells">Part 1. Analyzing extracellular recordings of head-direction cells</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-and-load-data">Fetch and load data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-analyzing-calcium-imaging-recordings-of-head-direction-cells">Part 2. Analyzing calcium imaging recordings of head-direction cells</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Compute tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-tuning-curves">Visualize tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-head-direction-from-neural-activity">Decode head-direction from neural activity</a></li>
 </ul>
 </li>
 </ul>
@@ -453,19 +459,24 @@ document.write(`
 <p class="admonition-title">Download</p>
 <p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/c122d7f29ca179d6d25c6f7adb6acb1f/01_head_direction-users.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">01_head_direction-users.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
 </div>
-<section class="tex2jax_ignore mathjax_ignore" id="analyzing-head-direction-cells-with-pynapple-and-nemos">
-<h1>Analyzing head-direction cells with Pynapple and Nemos<a class="headerlink" href="#analyzing-head-direction-cells-with-pynapple-and-nemos" title="Link to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="analyzing-head-direction-cells-with-pynapple">
+<h1>Analyzing head-direction cells with Pynapple<a class="headerlink" href="#analyzing-head-direction-cells-with-pynapple" title="Link to this heading">#</a></h1>
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder),
 working through the questions with your small group.</p>
-<p>In this tutorial, we will learn how to use pynapple and nemos to analyze head-direction cells recorded in the
+<p>In this tutorial, we will learn how to use pynapple to analyze electrophysiological data and calcium imaging data.</p>
+<ol class="arabic simple">
+<li><p>We will first analyze extracellular recordings of head-direction cells recorded in the
 anterodorsal thalamic nucleus (ADn) of the mouse. We will use a NWB file containing spike times of neurons and the head-direction of the animal over time.
-We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.
-Finally, we will fit a generalized linear model (GLM) to quantify the functional connectivity between neurons based on their spike history.</p>
+We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.</p></li>
+<li><p>We will then analyze calcium imaging data of head-direction cells recorded in the postsubiculum of the mouse.
+We will use a NWB file containing deconvolved calcium events of neurons and the head-direction of the animal over time.
+We will study the tuning properties of neurons with tuning curves.</p></li>
+</ol>
 <p>The pynapple documentation can be found <a class="reference external" href="https://pynapple.org">here</a>.</p>
 <p>The nemos documentation can be found <a class="reference external" href="https://nemos.readthedocs.io/en/latest/">here</a>.</p>
-<section id="objectives">
-<h2>Objectives<a class="headerlink" href="#objectives" title="Link to this heading">#</a></h2>
+<section id="part-1-analyzing-extracellular-recordings-of-head-direction-cells">
+<h2>Part 1. Analyzing extracellular recordings of head-direction cells<a class="headerlink" href="#part-1-analyzing-extracellular-recordings-of-head-direction-cells" title="Link to this heading">#</a></h2>
 <p>For part 1 of the tutorial, we will use pynapple to do the following tasks:</p>
 <ol class="arabic simple">
 <li><p>Loading a NWB file</p></li>
@@ -475,14 +486,12 @@ Finally, we will fit a generalized linear model (GLM) to quantify the functional
 <p>Let’s start by importing all the packages.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
 
 <span class="c1"># some helper plotting functions</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
 
 <span class="c1"># configure pynapple to ignore conversion warning</span>
@@ -494,9 +503,6 @@ Finally, we will fit a generalized linear model (GLM) to quantify the functional
 </div>
 </div>
 </div>
-</section>
-<section id="part-1-analyzing-head-direction-cells-with-pynapple">
-<h2>Part 1 : Analyzing head-direction cells with Pynapple<a class="headerlink" href="#part-1-analyzing-head-direction-cells-with-pynapple" title="Link to this heading">#</a></h2>
 <section id="fetch-and-load-data">
 <h3>Fetch and load data<a class="headerlink" href="#fetch-and-load-data" title="Link to this heading">#</a></h3>
 <p>The dataset we will use is from this study : <a class="reference external" href="https://www.nature.com/articles/nn.3968">Peyrache et al., 2015</a>.</p>
@@ -563,7 +569,7 @@ or <a class="reference external" href="https://pynapple.org/generated/pynapple.T
 </div>
 </div>
 </div>
-<p>But are the data actually loaded  or not?
+<p>But are the data actually loaded or not?
 If you look at the type of <code class="docutils literal notranslate"><span class="pre">angle</span></code>, you will see that it is a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
 But what about the underlying data array?
 The underlying data array is stored in the property <code class="docutils literal notranslate"><span class="pre">d</span></code> of the <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
@@ -806,6 +812,176 @@ and the pair of neurons that fire for opposite directions.</p>
 <p>What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.</p>
 </section>
 </section>
+<section id="part-2-analyzing-calcium-imaging-recordings-of-head-direction-cells">
+<h2>Part 2. Analyzing calcium imaging recordings of head-direction cells<a class="headerlink" href="#part-2-analyzing-calcium-imaging-recordings-of-head-direction-cells" title="Link to this heading">#</a></h2>
+<p>For part 2 of the tutorial, we will use pynapple to do the following tasks:</p>
+<ol class="arabic simple">
+<li><p>Loading a NWB file</p></li>
+<li><p>Compute tuning curves</p></li>
+<li><p>Visualize tuning curves</p></li>
+<li><p>Decode head-direction from neural activity</p></li>
+</ol>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">fetch</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;A0670-221213.nwb&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="load-data">
+<h3>Load data<a class="headerlink" href="#load-data" title="Link to this heading">#</a></h3>
+<p>Similar to part 1, we will start by loading the NWB file. The function <code class="docutils literal notranslate"><span class="pre">nap.load_file</span></code> can be used again.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Load NWB file</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>There are multiple entries in the NWB file. The calcium transients are stored in the <code class="docutils literal notranslate"><span class="pre">RoiResponseSeries</span></code> entry.
+The head-direction of the animal is stored in the <code class="docutils literal notranslate"><span class="pre">ry</span></code> entry. Let’s extract them.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transients</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RoiResponseSeries&quot;</span><span class="p">]</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ry&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">transients</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To get an idea of the data, let’s visualize the calcium transients of the first two neurons for the first 100 seconds of the recording.
+Instead of creating a new <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object, we can use the method <code class="docutils literal notranslate"><span class="pre">transients.get(0,</span> <span class="pre">100)</span></code> to get a restricted version of the <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.
+Contrary to <code class="docutils literal notranslate"><span class="pre">restrict</span></code>, which takes an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object as input, <code class="docutils literal notranslate"><span class="pre">get</span></code> can take start and end times directly as input and does not
+update the time support of the output <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transients</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Fluorescence (a.u.)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/01-04.png" /></p>
+</div>
+</section>
+<section id="id1">
+<h3>Compute tuning curves<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Now we have</p>
+<ul class="simple">
+<li><p>calcium transients</p></li>
+<li><p>a behavioral feature (i.e. head-direction),
+We can compute tuning curves, i.e. the fluorescence of neurons as a function of head-direction.
+We want to know how the fluorescence of each neuron changes as a function of the head-direction of the animal.
+We can use the same function as before : <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>.
+Don’t forget to give a name to the feature when calling the function (i.e. <code class="docutils literal notranslate"><span class="pre">feature_names</span> <span class="pre">=</span> <span class="pre">[&quot;angle&quot;]</span></code>).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The neural activity as a TsGroup</span>
+    <span class="n">features</span><span class="o">=</span><span class="p">,</span> <span class="c1"># Which feature? Here the head-direction of the animal</span>
+    <span class="n">bins</span><span class="o">=</span><span class="p">,</span> <span class="c1"># How many bins of feature space? Here 61 angular bins is a good numbers </span>
+    <span class="nb">range</span><span class="o">=</span><span class="p">,</span> <span class="c1"># The min and max of the bin array</span>
+    <span class="n">feature_names</span> <span class="o">=</span>  <span class="c1"># Let&#39;s give a name to our feature for better labelling of the output.</span>
+    <span class="p">)</span> 
+<span class="n">tuning_curves</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualize-tuning-curves">
+<h3>Visualize tuning curves<a class="headerlink" href="#visualize-tuning-curves" title="Link to this heading">#</a></h3>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">221</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">222</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">223</span><span class="p">)</span>
+<span class="n">tuning_curves</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span><span class="n">projection</span><span class="o">=</span><span class="s1">&#39;polar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/01-05.png" /></p>
+</div>
+</section>
+<section id="decode-head-direction-from-neural-activity">
+<h3>Decode head-direction from neural activity<a class="headerlink" href="#decode-head-direction-from-neural-activity" title="Link to this heading">#</a></h3>
+<p>Now that we have the tuning curves, we can use them to decode the head-direction of the animal from the neural activity.
+Pynapple provides two functions to do this: <code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code> for spike counts and <code class="docutils literal notranslate"><span class="pre">nap.decode_template</span></code> for event rates or continuous data.
+Since the data are calcium transients and not spike counts, we will use the template matching method.</p>
+<p><strong>Question:</strong> Can you decode the head-direction of the animal using the function <code class="docutils literal notranslate"><span class="pre">nap.decode_template</span></code> and call the variable <code class="docutils literal notranslate"><span class="pre">decoded_angle</span></code>?</p>
+<p>We will us the epoch <code class="docutils literal notranslate"><span class="pre">epochs</span> <span class="pre">=</span> <span class="pre">nap.IntervalSet([50,</span> <span class="pre">150])</span></code> to restrict the decoding to the first 100 seconds of the recording.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">epochs</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">150</span><span class="p">)</span>
+<span class="n">decoded_angle</span><span class="p">,</span> <span class="n">dist</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">decode_template</span><span class="p">(</span>
+    <span class="n">tuning_curves</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The tuning curves as an xarray object</span>
+    <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsdFrame in this case</span>
+    <span class="n">bin_size</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The bin size for decoding. Here I suggest 0.1 second</span>
+    <span class="n">metric</span><span class="o">=...</span> <span class="c1"># The metric to use to compare the neural activity to the tuning curves. Here I suggest &quot;correlation&quot;</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">transients</span><span class="o">.</span><span class="n">time_support</span> <span class="c1"># The epochs should correspond to when the neural activity is defined. Here we use the time support directly</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s visualize the decoded head-direction of the animal for the first 100 seconds of the recording.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="p">(</span><span class="n">ax1</span><span class="p">,</span> <span class="n">ax2</span><span class="p">)</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angle</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">epochs</span><span class="p">),</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;True&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">decoded_angle</span><span class="o">.</span><span class="n">times</span><span class="p">(),</span> <span class="n">decoded_angle</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Decoded&quot;</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">frameon</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">))</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Angle [rad]&quot;</span><span class="p">)</span>
+
+<span class="n">im</span> <span class="o">=</span> <span class="n">ax2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> 
+    <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> 
+    <span class="n">origin</span><span class="o">=</span><span class="s2">&quot;lower&quot;</span><span class="p">,</span> 
+    <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;inferno_r&quot;</span><span class="p">,</span> 
+    <span class="n">extent</span><span class="o">=</span><span class="p">(</span><span class="n">epochs</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">epochs</span><span class="o">.</span><span class="n">end</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Angle [rad]&quot;</span><span class="p">)</span>
+<span class="n">cbar_ax2</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.95</span><span class="p">,</span> <span class="n">ax2</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="mf">0.015</span><span class="p">,</span> <span class="n">ax2</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span><span class="o">.</span><span class="n">height</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="n">cax</span><span class="o">=</span><span class="n">cbar_ax2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Distance&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/01-06.png" /></p>
+</div>
+<p>The first panel shows the true head-direction of the animal and the decoded head-direction from neural activity.
+The second panel shows the distance between the neural activity and the tuning curves as a function of time and angle.</p>
+<p>You can play with the metric parameters of the decoding function to see how it affects the decoding performance.
+Possible metrics are “euclidean”, “manhattan”, “correlation”, “jensenshannon” and “cosine”.</p>
+</section>
+</section>
 </section>
 
 
@@ -829,11 +1005,11 @@ and the pair of neurons that fire for opposite directions.</p>
       </div>
     </a>
     <a class="right-next"
-       href="02_phase_precession-users.html"
+       href="02_population_analysis_with_nemos-users.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Analyzing hippocampal place cells with Pynapple and NeMoS</p>
+        <p class="prev-next-title">Fitting a population GLM model with Nemos</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -853,11 +1029,17 @@ and the pair of neurons that fire for opposite directions.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-head-direction-cells-with-pynapple">Part 1 : Analyzing head-direction cells with Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-analyzing-extracellular-recordings-of-head-direction-cells">Part 1. Analyzing extracellular recordings of head-direction cells</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetch-and-load-data">Fetch and load data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves">Compute tuning curves</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-correlograms">Compute correlograms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-analyzing-calcium-imaging-recordings-of-head-direction-cells">Part 2. Analyzing calcium imaging recordings of head-direction cells</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#load-data">Load data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Compute tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualize-tuning-curves">Visualize tuning curves</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-head-direction-from-neural-activity">Decode head-direction from neural activity</a></li>
 </ul>
 </li>
 </ul>

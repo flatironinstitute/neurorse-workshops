@@ -227,10 +227,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple and Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -409,7 +409,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-0-fetching-the-data">Part 0 : Fetching the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
@@ -467,9 +467,9 @@ document.write(`
 <div class="render-all">
 <p>In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep.
 Cells that fire together during wake also fire together during sleep and cells that don’t fire together during wake don’t fire
-together during sleep. The goal here is to characterized this relationship with generalized linear model.
+together during sleep. The goal here is to characterize this relationship with generalized linear model.
 Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.</p>
-<p>For part 2 of the tutorial, we will use nemos to do the following tasks:</p>
+<p>In this group project, we will use nemos to do the following tasks:</p>
 <ol class="arabic simple">
 <li><p>Create spike history features</p></li>
 <li><p>Fit a GLM model to a single neuron</p></li>
@@ -487,24 +487,23 @@ Since cells have a functional relationship to each other, the activity of one ce
 
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
 
 <span class="c1"># configure pynapple to ignore conversion warning</span>
 <span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
 
-<span class="c1"># configure plots some</span>
+<span class="c1"># configure plot style</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-26 22:26:55,790:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-27 17:51:37,217:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
 </div>
-<section id="part-0-fetching-the-data">
-<h2>Part 0 : Fetching the data<a class="headerlink" href="#part-0-fetching-the-data" title="Link to this heading">#</a></h2>
+<section id="fetching-the-data">
+<h2>Fetching the data<a class="headerlink" href="#fetching-the-data" title="Link to this heading">#</a></h2>
 <div class="render-all">
 <p>We will use the same dataset as in the previous tutorial, which can be downloaded with the helper function <code class="docutils literal notranslate"><span class="pre">fetch_data</span></code>.
 To speed up the session, the following code cell will download the data, load it with pynapple and extract the relevant
@@ -644,7 +643,7 @@ count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-04.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-04.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -653,7 +652,7 @@ count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-04.png)
+![](../../_static/_check_figs/02-04.png)
 :::
 </div>
 <div class="render-all">
@@ -852,42 +851,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img83e7709b686c4141a9c18a7b4607729e">
+  <img id="_anim_img7ca6075bbe694ab1bfa0c8a8c6a3d222">
   <div class="anim-controls">
-    <input id="_anim_slider83e7709b686c4141a9c18a7b4607729e" type="range" class="anim-slider"
+    <input id="_anim_slider7ca6075bbe694ab1bfa0c8a8c6a3d222" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim83e7709b686c4141a9c18a7b4607729e.set_frame(parseInt(this.value));">
+           oninput="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim83e7709b686c4141a9c18a7b4607729e.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim83e7709b686c4141a9c18a7b4607729e.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim83e7709b686c4141a9c18a7b4607729e.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim83e7709b686c4141a9c18a7b4607729e.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim83e7709b686c4141a9c18a7b4607729e.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim83e7709b686c4141a9c18a7b4607729e.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim83e7709b686c4141a9c18a7b4607729e.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim83e7709b686c4141a9c18a7b4607729e.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim83e7709b686c4141a9c18a7b4607729e.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim7ca6075bbe694ab1bfa0c8a8c6a3d222.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select83e7709b686c4141a9c18a7b4607729e"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select7ca6075bbe694ab1bfa0c8a8c6a3d222"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_83e7709b686c4141a9c18a7b4607729e"
+      <input type="radio" name="state" value="once" id="_anim_radio1_7ca6075bbe694ab1bfa0c8a8c6a3d222"
              >
-      <label for="_anim_radio1_83e7709b686c4141a9c18a7b4607729e">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_83e7709b686c4141a9c18a7b4607729e"
+      <label for="_anim_radio1_7ca6075bbe694ab1bfa0c8a8c6a3d222">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_7ca6075bbe694ab1bfa0c8a8c6a3d222"
              checked>
-      <label for="_anim_radio2_83e7709b686c4141a9c18a7b4607729e">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_83e7709b686c4141a9c18a7b4607729e"
+      <label for="_anim_radio2_7ca6075bbe694ab1bfa0c8a8c6a3d222">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_7ca6075bbe694ab1bfa0c8a8c6a3d222"
              >
-      <label for="_anim_radio3_83e7709b686c4141a9c18a7b4607729e">Reflect</label>
+      <label for="_anim_radio3_7ca6075bbe694ab1bfa0c8a8c6a3d222">Reflect</label>
     </form>
   </div>
 </div>
@@ -897,9 +896,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img83e7709b686c4141a9c18a7b4607729e";
-    var slider_id = "_anim_slider83e7709b686c4141a9c18a7b4607729e";
-    var loop_select_id = "_anim_loop_select83e7709b686c4141a9c18a7b4607729e";
+    var img_id = "_anim_img7ca6075bbe694ab1bfa0c8a8c6a3d222";
+    var slider_id = "_anim_slider7ca6075bbe694ab1bfa0c8a8c6a3d222";
+    var loop_select_id = "_anim_loop_select7ca6075bbe694ab1bfa0c8a8c6a3d222";
     var frames = new Array(20);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAMgCAYAAADbcAZoAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -10866,7 +10865,7 @@ AABghg0IAAAAADNsQAAAAACYYQMCAAAAwAwbEAAAAABm2IAAAAAAMMMGBAAAAICZ/x/UMgj7k9JY\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim83e7709b686c4141a9c18a7b4607729e = new Animation(frames, img_id, slider_id, 200.0,
+        anim7ca6075bbe694ab1bfa0c8a8c6a3d222 = new Animation(frames, img_id, slider_id, 200.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -10932,14 +10931,12 @@ dimension are matching our expectation</p>
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Time bins in counts: </span><span class="si">{</span><span class="n">neuron_count</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolution window size in bins: </span><span class="si">{</span><span class="n">window_size</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Feature shape: </span><span class="si">{</span><span class="n">input_feature</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time bins in counts: 18000
 Convolution window size in bins: 80
-Feature shape: (18000, 80)
 Feature shape: (18000, 80)
 </pre></div>
 </div>
@@ -10966,7 +10963,7 @@ Feature shape: (18000, 80)
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-05.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-05.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -10975,7 +10972,7 @@ Feature shape: (18000, 80)
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-05.png)
+![](../../_static/_check_figs/02-05.png)
 :::
 </div>
 <div class="render-all">
@@ -11618,7 +11615,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7fced0111300&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f2dcf712020&gt;&gt;</td>
         </tr>
     
 
@@ -11798,7 +11795,7 @@ The model should be called <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fce8c23ee40&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2d7eca2ea0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/4f60fd129a28fcc495f38559296296fa3dc0a6fd90c943f2d7f029c00bd6e766.png" src="../../_images/4f60fd129a28fcc495f38559296296fa3dc0a6fd90c943f2d7f029c00bd6e766.png" />
@@ -11811,7 +11808,7 @@ The model should be called <code class="docutils literal notranslate"><span clas
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-06.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-06.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -11820,7 +11817,7 @@ The model should be called <code class="docutils literal notranslate"><span clas
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-06.png)
+![](../../_static/_check_figs/02-06.png)
 :::
 </div>
 <div class="render-all">
@@ -12432,7 +12429,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7fced0111300&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f2dcf712020&gt;&gt;</td>
         </tr>
     
 
@@ -12614,7 +12611,7 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fce78eb7470&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2d7c0cd340&gt;
 </pre></div>
 </div>
 <img alt="../../_images/954b2b4fb2244546fc3637681af9bb2d6c32a2e7e112f95f406b3c04a7a7f5d9.png" src="../../_images/954b2b4fb2244546fc3637681af9bb2d6c32a2e7e112f95f406b3c04a7a7f5d9.png" />
@@ -12627,7 +12624,7 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-07.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-07.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -12636,7 +12633,7 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-07.png)
+![](../../_static/_check_figs/02-07.png)
 :::
 </div>
 <div class="render-all">
@@ -12673,7 +12670,7 @@ For history-type inputs, we'll use again the raised cosine log-stretched basis,
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-08.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-08.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -12682,7 +12679,7 @@ For history-type inputs, we'll use again the raised cosine log-stretched basis,
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-08.png)
+![](../../_static/_check_figs/02-08.png)
 :::
 </div>
 <div class="admonition note">
@@ -12787,7 +12784,7 @@ Compressed count history as feature: (18000, 8)
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-09.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-09.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -12796,7 +12793,7 @@ Compressed count history as feature: (18000, 8)
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-09.png)
+![](../../_static/_check_figs/02-09.png)
 :::
 </div>
 </section>
@@ -13402,7 +13399,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7fced0111300&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f2dcf712020&gt;&gt;</td>
         </tr>
     
 
@@ -13640,7 +13637,7 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fce7826da90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f2d85ecfb30&gt;
 </pre></div>
 </div>
 <img alt="../../_images/c767dfe4e02a7930e9319dd3dd84f64abf38924fda3d6a40b895733fd149ee5b.png" src="../../_images/c767dfe4e02a7930e9319dd3dd84f64abf38924fda3d6a40b895733fd149ee5b.png" />
@@ -13653,7 +13650,7 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-10.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-10.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13662,7 +13659,7 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-10.png)
+![](../../_static/_check_figs/02-10.png)
 :::
 </div>
 <div class="render-all">
@@ -13693,8 +13690,7 @@ rate_history = rate_history * conv_spk.rate
 <p>Let’s plot the predicted rates over a short window not used for training.</p>
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mf">8819.4</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">8821</span><span class="p">)</span>
-<span class="c1"># plot the rates</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the rates</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
     <span class="p">{</span><span class="s2">&quot;Self-connection raw history&quot;</span><span class="p">:</span><span class="n">rate_history</span><span class="p">,</span> <span class="s2">&quot;Self-connection basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">}</span>
@@ -13713,7 +13709,7 @@ rate_history = rate_history * conv_spk.rate
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-11.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-11.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13722,7 +13718,7 @@ rate_history = rate_history * conv_spk.rate
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-11.png)
+![](../../_static/_check_figs/02-11.png)
 :::
 </div>
 </section>
@@ -13820,7 +13816,7 @@ print(f"Model coefficients shape: {model.coef_.shape}")
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
     <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
     <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">,</span>
-    <span class="n">regularizer_strength</span><span class="o">=</span><span class="mf">0.01</span>
+    <span class="n">regularizer_strength</span><span class="o">=</span><span class="mf">0.1</span>
     <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">convolved_count</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model coefficients shape: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
@@ -13869,7 +13865,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/1f593d8edf5da91545504548349617a7b050cbbc83e3d0223af0636cc2c1259c.png" src="../../_images/1f593d8edf5da91545504548349617a7b050cbbc83e3d0223af0636cc2c1259c.png" />
+<img alt="../../_images/48da1e39769e197fa44b800ff6672382eab4bc378d79297fb4da79dc843caeaf.png" src="../../_images/48da1e39769e197fa44b800ff6672382eab4bc378d79297fb4da79dc843caeaf.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13879,7 +13875,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-12.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-12.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13888,7 +13884,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-12.png)
+![](../../_static/_check_figs/02-12.png)
 :::
 </div>
 <div class="render-all">
@@ -13898,14 +13894,14 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_rates_and_smoothed_counts</span><span class="p">(</span>
     <span class="n">neuron_count</span><span class="p">,</span>
     <span class="p">{</span><span class="s2">&quot;Self-connection: raw history&quot;</span><span class="p">:</span> <span class="n">rate_history</span><span class="p">,</span>
-     <span class="s2">&quot;Self-connection: bsais&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">,</span>
+     <span class="s2">&quot;Self-connection: basis&quot;</span><span class="p">:</span> <span class="n">rate_basis</span><span class="p">,</span>
      <span class="s2">&quot;All-to-all: basis&quot;</span><span class="p">:</span> <span class="n">predicted_firing_rate</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]}</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2930e25e2009a451297d236596561f533873e1a36a87af65cf6508650c421db4.png" src="../../_images/2930e25e2009a451297d236596561f533873e1a36a87af65cf6508650c421db4.png" />
+<img alt="../../_images/082334acb568098b36267941a4dbebbefb81b917d9d54972472bab4eb3e8d89a.png" src="../../_images/082334acb568098b36267941a4dbebbefb81b917d9d54972472bab4eb3e8d89a.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13915,7 +13911,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-13.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-13.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -13924,7 +13920,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-13.png)
+![](../../_static/_check_figs/02-13.png)
 :::
 </div>
 </section>
@@ -14017,7 +14013,7 @@ all the coupling filters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/d1a01d4e31f8b6ec8fd8e0e1dc1ee46e90297680946b2be1654f55345da3b9fb.png" src="../../_images/d1a01d4e31f8b6ec8fd8e0e1dc1ee46e90297680946b2be1654f55345da3b9fb.png" />
+<img alt="../../_images/6474ef9d1ca6a5a27e55b34253caa01e810ce7cd1332baee57929612cfdf1369.png" src="../../_images/6474ef9d1ca6a5a27e55b34253caa01e810ce7cd1332baee57929612cfdf1369.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -14027,7 +14023,7 @@ all the coupling filters.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/01-14.png&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-14.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -14036,7 +14032,7 @@ all the coupling filters.</p>
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/01-14.png)
+![](../../_static/_check_figs/02-14.png)
 :::
 </div>
 </section>
@@ -14079,7 +14075,7 @@ to head-direction.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-0-fetching-the-data">Part 0 : Fetching the data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
