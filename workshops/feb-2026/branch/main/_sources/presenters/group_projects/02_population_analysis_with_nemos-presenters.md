@@ -994,7 +994,6 @@ Here we can use the same `RaisedCosineLogConv` basis, but with a larger window s
 
 
 ```{code-cell} ipython3
-:tags: [render-all]
 # define the basis for calcium data
 calcium_window_size_sec = 2.0  # 2 seconds window
 calcium_window_size = int(calcium_window_size_sec * transients.rate)
@@ -1012,7 +1011,6 @@ We can convolve the calcium transients with the basis functions to get the featu
 
 
 ```{code-cell} ipython3
-:tags: [render-all]
 # convolve all the neurons
 calcium_convolved = calcium_basis.compute_features(transients)
 print(f"Convolved calcium shape: {calcium_convolved.shape}")
@@ -1037,7 +1035,6 @@ testing_ep = nap.IntervalSet(start + duration / 2, end)
 ```
 
 ```{code-cell} ipython3
-:tags: [render-all]
 calcium_model = nmo.glm.PopulationGLM(
     observation_model="Gamma",
     regularizer="Ridge",
@@ -1054,7 +1051,6 @@ We can predict the calcium signals using the fitted model during the test epoch 
 
 
 ```{code-cell} ipython3
-:tags: [render-all]
 calcium_predicted = calcium_model.predict(calcium_convolved.restrict(testing_ep))
 ```
 
@@ -1066,7 +1062,7 @@ We can visualize the predicted calcium signals alongside the actual signals to a
 :tags: [render-all]
 ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)  # Plot first 10 seconds of test epoch
 
-plt.figure()
+fig = plt.figure()
 plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
 plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], label="Predicted Calcium")
 plt.legend()
