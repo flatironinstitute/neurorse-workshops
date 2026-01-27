@@ -1062,7 +1062,7 @@ We can visualize the predicted calcium signals alongside the actual signals to a
 :tags: [render-all]
 ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)  # Plot first 10 seconds of test epoch
 
-plt.figure()
+fig = plt.figure()
 plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
 plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], label="Predicted Calcium")
 plt.legend()
@@ -1073,7 +1073,7 @@ plt.ylabel("Fluorescence Intensity")
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-plt.savefig("../../_static/_check_figs/02-12.png")
+fig.savefig("../../_static/_check_figs/02-12.png")
 ```
 
 

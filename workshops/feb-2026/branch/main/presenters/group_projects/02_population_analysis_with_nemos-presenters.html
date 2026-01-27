@@ -1414,7 +1414,7 @@ and you can explore different modeling choices.</p>
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ep_to_plot</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">testing_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">testing_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Plot first 10 seconds of test epoch</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transients</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Actual Calcium&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calcium_predicted</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted Calcium&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
@@ -1432,7 +1432,7 @@ and you can explore different modeling choices.</p>
 <p class="expanded admonition-title">Hide code cell source</p>
 </summary>
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-12.png&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../_static/_check_figs/02-12.png&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
