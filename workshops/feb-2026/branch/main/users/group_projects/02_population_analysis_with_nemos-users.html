@@ -411,20 +411,30 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-modelling-extracellular-spike-history-effects-with-glm">Part 1 : Modelling extracellular spike history effects with GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-to-a-single-neuron">Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-modelling-calcium-imaging-data-with-glm">Part 2 : Modelling calcium imaging data with GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-and-preprocessing-the-data">Loading and preprocessing the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-for-calcium-data">Basis functions for calcium data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Preparing the features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-population-glm">Fitting the Population GLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-and-visualizing-the-results">Predicting and visualizing the results</a></li>
 </ul>
 </li>
 </ul>
@@ -469,7 +479,9 @@ document.write(`
 <p>This notebook has had all its explanatory text removed and has not been run.
 It is intended to be downloaded and run locally (or on the provided binder),
 working through the questions with your small group.</p>
-<p>In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep.
+<p>This group project is focused on fitting a population GLM model to characterize the functional connectivity.</p>
+<p>In the first part, we will use the same dataset as in the previous tutorial, which contains head-direction cells recorded from the antero-dorsal nucleus of the thalamus (ADN) of a mouse during wake and sleep.
+In the previous notebook, we characterized the relationship between head-direction cells during wake and sleep.
 Cells that fire together during wake also fire together during sleep and cells that don’t fire together during wake don’t fire
 together during sleep. The goal here is to characterize this relationship with generalized linear model.
 Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.</p>
@@ -480,6 +492,7 @@ Since cells have a functional relationship to each other, the activity of one ce
 <li><p>Fit a GLM model with basis functions to reduce over-fitting</p></li>
 <li><p>Fit a GLM model to all neurons to learn functional connectivity</p></li>
 </ol>
+<p>In the second part, we will try to apply the same type of analysis to the calcium imaging dataset used in the first tutorial.</p>
 <p>Let’s start by importing all the packages.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
@@ -501,8 +514,10 @@ Since cells have a functional relationship to each other, the activity of one ce
 </div>
 </div>
 </div>
+<section id="part-1-modelling-extracellular-spike-history-effects-with-glm">
+<h2>Part 1 : Modelling extracellular spike history effects with GLM<a class="headerlink" href="#part-1-modelling-extracellular-spike-history-effects-with-glm" title="Link to this heading">#</a></h2>
 <section id="fetching-the-data">
-<h2>Fetching the data<a class="headerlink" href="#fetching-the-data" title="Link to this heading">#</a></h2>
+<h3>Fetching the data<a class="headerlink" href="#fetching-the-data" title="Link to this heading">#</a></h3>
 <p>We will use the same dataset as in the previous tutorial, which can be downloaded with the helper function <code class="docutils literal notranslate"><span class="pre">fetch_data</span></code>.
 To speed up the session, the following code cell will download the data, load it with pynapple and extract the relevant
 variables:</p>
@@ -531,8 +546,8 @@ variables:</p>
 </div>
 </div>
 </section>
-<section id="part-1-fitting-a-glm-to-a-single-neuron">
-<h2>Part 1 : Fitting a GLM to a single neuron<a class="headerlink" href="#part-1-fitting-a-glm-to-a-single-neuron" title="Link to this heading">#</a></h2>
+<section id="fitting-a-glm-to-a-single-neuron">
+<h3>Fitting a GLM to a single neuron<a class="headerlink" href="#fitting-a-glm-to-a-single-neuron" title="Link to this heading">#</a></h3>
 <p><strong>Question : are neurons constantly tuned to head-direction and can we use it to predict the spiking activity of each neuron
 based only on the activity of other neurons?</strong></p>
 <p>To fit the GLM faster, we will use only the first 3 min of wake.</p>
@@ -590,7 +605,7 @@ count <span class="math notranslate nohighlight">\(y_{t}\)</span>.</p>
 </div>
 </div>
 <section id="features-construction">
-<h3>Features Construction<a class="headerlink" href="#features-construction" title="Link to this heading">#</a></h3>
+<h4>Features Construction<a class="headerlink" href="#features-construction" title="Link to this heading">#</a></h4>
 <p>Let’s fix the spike history window size that we will use as predictor meaning how far back in time we want to look to predict the current rate.</p>
 <p>Let’s :</p>
 <ul class="simple">
@@ -683,7 +698,7 @@ instead the feature dimension is 80, because our bin size was 0.01 sec and the w
 We can learn these weights by maximum likelihood by fitting a GLM.</p>
 </section>
 <section id="fitting-a-single-neuron-model">
-<h3>Fitting a single neuron model<a class="headerlink" href="#fitting-a-single-neuron-model" title="Link to this heading">#</a></h3>
+<h4>Fitting a single neuron model<a class="headerlink" href="#fitting-a-single-neuron-model" title="Link to this heading">#</a></h4>
 <p>When working a real dataset, it is good practice to train your models on a chunk of the data and
 use the other chunk to assess the model performance. This process is known as “cross-validation”.
 There is no unique strategy on how to cross-validate your model; What works best
@@ -789,7 +804,7 @@ worst if we needed a finer temporal resolution, such 1ms time bins
 What can we do to mitigate over-fitting now?</p>
 </section>
 <section id="reducing-feature-dimensionality">
-<h3>Reducing feature dimensionality<a class="headerlink" href="#reducing-feature-dimensionality" title="Link to this heading">#</a></h3>
+<h4>Reducing feature dimensionality<a class="headerlink" href="#reducing-feature-dimensionality" title="Link to this heading">#</a></h4>
 <p>Let’s see how to use NeMoS’ <code class="docutils literal notranslate"><span class="pre">basis</span></code> module to reduce dimensionality and avoid over-fitting!
 For history-type inputs, we’ll use again the raised cosine log-stretched basis,
 <a class="reference external" href="https://www.jneurosci.org/content/25/47/11003">Pillow et al., 2005</a>.</p>
@@ -868,7 +883,7 @@ This can be performed in NeMoS by calling the <code class="docutils literal notr
 </div>
 </section>
 <section id="fit-a-glm-with-basis-features-with-reduced-dimensionality">
-<h3>Fit a GLM with basis features with reduced dimensionality<a class="headerlink" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality" title="Link to this heading">#</a></h3>
+<h4>Fit a GLM with basis features with reduced dimensionality<a class="headerlink" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality" title="Link to this heading">#</a></h4>
 <p>Now that we have our “compressed” history feature matrix, we can fit the parameters for a new GLM model using these features.</p>
 <p><strong>Question: Can you fit the model using the compressed features? Call it <code class="docutils literal notranslate"><span class="pre">model_basis</span></code>.</strong></p>
 <div class="cell docutils container">
@@ -981,13 +996,13 @@ by the two models on the whole dataset. The model should be called <code class="
 </div>
 </section>
 <section id="all-to-all-connectivity">
-<h3>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h3>
+<h4>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h4>
 <p>The same approach can be applied to the whole population. Now the firing rate of a neuron
 is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, <code class="docutils literal notranslate"><span class="pre">(num_time_points,</span> <span class="pre">num_neurons</span> <span class="pre">*</span> <span class="pre">num_basis_funcs)</span></code>.</p>
 <section id="preparing-the-features">
-<h4>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h4>
+<h5>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h5>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
 <li><p>Re-define the basis?</p></li>
@@ -1019,7 +1034,7 @@ This can be done by passing the population counts to the <code class="docutils l
 </div>
 </section>
 <section id="fitting-the-model">
-<span id="head-direction-fit-users"></span><h4>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h4>
+<span id="head-direction-fit-users"></span><h5>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h5>
 <p>This is an all-to-all neurons model.
 We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></a> to fit the whole population at once.</p>
 <p>Once we condition on past activity, log-likelihood of the population is the sum of the log-likelihood
@@ -1045,7 +1060,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 </section>
 <section id="comparing-model-predictions">
-<h4>Comparing model predictions.<a class="headerlink" href="#comparing-model-predictions" title="Link to this heading">#</a></h4>
+<h5>Comparing model predictions.<a class="headerlink" href="#comparing-model-predictions" title="Link to this heading">#</a></h5>
 <p>Predict the rate (counts are already sorted by tuning prefs)</p>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
@@ -1095,7 +1110,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 </section>
 <section id="visualizing-the-connectivity">
-<h4>Visualizing the connectivity<a class="headerlink" href="#visualizing-the-connectivity" title="Link to this heading">#</a></h4>
+<h5>Visualizing the connectivity<a class="headerlink" href="#visualizing-the-connectivity" title="Link to this heading">#</a></h5>
 <p>Finally, we can extract and visualize the pairwise interactions between neurons.</p>
 <p>**Question: Can you extract the weights and store it in a <code class="docutils literal notranslate"><span class="pre">(n_neurons,</span> <span class="pre">n_neurons,</span> <span class="pre">n_basis_funcs)</span></code> array?</p>
 <div class="cell tag_render-all docutils container">
@@ -1157,14 +1172,241 @@ all the coupling filters.</p>
 <p class="admonition-title">Figure check</p>
 <p><img alt="" src="../../_images/02-14.png" /></p>
 </div>
-</section>
-</section>
-<section id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
 <p>These coupling filters represent the influence of one neuron on another over time.
 They have been sorted based on the preferred head-direction of each neuron.
 Note that those neurons are not synaptically connected, but they have a functional relationship based on their tuning
 to head-direction.</p>
+</section>
+</section>
+</section>
+</section>
+<section id="part-2-modelling-calcium-imaging-data-with-glm">
+<h2>Part 2 : Modelling calcium imaging data with GLM<a class="headerlink" href="#part-2-modelling-calcium-imaging-data-with-glm" title="Link to this heading">#</a></h2>
+<section id="loading-and-preprocessing-the-data">
+<h3>Loading and preprocessing the data<a class="headerlink" href="#loading-and-preprocessing-the-data" title="Link to this heading">#</a></h3>
+<p>We will use the same data loading and preprocessing steps as in the previous group project. This part is more open-ended,
+and you can explore different modeling choices.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">fetch</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;A0670-221213.nwb&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">transients</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;RoiResponseSeries&quot;</span><span class="p">][:]</span>  <span class="c1"># Get calcium transients</span>
+<span class="n">angle</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;ry&quot;</span><span class="p">]</span> <span class="c1"># Get head-direction signal</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">transients</span><span class="p">,</span>
+    <span class="n">features</span><span class="o">=</span><span class="n">angle</span><span class="p">,</span> 
+    <span class="n">bins</span><span class="o">=</span><span class="mi">61</span><span class="p">,</span> 
+    <span class="n">epochs</span> <span class="o">=</span> <span class="n">angle</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
+    <span class="nb">range</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">),</span>
+    <span class="n">feature_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;angle&quot;</span><span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>To speed up the analysis, the following code computes a Rayleigh test to select only neurons that are significantly tuned to head-direction.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">angle</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">tuning_curves</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">C</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">S</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">R</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">p_value</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Z</span><span class="p">)</span>
+
+<span class="n">tokeep_neurons</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">p_value</span> <span class="o">&lt;</span> <span class="mf">0.01</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">transients</span> <span class="o">=</span> <span class="n">transients</span><span class="p">[:,</span> <span class="n">tokeep_neurons</span><span class="p">]</span>
+<span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="n">tokeep_neurons</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of neurons after tuning selection: </span><span class="si">{</span><span class="n">transients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, we sort the neurons based on their preferred head-direction.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pref_ang</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">idxmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="s2">&quot;angle&quot;</span><span class="p">)</span>
+<span class="n">sort_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">pref_ang</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+<span class="n">transients</span> <span class="o">=</span> <span class="n">transients</span><span class="p">[:,</span> <span class="n">sort_idx</span><span class="p">]</span>
+<span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">tuning_curves</span><span class="p">[</span><span class="n">sort_idx</span><span class="p">]</span>
+<span class="n">pref_ang</span> <span class="o">=</span> <span class="n">pref_ang</span><span class="p">[</span><span class="n">sort_idx</span><span class="p">]</span>
+<span class="n">transients</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="n">pref_ang</span><span class="o">=</span><span class="n">pref_ang</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">transients</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="basis-functions-for-calcium-data">
+<h3>Basis functions for calcium data<a class="headerlink" href="#basis-functions-for-calcium-data" title="Link to this heading">#</a></h3>
+<p>Here we can use the same <code class="docutils literal notranslate"><span class="pre">RaisedCosineLogConv</span></code> basis, but with a larger window size to capture the slower dynamics of calcium signals.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the basis for calcium data</span>
+<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># Window size in seconds</span>
+<span class="n">calcium_window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">calcium_window_size_sec</span> <span class="o">*</span> <span class="n">transients</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span> <span class="c1"># Convert window size to number of bins</span>
+<span class="n">calcium_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Number of basis functions </span>
+    <span class="n">window_size</span><span class="o">=</span><span class="n">calcium_window_size</span> <span class="c1"># Window size in bins</span>
+<span class="p">)</span>
+<span class="n">calcium_basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the basis for calcium data</span>
+<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># 2 seconds window</span>
+<span class="n">calcium_window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">calcium_window_size_sec</span> <span class="o">*</span> <span class="n">transients</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
+<span class="n">calcium_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
+    <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">calcium_window_size</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calcium_window_size</span><span class="p">)</span>
+<span class="n">calcium_basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="id1">
+<h3>Preparing the features<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>We can convolve the calcium transients with the basis functions to get the feature matrix.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># convolve all the neurons</span>
+<span class="n">calcium_convolved</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span> <span class="p">)</span> <span class="c1"># Parameter is the calcium transients</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolved calcium shape: </span><span class="si">{</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># convolve all the neurons</span>
+<span class="n">calcium_convolved</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">transients</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolved calcium shape: </span><span class="si">{</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="fitting-the-population-glm">
+<h3>Fitting the Population GLM<a class="headerlink" href="#fitting-the-population-glm" title="Link to this heading">#</a></h3>
+<p>We can fit a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> to the calcium data using a Gamma observation model, which is more appropriate for continuous-valued data.</p>
+<p>Similar to before, we will create a train-test split using the first and second half of the data.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">duration</span> <span class="o">=</span> <span class="n">calcium_convolved</span><span class="o">.</span><span class="n">time_support</span><span class="o">.</span><span class="n">tot_length</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">calcium_convolved</span><span class="o">.</span><span class="n">time_support</span><span class="p">[</span><span class="s2">&quot;start&quot;</span><span class="p">]</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">calcium_convolved</span><span class="o">.</span><span class="n">time_support</span><span class="p">[</span><span class="s2">&quot;end&quot;</span><span class="p">]</span>
+<span class="n">training_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">start</span> <span class="o">+</span> <span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">testing_ep</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">start</span> <span class="o">+</span> <span class="n">duration</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+    <span class="n">observation_model</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Observation model type</span>
+    <span class="n">regularizer</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularizer type</span>
+    <span class="n">solver_name</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Solver name</span>
+    <span class="n">regularizer_strength</span><span class="o">=...</span> <span class="c1"># Regularization strength</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="p">,</span> <span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the calcium transients during training epoch</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calcium model coefficients shape: </span><span class="si">{</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+    <span class="n">observation_model</span><span class="o">=</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span>
+    <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">,</span>
+    <span class="n">regularizer_strength</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">training_ep</span><span class="p">),</span> <span class="n">transients</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">training_ep</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calcium model coefficients shape: </span><span class="si">{</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="predicting-and-visualizing-the-results">
+<h3>Predicting and visualizing the results<a class="headerlink" href="#predicting-and-visualizing-the-results" title="Link to this heading">#</a></h3>
+<p>We can predict the calcium signals using the fitted model during the test epoch and visualize the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_predicted</span> <span class="o">=</span> <span class="n">calcium_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span> <span class="p">)</span> <span class="c1"># Parameter is the convolved feature matrix restricted during testing epoch</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_predicted</span> <span class="o">=</span> <span class="n">calcium_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">testing_ep</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can visualize the predicted calcium signals alongside the actual signals to assess the model’s performance.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ep_to_plot</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">IntervalSet</span><span class="p">(</span><span class="n">testing_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">testing_ep</span><span class="o">.</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">100</span><span class="p">)</span>  <span class="c1"># Plot first 10 seconds of test epoch</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transients</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Actual Calcium&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calcium_predicted</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted Calcium&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Calcium Signal Prediction&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Fluorescence Intensity&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/02-15.png" /></p>
+</div>
+<p>Similar to the spike data, we can extract and visualize the coupling filters between neurons based on the fitted model.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># split the coefficient vector along the feature axis (axis=0)</span>
+<span class="n">calcium_weights_dict</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">split_by_feature</span><span class="p">(</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># The output is a dict with key the basis label, </span>
+<span class="c1"># and value the reshaped coefficients</span>
+<span class="n">calcium_weights</span> <span class="o">=</span> <span class="n">calcium_weights_dict</span><span class="p">[</span><span class="s2">&quot;RaisedCosineLogConv&quot;</span><span class="p">]</span>
+<span class="c1"># reconstruct the coupling filters</span>
+<span class="n">time</span><span class="p">,</span> <span class="n">basis_kernels</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">evaluate_on_grid</span><span class="p">(</span><span class="n">calcium_window_size</span><span class="p">)</span>
+<span class="n">calcium_responses</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;jki,tk-&gt;ijt&quot;</span><span class="p">,</span> <span class="n">calcium_weights</span><span class="p">,</span> <span class="n">basis_kernels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calcium_responses</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_coupling_filters</span><span class="p">(</span><span class="n">calcium_responses</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/02-16.png" /></p>
+</div>
+<p>These coupling filters represent the functional relationships between neurons based on their calcium signal.
+Note that the slower dynamics of calcium signals may lead to different coupling patterns compared to spike data.</p>
+<p>The end of this group project. You can explore further by trying different basis functions, regularization strengths, or observation models.
+You can also try to incorporate external covariates, such as the head-direction signal, into the model.
+You can try to downsample the data to see how it affects the model fitting and predictions (i.e. check <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> in pynapple to downsample the transients).</p>
 </section>
 </section>
 </section>
@@ -1214,20 +1456,30 @@ to head-direction.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-fitting-a-glm-to-a-single-neuron">Part 1 : Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-modelling-extracellular-spike-history-effects-with-glm">Part 1 : Modelling extracellular spike history effects with GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-glm-to-a-single-neuron">Fitting a GLM to a single neuron</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#features-construction">Features Construction</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-modelling-calcium-imaging-data-with-glm">Part 2 : Modelling calcium imaging data with GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-and-preprocessing-the-data">Loading and preprocessing the data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-for-calcium-data">Basis functions for calcium data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Preparing the features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-population-glm">Fitting the Population GLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-and-visualizing-the-results">Predicting and visualizing the results</a></li>
 </ul>
 </li>
 </ul>

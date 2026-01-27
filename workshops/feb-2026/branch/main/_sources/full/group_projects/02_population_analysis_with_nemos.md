@@ -39,7 +39,10 @@ This notebook can be downloaded as **{nb-download}`02_population_analysis_with_n
 
 <div class="render-all">
 
-In the first part of the notebook, we characterized the relationship between head-direction cells during wake and sleep. 
+This group project is focused on fitting a population GLM model to characterize the functional connectivity.
+
+In the first part, we will use the same dataset as in the previous tutorial, which contains head-direction cells recorded from the antero-dorsal nucleus of the thalamus (ADN) of a mouse during wake and sleep.
+In the previous notebook, we characterized the relationship between head-direction cells during wake and sleep. 
 Cells that fire together during wake also fire together during sleep and cells that don't fire together during wake don't fire 
 together during sleep. The goal here is to characterize this relationship with generalized linear model. 
 Since cells have a functional relationship to each other, the activity of one cell should predict the activity of another cell.
@@ -49,6 +52,8 @@ In this group project, we will use nemos to do the following tasks:
 2. Fit a GLM model to a single neuron
 3. Fit a GLM model with basis functions to reduce over-fitting
 4. Fit a GLM model to all neurons to learn functional connectivity
+
+In the second part, we will try to apply the same type of analysis to the calcium imaging dataset used in the first tutorial.
 
 Let's start by importing all the packages.
 
@@ -75,7 +80,9 @@ plt.style.use(nmo.styles.plot_style)
 ```
 
 
-## Fetching the data
+## Part 1 : Modelling extracellular spike history effects with GLM 
+
+### Fetching the data
 
 <div class="render-all">
 
@@ -112,7 +119,7 @@ spikes.set_info(pref_ang = pref_ang)
 
 
 
-## Part 1 : Fitting a GLM to a single neuron
+### Fitting a GLM to a single neuron
 
 <div class="render-all">
 
@@ -195,7 +202,7 @@ epoch_one_spk = nap.IntervalSet(
 )
 ```
 
-### Features Construction
+#### Features Construction
 
 <div class="render-all">
 
@@ -346,7 +353,7 @@ We can learn these weights by maximum likelihood by fitting a GLM.
 </div>
 
 
-### Fitting a single neuron model
+#### Fitting a single neuron model
 
 <div class="render-all">
 
@@ -523,7 +530,7 @@ What can we do to mitigate over-fitting now?
 
 </div>
 
-### Reducing feature dimensionality
+#### Reducing feature dimensionality
 
 <div class="render-all">
 Let's see how to use NeMoS' `basis` module to reduce dimensionality and avoid over-fitting!
@@ -659,7 +666,7 @@ fig.savefig("../../_static/_check_figs/02-09.png")
 :::
 </div>
 
-### Fit a GLM with basis features with reduced dimensionality
+#### Fit a GLM with basis features with reduced dimensionality
 
 <div class="render-all">
 
@@ -833,7 +840,7 @@ fig.savefig("../../_static/_check_figs/02-11.png")
 :::
 </div>
 
-### All-to-all Connectivity
+#### All-to-all Connectivity
 
 <div class="render-all">
 
@@ -844,7 +851,7 @@ to get an array of predictors of shape, `(num_time_points, num_neurons * num_bas
 
 </div>
 
-#### Preparing the features
+##### Preparing the features
 
 <div class="render-all">
 
@@ -895,7 +902,7 @@ print(f"Convolved count shape: {convolved_count.shape}")
 ```
 
 (head-direction-fit-full)=
-#### Fitting the Model
+##### Fitting the Model
 
 <div class="render-all">
 
@@ -935,7 +942,7 @@ model = nmo.glm.PopulationGLM(
 print(f"Model coefficients shape: {model.coef_.shape}")
 ```
 
-#### Comparing model predictions.
+##### Comparing model predictions.
 
 <div class="render-all">
 
@@ -1017,7 +1024,7 @@ fig.savefig("../../_static/_check_figs/02-13.png")
 :::
 </div>
 
-#### Visualizing the connectivity
+##### Visualizing the connectivity
 
 <div class="render-all">
 
@@ -1118,12 +1125,279 @@ fig.savefig("../../_static/_check_figs/02-14.png")
 :::
 </div>
 
-### Conclusion
-
 <div class="render-all">
 
 These coupling filters represent the influence of one neuron on another over time. 
 They have been sorted based on the preferred head-direction of each neuron.
 Note that those neurons are not synaptically connected, but they have a functional relationship based on their tuning 
 to head-direction.
+</div>
+
+## Part 2 : Modelling calcium imaging data with GLM
+
+In this part we will fit a GLM to calcium imaging data. Calcium imaging data has different characteristics compared to extracellular spike data.
+First, the data is continuous-valued, representing fluorescence intensity, rather than discrete spike counts.
+Second, calcium signals have slower dynamics due to the kinetics of calcium indicators.
+Therefore, we will use a different observation model instead of a Poisson model, and we will adjust the basis functions to capture the slower dynamics.
+
+### Loading and preprocessing the data
+
+<div class="render-all">
+We will use the same data loading and preprocessing steps as in the previous group project. This part is more open-ended, 
+and you can explore different modeling choices.
+
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+path = nmo.fetch.fetch_data("A0670-221213.nwb")
+data = nap.load_file(path)
+transients = data["RoiResponseSeries"][:]  # Get calcium transients
+angle = data["ry"] # Get head-direction signal
+```
+
+The following code computes the tuning curves and sort the transients based on their preferred head-direction.
+
+```{code-cell} ipython3
+:tags: [render-all]
+tuning_curves = nap.compute_tuning_curves(
+    data=transients,
+    features=angle, 
+    bins=61, 
+    epochs = angle.time_support,
+    range=(0, 2 * np.pi),
+    feature_names = ["angle"]
+    )
+```
+
+<div class="render-all">
+
+To speed up the analysis, the following code computes a Rayleigh test to select only neurons that are significantly tuned to head-direction.
+
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+C = np.sum(tuning_curves.values * np.cos(tuning_curves.angle.values), axis=1) / np.sum(tuning_curves.values, axis=1)
+S = np.sum(tuning_curves.values * np.sin(tuning_curves.angle.values), axis=1) / np.sum(tuning_curves.values, axis=1)
+R = np.sqrt(C**2 + S**2)
+Z = tuning_curves.shape[1] * R**2
+p_value = np.exp(-Z)
+
+tokeep_neurons = np.where(p_value < 0.01)[0]
+transients = transients[:, tokeep_neurons]
+tuning_curves = tuning_curves[tokeep_neurons]
+print(f"Number of neurons after tuning selection: {transients.shape[1]}")
+```
+
+<div class="render-all">
+
+Finally, we sort the neurons based on their preferred head-direction.
+
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+pref_ang = tuning_curves.idxmax(dim="angle")
+sort_idx = np.argsort(pref_ang.values)
+transients = transients[:, sort_idx]
+tuning_curves = tuning_curves[sort_idx]
+pref_ang = pref_ang[sort_idx]
+transients.set_info(pref_ang=pref_ang)
+print(transients) 
+```
+
+
+
+### Basis functions for calcium data
+
+<div class="render-all">
+
+Here we can use the same `RaisedCosineLogConv` basis, but with a larger window size to capture the slower dynamics of calcium signals.
+
+</div>
+
+<div class="render-user">
+```{code-cell} ipython3
+# define the basis for calcium data
+calcium_window_size_sec = 2 # Window size in seconds
+calcium_window_size = int(calcium_window_size_sec * transients.rate) # Convert window size to number of bins
+calcium_basis = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=..., # Number of basis functions 
+    window_size=calcium_window_size # Window size in bins
+)
+calcium_basis
+```
+</div>
+
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+# define the basis for calcium data
+calcium_window_size_sec = 2.0  # 2 seconds window
+calcium_window_size = int(calcium_window_size_sec * transients.rate)
+calcium_basis = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=4, window_size=calcium_window_size
+)
+print(calcium_window_size)
+calcium_basis
+```
+
+### Preparing the features
+
+<div class="render-all">
+We can convolve the calcium transients with the basis functions to get the feature matrix.
+</div>
+
+<div class="render-user">
+```{code-cell} ipython3
+# convolve all the neurons
+calcium_convolved = calcium_basis.compute_features( ) # Parameter is the calcium transients
+print(f"Convolved calcium shape: {calcium_convolved.shape}")
+```
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+# convolve all the neurons
+calcium_convolved = calcium_basis.compute_features(transients)
+print(f"Convolved calcium shape: {calcium_convolved.shape}")
+```
+
+### Fitting the Population GLM
+
+<div class="render-all">
+We can fit a `PopulationGLM` to the calcium data using a Gamma observation model, which is more appropriate for continuous-valued data.
+
+Similar to before, we will create a train-test split using the first and second half of the data.
+
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+duration = calcium_convolved.time_support.tot_length("s")
+start = calcium_convolved.time_support["start"]
+end = calcium_convolved.time_support["end"]
+training_ep = nap.IntervalSet(start, start + duration / 2)
+testing_ep = nap.IntervalSet(start + duration / 2, end)
+```
+
+
+<div class="render-user">
+```{code-cell} ipython3
+calcium_model = nmo.glm.PopulationGLM(
+    observation_model=..., # Observation model type
+    regularizer=..., # Regularizer type
+    solver_name=..., # Solver name
+    regularizer_strength=... # Regularization strength
+    ).fit( , ) # Parameters are the convolved feature matrix and the calcium transients during training epoch
+print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
+```
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+calcium_model = nmo.glm.PopulationGLM(
+    observation_model="Gamma",
+    regularizer="Ridge",
+    solver_name="LBFGS",
+    regularizer_strength=0.1
+    ).fit(calcium_convolved.restrict(training_ep), transients.restrict(training_ep))
+print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
+```
+
+### Predicting and visualizing the results
+
+<div class="render-all">
+We can predict the calcium signals using the fitted model during the test epoch and visualize the results.
+</div>
+
+<div class="render-user">
+```{code-cell} ipython3
+calcium_predicted = calcium_model.predict( ) # Parameter is the convolved feature matrix restricted during testing epoch
+```
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+calcium_predicted = calcium_model.predict(calcium_convolved.restrict(testing_ep))
+```
+
+<div class="render-all">
+We can visualize the predicted calcium signals alongside the actual signals to assess the model's performance.
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)  # Plot first 10 seconds of test epoch
+
+plt.figure()
+plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
+plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], label="Predicted Calcium")
+plt.legend()
+plt.title("Calcium Signal Prediction")
+plt.xlabel("Time (s)")
+plt.ylabel("Fluorescence Intensity")
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+fig.savefig("../../_static/_check_figs/02-15.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-15.png)
+:::
+</div>
+
+<div class="render-all">
+
+Similar to the spike data, we can extract and visualize the coupling filters between neurons based on the fitted model.
+</div>
+
+```{code-cell} ipython3
+:tags: [render-all]
+# split the coefficient vector along the feature axis (axis=0)
+calcium_weights_dict = calcium_basis.split_by_feature(calcium_model.coef_, axis=0)
+# The output is a dict with key the basis label, 
+# and value the reshaped coefficients
+calcium_weights = calcium_weights_dict["RaisedCosineLogConv"]
+# reconstruct the coupling filters
+time, basis_kernels = calcium_basis.evaluate_on_grid(calcium_window_size)
+calcium_responses = np.einsum("jki,tk->ijt", calcium_weights, basis_kernels)
+print(calcium_responses.shape)
+```
+
+We can use the same plotting function as before to visualize the coupling filters for the calcium data.
+
+```{code-cell} ipython3
+:tags: [render-all]
+fig = workshop_utils.plot_coupling_filters(calcium_responses, tuning_curves)
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+fig.savefig("../../_static/_check_figs/02-16.png")
+```
+
+<div class="render-user">
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-16.png)
+:::
+</div>
+
+
+<div class="render-all">
+
+These coupling filters represent the functional relationships between neurons based on their calcium signal.
+Note that the slower dynamics of calcium signals may lead to different coupling patterns compared to spike data.
+
+The end of this group project. You can explore further by trying different basis functions, regularization strengths, or observation models.
+You can also try to incorporate external covariates, such as the head-direction signal, into the model.
+You can try to downsample the data to see how it affects the model fitting and predictions (i.e. check `bin_average` in pynapple to downsample the transients).
+
 </div>
