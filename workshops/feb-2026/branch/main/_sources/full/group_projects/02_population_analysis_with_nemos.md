@@ -226,13 +226,13 @@ fig = doc_plots.plot_history_window(neuron_count, epoch_one_spk, window_size_sec
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-04.png")
+fig.savefig("../../_static/_check_figs/02-01.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-04.png)
+![](../../_static/_check_figs/02-01.png)
 :::
 </div>
 
@@ -331,13 +331,13 @@ fig = workshop_utils.plot_features(input_feature, count.rate, suptitle)
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-05.png")
+fig.savefig("../../_static/_check_figs/02-02.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-05.png)
+![](../../_static/_check_figs/02-02.png)
 :::
 </div>
 
@@ -435,13 +435,13 @@ plt.legend()
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-06.png")
+fig.savefig("../../_static/_check_figs/02-03.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-06.png)
+![](../../_static/_check_figs/02-03.png)
 :::
 </div>
 
@@ -506,13 +506,13 @@ plt.legend()
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-07.png")
+fig.savefig("../../_static/_check_figs/02-04.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-07.png)
+![](../../_static/_check_figs/02-04.png)
 :::
 </div>
 
@@ -548,13 +548,13 @@ fig = doc_plots.plot_basis()
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-08.png")
+fig.savefig("../../_static/_check_figs/02-05.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-08.png)
+![](../../_static/_check_figs/02-05.png)
 :::
 </div>
 
@@ -656,13 +656,13 @@ fig = doc_plots.plot_convolved_counts(neuron_count, conv_spk, epoch_one_spk, epo
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-09.png")
+fig.savefig("../../_static/_check_figs/02-06.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-09.png)
+![](../../_static/_check_figs/02-06.png)
 :::
 </div>
 
@@ -776,13 +776,13 @@ plt.legend()
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-10.png")
+fig.savefig("../../_static/_check_figs/02-07.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-10.png)
+![](../../_static/_check_figs/02-07.png)
 :::
 </div>
 
@@ -830,13 +830,13 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-11.png")
+fig.savefig("../../_static/_check_figs/02-08.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-11.png)
+![](../../_static/_check_figs/02-08.png)
 :::
 </div>
 
@@ -984,13 +984,13 @@ fig = workshop_utils.plot_head_direction_tuning_model(tuning_curves, spikes, ang
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-12.png")
+fig.savefig("../../_static/_check_figs/02-09.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-12.png)
+![](../../_static/_check_figs/02-09.png)
 :::
 </div>
 
@@ -1014,13 +1014,13 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-13.png")
+fig.savefig("../../_static/_check_figs/02-10.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-13.png)
+![](../../_static/_check_figs/02-10.png)
 :::
 </div>
 
@@ -1115,13 +1115,13 @@ fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
 ```{code-cell} ipython3
 :tags: [hide-input]
 
-fig.savefig("../../_static/_check_figs/02-14.png")
+fig.savefig("../../_static/_check_figs/02-11.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-14.png)
+![](../../_static/_check_figs/02-11.png)
 :::
 </div>
 
@@ -1328,7 +1328,7 @@ We can visualize the predicted calcium signals alongside the actual signals to a
 :tags: [render-all]
 ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)  # Plot first 10 seconds of test epoch
 
-fig = plt.figure()
+plt.figure()
 plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
 plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], label="Predicted Calcium")
 plt.legend()
@@ -1339,13 +1339,13 @@ plt.ylabel("Fluorescence Intensity")
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-fig.savefig("../../_static/_check_figs/02-15.png")
+plt.savefig("../../_static/_check_figs/02-12.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-15.png)
+![](../../_static/_check_figs/02-12.png)
 :::
 </div>
 
@@ -1376,13 +1376,13 @@ fig = workshop_utils.plot_coupling_filters(calcium_responses, tuning_curves)
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-fig.savefig("../../_static/_check_figs/02-16.png")
+fig.savefig("../../_static/_check_figs/02-13.png")
 ```
 
 <div class="render-user">
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/02-16.png)
+![](../../_static/_check_figs/02-13.png)
 :::
 </div>
 
