@@ -546,7 +546,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-27 23:00:21,743:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-28 21:21:02,804:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1162,6 +1162,7 @@ body.vscode-dark {
   min-width: 300px;
   max-width: 700px;
   line-height: 1.6;
+  padding-bottom: 4px;
 }
 
 .xr-text-repr-fallback {
@@ -1172,8 +1173,11 @@ body.vscode-dark {
 .xr-header {
   padding-top: 6px;
   padding-bottom: 6px;
-  margin-bottom: 4px;
+}
+
+.xr-header {
   border-bottom: solid 1px var(--xr-border-color);
+  margin-bottom: 4px;
 }
 
 .xr-header > div,
@@ -1184,20 +1188,15 @@ body.vscode-dark {
 }
 
 .xr-obj-type,
-.xr-obj-name,
-.xr-group-name {
+.xr-obj-name {
   margin-left: 2px;
   margin-right: 10px;
 }
 
-.xr-group-name::before {
-  content: "📁";
-  padding-right: 0.3em;
-}
-
-.xr-group-name,
-.xr-obj-type {
+.xr-obj-type,
+.xr-group-box-contents > label {
   color: var(--xr-font-color2);
+  display: block;
 }
 
 .xr-sections {
@@ -1212,28 +1211,39 @@ body.vscode-dark {
   display: contents;
 }
 
-.xr-section-item input {
-  display: inline-block;
+.xr-section-item > input,
+.xr-group-box-contents > input,
+.xr-array-wrap > input {
+  display: block;
   opacity: 0;
   height: 0;
   margin: 0;
 }
 
-.xr-section-item input + label {
+.xr-section-item > input + label,
+.xr-var-item > input + label {
   color: var(--xr-disabled-color);
-  border: 2px solid transparent !important;
 }
 
-.xr-section-item input:enabled + label {
+.xr-section-item > input:enabled + label,
+.xr-var-item > input:enabled + label,
+.xr-array-wrap > input:enabled + label,
+.xr-group-box-contents > input:enabled + label {
   cursor: pointer;
   color: var(--xr-font-color2);
 }
 
-.xr-section-item input:focus + label {
-  border: 2px solid var(--xr-font-color0) !important;
+.xr-section-item > input:focus-visible + label,
+.xr-var-item > input:focus-visible + label,
+.xr-array-wrap > input:focus-visible + label,
+.xr-group-box-contents > input:focus-visible + label {
+  outline: auto;
 }
 
-.xr-section-item input:enabled + label:hover {
+.xr-section-item > input:enabled + label:hover,
+.xr-var-item > input:enabled + label:hover,
+.xr-array-wrap > input:enabled + label:hover,
+.xr-group-box-contents > input:enabled + label:hover {
   color: var(--xr-font-color0);
 }
 
@@ -1241,11 +1251,25 @@ body.vscode-dark {
   grid-column: 1;
   color: var(--xr-font-color2);
   font-weight: 500;
+  white-space: nowrap;
+}
+
+.xr-section-summary > em {
+  font-weight: normal;
+}
+
+.xr-span-grid {
+  grid-column-end: -1;
 }
 
 .xr-section-summary > span {
   display: inline-block;
-  padding-left: 0.5em;
+  padding-left: 0.3em;
+}
+
+.xr-group-box-contents > input:checked + label > span {
+  display: inline-block;
+  padding-left: 0.6em;
 }
 
 .xr-section-summary-in:disabled + label {
@@ -1273,7 +1297,8 @@ body.vscode-dark {
 }
 
 .xr-section-summary,
-.xr-section-inline-details {
+.xr-section-inline-details,
+.xr-group-box-contents > label {
   padding-top: 4px;
 }
 
@@ -1282,20 +1307,29 @@ body.vscode-dark {
 }
 
 .xr-section-details {
-  display: none;
   grid-column: 1 / -1;
   margin-top: 4px;
   margin-bottom: 5px;
+}
+
+.xr-section-summary-in ~ .xr-section-details {
+  display: none;
 }
 
 .xr-section-summary-in:checked ~ .xr-section-details {
   display: contents;
 }
 
+.xr-children {
+  display: inline-grid;
+  grid-template-columns: 100%;
+  grid-column: 1 / -1;
+  padding-top: 4px;
+}
+
 .xr-group-box {
   display: inline-grid;
-  grid-template-columns: 0px 20px auto;
-  width: 100%;
+  grid-template-columns: 0px 30px auto;
 }
 
 .xr-group-box-vline {
@@ -1309,13 +1343,43 @@ body.vscode-dark {
   grid-column-start: 2;
   grid-row-start: 1;
   height: 1em;
-  width: 20px;
+  width: 26px;
   border-bottom: 0.2em solid;
   border-color: var(--xr-border-color);
 }
 
 .xr-group-box-contents {
   grid-column-start: 3;
+  padding-bottom: 4px;
+}
+
+.xr-group-box-contents > label::before {
+  content: "📂";
+  padding-right: 0.3em;
+}
+
+.xr-group-box-contents > input:checked + label::before {
+  content: "📁";
+}
+
+.xr-group-box-contents > input:checked + label {
+  padding-bottom: 0px;
+}
+
+.xr-group-box-contents > input:checked ~ .xr-sections {
+  display: none;
+}
+
+.xr-group-box-contents > input + label > span {
+  display: none;
+}
+
+.xr-group-box-ellipsis {
+  font-size: 1.4em;
+  font-weight: 900;
+  color: var(--xr-font-color2);
+  letter-spacing: 0.15em;
+  cursor: default;
 }
 
 .xr-array-wrap {
@@ -1556,11 +1620,11 @@ Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
     fs:         20000.00000499643
-    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-43451502-d153-4153-9ccc-64a7af3205bc' class='xr-array-in' type='checkbox' checked><label for='section-43451502-d153-4153-9ccc-64a7af3205bc' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-59671e2a-d78a-44eb-b7c6-0c2ada678ca6' class='xr-array-in' type='checkbox' checked><label for='section-59671e2a-d78a-44eb-b7c6-0c2ada678ca6' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-41d288a3-ff79-4be7-9714-c797ccb2a959' class='xr-section-summary-in' type='checkbox'  checked><label for='section-41d288a3-ff79-4be7-9714-c797ccb2a959' class='xr-section-summary' >Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-544d2244-7ecf-42f5-bf64-f4a3d297a0f2' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-544d2244-7ecf-42f5-bf64-f4a3d297a0f2' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ee5f7423-a006-4096-9e48-f465533212d8' class='xr-var-data-in' type='checkbox'><label for='data-ee5f7423-a006-4096-9e48-f465533212d8' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-2a8eb344-7a0d-4ba3-919a-07929da4e952' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2a8eb344-7a0d-4ba3-919a-07929da4e952' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-bf6699bd-bc3d-4060-ac78-5978bfb6612c' class='xr-var-data-in' type='checkbox'><label for='data-bf6699bd-bc3d-4060-ac78-5978bfb6612c' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-18306ab0-053d-4733-bce2-30f3c2922dbc' class='xr-section-summary-in' type='checkbox' checked /><label for='section-18306ab0-053d-4733-bce2-30f3c2922dbc' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-e25626cd-1df0-4e45-b725-f0c78f5900ee' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e25626cd-1df0-4e45-b725-f0c78f5900ee' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ba091bfa-6a85-40ac-af95-1d3abd0476ef' class='xr-var-data-in' type='checkbox'><label for='data-ba091bfa-6a85-40ac-af95-1d3abd0476ef' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-eb43ff85-313d-437b-8219-1ab010ac5a25' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-eb43ff85-313d-437b-8219-1ab010ac5a25' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fe86e0cd-d7f8-4df7-936c-011e191ce619' class='xr-var-data-in' type='checkbox'><label for='data-fe86e0cd-d7f8-4df7-936c-011e191ce619' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-8951a293-1e53-465a-9cae-52b1c020501b' class='xr-section-summary-in' type='checkbox'  checked><label for='section-8951a293-1e53-465a-9cae-52b1c020501b' class='xr-section-summary' >Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-b369fca7-c661-4668-a4c4-31fd20fd04c2' class='xr-section-summary-in' type='checkbox' checked /><label for='section-b369fca7-c661-4668-a4c4-31fd20fd04c2' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -2354,7 +2418,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f3a260260c0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f46a5c72e80&gt;&gt;</td>
         </tr>
     
 
@@ -2642,7 +2706,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f39d9098560&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f465c72df70&gt;
 </pre></div>
 </div>
 <img alt="../../_images/f8b17f89ea9b7a25a0e93f7fd54543c57e4060190d8e894861ec3c629d61cbff.png" src="../../_images/f8b17f89ea9b7a25a0e93f7fd54543c57e4060190d8e894861ec3c629d61cbff.png" />
@@ -3458,7 +3522,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f3a260260c0&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7f46a5c72e80&gt;&gt;</td>
         </tr>
     
 
@@ -3737,7 +3801,7 @@ Predicted mean firing rate (current history): 1.4376871215756206 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f39ec156090&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f465e633fe0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/0b98acfde41e10f1f942937998508a801c7489d80bd63946201e9be38695cd75.png" src="../../_images/0b98acfde41e10f1f942937998508a801c7489d80bd63946201e9be38695cd75.png" />
