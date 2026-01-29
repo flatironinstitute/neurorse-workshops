@@ -231,6 +231,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_calcium_imaging_analysis-users.html">Calcium imaging analysis of head-direction cells</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
@@ -546,7 +547,7 @@ intrepetation.</p></li>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-28 21:21:02,804:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-29 16:29:42,194:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -1620,11 +1621,11 @@ Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
     fs:         20000.00000499643
-    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-59671e2a-d78a-44eb-b7c6-0c2ada678ca6' class='xr-array-in' type='checkbox' checked><label for='section-59671e2a-d78a-44eb-b7c6-0c2ada678ca6' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-f8a85e67-c8b9-451a-b422-6d30665ec5a4' class='xr-array-in' type='checkbox' checked><label for='section-f8a85e67-c8b9-451a-b422-6d30665ec5a4' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-18306ab0-053d-4733-bce2-30f3c2922dbc' class='xr-section-summary-in' type='checkbox' checked /><label for='section-18306ab0-053d-4733-bce2-30f3c2922dbc' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-e25626cd-1df0-4e45-b725-f0c78f5900ee' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-e25626cd-1df0-4e45-b725-f0c78f5900ee' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ba091bfa-6a85-40ac-af95-1d3abd0476ef' class='xr-var-data-in' type='checkbox'><label for='data-ba091bfa-6a85-40ac-af95-1d3abd0476ef' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-eb43ff85-313d-437b-8219-1ab010ac5a25' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-eb43ff85-313d-437b-8219-1ab010ac5a25' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-fe86e0cd-d7f8-4df7-936c-011e191ce619' class='xr-var-data-in' type='checkbox'><label for='data-fe86e0cd-d7f8-4df7-936c-011e191ce619' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-57ab1e5f-83f6-40c4-acba-ab60b873f14d' class='xr-section-summary-in' type='checkbox' checked /><label for='section-57ab1e5f-83f6-40c4-acba-ab60b873f14d' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-3fad5887-a1fe-45aa-9712-e4c494291c8a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-3fad5887-a1fe-45aa-9712-e4c494291c8a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-3515c1a1-61de-4161-b964-cc0316df2d38' class='xr-var-data-in' type='checkbox'><label for='data-3515c1a1-61de-4161-b964-cc0316df2d38' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-60e7fdc1-1d8f-4356-9b96-5be8c2556c03' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-60e7fdc1-1d8f-4356-9b96-5be8c2556c03' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-31552f44-aede-4039-a51e-adb8a8cca9ae' class='xr-var-data-in' type='checkbox'><label for='data-31552f44-aede-4039-a51e-adb8a8cca9ae' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-b369fca7-c661-4668-a4c4-31fd20fd04c2' class='xr-section-summary-in' type='checkbox' checked /><label for='section-b369fca7-c661-4668-a4c4-31fd20fd04c2' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-41a0e72e-7b3c-466d-bbed-75ffb4f31f84' class='xr-section-summary-in' type='checkbox' checked /><label for='section-41a0e72e-7b3c-466d-bbed-75ffb4f31f84' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -2418,7 +2419,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f46a5c72e80&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7ff154ba7060&gt;&gt;</td>
         </tr>
     
 
@@ -2706,7 +2707,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f465c72df70&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff10c509c40&gt;
 </pre></div>
 </div>
 <img alt="../../_images/f8b17f89ea9b7a25a0e93f7fd54543c57e4060190d8e894861ec3c629d61cbff.png" src="../../_images/f8b17f89ea9b7a25a0e93f7fd54543c57e4060190d8e894861ec3c629d61cbff.png" />
@@ -3522,7 +3523,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f46a5c72e80&gt;&gt;</td>
+            <td class="value">&lt;PjitFunction...7ff154ba7060&gt;&gt;</td>
         </tr>
     
 
@@ -3801,7 +3802,7 @@ Predicted mean firing rate (current history): 1.4376871215756206 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f465e633fe0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7ff129189400&gt;
 </pre></div>
 </div>
 <img alt="../../_images/0b98acfde41e10f1f942937998508a801c7489d80bd63946201e9be38695cd75.png" src="../../_images/0b98acfde41e10f1f942937998508a801c7489d80bd63946201e9be38695cd75.png" />
@@ -3875,7 +3876,9 @@ provide the ability to compute the pseudo-<span class="math notranslate nohighli
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pseudo-r2 (instantaneous current): 0.30376628041267395
-pseudo-r2 (current history): 0.35689446330070496
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>pseudo-r2 (current history): 0.35689446330070496
 </pre></div>
 </div>
 </div>

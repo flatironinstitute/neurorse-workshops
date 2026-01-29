@@ -39,29 +39,16 @@ This notebook can be downloaded as **{nb-download}`01_head_direction.ipynb`**. S
 
 <div class="render-all">
 
-In this tutorial, we will learn how to use pynapple to analyze electrophysiological data and calcium imaging data.
+In this tutorial, we will learn how to use pynapple to analyze electrophysiological data.
 
-1. We will first analyze extracellular recordings of head-direction cells recorded in the 
+We will analyze extracellular recordings of head-direction cells recorded in the 
 anterodorsal thalamic nucleus (ADn) of the mouse. We will use a NWB file containing spike times of neurons and the head-direction of the animal over time.
 We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.
 
-2. We will then analyze calcium imaging data of head-direction cells recorded in the postsubiculum of the mouse.
-We will use a NWB file containing deconvolved calcium events of neurons and the head-direction of the animal over time.
-We will study the tuning properties of neurons with tuning curves.
-
-
 The pynapple documentation can be found [here](https://pynapple.org).
 
-The nemos documentation can be found [here](https://nemos.readthedocs.io/en/latest/).
+We will use pynapple to do the following tasks:
 
-
-</div>
-
-## Part 1. Analyzing extracellular recordings of head-direction cells
-
-<div class="render-all">
-
-For part 1 of the tutorial, we will use pynapple to do the following tasks:
 1. Loading a NWB file
 2. Compute tuning curves
 3. Compute cross-correlograms
@@ -88,7 +75,7 @@ nap.nap_config.suppress_conversion_warnings = True
 plt.style.use(nmo.styles.plot_style)
 ```
 
-### Fetch and load data
+## Fetch and load data
 
 <div class="render-all">
 
@@ -257,7 +244,7 @@ wake_ep = epochs[epochs.tags=="wake"]
 sleep_ep = epochs[epochs.tags=="sleep"]
 ```
 
-### Compute tuning curves
+## Compute tuning curves
 
 <div class="render-all">
 
@@ -416,7 +403,7 @@ fig.savefig("../../_static/_check_figs/01-01.png")
 :::
 </div>
 
-### Compute correlograms
+## Compute correlograms
 
 <div class="render-all">
 
@@ -576,246 +563,3 @@ What does it mean for the relationship between cells here? Remember that during 
 </div>
 
 
-## Part 2. Analyzing calcium imaging recordings of head-direction cells
-
-<div class="render-all">
-
-For part 2 of the tutorial, we will use pynapple to do the following tasks:
-1. Loading a NWB file
-2. Compute tuning curves
-3. Visualize tuning curves
-4. Decode head-direction from neural activity
-
-</div>
-
-```{code-cell} ipython3
-:tags: [render-all]
-
-path = nmo.fetch.fetch_data("A0670-221213.nwb")
-print(path)
-```
-
-
-### Load data
-
-<div class="render-all">
-
-Similar to part 1, we will start by loading the NWB file. The function `nap.load_file` can be used again.
-
-</div>
-
-<div class="render-user">
-```{code-cell} ipython3
-data = ... # Load NWB file
-print(data)
-```
-</div>
-
-```{code-cell} ipython3
-:tags: [render-all]
-data = nap.load_file(path)
-
-print(data)
-```
-
-<div class="render-all">
-
-There are multiple entries in the NWB file. The calcium transients are stored in the `RoiResponseSeries` entry.
-The head-direction of the animal is stored in the `ry` entry. Let's extract them.
-
-</div>
-
-```{code-cell} ipython3
-:tags: [render-all]
-transients = data["RoiResponseSeries"]
-angle = data["ry"]
-print(transients)
-```
-
-<div class="render-all">
-
-To get an idea of the data, let's visualize the calcium transients of the first two neurons for the first 100 seconds of the recording.
-Instead of creating a new `IntervalSet` object, we can use the method `transients.get(0, 100)` to get a restricted version of the `Tsd` object.
-Contrary to `restrict`, which takes an `IntervalSet` object as input, `get` can take start and end times directly as input and does not 
-update the time support of the output `Tsd` object.
-
-</div>
-
-```{code-cell} ipython3
-:tags: [render-all]
-fig = plt.figure()
-plt.plot(transients[:,0:2].get(0, 100))
-plt.xlabel("Time (s)")
-plt.ylabel("Fluorescence (a.u.)")
-```
-
-```{code-cell} ipython3
-:tags: [hide-input]
-fig.savefig("../../_static/_check_figs/01-04.png")
-```
-
-<div class="render-user">
-:::{admonition} Figure check
-:class: dropdown
-![](../../_static/_check_figs/01-04.png)
-:::
-</div>
-
-### Compute tuning curves
-
-<div class="render-all">
-
-Now we have 
-- calcium transients
-- a behavioral feature (i.e. head-direction),
-We can compute tuning curves, i.e. the fluorescence of neurons as a function of head-direction. 
-We want to know how the fluorescence of each neuron changes as a function of the head-direction of the animal.
-We can use the same function as before : `nap.compute_tuning_curves`. 
-Don't forget to give a name to the feature when calling the function (i.e. `feature_names = ["angle"]`).
-
-</div>
-
-<div class="render-user">
-```{code-cell} ipython3
-tuning_curves = nap.compute_tuning_curves(
-    data=, # The neural activity as a TsGroup
-    features=, # Which feature? Here the head-direction of the animal
-    bins=, # How many bins of feature space? Here 61 angular bins is a good numbers 
-    range=, # The min and max of the bin array
-    feature_names =  # Let's give a name to our feature for better labelling of the output.
-    ) 
-tuning_curves
-```
-</div>
-
-```{code-cell} ipython3
-tuning_curves = nap.compute_tuning_curves(
-    data=transients,
-    features=angle, 
-    bins=61, 
-    epochs = angle.time_support,
-    range=(0, 2 * np.pi),
-    feature_names = ["angle"]
-    )
-tuning_curves
-```
-
-### Visualize tuning curves
-
-Let's visualize the tuning curves of the first two neurons.
-
-```{code-cell} ipython3
-:tags: [render-all]
-fig = plt.figure()
-plt.subplot(221)
-tuning_curves[0].plot()
-plt.subplot(222,projection='polar')
-plt.plot(tuning_curves.angle, tuning_curves[0].values)
-plt.subplot(223)
-tuning_curves[1].plot()
-plt.subplot(224,projection='polar')
-plt.plot(tuning_curves.angle, tuning_curves[1].values)
-plt.tight_layout()
-
-```
-
-```{code-cell} ipython3
-:tags: [hide-input]
-fig.savefig("../../_static/_check_figs/01-05.png")
-```
-
-<div class="render-user">
-:::{admonition} Figure check
-:class: dropdown
-![](../../_static/_check_figs/01-05.png)
-:::
-</div>
-
-
-
-### Decode head-direction from neural activity
-
-<div class="render-all">
-
-Now that we have the tuning curves, we can use them to decode the head-direction of the animal from the neural activity.
-Pynapple provides two functions to do this: `nap.decode_bayes` for spike counts and `nap.decode_template` for event rates or continuous data. 
-Since the data are calcium transients and not spike counts, we will use the template matching method.
-
-**Question:** Can you decode the head-direction of the animal using the function `nap.decode_template` and call the variable `decoded_angle`?
-
-We will us the epoch `epochs = nap.IntervalSet([50, 150])` to restrict the decoding to the first 100 seconds of the recording.
-
-</div>
-
-<div class="render-user">
-```{code-cell} ipython3
-epochs = nap.IntervalSet(start=50, end=150)
-decoded_angle, dist = nap.decode_template(
-    tuning_curves=..., # The tuning curves as an xarray object
-    data=..., # The neural activity as a TsdFrame in this case
-    bin_size=..., # The bin size for decoding. Here I suggest 0.1 second
-    metric=... # The metric to use to compare the neural activity to the tuning curves. Here I suggest "correlation"
-    epochs=transients.time_support # The epochs should correspond to when the neural activity is defined. Here we use the time support directly
-    )
-```
-</div>
-
-```{code-cell} ipython3
-epochs = nap.IntervalSet(start=50, end=150)
-decoded_angle, dist = nap.decode_template(
-    tuning_curves=tuning_curves,
-    data=transients,
-    bin_size=0.1,
-    metric="correlation",
-    epochs=epochs    
-    )
-```
-
-<div class="render-all">
-Let's visualize the decoded head-direction of the animal for the first 100 seconds of the recording.
-</div>
-
-```{code-cell} ipython3
-:tags: [render-all]
-fig, (ax1, ax2) = plt.subplots(figsize=(8, 8), nrows=2, ncols=1, sharex=True)
-ax1.plot(angle.restrict(epochs), label="True")
-ax1.scatter(decoded_angle.times(), decoded_angle.values, label="Decoded", c="orange")
-ax1.legend(frameon=False, bbox_to_anchor=(1.0, 1.0))
-ax1.set_ylabel("Angle [rad]")
-
-im = ax2.imshow(
-    dist.values.T, 
-    aspect="auto", 
-    origin="lower", 
-    cmap="inferno_r", 
-    extent=(epochs.start[0], epochs.end[0], 0.0, 2*np.pi)
-)
-ax2.set_ylabel("Angle [rad]")
-cbar_ax2 = fig.add_axes([0.95, ax2.get_position().y0, 0.015, ax2.get_position().height])
-fig.colorbar(im, cax=cbar_ax2, label="Distance")
-
-
-```
-
-```{code-cell} ipython3
-:tags: [hide-input]
-fig.savefig("../../_static/_check_figs/01-06.png")
-```
-
-<div class="render-user">
-:::{admonition} Figure check
-:class: dropdown
-![](../../_static/_check_figs/01-06.png)
-:::
-</div>
-
-
-<div class="render-all">
-
-The first panel shows the true head-direction of the animal and the decoded head-direction from neural activity.
-The second panel shows the distance between the neural activity and the tuning curves as a function of time and angle.
-
-You can play with the metric parameters of the decoding function to see how it affects the decoding performance. 
-Possible metrics are "euclidean", "manhattan", "correlation", "jensenshannon" and "cosine". 
-
-</div>
