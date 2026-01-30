@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.19.1
+    jupytext_version: 1.18.1
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -44,16 +44,16 @@ This notebook has had all its explanatory text removed and has not been run.
 ## Learning objectives
 
 
-- Instantiate the pynapple objects
-- Make the pynapple objects interact
+- Instantiate pynapple objects
+- Make pynapple objects interact
 - Use numpy with pynapple
-- Slicing pynapple objects
-- Adding metadata to pynapple objects
-- Learn the core functions of pynapple
+- Slice pynapple objects
+- Add metadata to pynapple objects
+- Apply core functions of pynapple
 
-The pynapple documentation can be found [here](https://pynapple.org).
-
-The documentation for objects and method of the core of pynapple is [here](https://pynapple.org/api.html).
+**Resources:**
+- [Pynapple documentation](https://pynapple.org)
+- [API reference for objects and methods](https://pynapple.org/api.html)
 
 
 Let's start by importing the pynapple package and matplotlib to see if everything is correctly installed.
@@ -142,7 +142,9 @@ print(tsd3)
 
 
 ```{code-cell} ipython3
-ep = nap.IntervalSet(start=starts_1, end=ends_1, time_units='ms')
+ep = nap.IntervalSet(
+    start=starts_1, 
+    end=ends_1, time_units='ms')
 print(ep)
 ```
 
@@ -174,7 +176,7 @@ tsgroup = nap.TsGroup({0:ts1, 1:ts2, 2:ts3})
 
 
 
-**Question:** ... and print it?
+**Question:** Can you print the result?
 
 
 
@@ -217,7 +219,7 @@ print(tsgroup.rate)
 
 
 
-Now you realized the variable `tsd1` has some noise. The good signal is between 10 and 30 seconds and  50 and 100.
+Now you notice that variable `tsd1` has some noise. The good signal is between 10 and 30 seconds and  50 and 100.
 
 **Question:** Can you create an `IntervalSet` object called `ep_signal` and use it to restrict the variable `tsd1`?
 
@@ -276,7 +278,7 @@ print(ep_signal.union(ep_tmp))
 
 
 
-**Question:** ... and visualize it?
+**Question:** Can you visualize it?
 
 
 ```{code-cell} ipython3
@@ -294,7 +296,7 @@ print(ep_signal.set_diff(ep_tmp))
 
 
 
-**Question:** ... and visualize it?
+**Question:** Can you visualize it?
 
 
 ```{code-cell} ipython3
@@ -305,7 +307,7 @@ workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.set_diff(ep_tmp
 
 
 
-Pynapple objects behaves very similarly like numpy array. They can be sliced with the following syntax :
+Pynapple objects behave similarly to numpy arrays. They can be sliced with the following syntax :
 
   `tsd[0:10] # First 10 elements`
 
@@ -325,7 +327,7 @@ print(np.mean(tsd3, 0))
 
 
 
-**Question:**: can you compute the average of `tsd2` for each timestamps and print it?
+**Question:** can you compute the average of `tsd2` for each timestamps and print it?
 
 
 ```{code-cell} ipython3
@@ -359,7 +361,7 @@ print(tsd3.get(50.1))
 
 
 
-Metadata are ubiquitous in neuroscience. They can be added to 3 pynapple objects :
+Metadata allow you to attach labels and additional information to your data objects. They are ubiquitous in neuroscience. They can be added to 3 pynapple objects :
 
 - `TsGroup` : to label neurons in electrophysiology
 - `IntervalSet` : to label intervals
@@ -375,7 +377,7 @@ tsgroup['planet'] = ['mars', 'venus', 'saturn']
 
 
 
-**Question:** ... and print it?
+**Question:** Can you print the result?
 
 
 ```{code-cell} ipython3
@@ -409,7 +411,7 @@ print(tsd2)
 
 
 
-You can also add metadata at initialization as a dictionnary using the keyword argument `metadata` : 
+You can also add metadata at initialization as a dictionary using the keyword argument `metadata`: 
 
 
 ```{code-cell} ipython3
@@ -422,7 +424,7 @@ print(tsgroup)
 
 
 
-Metadata are accessible either as attributes (i.e. `tsgroup.planet`) or as dictionnary-like keys (i.e. `ep['direction']`).
+Metadata are accessible either as attributes (i.e. `tsgroup.planet`) or as dictionary-like keys (i.e. `ep['direction']`).
 
 They can be used to slice objects. 
 
@@ -466,6 +468,17 @@ print(tsdframe)
 print(tsdframe[0])
 ```
 
+```{code-cell} ipython3
+print(tsdframe[:,0])
+```
+
+```{code-cell} ipython3
+try:
+    print(tsdframe[[12,1]])
+except Exception as e:
+    print(e)
+```
+
 
 
 **Question:** What happen when you do `tsdframe.loc[0]` and `tsdframe.loc[[0,1]]`
@@ -473,6 +486,9 @@ print(tsdframe[0])
 
 ```{code-cell} ipython3
 print(tsdframe.loc[0])
+```
+
+```{code-cell} ipython3
 print(tsdframe.loc[[0,1]])
 ```
 
@@ -499,6 +515,12 @@ This part focuses on the most important core functions of pynapple.
 count = tsgroup.count(1, ep_signal)
 print(count)
 ```
+
+
+
+**Question:** In two subplots, can you show the count and events over time?
+
+
 
 ```{code-cell} ipython3
 plt.figure()
@@ -642,12 +664,11 @@ print(tc.fs)
 plt.plot(tc.feat1, tc.values.T)
 ```
 
-## Important
+## Verify Your Setup
 
 
 
-**Question:** Does this work?
-If not, please ask a TA.
+**Question:** Does the following data download work correctly? If not, please ask a TA.
 
 
 

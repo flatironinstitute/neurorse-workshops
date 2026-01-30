@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.19.1
+    jupytext_version: 1.18.1
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -40,16 +40,16 @@ This notebook has had all its explanatory text removed and has not been run.
 ## Learning objectives
 
 
-- Instantiate the pynapple objects
-- Make the pynapple objects interact
+- Instantiate pynapple objects
+- Make pynapple objects interact
 - Use numpy with pynapple
-- Slicing pynapple objects
-- Adding metadata to pynapple objects
-- Learn the core functions of pynapple
+- Slice pynapple objects
+- Add metadata to pynapple objects
+- Apply core functions of pynapple
 
-The pynapple documentation can be found [here](https://pynapple.org).
-
-The documentation for objects and method of the core of pynapple is [here](https://pynapple.org/api.html).
+**Resources:**
+- [Pynapple documentation](https://pynapple.org)
+- [API reference for objects and methods](https://pynapple.org/api.html)
 
 
 Let's start by importing the pynapple package and matplotlib to see if everything is correctly installed.
@@ -154,7 +154,7 @@ This is a lot of timestamps to carry around as well.
 
 
 
-**Question:** ... and print it?
+**Question:** Can you print the result?
 
 
 ```{code-cell}
@@ -191,7 +191,7 @@ This is a lot of timestamps to carry around as well.
 
 
 
-Now you realized the variable `tsd1` has some noise. The good signal is between 10 and 30 seconds and  50 and 100.
+Now you notice that variable `tsd1` has some noise. The good signal is between 10 and 30 seconds and  50 and 100.
 
 **Question:** Can you create an `IntervalSet` object called `ep_signal` and use it to restrict the variable `tsd1`?
 
@@ -240,7 +240,7 @@ workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.intersect(ep_tm
 
 
 
-**Question:** ... and visualize it?
+**Question:** Can you visualize it?
 
 ```{code-cell}
 # enter code here
@@ -256,7 +256,7 @@ workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.intersect(ep_tm
 
 
 
-**Question:** ... and visualize it?
+**Question:** Can you visualize it?
 
 ```{code-cell}
 # enter code here
@@ -265,7 +265,7 @@ workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.intersect(ep_tm
 ## Numpy & pynapple
 
 
-Pynapple objects behaves very similarly like numpy array. They can be sliced with the following syntax :
+Pynapple objects behave similarly to numpy arrays. They can be sliced with the following syntax :
 
   `tsd[0:10] # First 10 elements`
 
@@ -284,7 +284,7 @@ Finally numpy functions works directly. Let's imagine `tsd3` is a movie with fra
 
 
 
-**Question:**: can you compute the average of `tsd2` for each timestamps and print it?
+**Question:** can you compute the average of `tsd2` for each timestamps and print it?
 
 ```{code-cell}
 # enter code here
@@ -313,7 +313,7 @@ Sometimes you want to get a data point as close as possible in time to another t
 ## Metadata
 
 
-Metadata are ubiquitous in neuroscience. They can be added to 3 pynapple objects :
+Metadata allow you to attach labels and additional information to your data objects. They are ubiquitous in neuroscience. They can be added to 3 pynapple objects :
 
 - `TsGroup` : to label neurons in electrophysiology
 - `IntervalSet` : to label intervals
@@ -328,7 +328,7 @@ Metadata are ubiquitous in neuroscience. They can be added to 3 pynapple objects
 
 
 
-**Question:** ... and print it?
+**Question:** Can you print the result?
 
 ```{code-cell}
 # enter code here
@@ -357,7 +357,7 @@ The object `tsd2` has 3 columns. Each column correspond to the rgb colors `[(0,0
 
 
 
-You can also add metadata at initialization as a dictionnary using the keyword argument `metadata` : 
+You can also add metadata at initialization as a dictionary using the keyword argument `metadata`: 
 
 ```{code-cell} ipython3
 :tags: [render-all]
@@ -368,7 +368,7 @@ print(tsgroup)
 ```
 
 
-Metadata are accessible either as attributes (i.e. `tsgroup.planet`) or as dictionnary-like keys (i.e. `ep['direction']`).
+Metadata are accessible either as attributes (i.e. `tsgroup.planet`) or as dictionary-like keys (i.e. `ep['direction']`).
 
 They can be used to slice objects. 
 
@@ -426,6 +426,15 @@ print(tsdframe)
 This part focuses on the most important core functions of pynapple.
 
 **Question:** Using the `count` function, can you count the number of events within 1 second bins for `tsgroup` over the `ep_signal` intervals?
+
+```{code-cell}
+# enter code here
+```
+
+
+
+**Question:** In two subplots, can you show the count and events over time?
+
 
 ```{code-cell}
 # enter code here
@@ -534,11 +543,10 @@ The coordinates can be accessed with the `coords` attribute. The feature positio
 # enter code here
 ```
 
-## Important
+## Verify Your Setup
 
 
-**Question:** Does this work?
-If not, please ask a TA.
+**Question:** Does the following data download work correctly? If not, please ask a TA.
 
 
 ```{code-cell} ipython3

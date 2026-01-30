@@ -159,15 +159,23 @@ tuning_curves
 
 ### Visualize tuning curves
 
+
+
+Let's visualize the tuning curves of the first two neurons.
+
+
+
 ```{code-cell} ipython3
 :tags: [render-all]
 fig = plt.figure()
 plt.subplot(221)
 tuning_curves[0].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
 plt.subplot(222,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[0].values)
 plt.subplot(223)
 tuning_curves[1].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
 plt.subplot(224,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[1].values)
 plt.tight_layout()

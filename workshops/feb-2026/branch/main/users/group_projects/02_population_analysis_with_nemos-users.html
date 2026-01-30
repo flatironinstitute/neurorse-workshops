@@ -419,13 +419,13 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
 </ul>
@@ -988,14 +988,15 @@ by the two models on the whole dataset. The model should be called <code class="
 <p><img alt="" src="../../_images/02-08.png" /></p>
 </div>
 </section>
+</section>
 <section id="all-to-all-connectivity">
-<h4>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h4>
+<h3>All-to-all Connectivity<a class="headerlink" href="#all-to-all-connectivity" title="Link to this heading">#</a></h3>
 <p>The same approach can be applied to the whole population. Now the firing rate of a neuron
 is predicted not only by its own count history, but also by the rest of the
 simultaneously recorded population. We can convolve the basis with the counts of each neuron
 to get an array of predictors of shape, <code class="docutils literal notranslate"><span class="pre">(num_time_points,</span> <span class="pre">num_neurons</span> <span class="pre">*</span> <span class="pre">num_basis_funcs)</span></code>.</p>
 <section id="preparing-the-features">
-<h5>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h5>
+<h4>Preparing the features<a class="headerlink" href="#preparing-the-features" title="Link to this heading">#</a></h4>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
 <li><p>Re-define the basis?</p></li>
@@ -1027,7 +1028,7 @@ This can be done by passing the population counts to the <code class="docutils l
 </div>
 </section>
 <section id="fitting-the-model">
-<span id="head-direction-fit-users"></span><h5>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h5>
+<span id="head-direction-fit-users"></span><h4>Fitting the Model<a class="headerlink" href="#fitting-the-model" title="Link to this heading">#</a></h4>
 <p>This is an all-to-all neurons model.
 We are using the class <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html"><code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></a> to fit the whole population at once.</p>
 <p>Once we condition on past activity, log-likelihood of the population is the sum of the log-likelihood
@@ -1045,7 +1046,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
     <span class="n">regularizer</span><span class="o">=</span><span class="p">,</span> <span class="c1"># Regularizer type</span>
     <span class="n">solver_name</span><span class="o">=</span><span class="p">,</span> <span class="c1"># Solver name</span>
     <span class="n">regularizer_strength</span><span class="o">=</span> <span class="c1"># Regularization strength</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(,</span> <span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the binned spike count time series</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="p">,</span> <span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the binned spike count time series</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model coefficients shape: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -1053,7 +1054,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 </section>
 <section id="comparing-model-predictions">
-<h5>Comparing model predictions.<a class="headerlink" href="#comparing-model-predictions" title="Link to this heading">#</a></h5>
+<h4>Comparing model predictions.<a class="headerlink" href="#comparing-model-predictions" title="Link to this heading">#</a></h4>
 <p>Predict the rate (counts are already sorted by tuning prefs)</p>
 <p><strong>Question: Can you:</strong></p>
 <ul class="simple">
@@ -1103,7 +1104,7 @@ maximizing each individual term separately (i.e. fitting one neuron at the time)
 </div>
 </section>
 <section id="visualizing-the-connectivity">
-<h5>Visualizing the connectivity<a class="headerlink" href="#visualizing-the-connectivity" title="Link to this heading">#</a></h5>
+<h4>Visualizing the connectivity<a class="headerlink" href="#visualizing-the-connectivity" title="Link to this heading">#</a></h4>
 <p>Finally, we can extract and visualize the pairwise interactions between neurons.</p>
 <p>**Question: Can you extract the weights and store it in a <code class="docutils literal notranslate"><span class="pre">(n_neurons,</span> <span class="pre">n_neurons,</span> <span class="pre">n_basis_funcs)</span></code> array?</p>
 <div class="cell tag_render-all docutils container">
@@ -1173,7 +1174,6 @@ to head-direction.</p>
 </section>
 </section>
 </section>
-</section>
 
 
                 </article>
@@ -1227,13 +1227,13 @@ to head-direction.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-single-neuron-model">Fitting a single neuron model</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#reducing-feature-dimensionality">Reducing feature dimensionality</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-with-basis-features-with-reduced-dimensionality">Fit a GLM with basis features with reduced dimensionality</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#all-to-all-connectivity">All-to-all Connectivity</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the Model</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comparing-model-predictions">Comparing model predictions.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-connectivity">Visualizing the connectivity</a></li>
 </ul>
 </li>
 </ul>

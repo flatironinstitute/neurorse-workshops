@@ -687,7 +687,7 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 fig.savefig("../../_static/_check_figs/02-08.png")
 ```
 
-#### All-to-all Connectivity
+### All-to-all Connectivity
 
 
 
@@ -698,7 +698,7 @@ to get an array of predictors of shape, `(num_time_points, num_neurons * num_bas
 
 
 
-##### Preparing the features
+#### Preparing the features
 
 
 
@@ -738,7 +738,7 @@ print(f"Convolved count shape: {convolved_count.shape}")
 ```
 
 (head-direction-fit-presenters)=
-##### Fitting the Model
+#### Fitting the Model
 
 
 
@@ -767,7 +767,7 @@ model = nmo.glm.PopulationGLM(
 print(f"Model coefficients shape: {model.coef_.shape}")
 ```
 
-##### Comparing model predictions.
+#### Comparing model predictions.
 
 
 
@@ -827,7 +827,7 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 fig.savefig("../../_static/_check_figs/02-10.png")
 ```
 
-##### Visualizing the connectivity
+#### Visualizing the connectivity
 
 
 

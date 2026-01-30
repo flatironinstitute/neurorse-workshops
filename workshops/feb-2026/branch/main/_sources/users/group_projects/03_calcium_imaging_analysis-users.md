@@ -81,7 +81,7 @@ Similar to part 1, we will start by loading the NWB file. The function `nap.load
 
 
 ```{code-cell} ipython3
-data = ... # Load NWB file
+data =  # Load NWB file
 print(data)
 ```
 
@@ -143,15 +143,22 @@ tuning_curves
 ```
 
 ### Visualize tuning curves
+
+
+Let's visualize the tuning curves of the first two neurons.
+
+
 ```{code-cell} ipython3
 :tags: [render-all]
 fig = plt.figure()
 plt.subplot(221)
 tuning_curves[0].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
 plt.subplot(222,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[0].values)
 plt.subplot(223)
 tuning_curves[1].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
 plt.subplot(224,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[1].values)
 plt.tight_layout()
@@ -179,10 +186,10 @@ We will us the epoch `epochs = nap.IntervalSet([50, 150])` to restrict the decod
 ```{code-cell} ipython3
 epochs = nap.IntervalSet(start=50, end=150)
 decoded_angle, dist = nap.decode_template(
-    tuning_curves=..., # The tuning curves as an xarray object
-    data=..., # The neural activity as a TsdFrame in this case
-    bin_size=..., # The bin size for decoding. Here I suggest 0.1 second
-    metric=..., # The metric to use to compare the neural activity to the tuning curves. Here I suggest "correlation"
+    tuning_curves= , # The tuning curves as an xarray object
+    data= , # The neural activity as a TsdFrame in this case
+    bin_size= , # The bin size for decoding. Here I suggest 0.1 second
+    metric= , # The metric to use to compare the neural activity to the tuning curves. Here I suggest "correlation"
     epochs=transients.time_support # The epochs should correspond to when the neural activity is defined. Here we use the time support directly
     )
 ```
@@ -273,7 +280,7 @@ Here we can use the same `RaisedCosineLogConv` basis, but with a larger window s
 calcium_window_size_sec = 0.5 # Window size in seconds
 calcium_window_size = int(calcium_window_size_sec * transients.rate) # Convert window size to number of bins
 calcium_basis = nmo.basis.RaisedCosineLogConv(
-    n_basis_funcs=..., # Number of basis functions 
+    n_basis_funcs= , # Number of basis functions 
     window_size=calcium_window_size # Window size in bins
 )
 calcium_basis
@@ -286,7 +293,7 @@ We can convolve the calcium transients with the basis functions to get the featu
 
 ```{code-cell} ipython3
 # convolve all the neurons
-calcium_convolved = calcium_basis.compute_features(...) # Parameter is the calcium transients
+calcium_convolved = calcium_basis.compute_features( ) # Parameter is the calcium transients
 print(f"Convolved calcium shape: {calcium_convolved.shape}")
 ```
 
@@ -313,12 +320,12 @@ Let's fit the `PopulationGLM` using the Gaussian observation model, Ridge regula
 
 ```{code-cell} ipython3
 calcium_model = nmo.glm.PopulationGLM(
-    observation_model=..., # Observation model type
-    regularizer=..., # Regularizer type
-    solver_name=..., # Solver name
-    regularizer_strength=..., # Regularization strength
+    observation_model= , # Observation model type
+    regularizer= , # Regularizer type
+    solver_name= , # Solver name
+    regularizer_strength= , # Regularization strength
     solver_kwargs={"maxiter": 5000}
-    ).fit(...,...) # Parameters are the convolved feature matrix and the calcium transients during training epoch
+    ).fit( , ) # Parameters are the convolved feature matrix and the calcium transients during training epoch
 print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
 ```
 
@@ -328,7 +335,7 @@ We can predict the calcium signals using the fitted model during the test epoch 
 
 
 ```{code-cell} ipython3
-calcium_predicted = calcium_model.predict(...) # Parameter is the convolved feature matrix restricted during testing epoch
+calcium_predicted = calcium_model.predict( ) # Parameter is the convolved feature matrix restricted during testing epoch
 ```
 
 
@@ -414,13 +421,13 @@ Now we can fit the `PopulationGLM` again using this feature mask to prevent self
 
 ```{code-cell} ipython3
 calcium_model = nmo.glm.PopulationGLM(
-    observation_model=..., # Observation model type
-    regularizer=..., # Regularizer type
-    solver_name=..., # Solver name
-    regularizer_strength=..., # Regularization strength
-    feature_mask=..., # The feature mask to prevent self-coupling
+    observation_model= , # Observation model type
+    regularizer= , # Regularizer type
+    solver_name= , # Solver name
+    regularizer_strength= , # Regularization strength
+    feature_mask= , # The feature mask to prevent self-coupling
     solver_kwargs={"maxiter": 5000}
-    ).fit(...,...) # Parameters are the convolved feature matrix and the calcium transients during training epoch
+    ).fit( , ) # Parameters are the convolved feature matrix and the calcium transients during training epoch
 print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
 ```
 

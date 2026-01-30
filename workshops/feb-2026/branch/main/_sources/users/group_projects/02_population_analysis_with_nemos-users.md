@@ -635,7 +635,7 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 ![](../../_static/_check_figs/02-08.png)
 :::
 
-#### All-to-all Connectivity
+### All-to-all Connectivity
 
 
 The same approach can be applied to the whole population. Now the firing rate of a neuron
@@ -644,7 +644,7 @@ simultaneously recorded population. We can convolve the basis with the counts of
 to get an array of predictors of shape, `(num_time_points, num_neurons * num_basis_funcs)`.
 
 
-##### Preparing the features
+#### Preparing the features
 
 
 **Question: Can you:**
@@ -679,7 +679,7 @@ Shape should be `(n_samples, n_basis_func * n_neurons)`
 print(f"Convolved count shape: {convolved_count.shape}")
 ```
 (head-direction-fit-users)=
-##### Fitting the Model
+#### Fitting the Model
 
 
 This is an all-to-all neurons model.
@@ -702,11 +702,11 @@ model = nmo.glm.PopulationGLM(
     regularizer=, # Regularizer type
     solver_name=, # Solver name
     regularizer_strength= # Regularization strength
-    ).fit(, ) # Parameters are the convolved feature matrix and the binned spike count time series
+    ).fit( , ) # Parameters are the convolved feature matrix and the binned spike count time series
 print(f"Model coefficients shape: {model.coef_.shape}")
 ```
 
-##### Comparing model predictions.
+#### Comparing model predictions.
 
 
 Predict the rate (counts are already sorted by tuning prefs)
@@ -763,7 +763,7 @@ fig = doc_plots.plot_rates_and_smoothed_counts(
 ![](../../_static/_check_figs/02-10.png)
 :::
 
-##### Visualizing the connectivity
+#### Visualizing the connectivity
 
 
 Finally, we can extract and visualize the pairwise interactions between neurons.

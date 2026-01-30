@@ -71,7 +71,7 @@ import workshop_utils
 # configure pynapple to ignore conversion warning
 nap.nap_config.suppress_conversion_warnings = True
 
-# configure plots some
+# configure some plots
 plt.style.use(nmo.styles.plot_style)
 ```
 
@@ -100,7 +100,7 @@ print(path)
 
 Pynapple provides the convenience function `nap.load_file` for loading a NWB file.
 
-**Question:** Can you open the NWB file giving the variable `path` to the function `load_file` and call the output `data`?
+**Question:** Can you open the NWB file by passing the variable `path` to the function `load_file` and call the output `data`?
 
 </div>
 
@@ -123,7 +123,7 @@ The content of the NWB file is not loaded yet. The object `data` behaves like a 
 It contains multiple entries corresponding to different data types stored in the NWB file.
 In NWB files, spike times are stored in the `units` entry.
 
-**Question:** Can you load the spike times from the NWB and call the variables `spikes`?
+**Question:** Can you load the spike times from the NWB and call the variable `spikes`?
 
 </div>
 
@@ -145,7 +145,7 @@ There are a lot of neurons. The neurons that interest us are the neurons labeled
 
 **Question:** Using the slicing method of your choice, can you select only the neurons in `adn` that are above 2 Hz firing rate?
 
-THere multiple options here. As a reminder, metadatas can be accessed like a dictionary or as attributes. There are also
+There are multiple options here. As a reminder, metadata can be accessed like a dictionary or as attributes. There are also
 functions that can help you filter neurons based on metadata.
 
 1. `spikes.label` returns a pandas Series with the metadata of the neurons.
@@ -170,7 +170,7 @@ print(len(spikes))
 
 <div class="render-all">
 
-The NWB file contains other information about the recording. `ry` contains the value of the head-direction of the animal over time. 
+The NWB file contains other information about the recording. `ry` contains the values of the head-direction of the animal over time. 
 
 **Question:** Can you extract the angle of the animal in a variable called `angle` and print it?
 
@@ -194,8 +194,8 @@ But are the data actually loaded or not?
 If you look at the type of `angle`, you will see that it is a `Tsd` object.
 But what about the underlying data array?
 The underlying data array is stored in the property `d` of the `Tsd` object.
-If you print it, you will see that it is a `h5py` array.
-By default, data are lazy-loaded. This can be useful when reading larger than memory array from disk with memory map.
+If you print it, you will see that it is an `h5py` array.
+By default, data are lazy-loaded. This can be useful when reading larger-than-memory arrays from disk with memory mapping.
 
 </div>
 
@@ -303,10 +303,12 @@ fig = plt.figure()
 plt.subplot(221)
 tuning_curves[0].plot()
 # plt.plot(tuning_curves[0])
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(222,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[0].values)
 plt.subplot(223)
 tuning_curves[1].plot()
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(224,projection='polar')
 plt.plot(tuning_curves.angle, tuning_curves[1].values)
 plt.tight_layout()
@@ -328,9 +330,9 @@ fig.savefig("../../_static/_check_figs/01-00.png")
 
 <div class="render-all">
 
-Most of those neurons are head-directions neurons.
+Most of those neurons are head-direction neurons.
 
-The next cell allows us to get a quick estimate of the neurons's preferred direction. 
+The next cell allows us to get a quick estimate of the neurons' preferred direction. 
 Since this is a lot of xarray wrangling, it is given.
 
 </div>
@@ -346,11 +348,15 @@ print(pref_ang)
 <div class="render-all">
 
 The variable `pref_ang` contains the preferred direction of each neuron. 
-Now this information can be useful to add it to the metainformation of the `spikes` object since it is neuron-specific information.
+This information can be useful to add to the metainformation of the `spikes` object since it is neuron-specific information.
 
 **Question:** Can you add it to the metainformation of `spikes`? The metadata field should be called `pref_ang`.
 
-Hint :
+</div>
+
+
+:::{admonition} Hint
+:class: render-all
 
 There are multiple ways of doing this:
 ```
@@ -358,8 +364,8 @@ tsgroup['label'] = metadata
 tsgroup.label = metadata
 tsgroup.set_info(label=metadata)
 ```
+:::
 
-</div>
 
 ```{code-cell} ipython3
 # spikes['pref_ang'] = pref_ang
@@ -383,11 +389,13 @@ ex_ep = nap.IntervalSet(start=8910, end=8960)
 
 fig = plt.figure()
 plt.subplot(211)
+plt.ylabel("Head direction (rad)")
 plt.plot(angle.restrict(ex_ep))
 plt.ylim(0, 2*np.pi)
-
 plt.subplot(212)
 plt.plot(spikes.restrict(ex_ep).to_tsd("pref_ang"), '|')
+plt.ylabel("Neuron (pref. dir.)")
+plt.xlabel("Time (s)")
 ```
 
 ```{code-cell} ipython3
@@ -456,17 +464,21 @@ fig = plt.figure()
 plt.subplot(221)
 tuning_curves.sel(unit=[7,20]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(222)
 plt.plot(cc_wake[(7, 20)])
 plt.xlabel("Time lag (s)")
 plt.title("Cross-corr.")
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(223)
 tuning_curves.sel(unit=[7,26]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(224)
 plt.plot(cc_wake[(7, 26)])
 plt.xlabel("Time lag (s)")
 plt.title("Cross-corr.")
+plt.ylabel("Firing rate (Hz)")
 plt.tight_layout()
 ```
 
@@ -489,7 +501,7 @@ fig.savefig("../../_static/_check_figs/01-02.png")
 As you can see, the pair of neurons that fire for the same direction have a positive correlation at time lag 0, meaning they tend to fire together.
 The pair of neurons that fire for opposite directions have a negative correlation at time lag 0, meaning when one neuron fires, the other does not.
 
-Pairwise correlation were computed during wakefulness. The activity of the neurons was also recorded during sleep.
+Pairwise correlations were computed during wakefulness. The activity of the neurons was also recorded during sleep.
 
 **Question:** can you compute the cross-correlograms during sleep?
 
@@ -524,22 +536,27 @@ fig = plt.figure()
 plt.subplot(231)
 tuning_curves.sel(unit=[7,20]).plot(x='angle', hue='unit')
 plt.title("Tuning curves")
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(232)
 plt.plot(cc_wake[(7, 20)])
 plt.xlabel("Time lag (s)")
+plt.ylabel("Firing rate (Hz)")
 plt.title("Wake")
 plt.subplot(233)
 plt.plot(cc_sleep[(7, 20)])
 plt.xlabel("Time lag (s)")
+plt.ylabel("Firing rate (Hz)")
 plt.title("Sleep")
 plt.subplot(234)
 tuning_curves.sel(unit=[7,26]).plot(x='angle', hue='unit')
 plt.subplot(235)
 plt.plot(cc_wake[(7, 26)])
 plt.xlabel("Time lag (s)")
+plt.ylabel("Firing rate (Hz)")
 plt.subplot(236)
 plt.plot(cc_sleep[(7, 26)])
 plt.xlabel("Time lag (s)")
+plt.ylabel("Firing rate (Hz)")
 plt.tight_layout()
 ```
 

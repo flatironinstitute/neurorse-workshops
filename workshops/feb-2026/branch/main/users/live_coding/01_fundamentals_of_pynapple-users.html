@@ -421,7 +421,7 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-functions-of-pynapple">Core functions of pynapple</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-high-level-function-compute-tuning-curves">First high level function : <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-your-setup">Verify Your Setup</a></li>
 </ul>
             </nav>
         </div>
@@ -459,15 +459,18 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <section id="learning-objectives">
 <h2>Learning objectives<a class="headerlink" href="#learning-objectives" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p>Instantiate the pynapple objects</p></li>
-<li><p>Make the pynapple objects interact</p></li>
+<li><p>Instantiate pynapple objects</p></li>
+<li><p>Make pynapple objects interact</p></li>
 <li><p>Use numpy with pynapple</p></li>
-<li><p>Slicing pynapple objects</p></li>
-<li><p>Adding metadata to pynapple objects</p></li>
-<li><p>Learn the core functions of pynapple</p></li>
+<li><p>Slice pynapple objects</p></li>
+<li><p>Add metadata to pynapple objects</p></li>
+<li><p>Apply core functions of pynapple</p></li>
 </ul>
-<p>The pynapple documentation can be found <a class="reference external" href="https://pynapple.org">here</a>.</p>
-<p>The documentation for objects and method of the core of pynapple is <a class="reference external" href="https://pynapple.org/api.html">here</a>.</p>
+<p><strong>Resources:</strong></p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pynapple.org">Pynapple documentation</a></p></li>
+<li><p><a class="reference external" href="https://pynapple.org/api.html">API reference for objects and methods</a></p></li>
+</ul>
 <p>Let’s start by importing the pynapple package and matplotlib to see if everything is correctly installed.
 If an import fails, you can do <code class="docutils literal notranslate"><span class="pre">!pip</span> <span class="pre">install</span> <span class="pre">pynapple</span> <span class="pre">matplotlib</span></code> in a cell to fix it.</p>
 <div class="cell tag_render-all docutils container">
@@ -563,7 +566,7 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> … and print it?</p>
+<p><strong>Question:</strong> Can you print the result?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -598,7 +601,7 @@ If an import fails, you can do <code class="docutils literal notranslate"><span 
 </div>
 </div>
 </div>
-<p>Now you realized the variable <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> has some noise. The good signal is between 10 and 30 seconds and  50 and 100.</p>
+<p>Now you notice that variable <code class="docutils literal notranslate"><span class="pre">tsd1</span></code> has some noise. The good signal is between 10 and 30 seconds and  50 and 100.</p>
 <p><strong>Question:</strong> Can you create an <code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> object called <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> and use it to restrict the variable <code class="docutils literal notranslate"><span class="pre">tsd1</span></code>?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -648,7 +651,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> … and visualize it?</p>
+<p><strong>Question:</strong> Can you visualize it?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -664,7 +667,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> … and visualize it?</p>
+<p><strong>Question:</strong> Can you visualize it?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -675,7 +678,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="numpy-pynapple">
 <h2>Numpy &amp; pynapple<a class="headerlink" href="#numpy-pynapple" title="Link to this heading">#</a></h2>
-<p>Pynapple objects behaves very similarly like numpy array. They can be sliced with the following syntax :</p>
+<p>Pynapple objects behave similarly to numpy arrays. They can be sliced with the following syntax :</p>
 <p><code class="docutils literal notranslate"><span class="pre">tsd[0:10]</span> <span class="pre">#</span> <span class="pre">First</span> <span class="pre">10</span> <span class="pre">elements</span></code></p>
 <p>Arithmetical operations are available as well :</p>
 <p><code class="docutils literal notranslate"><span class="pre">tsd</span> <span class="pre">=</span> <span class="pre">tsd</span> <span class="pre">+</span> <span class="pre">1</span></code></p>
@@ -688,7 +691,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p><strong>Question:</strong>: can you compute the average of <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> for each timestamps and print it?</p>
+<p><strong>Question:</strong> can you compute the average of <code class="docutils literal notranslate"><span class="pre">tsd2</span></code> for each timestamps and print it?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -719,7 +722,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </section>
 <section id="metadata">
 <h2>Metadata<a class="headerlink" href="#metadata" title="Link to this heading">#</a></h2>
-<p>Metadata are ubiquitous in neuroscience. They can be added to 3 pynapple objects :</p>
+<p>Metadata allow you to attach labels and additional information to your data objects. They are ubiquitous in neuroscience. They can be added to 3 pynapple objects :</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> : to label neurons in electrophysiology</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IntervalSet</span></code> : to label intervals</p></li>
@@ -733,7 +736,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p><strong>Question:</strong> … and print it?</p>
+<p><strong>Question:</strong> Can you print the result?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -759,7 +762,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p>You can also add metadata at initialization as a dictionnary using the keyword argument <code class="docutils literal notranslate"><span class="pre">metadata</span></code> :</p>
+<p>You can also add metadata at initialization as a dictionary using the keyword argument <code class="docutils literal notranslate"><span class="pre">metadata</span></code>:</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tsgroup</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsGroup</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span><span class="n">ts1</span><span class="p">,</span> <span class="mi">1</span><span class="p">:</span><span class="n">ts2</span><span class="p">,</span> <span class="mi">2</span><span class="p">:</span><span class="n">ts3</span><span class="p">},</span> <span class="n">metadata</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;planet&#39;</span><span class="p">:[</span><span class="s1">&#39;mars&#39;</span><span class="p">,</span><span class="s1">&#39;venus&#39;</span><span class="p">,</span> <span class="s1">&#39;saturn&#39;</span><span class="p">]})</span>
@@ -769,7 +772,7 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </div>
-<p>Metadata are accessible either as attributes (i.e. <code class="docutils literal notranslate"><span class="pre">tsgroup.planet</span></code>) or as dictionnary-like keys (i.e. <code class="docutils literal notranslate"><span class="pre">ep['direction']</span></code>).</p>
+<p>Metadata are accessible either as attributes (i.e. <code class="docutils literal notranslate"><span class="pre">tsgroup.planet</span></code>) or as dictionary-like keys (i.e. <code class="docutils literal notranslate"><span class="pre">ep['direction']</span></code>).</p>
 <p>They can be used to slice objects.</p>
 <p><strong>Question:</strong> Can you select only the elements of <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> with rate below 1Hz?</p>
 <div class="cell docutils container">
@@ -829,6 +832,14 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 <h2>Core functions of pynapple<a class="headerlink" href="#core-functions-of-pynapple" title="Link to this heading">#</a></h2>
 <p>This part focuses on the most important core functions of pynapple.</p>
 <p><strong>Question:</strong> Using the <code class="docutils literal notranslate"><span class="pre">count</span></code> function, can you count the number of events within 1 second bins for <code class="docutils literal notranslate"><span class="pre">tsgroup</span></code> over the <code class="docutils literal notranslate"><span class="pre">ep_signal</span></code> intervals?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Question:</strong> In two subplots, can you show the count and events over time?</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># enter code here</span>
@@ -927,10 +938,9 @@ You can also check the <code class="docutils literal notranslate"><span class="p
 </div>
 </div>
 </section>
-<section id="important">
-<h2>Important<a class="headerlink" href="#important" title="Link to this heading">#</a></h2>
-<p><strong>Question:</strong> Does this work?
-If not, please ask a TA.</p>
+<section id="verify-your-setup">
+<h2>Verify Your Setup<a class="headerlink" href="#verify-your-setup" title="Link to this heading">#</a></h2>
+<p><strong>Question:</strong> Does the following data download work correctly? If not, please ask a TA.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
@@ -999,7 +1009,7 @@ If not, please ask a TA.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-functions-of-pynapple">Core functions of pynapple</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-high-level-function-compute-tuning-curves">First high level function : <code class="docutils literal notranslate"><span class="pre">compute_tuning_curves</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#important">Important</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#verify-your-setup">Verify Your Setup</a></li>
 </ul>
   </nav></div>
 

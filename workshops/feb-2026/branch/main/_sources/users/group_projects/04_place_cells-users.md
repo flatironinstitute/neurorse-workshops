@@ -240,7 +240,7 @@ forward_ep = data["forward_ep"]
 For the following exercises, we'll only focus on periods labeled as forward runs aloong the linear track. We can extract this information using the interval set `forward_ep`.
 
 
-#### 1. Restrict `position` to `forward_ep` and confirm that there are no `nan` values in the restricted data set.
+#### 1.1 Restrict `position` to `forward_ep` and confirm that there are no `nan` values in the restricted data set.
 
 ```{code-cell} ipython3
 # restrict position and check for nans
@@ -254,7 +254,7 @@ We also want the speed of the animal during forward runs. We can get this using 
 Note, however, that the output of the derivative function is *velocity*. For the following analyses, we only care about the magnitude, or *speed*; therefore, we'll need to take the absolute value of the output to get our variable of interest.
 
 
-#### 2. Calculate velocity using the [`derivative`](https://pynapple.org/generated/pynapple.Tsd.derivative.html) method on position during forward runs. Use `np.abs` to convert the velocity into speed.
+#### 1.2 Calculate velocity using the [`derivative`](https://pynapple.org/generated/pynapple.Tsd.derivative.html) method on position during forward runs. Use `np.abs` to convert the velocity into speed.
 
 ```{code-cell} ipython3
 # calculate speed
@@ -266,7 +266,7 @@ speed =
 To get a sense of what the LFP looks like while the animal runs down the linear track, we can plot each variable; `lfp`, `position`, and `speed`; side-by-side. Let's do this for an example run; specifically, we'll look at forward run 9.
 
 
-#### 3. Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict `lfp` and `position` to this epoch.
+#### 1.3 Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict `lfp` and `position` to this epoch.
 
 ```{code-cell} ipython3
 ex_ep =
@@ -323,14 +323,14 @@ First, we will look at the place selectivity of each unit. We can find place fir
 We'll filter for units that fire at least 1 Hz and at most 10 Hz when the animal is running forward along the linear track. This will select for units that are active during our window of interest and eliminate putative interneurons (i.e. fast-firing inhibitory neurons that don't usually have place selectivity). Afterwards, we'll compute the tuning curves for these sub-selected units over position.
 
 
-#### 1. Restrict `spikes` to `forward_ep` and select for units whose rate is at least 1 Hz and at most 10 Hz
+#### 2.1 Restrict `spikes` to `forward_ep` and select for units whose rate is at least 1 Hz and at most 10 Hz
 
 ```{code-cell} ipython3
 # save the filtered spikes in the following variable
 good_spikes = 
 ```
 
-#### 2. Compute tuning curves with respect to `position` for units in `good_spikes`.
+#### 2.2 Compute tuning curves with respect to `position` for units in `good_spikes`.
 
 
 - Use 50 position bins
@@ -377,7 +377,7 @@ We can see clear spatial selectivity in these example units, where firing rate p
 Let's repeat this exercise, but instead compute tuning curves as a function of *speed* instead of position.
 
 
-#### 3. Compute tuning curves with respect to `speed` for units in `good_spikes`.
+#### 2.3 Compute tuning curves with respect to `speed` for units in `good_spikes`.
 
 
 - Use 30 speed bins
@@ -390,21 +390,48 @@ speed_fields =
 ```
 
 
+    
+Let's compare the position tuning with the speed tuning of select neurons.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = workshop_utils.plot_position_speed(position, speed, place_fields.sel(unit=neurons), speed_fields.sel(unit=neurons), neurons);
+```
+
 :::{admonition} Figure check
 :class: dropdown
 ![](../../_static/_check_figs/pc-03.png)
 :::
 
+
+
+These neurons all show both position and speed tuning, and we see that the animal's speed and position are highly correlated. How can we disentangle which variable is responsible for driving neural activity? This is where NeMoS comes in handy: GLMs can help us model responses to multiple, potentially correlated predictors. 
+
+The goal of the remaining exercises in this section is to fit a PopulationGLM including both position and speed as predictors, and check if this model accurately captures the tuning curves of the neurons.
+
+
 ### Estimating tuning curves using a population GLM
+
+    
+As we've seen before, we will use basis objects to represent the input values.  In previous tutorials, we've used the `Conv` basis objects to represent the time-dependent effects we were looking to capture. Here, we're trying to capture the non-linear relationship between our input variables and firing rate, so we want the `Eval` objects. In these circumstances, you should look at the tuning you're trying to capture and compare to the [basis kernels (visualized in NeMoS docs)](https://nemos.readthedocs.io/en/latest/background/basis/README.html#): you want your tuning to be capturable by a linear combination of them.
+
+In this case, several of these would probably work; we will use [`BSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.BSplineEval.html#nemos.basis.BSplineEval) for both, though with different numbers of basis functions.
+
+Additionally, since we have two different inputs, we'll need two separate basis objects.
+
+
 :::{note}
 :class: render-all
 
 This afternoon, we'll show how to cross-validate across basis identity, which you can use to choose the basis.
 
 :::
-#### 4. Compute observations by counting spikes, using the pynapple method `count`, on our `TsGroup` of spike times, `good_spikes`.
+#### 2.4 Compute observations by counting spikes, using the pynapple method `count`, on our `TsGroup` of spike times, `good_spikes`.
 
 
+- For speed later on, only compute `count` on our example units by indexing `good_spikes` with `neurons`
 - Use a `bin_size` of 10 ms (0.01s)
 - Pass `forward_ep` as the optional argument `ep` to make sure we're only counting during forward runs.
 
@@ -415,7 +442,12 @@ bin_size =
 counts = 
 ```
 
-#### 5. Upsample `position` and `speed` using the pynapple method [`interpolate`](https://pynapple.org/generated/pynapple.Tsd.interpolate.html) with the time stamps from `counts`.
+
+
+By using this bin size for spike counts, `counts` will have a much higher sampling rate, and therefore have more data points, than our features, `position` and `speed`. We'll need to upsample our features to match the number of time points in `counts` in order to create a design matrix of the correct size to fit the model. We can achieve this by using the pynapple object method [`interpolate`](https://pynapple.org/generated/pynapple.Tsd.interpolate.html). This method will linearly interpolate new position and speed samples between existing samples at timestamps given by another pynapple object, in our case by `counts`.
+
+
+#### 2.5 Upsample `position` and `speed` using the pynapple method [`interpolate`](https://pynapple.org/generated/pynapple.Tsd.interpolate.html) with the time stamps from `counts`.
 
 
 - Use a `bin_size` of 10 ms (0.01s)
@@ -427,6 +459,15 @@ up_position =
 up_speed = 
 ```
 
+
+    
+As we've seen before, we will use basis objects to represent the input values.  In previous tutorials, we've used the `Conv` basis objects to represent the time-dependent effects we were looking to capture. Here, we're trying to capture the non-linear relationship between our input variables and firing rate, so we want the `Eval` objects. In these circumstances, you should look at the tuning you're trying to capture and compare to the [basis kernels (visualized in NeMoS docs)](https://nemos.readthedocs.io/en/latest/background/basis/README.html#): you want your tuning to be capturable by a linear combination of them.
+
+In this case, several of these would probably work; we will use [`BSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.BSplineEval.html#nemos.basis.BSplineEval) for both, though with different numbers of basis functions.
+
+Additionally, since we have two different inputs, we'll need two separate basis objects.
+
+
 :::{note}
 :class: render-all
 
@@ -434,7 +475,7 @@ This afternoon, we'll show how to cross-validate across basis identity, which yo
 
 :::
 (basis-eval-place-cells-users)=
-#### 6. Instantiate the basis by doing the following:
+#### 2.6 Instantiate the basis by doing the following:
 
 
 - Create a separate basis object for each model input (speed and position).
@@ -464,13 +505,13 @@ However, now we have an issue: in all our previous examples, we had a single bas
 To do this, we can use [NeMoS basis composition](https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html), where you can add the two bases together and obtain a new additive basis. We can similarly call `compute_features` on this additive basis, passing both position and speed, to obtain the same design matrix. For people familiar with NumPy, this is equivalent to calling `basis.compute_features()` for each basis separately and then [concatenate](https://numpy.org/doc/stable/reference/generated/numpy.concatenate.html) the outputs.
 
 
-#### 7. Create an additive basis by adding together `position_basis` and `speed_basis`.
+#### 2.7 Create an additive basis by adding together `position_basis` and `speed_basis`.
 
 ```{code-cell} ipython3
 additive_basis = 
 ```
 
-#### 8. Create a design matrix by passing `up_position` and `up_speed` to the basis method `compute_features`
+#### 2.8 Create a design matrix by passing `up_position` and `up_speed` to the basis method `compute_features`
 
 
 - Make sure the features are passed in the same order that the basis objects were added together!
@@ -488,7 +529,7 @@ Notice that, since we passed pynapple objects to the basis object, we got a pyna
 As we've done before, we can now use the Poisson GLM from NeMoS to learn the combined model.
 
 
-#### 9. Fit a GLM by doing the following:
+#### 2.9 Fit a GLM by doing the following:
 
 
 - Initialize `PopulationGLM`
@@ -509,7 +550,7 @@ glm.fit(
 Let's check first if our model can accurately predict the tuning curves we displayed above. We can use the [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) function of NeMoS and then compute new tuning curves using pynapple. 
 
 
-#### 10. Use [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
+#### 2.10 Use [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
 
 
 - Remember to convert the predicted firing rate to spikes per second!
@@ -550,14 +591,14 @@ We can see that this model does a good job capturing both the position and the s
 ### Getting the Wavelet Decomposition
 
 
-Next we'll use pynapple's signal processing module to analyze LFP and visualize phase precessing within hippocampal place cells. We'll start by performing a wavelet decomposition on the LFP trace during example run 9 that saved in Part 1 question 3 as the Tsd `ex_lfp`. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform).
+Next we'll use pynapple's signal processing module to analyze LFP and visualize phase precessing within hippocampal place cells. We'll start by performing a wavelet decomposition on the LFP trace during example run 9 that saved in **1.3** as the Tsd `ex_lfp`. We can do this in pynapple using the function [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform).
 
 A [continuous wavelet transform](https://en.wikipedia.org/wiki/Continuous_wavelet_transform) decomposes a signal into a set of [wavelets](https://en.wikipedia.org/wiki/Wavelet), in this case [Morlet wavelets](https://en.wikipedia.org/wiki/Morlet_wavelet), that span both frequency and time. You can think of the wavelet transform as a cross-correlation between the signal and each wavelet, giving the similarity between the signal and various frequency components at each time point of the signal. Similar to a Fourier transform, this gives us an estimate of what frequencies are dominating a signal. Unlike the Fourier tranform, however, the wavelet transform gives us this estimate as a function of time.
 
 We must define the frequency set that we'd like to use for our decomposition. We can do this with the numpy function [`np.geomspace`](https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html), which returns numbers evenly spaced on a log scale. We pass the lower frequency, the upper frequency, and number of samples as positional arguments.
 
 
-#### 1. Define 100 log-spaced samples between 5 and 200 Hz using [`np.geomspace`](https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html)
+#### 3.1 Define 100 log-spaced samples between 5 and 200 Hz using [`np.geomspace`](https://numpy.org/doc/stable/reference/generated/numpy.geomspace.html)
 
 ```{code-cell} ipython3
 # 100 log-spaced samples between 5Hz and 200Hz
@@ -569,7 +610,7 @@ freqs =
 We can now compute the wavelet transform on our LFP data during the example run using [`nap.compute_wavelet_transform`](https://pynapple.org/generated/pynapple.process.wavelets.html#pynapple.process.wavelets.compute_wavelet_transform) by passing both `ex_lfp` and `freqs`. We'll also pass the optional argument `fs`, which is known to be 1250Hz from the study methods.
 
 
-#### 2. Compute the wavelet transform of `ex_lfp` using `freqs` defined above.
+#### 3.2 Compute the wavelet transform of `ex_lfp` using `freqs` defined above.
 
 
 - Supply the known sampling rate, 1250 Hz, as the optional argument `fs` 
@@ -627,10 +668,10 @@ You should see a strong presence of theta in the 6-12Hz frequency band while the
 To capture phase precession, we will need to compute the phase of the theta oscillation present in the LFP. Similar to our analysis of position, we only want to compute theta phase during forward runs down the track, where the theta power will be strongest.
 
 
-#### 3. Restrict `lfp` to `forward_ep`.
+#### 3.3 Restrict `lfp` to `forward_ep`.
 
 
-- Confirm that `position` is already be restricted to this epoch from Part 1: question 1. If not, also restrict `position` to `forward_ep`
+- Confirm that `position` is already be restricted to this epoch from **1.1**. If not, also restrict `position` to `forward_ep`
 
 
 
@@ -644,7 +685,7 @@ position =
 We can extract the theta oscillation by applying a bandpass filter on the raw LFP. To do this, we use the pynapple function [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter). Conveniently, this function will recognize and handle splits in the epoched data (i.e. applying the filtering separately to discontinuous epochs), so we don't have to worry about passing signals that have been split in time.
 
 
-#### 4. Using [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter), filter `lfp` for theta within a 6-12 Hz range.
+#### 3.4 Using [`nap.apply_bandpass_filter`](https://pynapple.org/generated/pynapple.process.filtering.html#pynapple.process.filtering.apply_bandpass_filter), filter `lfp` for theta within a 6-12 Hz range.
 
 
 - Same as before, pass the sampling rate of 1250 Hz (`sample_rate`)
@@ -683,18 +724,18 @@ plt.legend();
 Finally, we need to extract the phase of theta from the filtered signal. We can do this by taking the angle of the [Hilbert transform](https://en.wikipedia.org/wiki/Hilbert_transform).
 
 
-#### 5. Use [`sp.signal.hilbert`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.hilbert.html) to perform the Hilbert transform of `theta_band`, using [`np.angle`](https://numpy.org/doc/2.3/reference/generated/numpy.angle.html) to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
+#### 3.5 Use [`sp.signal.hilbert`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.hilbert.html) to perform the Hilbert transform of `theta_band`, using [`np.angle`](https://numpy.org/doc/2.3/reference/generated/numpy.angle.html) to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a `Tsd` object.
 
 
 - TIP: don't forget to pass the time support!
-- The line for wrapping the phase from [0, 2pi] is provided, by adding 2pi to all negative angles
+- The code for wrapping the phase from [0, 2pi] is provided, by taking the [modulo](https://en.wikipedia.org/wiki/Modulo) of all angles with 2pi. (When all values are between -pi, and pi, this is equivalent to adding 2pi to all negative angles.)
   
 
 
 ```{code-cell} ipython3
 # compute the phase
 phase = 
-phase[phase < 0 ] += 2 * np.pi # wrap to [0,2pi]
+phase %= 2 * np.pi # wrap to [0,2pi]
 # store as a Tsd
 theta_phase = 
 ```
@@ -732,7 +773,7 @@ ax.legend([p1[0],p2[0]],["theta phase","filtered LFP"])
     
 As an initial visualization of phase precession, we'll look at a single traversal of the linear track. First, let's look at how the timing of an example unit's spikes lines up with the LFP and theta. To plot the spike times on the same axis as the LFP, we'll use the pynapple object's method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) to align the spike times with the theta amplitude. For our spiking data, this will find the amplitude closest in time to each spike. Let's start by applying [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) on unit 177, who's place field is cenetered on the linear track, using `theta_band` to align the amplityde of the filtered LFP.
 
-#### 6. Use the pynapple object method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) to find the value of `theta_band` corresponding to each spike time from unit 177.
+#### 3.6 Use the pynapple object method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html) to find the value of `theta_band` corresponding to each spike time from unit 177.
 
 
 
@@ -774,7 +815,7 @@ As the animal runs through unit 177's place field (thick green), the unit spikes
 We can exemplify this pattern by plotting the spike times aligned to the phase of theta. We'll want the corresponding phase of theta at which the unit fires as the animal is running down the track, which we can again compute using the method [`value_from`](https://pynapple.org/generated/pynapple.TsGroup.value_from.html). 
 
 
-#### 7. Compute the value of `theta_phase` corresponding to each spike time from unit 177.
+#### 3.7 Compute the value of `theta_phase` corresponding to each spike time from unit 177.
 
 ```{code-cell} ipython3
 spike_phase = 
@@ -817,7 +858,7 @@ We now see a negative trend in the spike phase as the animal moves through unit 
 We can observe this phenomena on average across the session by relating the spike phase to the spike position. 
 
 
-#### 8. Compute the position corresponding to each spike for example unit 177.
+#### 3.8 Compute the position corresponding to each spike for example unit 177.
 
 ```{code-cell} ipython3
 spike_position = 
@@ -856,13 +897,13 @@ The scatter plot above can be similarly be represented as a 2D tuning curve over
 To do this, we'll need to combine `position` and `theta_phase` into a `TsdFrame`. For this to work, both variables must have the same length. Similar to what we did in Part 2, we can achieve this by upsampling `position` to the length of `theta_phase` using the pynapple object method [`interpolate`](https://pynapple.org/generated/pynapple.Tsd.interpolate.html). Once they're the same length, they can be combined into a single `TsdFrame` and used to compute 2D tuning curves.
 
 
-#### 1. Interpolate `position` to the time points of `theta_phase`.
+#### 4.1 Interpolate `position` to the time points of `theta_phase`.
 
 ```{code-cell} ipython3
 upsampled_pos = 
 ```
 
-#### 2. Stack `upsampled_pos` and `theta_phase` together into a single [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html)
+#### 4.2 Stack `upsampled_pos` and `theta_phase` together into a single [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html)
 
 
 - For stacking arrays, you can use a numpy function like `np.stack`.
@@ -876,7 +917,7 @@ upsampled_pos =
 features = 
 ```
 
-#### 3. Apply [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) with `features` on our subselected group of units, `good_spikes`
+#### 4.3 Apply [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) with `features` on our subselected group of units, `good_spikes`
 
 
 - Use 50 bins for position and 30 bins for theta phase
@@ -902,7 +943,7 @@ p = tc_norm.sel(unit=neurons).plot(x="position", y="phase", col="unit", col_wrap
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-11.png)
+![](../../_static/_check_figs/pc-12.png)
 :::
 
 
@@ -915,14 +956,14 @@ You should be able to notice a negative relationship between position and phase,
     
 How can we model 2D tuning curves in a GLM? Similar to Part 2, we can define a 2D basis by using [NeMoS basis composition](https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html), but instead *multiplying* two basis objects. In fact, we can use both addition and multiplication together to create arbitrarily complex, multidimensional basis objects.
 
-First, we'll create a basis object for theta phase, specifically using [`CyclicBSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval).
+First, we'll create a basis object for theta phase, specifically using [`CyclicBSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval). We use this instead of `BSplineBasis` because the phase angle is a circular variable.
 
 
-#### 4. Instantiate a [`CyclicBSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval) basis object for phase, using 10 basis functions.
+#### 4.4 Instantiate a [`CyclicBSplineEval`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval) basis object for phase, using 10 basis functions.
 
 
 - Provide the label `"phase"` for the basis.
-- If necessary, reinstantiate the basis objects for position, `position_basis`, and speed, `speed_basis`, as you did in Part 2 question 6.
+- If necessary, reinstantiate the basis objects for position, `position_basis`, and speed, `speed_basis`, as you did in **2.6**.
 
 
 
@@ -930,7 +971,7 @@ First, we'll create a basis object for theta phase, specifically using [`CyclicB
 phase_basis =
 ```
 
-#### 5. Create the full basis by multiplying `position_basis` and `phase_basis` and adding `speed_basis`.
+#### 4.5 Create the full basis by multiplying `position_basis` and `phase_basis` and adding `speed_basis`.
 
 ```{code-cell} ipython3
 full_basis =
@@ -941,41 +982,42 @@ full_basis =
 Before we can call `compute_features`, we need to make sure `theta_phase` has the same number of time points as `counts`. Since `theta_phase` has *more* time points than counts, we'll need to *downsample* the number of time points. We can do this using the pynapple object method [`bin_average`](https://pynapple.org/generated/pynapple.Tsd.bin_average.html). This function will average values within a specified bin size. We can achieve the same sampling rate by using the same bin size as we used for our spike counts.
 
 
-#### 6. Downsample `theta_phase` using `bin_average` and a bin size of 0.01 s.
+#### 4.6 Downsample `theta_phase` using `bin_average` and a bin size of 0.01 s.
 
 
-- If necessary, redefine `up_position` and `up_speed` the same as Part 2 question 5
+- If necessary, redefine `up_position` and `up_speed` the same as **2.5**.
 
 
-
-```{code-cell} ipython3
-bin_theta =
-```
-
-#### 7. Create a design matrix by calling `compute_features` on `full_basis` using `up_position`, `bin_theta`, and `up_speed`
 
 ```{code-cell} ipython3
 bin_theta =
 ```
 
-#### 8. Fit a GLM by doing the following:
+#### 4.7 Create a design matrix by calling `compute_features` on `full_basis` using `up_position`, `bin_theta`, and `up_speed`
+
+```{code-cell} ipython3
+X =
+```
+
+#### 4.8 Fit a GLM by doing the following:
 
 
 - Initialize `PopulationGLM`
 - Use the "LBFGS" solver and pass `{"tol": 1e-12}` to `solver_kwargs`.
 - Fit the data, passing the design matrix `X` and spike counts `counts` to the glm object.
+    - `counts` should have been computed before in **2.4**.
 
 
 
 ```{code-cell} ipython3
-bin_theta =
+glm =
 ```
 
-#### 9. Use [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
+#### 4.9 Use [`predict`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict) to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
 
 
 - Remember to convert the predicted firing rate to spikes per second!
-- Compute 1D tuning curves for position and speeds in the same way as Part 2 question 10.
+- Compute 1D tuning curves for position and speeds in the same way as **2.10**.
 - Compute 2D tuning curves for position x phase using `predicted_rate` and the TsdFrame `features`, using 50 bins for position and 30 bins for phase.
 
 
@@ -991,9 +1033,29 @@ glm_pos_theta =
 ```
 
 
+
+We'll use a helper function from NeMoS to compare the predicted tuning curves to those computed from the data
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+from nemos import _documentation_utils as doc_plots
+neuron = 82
+idx = np.where(glm_pf.unit == neuron)[0][0]
+fig = doc_plots.plot_position_phase_speed_tuning(
+    place_fields.sel(unit=neuron),
+    glm_pf[idx],
+    speed_fields.sel(unit=neuron),
+    glm_speed[idx],
+    tuning_curves.sel(unit=neuron),
+    glm_pos_theta[idx],
+    )
+```
+
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-12.png)
+![](../../_static/_check_figs/pc-13.png)
 :::
 
 ### Bonus Exercise
@@ -1091,14 +1153,14 @@ p = (place_fields_sorted / place_fields_sorted.max(axis=1)).plot()
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-13.png)
+![](../../_static/_check_figs/pc-14.png)
 :::
 
 
 
 We can decode any number of features using the function [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes), which will decode any number of features given by the input `tuning_curves`, computed by [`nap.compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves).
 
-#### 1. Use [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep`
+#### 5.1 Use [`nap.decode_bayes`](https://pynapple.org/generated/pynapple.process.decoding.html#pynapple.process.decoding.decode_bayes) to decode position during `ex_run_ep`
 
 - Use 40 ms time bins
 
@@ -1127,7 +1189,7 @@ ax.set(xlabel="Time (s)", ylabel="Position (cm)", );
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-14.png)
+![](../../_static/_check_figs/pc-15.png)
 :::
 
 
@@ -1148,7 +1210,7 @@ workshop_utils.animate_1d_convolution(ex_counts, np.ones(5), tsd_label="original
 The count at each time point is computed by convolving the kernel (yellow), centered at that time point, with the original spike counts (blue). For a length-5 kernel of ones, this amounts to summing the counts in the center bin with two bins before and two bins after (shaded green, top). The result is an array of counts smoothed out in time (green, bottom).
 
 
-#### 2. Decode the same run as above, now using sliding window size of 5 bins.
+#### 5.2 Decode the same run as above, now using sliding window size of 5 bins.
 
 ```{code-cell} ipython3
 smth_decoded_position, smth_decoded_prob = 
@@ -1173,7 +1235,7 @@ ax.set(xlabel="Time (s)", ylabel="Position (cm)", );
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-15.png)
+![](../../_static/_check_figs/pc-16.png)
 :::
 
 
@@ -1183,7 +1245,7 @@ This gives us a much closer approximation of the animal's true position.
 Units phase precessing together creates fast, spatial sequences around the animal's true position. We can reveal this by decoding at an even shorter time scale, which will appear as smooth errors in the decoder.
 
 
-#### 3. Decode again using a smaller bin size of $10 ms$ and sliding window size of 5 bins.
+#### 5.3 Decode again using a smaller bin size of $10 ms$ and sliding window size of 5 bins.
 
 ```{code-cell} ipython3
 smth_decoded_position, smth_decoded_prob = 
@@ -1214,7 +1276,7 @@ fig.supxlabel("Time (s)");
 
 :::{admonition} Figure check
 :class: dropdown
-![](../../_static/_check_figs/pc-16.png)
+![](../../_static/_check_figs/pc-17.png)
 :::
 
 
@@ -1237,6 +1299,10 @@ Pynapple has another decoding method, [`nap.decode_template`](https://pynapple.o
     
 Instead of using place fields computed from the data, what if we used the predicted tuning curves by our GLM in Part 2 to do decoding? As a second bonus exercise, you can try Bayesian decoding using GLM-predicted tuning curves and compare the results to the decoding above.
 
+
+```{code-cell}
+# enter code here
+```
 
 ## References
 
