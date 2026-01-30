@@ -526,7 +526,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-30 17:54:15,408:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-30 18:15:59,318:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -747,7 +747,7 @@ X =
 <p>What we are looking for is a regularization strength that balances out the bias towards simpler models with the variance necessary to explain the data. However, how do we know how much we should regularize? One thing we can do is use cross-validation to see whether model performance on unseen data improves with regularization (behind the scenes, this is what we did!). We’ll walk through how to do that now.</p>
 <p>Instead of implementing our own cross-validation machinery, the developers of nemos decided that we should write the package to be compliant with <a class="reference external" href="https://scikit-learn.org">scikit-learn</a>, the canonical machine learning python library. Our models are all what scikit-learn calls “estimators”, which means they have <code class="docutils literal notranslate"><span class="pre">.fit</span></code>, <code class="docutils literal notranslate"><span class="pre">.score.</span></code> and <code class="docutils literal notranslate"><span class="pre">.predict</span></code> methods. Thus, we can use them with scikit-learn’s objects out of the box.</p>
 <p>We’re going to use scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.GridSearchCV.html">GridSearchCV</a> object, which performs a cross-validated grid search, as <a class="reference external" href="https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf">Edoardo explained in his presentation</a>.</p>
-<p>This object requires an estimator, our <code class="docutils literal notranslate"><span class="pre">glm</span></code> object here, and <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, a dictionary defining what to check. For now, let’s just compare Ridge regularization with no regularization:</p>
+<p>This object requires an estimator, our <code class="docutils literal notranslate"><span class="pre">glm</span></code> object here, and <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, a dictionary defining what to check. For now, let’s just compare Ridge regularization at two different strengths:</p>
 <div class="render-user render-presenter">
 <ul class="simple">
 <li><p>How do we decide when to use regularization?</p></li>
@@ -1351,7 +1351,7 @@ a.param-doc-link::before {
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label  sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" ><label for="sk-estimator-id-1" class="sk-toggleable__label  sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link " rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link ">i<span>Not fitted</span></span></div></label><div class="sk-toggleable__content " data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1553,7 +1553,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -1740,19 +1740,19 @@ forceTheme('sk-container-id-1');</script></body></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
@@ -2309,7 +2309,7 @@ a.param-doc-link::before {
     cursor: pointer;
 }
 </style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
-             estimator=PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
+             estimator=PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=Ridge(), regularizer_strength=1.0, solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;),
              param_grid={&#x27;regularizer_strength&#x27;: [0.0001, 1.0]})</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" ><label for="sk-estimator-id-4" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GridSearchCV</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.model_selection.GridSearchCV.html">?<span>Documentation for GridSearchCV</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2511,7 +2511,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -2735,10 +2735,10 @@ forceTheme('sk-container-id-2');</script></body></div></div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.764928</td>
-      <td>0.698558</td>
-      <td>0.370804</td>
-      <td>0.448497</td>
+      <td>1.798446</td>
+      <td>0.714199</td>
+      <td>0.379310</td>
+      <td>0.458940</td>
       <td>0.0001</td>
       <td>{'regularizer_strength': 0.0001}</td>
       <td>-0.127700</td>
@@ -2752,10 +2752,10 @@ forceTheme('sk-container-id-2');</script></body></div></div>
     </tr>
     <tr>
       <th>1</th>
-      <td>3.019093</td>
-      <td>2.538270</td>
-      <td>0.006433</td>
-      <td>0.001989</td>
+      <td>3.027419</td>
+      <td>2.574599</td>
+      <td>0.006481</td>
+      <td>0.001512</td>
       <td>1.0000</td>
       <td>{'regularizer_strength': 1.0}</td>
       <td>-0.137128</td>
@@ -2771,7 +2771,26 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 </table>
 </div></div></div>
 </div>
-<p>The most informative for us is the <code class="docutils literal notranslate"><span class="pre">'mean_test_score'</span></code> key, which shows the average of <code class="docutils literal notranslate"><span class="pre">glm.score</span></code> on each test-fold. Thus, higher is better, and we can see that the UnRegularized model performs better.</p>
+<p>The most informative for us is the <code class="docutils literal notranslate"><span class="pre">'mean_test_score'</span></code> key, which shows the average of <code class="docutils literal notranslate"><span class="pre">glm.score</span></code> on each test-fold. Thus, higher is better, and we can see that the model performs better with lower regularization strength.</p>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best regularization strength!</p>
+<p>As an exercise, spend 10 minutes trying to find the best regularization strength!</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">glm</span></code> model we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, selecting different values for <code class="docutils literal notranslate"><span class="pre">&quot;regularizer_strength&quot;</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;regularizer_strength&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+</ul>
+<p>Who can find the best regularization strength?</p>
+<p>If you finish early, try out different regularizers and try to find the best regularization strength for each of them.</p>
+</div>
 </section>
 <section id="select-basis">
 <span id="sklearn-basis-full"></span><h3>Select basis<a class="headerlink" href="#select-basis" title="Link to this heading">#</a></h3>
@@ -5097,7 +5116,7 @@ a.param-doc-link::before {
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                 (&#x27;glm&#x27;,
-                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" ><label for="sk-estimator-id-9" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -5314,7 +5333,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -5500,7 +5519,7 @@ forceTheme('sk-container-id-5');</script></body></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
@@ -6062,7 +6081,7 @@ a.param-doc-link::before {
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                 (&#x27;glm&#x27;,
-                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-12" type="checkbox" ><label for="sk-estimator-id-12" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -6279,7 +6298,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -6582,277 +6601,277 @@ cv =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
@@ -7415,7 +7434,7 @@ a.param-doc-link::before {
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                                        (&#x27;glm&#x27;,
-                                        PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
+                                        PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))]),
              param_grid={&#x27;basis__position__n_basis_funcs&#x27;: [5, 10, 20],
                          &#x27;basis__speed&#x27;: [MSplineEval(n_basis_funcs=15),
                                           BSplineEval(n_basis_funcs=15),
@@ -7732,7 +7751,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -7955,10 +7974,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
   <tbody>
     <tr>
       <th>0</th>
-      <td>1.930845</td>
-      <td>0.664997</td>
-      <td>0.524185</td>
-      <td>0.548538</td>
+      <td>1.947474</td>
+      <td>0.676619</td>
+      <td>0.517132</td>
+      <td>0.541677</td>
       <td>5</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -7973,10 +7992,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>1</th>
-      <td>1.493615</td>
-      <td>0.253680</td>
-      <td>0.040894</td>
-      <td>0.004737</td>
+      <td>1.557237</td>
+      <td>0.259997</td>
+      <td>0.039836</td>
+      <td>0.007274</td>
       <td>5</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -7991,10 +8010,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>2</th>
-      <td>1.500677</td>
-      <td>0.227762</td>
-      <td>0.150626</td>
-      <td>0.130118</td>
+      <td>1.539631</td>
+      <td>0.251271</td>
+      <td>0.146406</td>
+      <td>0.134477</td>
       <td>5</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 5, 'basis__...</td>
@@ -8009,10 +8028,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>3</th>
-      <td>1.631050</td>
-      <td>0.178244</td>
-      <td>0.142506</td>
-      <td>0.052262</td>
+      <td>1.615359</td>
+      <td>0.183423</td>
+      <td>0.137520</td>
+      <td>0.054830</td>
       <td>10</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -8027,10 +8046,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>4</th>
-      <td>1.647238</td>
-      <td>0.269982</td>
-      <td>0.056824</td>
-      <td>0.010359</td>
+      <td>1.649329</td>
+      <td>0.281463</td>
+      <td>0.057732</td>
+      <td>0.004452</td>
       <td>10</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -8045,10 +8064,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>5</th>
-      <td>1.553518</td>
-      <td>0.137999</td>
-      <td>0.054508</td>
-      <td>0.006621</td>
+      <td>1.570609</td>
+      <td>0.148174</td>
+      <td>0.061993</td>
+      <td>0.006715</td>
       <td>10</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 10, 'basis_...</td>
@@ -8063,10 +8082,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>6</th>
-      <td>1.943417</td>
-      <td>0.389349</td>
-      <td>0.287138</td>
-      <td>0.186956</td>
+      <td>2.033125</td>
+      <td>0.378676</td>
+      <td>0.312010</td>
+      <td>0.223405</td>
       <td>20</td>
       <td>(((MSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -8081,10 +8100,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>7</th>
-      <td>1.763812</td>
-      <td>0.301619</td>
-      <td>0.096012</td>
-      <td>0.014717</td>
+      <td>1.899323</td>
+      <td>0.210027</td>
+      <td>0.107492</td>
+      <td>0.006711</td>
       <td>20</td>
       <td>(((BSplineEval(n_basis_funcs=15, order=4))))</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -8099,10 +8118,10 @@ forceTheme('sk-container-id-7');</script></body></div></div>
     </tr>
     <tr>
       <th>8</th>
-      <td>1.650268</td>
-      <td>0.144297</td>
-      <td>0.088321</td>
-      <td>0.021991</td>
+      <td>1.723484</td>
+      <td>0.166843</td>
+      <td>0.102711</td>
+      <td>0.013521</td>
       <td>20</td>
       <td>(((RaisedCosineLinearEval(n_basis_funcs=15, wi...</td>
       <td>{'basis__position__n_basis_funcs': 20, 'basis_...</td>
@@ -8695,7 +8714,7 @@ a.param-doc-link::before {
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                 (&#x27;glm&#x27;,
-                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+                 PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(), solver_kwargs={&#x27;tol&#x27;: 1e-12}, solver_name=&#x27;LBFGS&#x27;))])</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-19" type="checkbox" ><label for="sk-estimator-id-19" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>Pipeline</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.8/modules/generated/sklearn.pipeline.Pipeline.html">?<span>Documentation for Pipeline</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -8912,7 +8931,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -9100,6 +9119,26 @@ forceTheme('sk-container-id-8');</script></body></div></div>
 <div class="cell_output docutils container">
 <img alt="../../_images/b23c70b7963378df985447356746d5739822cfa80a9b4888b86f26fbb5a2aa10.png" src="../../_images/b23c70b7963378df985447356746d5739822cfa80a9b4888b86f26fbb5a2aa10.png" />
 </div>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best basis!</p>
+<p>As an exercise, spend 10 minutes exploring the possible basis objects and seeing which performs the best.</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">pipe</span></code> object we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, setting <code class="docutils literal notranslate"><span class="pre">basis__speed</span></code> and <code class="docutils literal notranslate"><span class="pre">basis__position</span></code> (or their attributes, e.g., <code class="docutils literal notranslate"><span class="pre">basis__position__n_basis_funcs</span></code>) to a range of values. Remember that all combinations are tested, so if you e.g., select 5 choices for each, you’ll be testing 25 different combinations!</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;basis__position&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+    <span class="s2">&quot;basis__speed&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+<li><p>Finally, visualize the best estimator with <code class="docutils literal notranslate"><span class="pre">visualize_model_predictions(cv.best_estimator_,</span> <span class="pre">transformer_input)</span></code></p></li>
+</ul>
+<p>Who can find the best set of basis objects?</p>
 </div>
 </section>
 </section>
@@ -10054,97 +10093,97 @@ cv =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/agent/workspace/rorse_ccn-software-feb-2026_main@2/.venv/lib/python3.12/site-packages/nemos/glm/glm.py:728: RuntimeWarning: The fit did not converge. Consider the following:
 1) Enable float64 with ``jax.config.update(&#39;jax_enable_x64&#39;, True)`` 
 2) Increase the max number of iterations or increase tolerance (if reasonable). These parameters can be specified by providing a ``solver_kwargs`` dictionary. For the available options see the ``self.solver.__init__`` docstrings.
   warnings.warn(
@@ -10707,7 +10746,7 @@ a.param-doc-link::before {
     basis2=&#x27;speed&#x27;: MSplineEval(n_basis_funcs=15, order=4),
 ))),
                                        (&#x27;glm&#x27;,
-                                        PopulationGLM(inverse_link_function=&lt;function exp at 0x7f0ba29002c0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(...
+                                        PopulationGLM(inverse_link_function=&lt;function exp at 0x7f33ff8900e0&gt;, observation_model=PoissonObservations(), regularizer=UnRegularized(...
     basis1=&#x27;position&#x27;: MSplineEval(n_basis_funcs=10, order=4),
     basis2=CustomBasis(
         funcs=[func],
@@ -11074,7 +11113,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f0ba29002c0&gt;</td>
+            <td class="value">&lt;function exp...x7f33ff8900e0&gt;</td>
         </tr>
     
 
@@ -11308,6 +11347,12 @@ Let's examine the model comparison results:
 </div>
 <div class="render-all">
 Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the model!</p>
+<p>In this section, we only compared a single choice of regularization strength and basis objects for each feature. As an exercise, spend 10 minutes combining what we learned here with the earlier sections: for each feature combination (position, speed, position + speed), try several different basis objects and, optionally, different regularization strengths.</p>
+<p>Don’t forget to visualize your model’s predictions!</p>
+<p>Who can find the best model?</p>
 </div>
 <section id="next-steps">
 <h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>

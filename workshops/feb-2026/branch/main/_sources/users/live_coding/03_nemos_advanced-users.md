@@ -271,6 +271,28 @@ cv
 
 pd.DataFrame(cv.cv_results_)
 ```
+:::{admonition} Find the best regularization strength!
+:class: important render-all
+
+As an exercise, spend 10 minutes trying to find the best regularization strength!
+
+- You should use the `glm` model we defined in this section.
+- You will need to redefine the `param_grid` dictionary, selecting different values for `"regularizer_strength"`:
+
+```{code-block} python
+param_grid = {
+    "regularizer_strength": ...,
+}
+```
+
+- After defining `param_grid`, reinitialize `cv` (you can do so with the same arguments).
+- Then call `cv.fit` and re-run `pd.DataFrame(cv.cv_results_)` to summarize the results.
+
+Who can find the best regularization strength?
+
+If you finish early, try out different regularizers and try to find the best regularization strength for each of them.
+
+:::
 (sklearn-basis-users)=
 ### Select basis
 
@@ -522,6 +544,28 @@ best_estim
 
 visualize_model_predictions(best_estim, transformer_input)
 ```
+:::{admonition} Find the best basis!
+:class: important render-all
+
+As an exercise, spend 10 minutes exploring the possible basis objects and seeing which performs the best.
+
+- You should use the `pipe` object we defined in this section.
+- You will need to redefine the `param_grid` dictionary, setting `basis__speed` and `basis__position` (or their attributes, e.g., `basis__position__n_basis_funcs`) to a range of values. Remember that all combinations are tested, so if you e.g., select 5 choices for each, you'll be testing 25 different combinations!
+
+```{code-block} python
+param_grid = {
+    "basis__position": ...,
+    "basis__speed": ...,
+}
+
+```
+- After defining `param_grid`, reinitialize `cv` (you can do so with the same arguments).
+- Then call `cv.fit` and re-run `pd.DataFrame(cv.cv_results_)` to summarize the results.
+- Finally, visualize the best estimator with `visualize_model_predictions(cv.best_estimator_, transformer_input)`
+
+Who can find the best set of basis objects?
+
+:::
 (sklearn-feature-selection-users)=
 ## Feature selection
 
@@ -631,6 +675,16 @@ cv_df[["param_basis__basis", "mean_test_score", "rank_test_score"]]
 
 Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.
 
+:::{admonition} Find the model!
+:class: important render-all
+
+In this section, we only compared a single choice of regularization strength and basis objects for each feature. As an exercise, spend 10 minutes combining what we learned here with the earlier sections: for each feature combination (position, speed, position + speed), try several different basis objects and, optionally, different regularization strengths.
+
+Don't forget to visualize your model's predictions!
+
+Who can find the best model?
+
+:::
 ### Next Steps
 
 

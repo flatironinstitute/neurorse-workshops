@@ -733,6 +733,25 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best regularization strength!</p>
+<p>As an exercise, spend 10 minutes trying to find the best regularization strength!</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">glm</span></code> model we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, selecting different values for <code class="docutils literal notranslate"><span class="pre">&quot;regularizer_strength&quot;</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;regularizer_strength&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+</ul>
+<p>Who can find the best regularization strength?</p>
+<p>If you finish early, try out different regularizers and try to find the best regularization strength for each of them.</p>
+</div>
 </section>
 <section id="select-basis">
 <span id="sklearn-basis-presenters"></span><h3>Select basis<a class="headerlink" href="#select-basis" title="Link to this heading">#</a></h3>
@@ -989,6 +1008,26 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </div>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the best basis!</p>
+<p>As an exercise, spend 10 minutes exploring the possible basis objects and seeing which performs the best.</p>
+<ul class="simple">
+<li><p>You should use the <code class="docutils literal notranslate"><span class="pre">pipe</span></code> object we defined in this section.</p></li>
+<li><p>You will need to redefine the <code class="docutils literal notranslate"><span class="pre">param_grid</span></code> dictionary, setting <code class="docutils literal notranslate"><span class="pre">basis__speed</span></code> and <code class="docutils literal notranslate"><span class="pre">basis__position</span></code> (or their attributes, e.g., <code class="docutils literal notranslate"><span class="pre">basis__position__n_basis_funcs</span></code>) to a range of values. Remember that all combinations are tested, so if you e.g., select 5 choices for each, you’ll be testing 25 different combinations!</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">param_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;basis__position&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+    <span class="s2">&quot;basis__speed&quot;</span><span class="p">:</span> <span class="o">...</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>After defining <code class="docutils literal notranslate"><span class="pre">param_grid</span></code>, reinitialize <code class="docutils literal notranslate"><span class="pre">cv</span></code> (you can do so with the same arguments).</p></li>
+<li><p>Then call <code class="docutils literal notranslate"><span class="pre">cv.fit</span></code> and re-run <code class="docutils literal notranslate"><span class="pre">pd.DataFrame(cv.cv_results_)</span></code> to summarize the results.</p></li>
+<li><p>Finally, visualize the best estimator with <code class="docutils literal notranslate"><span class="pre">visualize_model_predictions(cv.best_estimator_,</span> <span class="pre">transformer_input)</span></code></p></li>
+</ul>
+<p>Who can find the best set of basis objects?</p>
+</div>
 </section>
 </section>
 <section id="feature-selection">
@@ -1105,6 +1144,12 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 <p>Position emerges as the predictor with the greatest explanatory power, while speed adds only marginal benefits.</p>
+<div class="important render-all admonition">
+<p class="admonition-title">Find the model!</p>
+<p>In this section, we only compared a single choice of regularization strength and basis objects for each feature. As an exercise, spend 10 minutes combining what we learned here with the earlier sections: for each feature combination (position, speed, position + speed), try several different basis objects and, optionally, different regularization strengths.</p>
+<p>Don’t forget to visualize your model’s predictions!</p>
+<p>Who can find the best model?</p>
+</div>
 <section id="next-steps">
 <h3>Next Steps<a class="headerlink" href="#next-steps" title="Link to this heading">#</a></h3>
 <p>For the next project, you can use all the tools showcased here to find a better encoding model for these hippocampal neurons.</p>
