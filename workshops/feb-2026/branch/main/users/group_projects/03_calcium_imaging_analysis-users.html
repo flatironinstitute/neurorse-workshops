@@ -421,8 +421,11 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-the-data">Preprocessing the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-for-calcium-data">Basis functions for calcium data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-population-glm">Fitting the Population GLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-simple-gaussian-population-glm">Fitting a simple Gaussian Population GLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-and-visualizing-the-results">Predicting and visualizing the results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-population-glm-with-masking-no-self-coupling">Fitting a population GLM with masking (no self-coupling)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-coupling-filters-without-self-coupling">Visualizing the coupling filters without self-coupling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
@@ -511,15 +514,6 @@ working through the questions with your small group.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="o">...</span> <span class="c1"># Load NWB file</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell tag_render-all docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -618,7 +612,7 @@ Since the data are calcium transients and not spike counts, we will use the temp
     <span class="n">tuning_curves</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The tuning curves as an xarray object</span>
     <span class="n">data</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The neural activity as a TsdFrame in this case</span>
     <span class="n">bin_size</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The bin size for decoding. Here I suggest 0.1 second</span>
-    <span class="n">metric</span><span class="o">=...</span> <span class="c1"># The metric to use to compare the neural activity to the tuning curves. Here I suggest &quot;correlation&quot;</span>
+    <span class="n">metric</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The metric to use to compare the neural activity to the tuning curves. Here I suggest &quot;correlation&quot;</span>
     <span class="n">epochs</span><span class="o">=</span><span class="n">transients</span><span class="o">.</span><span class="n">time_support</span> <span class="c1"># The epochs should correspond to when the neural activity is defined. Here we use the time support directly</span>
     <span class="p">)</span>
 </pre></div>
@@ -718,16 +712,16 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># convolve all the neurons</span>
-<span class="n">calcium_convolved</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span> <span class="p">)</span> <span class="c1"># Parameter is the calcium transients</span>
+<span class="n">calcium_convolved</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the calcium transients</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Convolved calcium shape: </span><span class="si">{</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </section>
-<section id="fitting-the-population-glm">
-<h3>Fitting the Population GLM<a class="headerlink" href="#fitting-the-population-glm" title="Link to this heading">#</a></h3>
-<p>We can fit a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> to the calcium data using a Gamma observation model, which is more appropriate for continuous-valued data.</p>
+<section id="fitting-a-simple-gaussian-population-glm">
+<h3>Fitting a simple Gaussian Population GLM<a class="headerlink" href="#fitting-a-simple-gaussian-population-glm" title="Link to this heading">#</a></h3>
+<p>We can fit a <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> to the calcium data using a Gaussian observation model, which is more appropriate for continuous-valued data.</p>
 <p>Similar to before, we will create a train-test split using the first and second half of the data.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
@@ -740,14 +734,16 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 </div>
 </div>
 </div>
+<p>Let’s fit the <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> using the Gaussian observation model, Ridge regularization, and the LBFGS solver.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
     <span class="n">observation_model</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Observation model type</span>
     <span class="n">regularizer</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularizer type</span>
     <span class="n">solver_name</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Solver name</span>
-    <span class="n">regularizer_strength</span><span class="o">=...</span> <span class="c1"># Regularization strength</span>
-    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span> <span class="p">,</span> <span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the calcium transients during training epoch</span>
+    <span class="n">regularizer_strength</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularization strength</span>
+    <span class="n">solver_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">}</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">,</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the calcium transients during training epoch</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calcium model coefficients shape: </span><span class="si">{</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -759,7 +755,7 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 <p>We can predict the calcium signals using the fitted model during the test epoch and visualize the results.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_predicted</span> <span class="o">=</span> <span class="n">calcium_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span> <span class="p">)</span> <span class="c1"># Parameter is the convolved feature matrix restricted during testing epoch</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_predicted</span> <span class="o">=</span> <span class="n">calcium_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameter is the convolved feature matrix restricted during testing epoch</span>
 </pre></div>
 </div>
 </div>
@@ -771,7 +767,7 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">transients</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Actual Calcium&quot;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calcium_predicted</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted Calcium&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">calcium_predicted</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">ep_to_plot</span><span class="p">)[:,</span><span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Predicted Calcium&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Calcium Signal Prediction&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Time (s)&quot;</span><span class="p">)</span>
@@ -812,7 +808,82 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 <p><img alt="" src="../../_images/02-13.png" /></p>
 </div>
 <p>These coupling filters represent the functional relationships between neurons based on their calcium signal.
-Note that the slower dynamics of calcium signals may lead to different coupling patterns compared to spike data.</p>
+We can see that the self-coupling dominates the coupling filters, which is expected due to the slow dynamics of calcium signals.</p>
+</section>
+<section id="fitting-a-population-glm-with-masking-no-self-coupling">
+<h3>Fitting a population GLM with masking (no self-coupling)<a class="headerlink" href="#fitting-a-population-glm-with-masking-no-self-coupling" title="Link to this heading">#</a></h3>
+<p>To prevent self-coupling, we can create a feature mask that blocks self-connections for each neuron.
+This is done by creating a mask matrix where the diagonal elements (self-connections) are set to zero, and all other elements are set to one.
+We then repeat this mask for each basis function to create the final feature mask.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_neurons</span> <span class="o">=</span> <span class="n">transients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">n_neurons</span><span class="p">,</span> <span class="n">n_neurons</span><span class="p">))</span> <span class="c1"># Create a square matrix of ones equal to the number of neurons</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">mask</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n_neurons</span><span class="p">)</span> <span class="c1"># Subtract the identity matrix to set diagonal elements to zero</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">n_basis_funcs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Repeat for each basis function to create final feature mask</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;gray&quot;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s2">&quot;auto&quot;</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_neurons</span><span class="p">),</span> <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_neurons</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">ticks</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_neurons</span> <span class="o">*</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">n_basis_funcs</span><span class="p">,</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">n_basis_funcs</span><span class="p">),</span>
+           <span class="n">labels</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_neurons</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Feature Mask (No Self-Coupling)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Neurons&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Neurons x Basis Functions&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s2">&quot;Mask Value&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can fit the <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code> again using this feature mask to prevent self-coupling.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+    <span class="n">observation_model</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Observation model type</span>
+    <span class="n">regularizer</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularizer type</span>
+    <span class="n">solver_name</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Solver name</span>
+    <span class="n">regularizer_strength</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Regularization strength</span>
+    <span class="n">feature_mask</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># The feature mask to prevent self-coupling</span>
+    <span class="n">solver_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">}</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="o">...</span><span class="p">,</span><span class="o">...</span><span class="p">)</span> <span class="c1"># Parameters are the convolved feature matrix and the calcium transients during training epoch</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calcium model coefficients shape: </span><span class="si">{</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="visualizing-the-coupling-filters-without-self-coupling">
+<h3>Visualizing the coupling filters without self-coupling<a class="headerlink" href="#visualizing-the-coupling-filters-without-self-coupling" title="Link to this heading">#</a></h3>
+<p>We can extract and visualize the coupling filters again to see the effect of removing self-coupling.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># split the coefficient vector along the feature axis (axis=0)</span>
+<span class="n">calcium_weights_dict</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">split_by_feature</span><span class="p">(</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1"># The output is a dict with key the basis label, </span>
+<span class="c1"># and value the reshaped coefficients</span>
+<span class="n">calcium_weights</span> <span class="o">=</span> <span class="n">calcium_weights_dict</span><span class="p">[</span><span class="s2">&quot;RaisedCosineLogConv&quot;</span><span class="p">]</span>
+<span class="c1"># reconstruct the coupling filters</span>
+<span class="n">time</span><span class="p">,</span> <span class="n">basis_kernels</span> <span class="o">=</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">evaluate_on_grid</span><span class="p">(</span><span class="n">calcium_window_size</span><span class="p">)</span>
+<span class="n">calcium_responses_noself</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">einsum</span><span class="p">(</span><span class="s2">&quot;jki,tk-&gt;ijt&quot;</span><span class="p">,</span> <span class="n">calcium_weights</span><span class="p">,</span> <span class="n">basis_kernels</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">calcium_responses_noself</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_coupling_filters</span><span class="p">(</span><span class="n">calcium_responses_noself</span><span class="p">,</span> <span class="n">tuning_curves</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Figure check</p>
+<p><img alt="" src="../../_images/02-14.png" /></p>
+</div>
+</section>
+<section id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Link to this heading">#</a></h3>
 <p>The end of this group project. You can explore further by trying different basis functions, regularization strengths, or observation models.
 You can also try to incorporate external covariates, such as the head-direction signal, into the model.
 You can try to downsample the data to see how it affects the model fitting and predictions (i.e. check <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> in pynapple to downsample the transients).</p>
@@ -876,8 +947,11 @@ You can try to downsample the data to see how it affects the model fitting and p
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preprocessing-the-data">Preprocessing the data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basis-functions-for-calcium-data">Basis functions for calcium data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-the-features">Preparing the features</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-population-glm">Fitting the Population GLM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-simple-gaussian-population-glm">Fitting a simple Gaussian Population GLM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predicting-and-visualizing-the-results">Predicting and visualizing the results</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-a-population-glm-with-masking-no-self-coupling">Fitting a population GLM with masking (no self-coupling)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-the-coupling-filters-without-self-coupling">Visualizing the coupling filters without self-coupling</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>

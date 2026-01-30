@@ -90,7 +90,6 @@ Similar to part 1, we will start by loading the NWB file. The function `nap.load
 
 
 ```{code-cell} ipython3
-:tags: [render-all]
 data = nap.load_file(path)
 
 print(data)
@@ -318,10 +317,10 @@ calcium_convolved = calcium_basis.compute_features(transients)
 print(f"Convolved calcium shape: {calcium_convolved.shape}")
 ```
 
-### Fitting the Population GLM
+### Fitting a simple Gaussian Population GLM
 
 
-We can fit a `PopulationGLM` to the calcium data using a Gamma observation model, which is more appropriate for continuous-valued data.
+We can fit a `PopulationGLM` to the calcium data using a Gaussian observation model, which is more appropriate for continuous-valued data.
 
 Similar to before, we will create a train-test split using the first and second half of the data.
 
@@ -336,18 +335,18 @@ training_ep = nap.IntervalSet(start, start + duration / 2)
 testing_ep = nap.IntervalSet(start + duration / 2, end)
 ```
 
-```{code-cell} ipython3
-transients.shape
-mask = np.ones((transients.shape[1], )*2) - np.eye(transients.shape[1])
-mask = np.repeat(mask, calcium_basis.n_basis_funcs, axis=0)
 
+
+Let's fit the `PopulationGLM` using the Gaussian observation model, Ridge regularization, and the LBFGS solver.
+
+
+
+```{code-cell} ipython3
 calcium_model = nmo.glm.PopulationGLM(
-    observation_model="Gamma",
+    observation_model="Gaussian",
     regularizer="Ridge",
     solver_name="LBFGS",
-    regularizer_strength=0.0001,
-    inverse_link_function=jax.nn.softplus,  # key:  default was 1/x. 1/x is large if x->0+ 
-    feature_mask=mask,
+    regularizer_strength=0.001,
     solver_kwargs={"maxiter": 5000}
     ).fit(calcium_convolved.restrict(training_ep), transients.restrict(training_ep))
 
@@ -374,7 +373,7 @@ ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)  # 
 
 fig = plt.figure()
 plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
-plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], label="Predicted Calcium")
+plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], '--', label="Predicted Calcium")
 plt.legend()
 plt.title("Calcium Signal Prediction")
 plt.xlabel("Time (s)")
@@ -415,9 +414,88 @@ fig.savefig("../../_static/_check_figs/02-13.png")
 ```
 
 
-
 These coupling filters represent the functional relationships between neurons based on their calcium signal.
-Note that the slower dynamics of calcium signals may lead to different coupling patterns compared to spike data.
+We can see that the self-coupling dominates the coupling filters, which is expected due to the slow dynamics of calcium signals.
+
+
+### Fitting a population GLM with masking (no self-coupling)
+
+
+To prevent self-coupling, we can create a feature mask that blocks self-connections for each neuron.
+This is done by creating a mask matrix where the diagonal elements (self-connections) are set to zero, and all other elements are set to one.
+We then repeat this mask for each basis function to create the final feature mask.
+
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+n_neurons = transients.shape[1]
+mask = np.ones((n_neurons, n_neurons)) # Create a square matrix of ones equal to the number of neurons
+mask = mask - np.eye(n_neurons) # Subtract the identity matrix to set diagonal elements to zero
+mask = np.repeat(mask, calcium_basis.n_basis_funcs, axis=0) # Repeat for each basis function to create final feature mask
+
+fig = plt.figure()
+plt.imshow(mask, cmap="gray", aspect="auto", interpolation='none')
+plt.xticks(ticks=np.arange(n_neurons), labels=np.arange(n_neurons))
+plt.yticks(ticks=np.arange(0, n_neurons * calcium_basis.n_basis_funcs, calcium_basis.n_basis_funcs),
+           labels=np.arange(n_neurons))
+plt.title("Feature Mask (No Self-Coupling)")
+plt.xlabel("Neurons")
+plt.ylabel("Neurons x Basis Functions")
+plt.colorbar(label="Mask Value")
+```
+
+
+
+Now we can fit the `PopulationGLM` again using this feature mask to prevent self-coupling.
+
+
+
+```{code-cell} ipython3
+calcium_model = nmo.glm.PopulationGLM(
+    observation_model="Gaussian",
+    regularizer="Ridge",
+    solver_name="LBFGS",
+    regularizer_strength=0.001, 
+    feature_mask=mask,
+    solver_kwargs={"maxiter": 5000}
+    ).fit(calcium_convolved.restrict(training_ep), transients.restrict(training_ep))
+
+print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
+```
+
+### Visualizing the coupling filters without self-coupling
+
+
+We can extract and visualize the coupling filters again to see the effect of removing self-coupling.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+# split the coefficient vector along the feature axis (axis=0)
+calcium_weights_dict = calcium_basis.split_by_feature(calcium_model.coef_, axis=0)
+# The output is a dict with key the basis label, 
+# and value the reshaped coefficients
+calcium_weights = calcium_weights_dict["RaisedCosineLogConv"]
+# reconstruct the coupling filters
+time, basis_kernels = calcium_basis.evaluate_on_grid(calcium_window_size)
+calcium_responses_noself = np.einsum("jki,tk->ijt", calcium_weights, basis_kernels)
+print(calcium_responses_noself.shape)
+```
+
+```{code-cell} ipython3
+:tags: [render-all]
+fig = workshop_utils.plot_coupling_filters(calcium_responses_noself, tuning_curves)
+```
+
+```{code-cell} ipython3
+:tags: [hide-input]
+fig.savefig("../../_static/_check_figs/02-14.png")
+```
+
+### Conclusion
+
+
 
 The end of this group project. You can explore further by trying different basis functions, regularization strengths, or observation models.
 You can also try to incorporate external covariates, such as the head-direction signal, into the model.
