@@ -230,8 +230,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_calcium_imaging_analysis-users.html">Calcium imaging analysis of head-direction cells</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -503,7 +503,7 @@ Since cells have a functional relationship to each other, the activity of one ce
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-29 16:26:28,129:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>WARNING:2026-01-30 16:44:43,847:jax._src.xla_bridge:876: An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
 </pre></div>
 </div>
 </div>
@@ -859,42 +859,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img334d2592913c44cca2b5456ea3b8d4c9">
+  <img id="_anim_imgd5b688534d7846f283ed57a33b912136">
   <div class="anim-controls">
-    <input id="_anim_slider334d2592913c44cca2b5456ea3b8d4c9" type="range" class="anim-slider"
+    <input id="_anim_sliderd5b688534d7846f283ed57a33b912136" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim334d2592913c44cca2b5456ea3b8d4c9.set_frame(parseInt(this.value));">
+           oninput="animd5b688534d7846f283ed57a33b912136.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animd5b688534d7846f283ed57a33b912136.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animd5b688534d7846f283ed57a33b912136.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animd5b688534d7846f283ed57a33b912136.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animd5b688534d7846f283ed57a33b912136.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animd5b688534d7846f283ed57a33b912136.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animd5b688534d7846f283ed57a33b912136.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animd5b688534d7846f283ed57a33b912136.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animd5b688534d7846f283ed57a33b912136.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim334d2592913c44cca2b5456ea3b8d4c9.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animd5b688534d7846f283ed57a33b912136.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select334d2592913c44cca2b5456ea3b8d4c9"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectd5b688534d7846f283ed57a33b912136"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_334d2592913c44cca2b5456ea3b8d4c9"
+      <input type="radio" name="state" value="once" id="_anim_radio1_d5b688534d7846f283ed57a33b912136"
              >
-      <label for="_anim_radio1_334d2592913c44cca2b5456ea3b8d4c9">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_334d2592913c44cca2b5456ea3b8d4c9"
+      <label for="_anim_radio1_d5b688534d7846f283ed57a33b912136">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_d5b688534d7846f283ed57a33b912136"
              checked>
-      <label for="_anim_radio2_334d2592913c44cca2b5456ea3b8d4c9">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_334d2592913c44cca2b5456ea3b8d4c9"
+      <label for="_anim_radio2_d5b688534d7846f283ed57a33b912136">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_d5b688534d7846f283ed57a33b912136"
              >
-      <label for="_anim_radio3_334d2592913c44cca2b5456ea3b8d4c9">Reflect</label>
+      <label for="_anim_radio3_d5b688534d7846f283ed57a33b912136">Reflect</label>
     </form>
   </div>
 </div>
@@ -904,9 +904,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img334d2592913c44cca2b5456ea3b8d4c9";
-    var slider_id = "_anim_slider334d2592913c44cca2b5456ea3b8d4c9";
-    var loop_select_id = "_anim_loop_select334d2592913c44cca2b5456ea3b8d4c9";
+    var img_id = "_anim_imgd5b688534d7846f283ed57a33b912136";
+    var slider_id = "_anim_sliderd5b688534d7846f283ed57a33b912136";
+    var loop_select_id = "_anim_loop_selectd5b688534d7846f283ed57a33b912136";
     var frames = new Array(20);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAMgCAYAAADbcAZoAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -10873,7 +10873,7 @@ AABghg0IAAAAADNsQAAAAACYYQMCAAAAwAwbEAAAAABm2IAAAAAAMMMGBAAAAICZ/x/UMgj7k9JY\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim334d2592913c44cca2b5456ea3b8d4c9 = new Animation(frames, img_id, slider_id, 200.0,
+        animd5b688534d7846f283ed57a33b912136 = new Animation(frames, img_id, slider_id, 200.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -11623,7 +11623,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f65eed2f060&gt;&gt;</td>
+            <td class="value">&lt;function exp...x7f90ed62f380&gt;</td>
         </tr>
     
 
@@ -11803,10 +11803,10 @@ The model should be called <code class="docutils literal notranslate"><span clas
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f659e439dc0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f90c113d8e0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/4f60fd129a28fcc495f38559296296fa3dc0a6fd90c943f2d7f029c00bd6e766.png" src="../../_images/4f60fd129a28fcc495f38559296296fa3dc0a6fd90c943f2d7f029c00bd6e766.png" />
+<img alt="../../_images/bae37dc332adcf9e0bcbd86c11c7601a1d220c356709b628db936a1bd442321c.png" src="../../_images/bae37dc332adcf9e0bcbd86c11c7601a1d220c356709b628db936a1bd442321c.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -12437,7 +12437,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f65eed2f060&gt;&gt;</td>
+            <td class="value">&lt;function exp...x7f90ed62f380&gt;</td>
         </tr>
     
 
@@ -12619,10 +12619,10 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f659e26d880&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f90c01f7c50&gt;
 </pre></div>
 </div>
-<img alt="../../_images/954b2b4fb2244546fc3637681af9bb2d6c32a2e7e112f95f406b3c04a7a7f5d9.png" src="../../_images/954b2b4fb2244546fc3637681af9bb2d6c32a2e7e112f95f406b3c04a7a7f5d9.png" />
+<img alt="../../_images/e0c25d4ef06097c98e0128c9ed629ef4564df970dcade86cf6a971bf3f87a3df.png" src="../../_images/e0c25d4ef06097c98e0128c9ed629ef4564df970dcade86cf6a971bf3f87a3df.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -12668,7 +12668,7 @@ For history-type inputs, we'll use again the raised cosine log-stretched basis,
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6afd843d86f59d34979aa4cdebdc148d6d5613b88465a5b4b9fdf982e847c317.png" src="../../_images/6afd843d86f59d34979aa4cdebdc148d6d5613b88465a5b4b9fdf982e847c317.png" />
+<img alt="../../_images/c9198aef107791f4b6866ecc9fa3f61f8894bca2c170afd647bd1617bef6344f.png" src="../../_images/c9198aef107791f4b6866ecc9fa3f61f8894bca2c170afd647bd1617bef6344f.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -12782,7 +12782,7 @@ Compressed count history as feature: (18000, 8)
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/b4d31bd55cbab756c02d1db20ad7c89dc7c23ab75371f57b68bc4ad5a6ca001d.png" src="../../_images/b4d31bd55cbab756c02d1db20ad7c89dc7c23ab75371f57b68bc4ad5a6ca001d.png" />
+<img alt="../../_images/0c2c92952ca2fb6289950cefc8fb34e3feb0a66541b09d2a801859b04ff36d44.png" src="../../_images/0c2c92952ca2fb6289950cefc8fb34e3feb0a66541b09d2a801859b04ff36d44.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13407,7 +13407,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;PjitFunction...7f65eed2f060&gt;&gt;</td>
+            <td class="value">&lt;function exp...x7f90ed62f380&gt;</td>
         </tr>
     
 
@@ -13582,8 +13582,8 @@ We have now 8 coefficients,</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.00699612  0.11532579  0.11950849  0.02769398  0.06939435  0.085118
- -0.00209196  0.05547414]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.02637562  0.1609016   0.07151075  0.07084915  0.03745095  0.10466594
+ -0.0109553   0.05782339]
 </pre></div>
 </div>
 </div>
@@ -13645,10 +13645,10 @@ by visual comparison, as we did previously. Let’s fit the second half of the d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f65a7795250&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f9098f9db50&gt;
 </pre></div>
 </div>
-<img alt="../../_images/c767dfe4e02a7930e9319dd3dd84f64abf38924fda3d6a40b895733fd149ee5b.png" src="../../_images/c767dfe4e02a7930e9319dd3dd84f64abf38924fda3d6a40b895733fd149ee5b.png" />
+<img alt="../../_images/1d2ebc4fefc792bc4218c719684b26ae1afb78d431e56d5072c1b735b48003e3.png" src="../../_images/1d2ebc4fefc792bc4218c719684b26ae1afb78d431e56d5072c1b735b48003e3.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13707,7 +13707,7 @@ rate_history = rate_history * conv_spk.rate
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/11158f5874c6a477d696901f3fe756364661a3213b194dc83aa7611dc7dd896f.png" src="../../_images/11158f5874c6a477d696901f3fe756364661a3213b194dc83aa7611dc7dd896f.png" />
+<img alt="../../_images/e6fda4d3ca3af174ff60bd92fb15f81d2076b6b53436682d2fe4954aea01caab.png" src="../../_images/e6fda4d3ca3af174ff60bd92fb15f81d2076b6b53436682d2fe4954aea01caab.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13873,7 +13873,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/48da1e39769e197fa44b800ff6672382eab4bc378d79297fb4da79dc843caeaf.png" src="../../_images/48da1e39769e197fa44b800ff6672382eab4bc378d79297fb4da79dc843caeaf.png" />
+<img alt="../../_images/1d0537c5531d2b6b24200e1950dd48f1613f32d25176bb7d03f52395c2fc1f32.png" src="../../_images/1d0537c5531d2b6b24200e1950dd48f1613f32d25176bb7d03f52395c2fc1f32.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -13909,7 +13909,7 @@ predicted_firing_rate = predicted_firing_rate * conv_spk.rate
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/082334acb568098b36267941a4dbebbefb81b917d9d54972472bab4eb3e8d89a.png" src="../../_images/082334acb568098b36267941a4dbebbefb81b917d9d54972472bab4eb3e8d89a.png" />
+<img alt="../../_images/87fe4a1d187637cc01eac0522913b57ffea8fc6d0945e3f193a8505b2b45dd53.png" src="../../_images/87fe4a1d187637cc01eac0522913b57ffea8fc6d0945e3f193a8505b2b45dd53.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">
@@ -14021,7 +14021,7 @@ all the coupling filters.</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/6474ef9d1ca6a5a27e55b34253caa01e810ce7cd1332baee57929612cfdf1369.png" src="../../_images/6474ef9d1ca6a5a27e55b34253caa01e810ce7cd1332baee57929612cfdf1369.png" />
+<img alt="../../_images/7360f08573d88c7fc6e445d868690741574febb0087f1a5083100c5e41b9b2a2.png" src="../../_images/7360f08573d88c7fc6e445d868690741574febb0087f1a5083100c5e41b9b2a2.png" />
 </div>
 </div>
 <div class="cell tag_hide-input docutils container">

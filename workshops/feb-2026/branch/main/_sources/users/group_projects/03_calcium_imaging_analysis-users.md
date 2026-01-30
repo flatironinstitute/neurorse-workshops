@@ -55,6 +55,10 @@ import pynapple as nap
 import matplotlib.pyplot as plt
 import numpy as np
 import nemos as nmo
+import jax
+
+# LBFGS works better with float64 precision
+jax.config.update("jax_enable_x64", True)
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
@@ -272,7 +276,7 @@ Here we can use the same `RaisedCosineLogConv` basis, but with a larger window s
 
 ```{code-cell} ipython3
 # define the basis for calcium data
-calcium_window_size_sec = 2 # Window size in seconds
+calcium_window_size_sec = 0.5 # Window size in seconds
 calcium_window_size = int(calcium_window_size_sec * transients.rate) # Convert window size to number of bins
 calcium_basis = nmo.basis.RaisedCosineLogConv(
     n_basis_funcs=..., # Number of basis functions 

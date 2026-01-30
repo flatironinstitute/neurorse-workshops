@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.18.1
+    jupytext_version: 1.19.1
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -648,7 +648,6 @@ print(tc.fs)
 # tc[1].plot()
 # plt.plot(tc[1].feat1, tc[1].values)
 plt.plot(tc.feat1, tc.values.T)
-
 ```
 
 ## Important

@@ -57,7 +57,7 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="03_phase_precession-users.html" />
+    <link rel="next" title="Analyzing hippocampal place cells with Pynapple and NeMoS" href="04_place_cells-users.html" />
     <link rel="prev" title="Fitting a population GLM model with Nemos" href="02_population_analysis_with_nemos-users.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -230,8 +230,8 @@
 <li class="toctree-l1"><a class="reference internal" href="01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Calcium imaging analysis of head-direction cells</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -484,6 +484,10 @@ working through the questions with your small group.</p>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+
+<span class="c1"># LBFGS works better with float64 precision</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
@@ -696,7 +700,7 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the basis for calcium data</span>
-<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mi">2</span> <span class="c1"># Window size in seconds</span>
+<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="c1"># Window size in seconds</span>
 <span class="n">calcium_window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">calcium_window_size_sec</span> <span class="o">*</span> <span class="n">transients</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span> <span class="c1"># Convert window size to number of bins</span>
 <span class="n">calcium_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
     <span class="n">n_basis_funcs</span><span class="o">=...</span><span class="p">,</span> <span class="c1"># Number of basis functions </span>
@@ -837,7 +841,7 @@ You can try to downsample the data to see how it affects the model fitting and p
       </div>
     </a>
     <a class="right-next"
-       href="03_phase_precession-users.html"
+       href="04_place_cells-users.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

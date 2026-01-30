@@ -230,8 +230,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_calcium_imaging_analysis-users.html">Calcium imaging analysis of head-direction cells</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_phase_precession-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
 <ul class="nav bd-sidenav">
@@ -485,6 +485,10 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+
+<span class="c1"># LBFGS works better with float64 precision</span>
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
 
 <span class="c1"># some helper plotting functions</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
@@ -717,7 +721,7 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># define the basis for calcium data</span>
-<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mf">2.0</span>  <span class="c1"># 2 seconds window</span>
+<span class="n">calcium_window_size_sec</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># .5 seconds window</span>
 <span class="n">calcium_window_size</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">calcium_window_size_sec</span> <span class="o">*</span> <span class="n">transients</span><span class="o">.</span><span class="n">rate</span><span class="p">)</span>
 <span class="n">calcium_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">RaisedCosineLogConv</span><span class="p">(</span>
     <span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">window_size</span><span class="o">=</span><span class="n">calcium_window_size</span>
@@ -759,12 +763,20 @@ Possible metrics are “euclidean”, “manhattan”, “correlation”, “jen
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transients</span><span class="o">.</span><span class="n">shape</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">transients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">transients</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">calcium_basis</span><span class="o">.</span><span class="n">n_basis_funcs</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">calcium_model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
     <span class="n">observation_model</span><span class="o">=</span><span class="s2">&quot;Gamma&quot;</span><span class="p">,</span>
     <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
     <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span><span class="p">,</span>
-    <span class="n">regularizer_strength</span><span class="o">=</span><span class="mf">0.1</span>
+    <span class="n">regularizer_strength</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span>
+    <span class="n">inverse_link_function</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">softplus</span><span class="p">,</span>  <span class="c1"># key:  default was 1/x. 1/x is large if x-&gt;0+ </span>
+    <span class="n">feature_mask</span><span class="o">=</span><span class="n">mask</span><span class="p">,</span>
+    <span class="n">solver_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;maxiter&quot;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">}</span>
     <span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">calcium_convolved</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">training_ep</span><span class="p">),</span> <span class="n">transients</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">training_ep</span><span class="p">))</span>
+
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Calcium model coefficients shape: </span><span class="si">{</span><span class="n">calcium_model</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

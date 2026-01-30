@@ -70,6 +70,10 @@ import pynapple as nap
 import matplotlib.pyplot as plt
 import numpy as np
 import nemos as nmo
+import jax
+
+# LBFGS works better with float64 precision
+jax.config.update("jax_enable_x64", True)
 
 # some helper plotting functions
 from nemos import _documentation_utils as doc_plots
@@ -370,7 +374,7 @@ Here we can use the same `RaisedCosineLogConv` basis, but with a larger window s
 <div class="render-user">
 ```{code-cell} ipython3
 # define the basis for calcium data
-calcium_window_size_sec = 2 # Window size in seconds
+calcium_window_size_sec = 0.5 # Window size in seconds
 calcium_window_size = int(calcium_window_size_sec * transients.rate) # Convert window size to number of bins
 calcium_basis = nmo.basis.RaisedCosineLogConv(
     n_basis_funcs=..., # Number of basis functions 
@@ -384,7 +388,7 @@ calcium_basis
 
 ```{code-cell} ipython3
 # define the basis for calcium data
-calcium_window_size_sec = 2.0  # 2 seconds window
+calcium_window_size_sec = 0.5  # .5 seconds window
 calcium_window_size = int(calcium_window_size_sec * transients.rate)
 calcium_basis = nmo.basis.RaisedCosineLogConv(
     n_basis_funcs=4, window_size=calcium_window_size
@@ -445,12 +449,20 @@ print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
 </div>
 
 ```{code-cell} ipython3
+transients.shape
+mask = np.ones((transients.shape[1], )*2) - np.eye(transients.shape[1])
+mask = np.repeat(mask, calcium_basis.n_basis_funcs, axis=0)
+
 calcium_model = nmo.glm.PopulationGLM(
     observation_model="Gamma",
     regularizer="Ridge",
     solver_name="LBFGS",
-    regularizer_strength=0.1
+    regularizer_strength=0.0001,
+    inverse_link_function=jax.nn.softplus,  # key:  default was 1/x. 1/x is large if x->0+ 
+    feature_mask=mask,
+    solver_kwargs={"maxiter": 5000}
     ).fit(calcium_convolved.restrict(training_ep), transients.restrict(training_ep))
+
 print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
 ```
 
