@@ -46,6 +46,16 @@ warnings.filterwarnings(
 This notebook can be downloaded as **{nb-download}`02_current_injection-presenters.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
 
+:::{admonition} Jupyter Lab tip
+:class: important render-all
+
+Newer versions of Jupyter Lab have addressed an issue with skipping around the notebook while scrolling. To make sure this fix is enabled, in the Jupyter Lab GUI, navigate to `Settings > Settings Editor > Notebook` and scroll down to the `Windowing mode` setting and make sure it is set to `contentVisibility`. 
+
+Also reminder to presenter: Go to `View > Appearance`, select `Simple Interface` and turn off everything else to hide as many bars as possible. And maybe activate `Presentation Mode`.
+
+And turn on `View > Render side-by-side` (shortcut `Shift+R`).
+:::
+
 # Introduction to GLM and NeMoS
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
