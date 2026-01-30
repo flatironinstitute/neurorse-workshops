@@ -3,7 +3,6 @@
 
 We will attempt to explain everything as we do it, but here's a quick cheat sheet to familiarize you with the most commonly-used shortcuts:
 
-Together we will open up a new jupyter notebook and practice:
 - Toggling between jupyter's command and edit mode (`Escape`, `Enter`).
 - Navigating up and down the notebook (arrow keys).
 - Creating a new cell above (`a`) and below (`b`) the current one.
