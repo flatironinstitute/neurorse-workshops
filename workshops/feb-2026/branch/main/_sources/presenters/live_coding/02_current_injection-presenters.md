@@ -495,7 +495,8 @@ workshop_utils.plot_current_history_features(binned_current, current_history, ba
 
 
 ```{code-cell} ipython3
-history_model = nmo.glm.GLM(solver_name="LBFGS")
+history_model = nmo.glm.GLM(solver_name="LBFGS",
+                            solver_kwargs={"tol": 1e-12, "maxiter": 1000})
 history_model.fit(current_history, count)
 ```
 
