@@ -321,6 +321,8 @@ During the first day, we will demonstrate [pynaviz](https://pynapple-org.github.
 - If you run an import cell in our notebooks and it hangs for a long time, and then you hit "Stop" and the error says something about permission denied, you have a permission issue with your virtual environment. You should either modify the permissions of the folder containing your environment variable (where this folder is and how this should be done depends on which tool you used and your Operating System), or run `jupyter lab` with elevated permissions:
     - On Windows: Open the start menu and right click on "Anaconda Prompt" or "Powershell" (whichever you use) and click "Run as Administrator". You may also need to open the browser as administrator.
     - On Mac/Linux: run `sudo jupyter lab` instead of `jupyter lab`.
+- If you cannot see the images in the notebooks (e.g., at the top of `02_current_injections-users`), run `jupyter lab` or `uv run jupyter lab` with no arguments from the root directory of the project (i.e., in the `ccn-software-feb-2026` directory, not `notebooks`).
+- If you get import errors in the jupyter notebook, you are likely using a different `jupyter` than the one installed in this directory. If you used `uv` to install the environment, you need to run `uv run jupyter lab` from the root directory of the project (i.e., in the `ccn-software-feb-2026` directory). If you used `conda`, make sure the environment is activated, and then run `jupyter lab`.
 
 ## Binder
 
