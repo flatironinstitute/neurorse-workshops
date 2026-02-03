@@ -190,7 +190,7 @@ decoded_angle, dist = nap.decode_template(
     data= , # The neural activity as a TsdFrame in this case
     bin_size= , # The bin size for decoding. Here I suggest 0.1 second
     metric= , # The metric to use to compare the neural activity to the tuning curves. Here I suggest "correlation"
-    epochs=transients.time_support # The epochs should correspond to when the neural activity is defined. Here we use the time support directly
+    epochs=epochs # The epochs should correspond to when the neural activity is defined.
     )
 ```
 

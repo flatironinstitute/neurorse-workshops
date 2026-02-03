@@ -616,7 +616,7 @@ Since the data are calcium transients and not spike counts, we will use the temp
     <span class="n">data</span><span class="o">=</span> <span class="p">,</span> <span class="c1"># The neural activity as a TsdFrame in this case</span>
     <span class="n">bin_size</span><span class="o">=</span> <span class="p">,</span> <span class="c1"># The bin size for decoding. Here I suggest 0.1 second</span>
     <span class="n">metric</span><span class="o">=</span> <span class="p">,</span> <span class="c1"># The metric to use to compare the neural activity to the tuning curves. Here I suggest &quot;correlation&quot;</span>
-    <span class="n">epochs</span><span class="o">=</span><span class="n">transients</span><span class="o">.</span><span class="n">time_support</span> <span class="c1"># The epochs should correspond to when the neural activity is defined. Here we use the time support directly</span>
+    <span class="n">epochs</span><span class="o">=</span><span class="n">epochs</span> <span class="c1"># The epochs should correspond to when the neural activity is defined.</span>
     <span class="p">)</span>
 </pre></div>
 </div>
