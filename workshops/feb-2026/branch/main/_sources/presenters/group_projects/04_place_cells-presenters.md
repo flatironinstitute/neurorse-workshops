@@ -593,7 +593,7 @@ X
 
 
 
-Notice that, since we passed pynapple objects to the basis object, we got a pynapple object back, preserving the time stamps. Additionally, `X` has the same number of time points as our input position and speed, but 20 columns. The columns come from  `n_basis_funcs` from each basis (10 for position, 10 for speed).
+Notice that, since we passed pynapple objects to the basis object, we got a pynapple object back, preserving the time stamps. Additionally, `X` has the same number of time points as our input position and speed, but 18 columns. The columns come from  `n_basis_funcs` from each basis (12 for position, 6 for speed).
 
 As we've done before, we can now use the Poisson GLM from NeMoS to learn the combined model.
 
