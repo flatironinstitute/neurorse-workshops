@@ -410,7 +410,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>
@@ -450,6 +450,10 @@
 </div>
 </details>
 </div>
+<div class="note render-all admonition">
+<p class="admonition-title">Working without pynapple</p>
+<p>Unlike the other notebooks in this workshop, here we work directly with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays rather than pynapple objects. The IBL trial data is naturally tabular (one row per trial, with no continuous time axis), so we keep it as a DataFrame and show how NeMoS interfaces with plain NumPy. NeMoS also accepts pynapple <code class="docutils literal notranslate"><span class="pre">Tsd</span></code>/<code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> objects directly, and we point out as we go where that would change the workflow (for example, how session boundaries are handled).</p>
+</div>
 <div class="important render-all admonition">
 <p class="admonition-title">Download</p>
 <p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/6ab85d3fa001b0b40f5405c235fcf102/04_glm_hmm-users.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">04_glm_hmm-users.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
@@ -466,6 +470,9 @@
 It is intended to be downloaded and run locally (or on the provided binder)
 while listening to the presenter’s explanation. In order to see the fully
 rendered of this notebook, go <a class="reference internal" href="../../full/live_coding/04_glm_hmm.html"><span class="std std-doc">here</span></a></p>
+<p>In this notebook, we will learn how to model behavioral choices by fitting a GLM-HMM, replicating the main findings of Ashwood et al. (2022) <span id="cite1a"></span><a href="#ref1a">[1a]</a>.</p>
+<p>In particular, we will analyze the IBL decision-making task (IBL et al., 2021) <span id="cite2a"></span><a href="#ref2a">[2a]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3a"></span><a href="#ref3a">[3a]</a>).</p>
+<p>During this task, a sinusoidal grating with varying contrast [0%-100%] appeared either at the right or left side of the screen. The mice indicated this side by turning a small wheel, which moved the stimulus toward the center of the screen (Burgess et al., 2021 <span id="cite3b"></span><a href="#ref3b">[3b]</a>). If the mice chose the side correctly, they would receive a water reward; if not, they would get a noise burst and a 1-second timeout. For the first 90 trials of each session, the stimulus appeared randomly on either side of the screen; after that, it appeared on one side with fixed probability 0.8, alternating randomly every 20–100 trials.</p>
 <section id="dataset">
 <h2>Dataset<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h2>
 <p>Data for this notebook comes from the IBL decision-making task (IBL et al., 2021) <span id="cite2c"></span><a href="#ref2c">[2c]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3c"></span><a href="#ref3c">[3c]</a>).</p>
@@ -559,14 +566,14 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <p>and inspect its contents.</p>
 <div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;choice </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, shape:  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;choice </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, shape:  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast right </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast right </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reward </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reward </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;probability of stimulus on left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;probability of stimulus on left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;session </span><span class="se">\n</span><span class="s2">(some) values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">unique</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -596,13 +603,16 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;P(stimulus on the left)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Trial number&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#TODO: add dropdown with original figures.</span>
 </pre></div>
 </div>
 </div>
 </div>
 <p>Let’s do some pandas wrangling to keep only the sessions that have:</p>
 <ul class="simple">
-<li><p>The initial 50-50 trial block.</p></li>
+<li><p>Filter to sessions that went through all testing blocks (in particular all 50-50, 20-80 and 80-20 blocks).</p></li>
+<li><p>Get the initial 50-50 trial block.</p></li>
 <li><p>Fewer than 10 invalid trials in that block.</p></li>
 </ul>
 <div class="cell tag_render-all docutils container">
@@ -610,6 +620,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Invalid choice marker</span>
 <span class="n">viol_val</span> <span class="o">=</span> <span class="mi">0</span>
 
+<span class="c1"># Selecting the sessions as in the Ashwood at al. paper</span>
 <span class="c1"># Boolean mask selecting sessions with 50-50, 20-80 and 80-20 blocks</span>
 <span class="n">has_three_blocks</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">trials</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;session&quot;</span><span class="p">)[</span><span class="s2">&quot;probabilityLeft&quot;</span><span class="p">]</span>
@@ -791,8 +802,14 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </div>
+<div class="note dropdown render-all admonition">
+<p class="admonition-title">How does this one-liner find the session starts?</p>
+<p><code class="docutils literal notranslate"><span class="pre">session</span></code> holds one session id per trial. Comparing <code class="docutils literal notranslate"><span class="pre">session[1:]</span></code> (every trial but the first) with <code class="docutils literal notranslate"><span class="pre">session[:-1]</span></code> (every trial but the last) yields a boolean array that is <code class="docutils literal notranslate"><span class="pre">True</span></code> wherever a trial’s session id differs from the previous trial’s — that is, exactly at the session boundaries. <code class="docutils literal notranslate"><span class="pre">np.flatnonzero</span></code> returns the indices where this is <code class="docutils literal notranslate"><span class="pre">True</span></code>, and we add <code class="docutils literal notranslate"><span class="pre">1</span></code> because the comparison is shifted by one (position <code class="docutils literal notranslate"><span class="pre">i</span></code> in the comparison corresponds to trial <code class="docutils literal notranslate"><span class="pre">i+1</span></code>). The result is the array of indices at which a new session begins.</p>
+</div>
 <ul class="simple">
 <li><p>Initialize the <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object with 3 states and <code class="docutils literal notranslate"><span class="pre">regularizer=&quot;Ridge&quot;</span></code>.</p></li>
+<li><p>Set seed for trying different initial parameters (<code class="docutils literal notranslate"><span class="pre">jax.random.PRNGKey(number)</span></code>).</p></li>
+<li><p>By default, the intercept is set to match the empirical choice probability, and the coefficients are set as random gaussian centered at zero with small standard deviation.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -802,10 +819,6 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </pre></div>
 </div>
 </div>
-</div>
-<div class="dropdown admonition">
-<p class="admonition-title">Importance of initial parameters in GLM-HMMs</p>
-<p>When fitting a GLM-HMMs, the likelihood surface is non-convex, and EM-based fitting can converge to different local optima depending on starting values. As a result, different initializations can lead to qualitatively different parameters. In practice, this makes it necessary to either run multiple random restarts or use informed initializations derived from simpler models (e.g. logistic regression or clustering of behavior).</p>
 </div>
 <ul class="simple">
 <li><p>Fit the model providing the <code class="docutils literal notranslate"><span class="pre">new_sess_mouse</span></code> markers as the <code class="docutils literal notranslate"><span class="pre">session_starts</span></code> argument of <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>.</p></li>
@@ -901,7 +914,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute smooth_proba</span>
 <span class="n">posteriors</span> <span class="o">=</span> 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First five osteriors </span><span class="se">\n</span><span class="si">{</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First five posteriors </span><span class="se">\n</span><span class="si">{</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="c1"># Each (valid) posterior row sums to 1</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">posteriors</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span>
@@ -932,8 +945,8 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 </div>
 </div>
 </section>
-<section id="computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">
-<h3>Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code><a class="headerlink" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state" title="Link to this heading">#</a></h3>
+<section id="understanding-mouse-behavior-in-different-states">
+<h3>Understanding mouse behavior in different states<a class="headerlink" href="#understanding-mouse-behavior-in-different-states" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Get the most likely sequence of states given the observation by calling <code class="docutils literal notranslate"><span class="pre">decode_state</span></code>, which runs the Viterbi (also known as max-sum) algorithm.</p></li>
 <li><p>Remember to provide the <code class="docutils literal notranslate"><span class="pre">session_starts=new_sess_mouse</span></code></p></li>
@@ -961,7 +974,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <ul class="simple">
 <li><p>Compute the accuracy:</p>
 <ul>
-<li><p>Mask out the 0 contrast stimuli</p></li>
+<li><p>Mask out the 0 contrast stimuli (because there is no correct answer in that case)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">choice==0</span></code>: right choice, <code class="docutils literal notranslate"><span class="pre">choice==1</span></code>: left choice.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>: left stimulus presented, <code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>: right stimulus presented.</p></li>
 <li><p>Use convention above to get the accuracy.</p></li>
@@ -1093,7 +1106,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/liv
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>

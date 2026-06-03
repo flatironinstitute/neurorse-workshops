@@ -410,7 +410,7 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>
@@ -456,6 +456,10 @@
 </div>
 </div>
 </div>
+<div class="note render-all admonition">
+<p class="admonition-title">Working without pynapple</p>
+<p>Unlike the other notebooks in this workshop, here we work directly with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays rather than pynapple objects. The IBL trial data is naturally tabular (one row per trial, with no continuous time axis), so we keep it as a DataFrame and show how NeMoS interfaces with plain NumPy. NeMoS also accepts pynapple <code class="docutils literal notranslate"><span class="pre">Tsd</span></code>/<code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> objects directly, and we point out as we go where that would change the workflow (for example, how session boundaries are handled).</p>
+</div>
 <div class="important render-all admonition">
 <p class="admonition-title">Download</p>
 <p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/6dc37d01917fd8de3ecc5b013943d19b/04_glm_hmm.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">04_glm_hmm.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
@@ -468,9 +472,11 @@
 </div>
 <section class="tex2jax_ignore mathjax_ignore" id="infer-behavioral-strategies-during-decision-making-with-glm-hmms">
 <h1>Infer behavioral strategies during decision making with GLM-HMMs<a class="headerlink" href="#infer-behavioral-strategies-during-decision-making-with-glm-hmms" title="Link to this heading">#</a></h1>
+<div class="render-all">
 <p>In this notebook, we will learn how to model behavioral choices by fitting a GLM-HMM, replicating the main findings of Ashwood et al. (2022) <span id="cite1a"></span><a href="#ref1a">[1a]</a>.</p>
 <p>In particular, we will analyze the IBL decision-making task (IBL et al., 2021) <span id="cite2a"></span><a href="#ref2a">[2a]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3a"></span><a href="#ref3a">[3a]</a>).</p>
 <p>During this task, a sinusoidal grating with varying contrast [0%-100%] appeared either at the right or left side of the screen. The mice indicated this side by turning a small wheel, which moved the stimulus toward the center of the screen (Burgess et al., 2021 <span id="cite3b"></span><a href="#ref3b">[3b]</a>). If the mice chose the side correctly, they would receive a water reward; if not, they would get a noise burst and a 1-second timeout. For the first 90 trials of each session, the stimulus appeared randomly on either side of the screen; after that, it appeared on one side with fixed probability 0.8, alternating randomly every 20–100 trials.</p>
+</div>
 <section id="dataset">
 <h2>Dataset<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h2>
 <div class="render-all">
@@ -535,10 +541,10 @@ First, let's download the data using  <a href="https://docs.internationalbrainla
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-2/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   0%|          | 0.00/4.96M [00:00&lt;?, ?B/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-2/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:03, 1.27MB/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-2/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:03, 1.44MB/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-2/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 20.4MB/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-2/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 22.0MB/s]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;intervals_0&#39;, &#39;intervals_1&#39;, &#39;goCue_times&#39;, &#39;response_times&#39;, &#39;choice&#39;,
@@ -556,11 +562,7 @@ First, let's download the data using  <a href="https://docs.internationalbrainla
 </div>
 </div>
 </div>
-<div class="tip dropdown admonition">
-<p class="admonition-title">Should I use one.search() or load_aggregate to download all the data from an animal?</p>
-<p><code class="docutils literal notranslate"><span class="pre">one.search()</span></code> returns session IDs (eids) that exist as session records in Alyx, while <code class="docutils literal notranslate"><span class="pre">load_aggregate()</span></code> downloads a pre-computed file with trial data pooled across multiple sessions. If you want to get all sessions from a single animal, it is recommended to use <code class="docutils literal notranslate"><span class="pre">load_aggregate</span></code>, because some sessions may be located in a dataframe without a session identifier in itself (but containing multiple sessions with their own session identifiers).</p>
-</div>
-<p>We can take a subset of those columns to keep only the relevant sources of information. We are modeling choice as result of observables and behavioral state, so we need choice, stimuli presented and reward obtained. Additionally, we want to keep the information of the probability of the stimulus appearing in a given position since this changes within a session, and the session id to know when sessions start and end.</p>
+<p><code class="docutils literal notranslate"><span class="pre">trials</span></code> is a pandas DataFrame, with one row per trial and one column per measured variable. We can take a subset of those columns to keep only the relevant sources of information. We are modeling choice as result of observables and behavioral state, so we need choice, stimuli presented and reward obtained. Additionally, we want to keep the information of the probability of the stimulus appearing in a given position since this changes within a session, and the session id to know when sessions start and end.</p>
 <div class="render-users, render-presenter">
 We only need a subset of those columns, in particular we will work with:
 </div>
@@ -616,14 +618,14 @@ We only need a subset of those columns, in particular we will work with:
 and inspect its contents.
 </div><div class="cell tag_render-all docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;choice </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, shape:  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;choice </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, shape:  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast right </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast right </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reward </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reward </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;probability of stimulus on left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;probability of stimulus on left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;session </span><span class="se">\n</span><span class="s2">(some) values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">unique</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
@@ -631,19 +633,19 @@ and inspect its contents.
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>choice 
-values: [ 1 -1  0], data type: int64, shape:  
+values: [-1  0  1], data type: int64, shape:  
 
 contrast left 
-values: [0.5       nan 1.     0.25   0.125  0.0625 0.    ], data type: float64 
+values: [0.     0.0625 0.125  0.25   0.5    1.        nan], data type: float64 
 
 contrast right 
-values: [   nan 0.5    1.     0.25   0.125  0.0625 0.    ], data type: float64 
+values: [0.     0.0625 0.125  0.25   0.5    1.        nan], data type: float64 
 
 reward 
-values: [ 1 -1], data type: int64 
+values: [-1  1], data type: int64 
 
 probability of stimulus on left 
-values: [0.5 0.8 0.4 0.2 0.1 0.3 0.6 0.7 0.  0.9 1.  0.2], data type: float64 
+values: [0.  0.1 0.2 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1. ], data type: float64 
 
 session 
 (some) values: [&#39;e572b45a-34de-453a-b13e-4d90f0374f1e&#39;
@@ -680,6 +682,8 @@ Finally, let's focus our analysis on one example session.
 <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;P(stimulus on the left)&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Trial number&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#TODO: add dropdown with original figures.</span>
 </pre></div>
 </div>
 </div>
@@ -695,7 +699,8 @@ Finally, let's focus our analysis on one example session.
 <div class="render-user, render-presenter">
 Let's do some pandas wrangling to keep only the sessions that have:
 <ul class="simple">
-<li><p>The initial 50-50 trial block.</p></li>
+<li><p>Filter to sessions that went through all testing blocks (in particular all 50-50, 20-80 and 80-20 blocks).</p></li>
+<li><p>Get the initial 50-50 trial block.</p></li>
 <li><p>Fewer than 10 invalid trials in that block.</p></li>
 </ul>
 </div><div class="cell tag_render-all docutils container">
@@ -703,6 +708,7 @@ Let's do some pandas wrangling to keep only the sessions that have:
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Invalid choice marker</span>
 <span class="n">viol_val</span> <span class="o">=</span> <span class="mi">0</span>
 
+<span class="c1"># Selecting the sessions as in the Ashwood at al. paper</span>
 <span class="c1"># Boolean mask selecting sessions with 50-50, 20-80 and 80-20 blocks</span>
 <span class="n">has_three_blocks</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">trials</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;session&quot;</span><span class="p">)[</span><span class="s2">&quot;probabilityLeft&quot;</span><span class="p">]</span>
@@ -729,7 +735,9 @@ Let's do some pandas wrangling to keep only the sessions that have:
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># of sessions before restrictions 73
-# of sessions after restrictions 56
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># of sessions after restrictions 56
 </pre></div>
 </div>
 </div>
@@ -763,11 +771,11 @@ rewarded =
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can select all the necessary values for the design matrix: </span>
 <span class="c1"># choice, contrast of stimuli and reward</span>
-<span class="n">choices</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;choice&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">stim_left</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastLeft&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">stim_right</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastRight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">rewarded</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;feedbackType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">session</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="n">choices</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;choice&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">stim_left</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastLeft&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">stim_right</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastRight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">rewarded</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;feedbackType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
 </pre></div>
 </div>
 </div>
@@ -837,8 +845,7 @@ valid_choices_idx =
 </div>
 </div>
 </div>
-<p>With those two elements we can compute our design matrix for this session. We will do this using the NeMoS basis class <code class="docutils literal notranslate"><span class="pre">nmo.basis</span></code>, which will make the process a lot easier.</p>
-<p>A basis is a collection of functions that, when combined, can represent more complex relationships. NeMoS has a lot of different basis functions, but here we are interested in using two: <code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> and <code class="docutils literal notranslate"><span class="pre">IdentityEval</span></code>.</p>
+<p>With those two elements we can compute our design matrix for this session, we can do this using nemos basis objects:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> includes the past values of a sample as predictors (raw history). You choose how far back to go; here we only need one trial in the past. We use this to create the previous-choice predictor.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">IdentityEval</span></code> uses the samples themselves as predictors; its purpose is simply to wrap them as a NeMoS object. We use this for the stimuli predictor.</p></li>
@@ -932,18 +939,22 @@ X_unnormalized[:5,:]
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an additive basis using our three components</span>
 <span class="n">basis_object</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="n">stimuli_basis</span> <span class="o">+</span>                         <span class="c1"># will process one input</span>
-    <span class="n">wsls_basis</span> <span class="o">+</span>                            <span class="c1"># will process two inputs (choice &amp; reward)</span>
-    <span class="n">prev_choice_basis</span>                       <span class="c1"># will process one input</span>
+    <span class="n">stimuli_basis</span> <span class="o">+</span>      <span class="c1"># will process one input</span>
+    <span class="n">wsls_basis</span> <span class="o">+</span>         <span class="c1"># will process two inputs (choice &amp; reward)</span>
+    <span class="n">prev_choice_basis</span>    <span class="c1"># will process one input</span>
 <span class="p">)</span>
 
 <span class="c1"># Compute features</span>
 <span class="n">X_unnormalized</span> <span class="o">=</span> <span class="n">basis_object</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span>
-    <span class="n">signed_contrast</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>     <span class="c1"># input 1 : processed with stimuli_basis</span>
-    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>             <span class="c1"># input 2 : wsls input 1: choice</span>
-    <span class="n">rewarded</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>            <span class="c1"># input 3 : wsls input 2: reward</span>
-    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">]</span>              <span class="c1"># input 4 : processed with prev_choice</span>
-<span class="p">)</span>        
+    <span class="c1"># input 1 : processed with stimuli_basis</span>
+    <span class="n">signed_contrast</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 2 : wsls input 1: choice</span>
+    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 3 : wsls input 2: reward</span>
+    <span class="n">rewarded</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 4 : processed with prev_choice</span>
+    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+<span class="p">)</span>
 
 <span class="n">X_unnormalized</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:]</span>
 </pre></div>
@@ -977,11 +988,16 @@ X[:, 0] =
 ```
 </div><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">zscore</span>
-
-<span class="c1"># Copy the array (we&#39;ll need the un-normalized later)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy the array (we&#39;ll need the un-normalized later)</span>
 <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X_unnormalized</span><span class="p">)</span>
-
+</pre></div>
+</div>
+</div>
+</div>
+<p>We z-score only the signed-contrast predictor (column 0), leaving the previous-choice and WSLS columns untouched since they are already on a unit scale. See the dropdown below for why this matters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">zscore</span>
 <span class="c1"># Apply z-scoring</span>
 <span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -1007,7 +1023,7 @@ X[:, 0] =
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/ef1f12b03eca2f9a16fa0e8cac3ccedfe63b666f2c4ed69e1c6f52c3fd471ac9.png" src="../../_images/ef1f12b03eca2f9a16fa0e8cac3ccedfe63b666f2c4ed69e1c6f52c3fd471ac9.png" />
+<img alt="../../_images/45a251463a1744af1f353de3b8054ee76508ca8fddfb6448e4f19babc6ccad48.png" src="../../_images/45a251463a1744af1f353de3b8054ee76508ca8fddfb6448e4f19babc6ccad48.png" />
 </div>
 </div>
 </section>
@@ -1052,13 +1068,16 @@ new_sess_mouse =
 </div>
 </div>
 </div>
-<p>Let’s initialize the <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object. The only required parameter is the number of states. Ashwood et al. (2022) <span id="cite1d"></span><a href="#ref1d">[1d]</a> found that most mice used 3 decision-making states when performing this task. Following that work, we will initialize our <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object with 3 states.</p>
-<div class="note admonition">
-<p class="admonition-title">GLM-HMM observation models</p>
-<p>The default observation model for the GLM-HMM is Bernoulli, but Categorical (Multinomial), Poisson, Gamma, Negative Binomial and Gaussian observation models are also available. If you want, you can also set a different observation model of your choice and personalize the inverse link function. However, bear in mind that convexity is not guaranteed for all likelihood functions.</p>
+<div class="note dropdown render-all admonition">
+<p class="admonition-title">How does this one-liner find the session starts?</p>
+<p><code class="docutils literal notranslate"><span class="pre">session</span></code> holds one session id per trial. Comparing <code class="docutils literal notranslate"><span class="pre">session[1:]</span></code> (every trial but the first) with <code class="docutils literal notranslate"><span class="pre">session[:-1]</span></code> (every trial but the last) yields a boolean array that is <code class="docutils literal notranslate"><span class="pre">True</span></code> wherever a trial’s session id differs from the previous trial’s — that is, exactly at the session boundaries. <code class="docutils literal notranslate"><span class="pre">np.flatnonzero</span></code> returns the indices where this is <code class="docutils literal notranslate"><span class="pre">True</span></code>, and we add <code class="docutils literal notranslate"><span class="pre">1</span></code> because the comparison is shifted by one (position <code class="docutils literal notranslate"><span class="pre">i</span></code> in the comparison corresponds to trial <code class="docutils literal notranslate"><span class="pre">i+1</span></code>). The result is the array of indices at which a new session begins.</p>
 </div>
+<p>Let’s initialize the <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object. The only required parameter is the number of states. Ashwood et al. (2022) <span id="cite1d"></span><a href="#ref1d">[1d]</a> found that most mice used 3 decision-making states when performing this task. Following that work, we will initialize our <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object with 3 states.</p>
+<p>The likelihood of a GLM-HMM is non-convex, so the EM algorithm used to fit it can converge to different local optima depending on the starting parameters. NeMoS initializes the model for you: by default, the per-state intercepts are set to match the empirical choice probability, and the GLM coefficients are drawn from a Gaussian centered at zero with a small standard deviation. The <code class="docutils literal notranslate"><span class="pre">seed</span></code> argument controls this random draw, so in practice you should refit the model with several seeds and keep the solution with the highest log-likelihood.</p>
 <div class="render-presenter, render-user">
 - Initialize the `GLMHMM` object with 3 states and `regularizer="Ridge"`.
+- Set seed for trying different initial parameters (`jax.random.PRNGKey(number)`).
+- By default, the intercept is set to match the empirical choice probability, and the coefficients are set as random gaussian centered at zero with small standard deviation.
 </div>
 <div class="render-presenter, render-user">
 ```{code-cell} ipython3
@@ -1073,6 +1092,8 @@ model
 <span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm_hmm</span><span class="o">.</span><span class="n">GLMHMM</span><span class="p">(</span>
     <span class="n">n_states</span><span class="p">,</span>
     <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="c1"># change this to try multiple init</span>
+    <span class="n">seed</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> 
 <span class="p">)</span>
 
 <span class="n">model</span>
@@ -1080,7 +1101,7 @@ model
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-1 {
+<div class="output text_html"><style>.sk-global {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -1097,7 +1118,7 @@ model
   --sklearn-color-fitted-level-3: cornflowerblue;
 }
 
-#sk-container-id-1.light {
+.sk-global.light {
   /* Specific color for light theme */
   --sklearn-color-text-on-default-background: black;
   --sklearn-color-background: white;
@@ -1105,25 +1126,24 @@ model
   --sklearn-color-icon: #696969;
 }
 
-#sk-container-id-1.dark {
+.sk-global.dark {
   --sklearn-color-text-on-default-background: white;
   --sklearn-color-background: #111;
   --sklearn-color-border-box: white;
   --sklearn-color-icon: #878787;
 }
 
-#sk-container-id-1 {
+.sk-global {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-1 pre {
+.sk-global pre {
   padding: 0;
 }
 
-#sk-container-id-1 input.sk-hidden--visually {
+.sk-global input.sk-hidden--visually {
   border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -1132,7 +1152,7 @@ model
   width: 1px;
 }
 
-#sk-container-id-1 div.sk-dashed-wrapped {
+.sk-global div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1140,7 +1160,7 @@ model
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-1 div.sk-container {
+.sk-global div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1150,7 +1170,7 @@ model
   position: relative;
 }
 
-#sk-container-id-1 div.sk-text-repr-fallback {
+.sk-global div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -1166,14 +1186,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-1 div.sk-parallel-item::after {
+.sk-global div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-1 div.sk-parallel {
+.sk-global div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -1181,28 +1201,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-1 div.sk-parallel-item {
+.sk-global div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-1 div.sk-parallel-item:first-child::after {
+.sk-global div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:last-child::after {
+.sk-global div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-1 div.sk-parallel-item:only-child::after {
+.sk-global div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-1 div.sk-serial {
+.sk-global div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1220,14 +1240,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-1 div.sk-toggleable {
+.sk-global div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-1 label.sk-toggleable__label {
+.sk-global label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -1240,13 +1260,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-1 label.sk-toggleable__label .caption {
+.sk-global label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+.sk-global label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -1254,25 +1274,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+.sk-global label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-1 div.sk-toggleable__content {
+.sk-global div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted {
+.sk-global div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content pre {
+.sk-global div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -1280,78 +1300,78 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+.sk-global div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-1 div.sk-label label.sk-toggleable__label,
-#sk-container-id-1 div.sk-label label {
+.sk-global div.sk-label label.sk-toggleable__label,
+.sk-global div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+.sk-global div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-1 div.sk-label label {
+.sk-global div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   line-height: 1.2em;
 }
 
-#sk-container-id-1 div.sk-label-container {
+.sk-global div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-1 div.sk-estimator {
+.sk-global div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -1361,18 +1381,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted {
+.sk-global div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-1 div.sk-estimator:hover {
+.sk-global div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-1 div.sk-estimator.fitted:hover {
+.sk-global div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -1463,7 +1483,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-1 a.estimator_doc_link {
+.sk-global a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -1478,7 +1498,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted {
+.sk-global a.estimator_doc_link.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -1486,16 +1506,24 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 }
 
 /* On hover */
-#sk-container-id-1 a.estimator_doc_link:hover {
+.sk-global a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+.sk-global a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-top-container.sk-global {
+  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
+   We need to set it to !important and add tabindex="0" in the HTML
+   to allow keyboard-only users to navigate the display. */
+  overflow-x: scroll !important;
+  max-width: 100%;
 }
 
 .estimator-table {
@@ -1531,11 +1559,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: #f6f6f6;
 }
 
-.estimator-table .parameters-table tr:hover {
+.estimator-table .parameters-table tr:hover td {
     background-color: #e0e0e0;
 }
 
-.estimator-table table td {
+.estimator-table table :is(td, th) {
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
@@ -1559,7 +1587,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: transparent;
 }
 
-.default td {
+.default td, .estimator-table th {
     color: black;
     text-align: left !important;
 }
@@ -1567,6 +1595,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .user-set td i,
 .default td i {
     color: black;
+}
+
+td.fitted-att-type {
+    white-space: preserve nowrap;
 }
 
 /*
@@ -1581,6 +1613,14 @@ a.param-doc-link:visited {
     color: inherit;
     display: block;
     padding: .5em;
+}
+
+@supports(anchor-name: --doc-link) {
+    a.param-doc-link,
+    a.param-doc-link:link,
+    a.param-doc-link:visited {
+    anchor-name: --doc-link;
+    }
 }
 
 /* "hack" to make the entire area of the cell containing the link clickable */
@@ -1609,6 +1649,14 @@ a.param-doc-link::before {
     border: thin solid var(--sklearn-color-unfitted-level-3);
 }
 
+@supports(position-area: center right) {
+    .param-doc-description {
+    position-area: center right;
+    position: fixed;
+    margin-left: 0;
+    }
+}
+
 /* Fitted state for parameter tooltips */
 .fitted .param-doc-description {
     /* fitted */
@@ -1630,7 +1678,128 @@ a.param-doc-link::before {
     height: 14px;
     cursor: pointer;
 }
-</style><body><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GLMHMM(
+
+.features {
+  font-family: monospace;
+  cursor: pointer;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: .20em;
+  margin-bottom: 0.5em;
+  font-size: inherit; /* Needed for jupyter */
+}
+
+.features.fitted {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features summary {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: .25em;
+}
+
+.features details[open] > summary {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features.fitted details[open] > summary {
+  background-color: var(--sklearn-color-fitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features details > summary .arrow::before {
+  content: "▸";
+  color: grey;
+}
+
+.features details[open] > summary .arrow::before {
+  content: "▾";
+}
+
+.features details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.features.fitted details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.features .features-container {
+  max-width: 15em;
+  max-height: 10em;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: .25em 0.1rem;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 0 0 .5em .5em;
+}
+
+.features.fitted .features-container {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features .image-container {
+  block-size: 1em;
+  inline-size: 1em;
+  padding: 0;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features .copy-paste-icon {
+  background-size: 1em 1em;
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%) opacity(60%);
+}
+
+.features .features-container table {
+  width: 100%;
+  margin: 0.01em;
+}
+
+.features .features-container table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.features .features-container table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.features .features-container table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.features .features-container table {
+  table-layout: inherit;
+}
+
+.features .features-container table td {
+  text-align: left;
+  padding: 0 0.5em;
+  border: 1px solid rgba(106, 105, 104, 0.232);
+  white-space: nowrap;
+  color: var(--sklearn-color-text);
+}
+
+.total_features {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+</style><body><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GLMHMM(
     n_states=3,
     observation_model=BernoulliObservations(),
     inverse_link_function=logistic,
@@ -1639,9 +1808,9 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f28e1a9c720&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f28e1a9c7c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f28d951b100&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f28d951b600&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
-)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f0e20160680&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f0e20160720&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f0e1a70afc0&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f0e1a70b560&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -1674,7 +1843,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f28e167ec00&gt;</td>
+            <td class="value">&lt;function log...x7f0e6832a700&gt;</td>
         </tr>
     
 
@@ -1685,6 +1854,56 @@ a.param-doc-link::before {
             ></i></td>
             <td class="param">regularizer</td>
             <td class="value">Ridge()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_name',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_name</td>
+            <td class="value">&#x27;LBFGS&#x27;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_kwargs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_kwargs</td>
+            <td class="value">{}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('seed',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">seed</td>
+            <td class="value">Array([ 0, 12], dtype=uint32)</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('hmm_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">hmm_initialization_funcs</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f0e20160680&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f0e20160720&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('model_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">model_initialization_funcs</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f0e1a70afc0&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f0e1a70b560&gt;, ...}</td>
         </tr>
     
 
@@ -1718,26 +1937,6 @@ a.param-doc-link::before {
         </tr>
     
 
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('solver_name',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">solver_name</td>
-            <td class="value">&#x27;LBFGS&#x27;</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('solver_kwargs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">solver_kwargs</td>
-            <td class="value">{}</td>
-        </tr>
-    
-
         <tr class="default">
             <td><i class="copy-paste-icon"
                  onclick="copyToClipboard('maxiter',
@@ -1757,41 +1956,93 @@ a.param-doc-link::before {
             <td class="value">1e-08</td>
         </tr>
     
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('seed',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">seed</td>
-            <td class="value">Array([  0, 1... dtype=uint32)</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('hmm_initialization_funcs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f28e1a9c720&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f28e1a9c7c0&gt;, ...}</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('model_initialization_funcs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f28d951b100&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f28d951b600&gt;, ...}</td>
-        </tr>
-    
                   </tbody>
                 </table>
             </details>
         </div>
-    </div></div></div></div></div><script>function copyToClipboard(text, element) {
+    
+        <div class="estimator-table">
+            <details>
+                <summary>Fitted attributes</summary>
+                <table class="parameters-table">
+                    <tbody>
+                        <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        </tr>
+                        
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">coef_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">dof_resid_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">initial_prob_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">intercept_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">scale_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">solver_state_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">transition_prob_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+                    </tbody>
+                </table>
+            </details>
+        </div>
+    </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
+ SPDX-License-Identifier: BSD-3-Clause
+*/
+
+function copyToClipboard(text, element) {
     // Get the parameter prefix from the closest toggleable content
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -1828,6 +2079,13 @@ a.param-doc-link::before {
 document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+
+    const parent = element.parentElement;
+    if (!parent || !parent.nextElementSibling) {
+        console.warn('Expected copy-paste icon is missing from the DOM structure');
+        return;
+    }
+
     const paramName = element.parentElement.nextElementSibling
         .textContent.trim().split(' ')[0];
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -1835,7 +2093,51 @@ document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     element.setAttribute('title', fullParamName);
 });
 
+/**
+ * Copy the list of feature names formatted as a Python list.
+ *
+ * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
+ *   contain a `details` element and a table containing feature named.
+ * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
+ */
+function copyFeatureNamesToClipboard(element) {
+    var detailsElem = element.closest('.features').querySelector('details');
+    var wasOpen = detailsElem.open;
+    detailsElem.open = true;
+    var content = element.closest('.features').querySelector('tbody')
+                  .innerText.trim();
+    if (!wasOpen) detailsElem.open = false;
+    const rows = content.split('\n').map(row => `    "${row}"`);
+    const formattedText = `[\n${rows.join(',\n')},\n]`;
+    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalStyle = element.style;
+    const copyMark = document.createElement('span');
+    copyMark.innerHTML = '✔';
+    copyMark.style.color = 'blue';
+    copyMark.style.fontSize = '1em';
 
+    navigator.clipboard.writeText(formattedText)
+        .then(() => {
+            element.style.display = 'none';
+            element.parentElement.appendChild(copyMark);
+
+            setTimeout(() => {
+                copyMark.remove();
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'orange';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        });
+    return false;
+}
 /**
  * Adapted from Skrub
  * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -1908,10 +2210,6 @@ function forceTheme(elementId) {
 
 forceTheme('sk-container-id-1');</script></body></div></div>
 </div>
-<div class="dropdown admonition">
-<p class="admonition-title">Importance of initial parameters in GLM-HMMs</p>
-<p>When fitting a GLM-HMMs, the likelihood surface is non-convex, and EM-based fitting can converge to different local optima depending on starting values. As a result, different initializations can lead to qualitatively different parameters. In practice, this makes it necessary to either run multiple random restarts or use informed initializations derived from simpler models (e.g. logistic regression or clustering of behavior).</p>
-</div>
 <p>Once we created our object, we can fit our model. The fit function takes two mandatory arguments: the design matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> we created above and the <code class="docutils literal notranslate"><span class="pre">choices</span></code>. Additionally, we will also include <code class="docutils literal notranslate"><span class="pre">new_sess_mouse</span></code>, the new session indicator.</p>
 <div class="render-presenter, render-user">
 <ul class="simple">
@@ -1928,7 +2226,7 @@ forceTheme('sk-container-id-1');</script></body></div></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-2 {
+<div class="output text_html"><style>.sk-global {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
   --sklearn-color-text-muted: #666;
@@ -1945,7 +2243,7 @@ forceTheme('sk-container-id-1');</script></body></div></div>
   --sklearn-color-fitted-level-3: cornflowerblue;
 }
 
-#sk-container-id-2.light {
+.sk-global.light {
   /* Specific color for light theme */
   --sklearn-color-text-on-default-background: black;
   --sklearn-color-background: white;
@@ -1953,25 +2251,24 @@ forceTheme('sk-container-id-1');</script></body></div></div>
   --sklearn-color-icon: #696969;
 }
 
-#sk-container-id-2.dark {
+.sk-global.dark {
   --sklearn-color-text-on-default-background: white;
   --sklearn-color-background: #111;
   --sklearn-color-border-box: white;
   --sklearn-color-icon: #878787;
 }
 
-#sk-container-id-2 {
+.sk-global {
   color: var(--sklearn-color-text);
 }
 
-#sk-container-id-2 pre {
+.sk-global pre {
   padding: 0;
 }
 
-#sk-container-id-2 input.sk-hidden--visually {
+.sk-global input.sk-hidden--visually {
   border: 0;
-  clip: rect(1px 1px 1px 1px);
-  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(100%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -1980,7 +2277,7 @@ forceTheme('sk-container-id-1');</script></body></div></div>
   width: 1px;
 }
 
-#sk-container-id-2 div.sk-dashed-wrapped {
+.sk-global div.sk-dashed-wrapped {
   border: 1px dashed var(--sklearn-color-line);
   margin: 0 0.4em 0.5em 0.4em;
   box-sizing: border-box;
@@ -1988,7 +2285,7 @@ forceTheme('sk-container-id-1');</script></body></div></div>
   background-color: var(--sklearn-color-background);
 }
 
-#sk-container-id-2 div.sk-container {
+.sk-global div.sk-container {
   /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
      but bootstrap.min.css set `[hidden] { display: none !important; }`
      so we also need the `!important` here to be able to override the
@@ -1998,7 +2295,7 @@ forceTheme('sk-container-id-1');</script></body></div></div>
   position: relative;
 }
 
-#sk-container-id-2 div.sk-text-repr-fallback {
+.sk-global div.sk-text-repr-fallback {
   display: none;
 }
 
@@ -2014,14 +2311,14 @@ div.sk-item {
 
 /* Parallel-specific style estimator block */
 
-#sk-container-id-2 div.sk-parallel-item::after {
+.sk-global div.sk-parallel-item::after {
   content: "";
   width: 100%;
   border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
   flex-grow: 1;
 }
 
-#sk-container-id-2 div.sk-parallel {
+.sk-global div.sk-parallel {
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -2029,28 +2326,28 @@ div.sk-item {
   position: relative;
 }
 
-#sk-container-id-2 div.sk-parallel-item {
+.sk-global div.sk-parallel-item {
   display: flex;
   flex-direction: column;
 }
 
-#sk-container-id-2 div.sk-parallel-item:first-child::after {
+.sk-global div.sk-parallel-item:first-child::after {
   align-self: flex-end;
   width: 50%;
 }
 
-#sk-container-id-2 div.sk-parallel-item:last-child::after {
+.sk-global div.sk-parallel-item:last-child::after {
   align-self: flex-start;
   width: 50%;
 }
 
-#sk-container-id-2 div.sk-parallel-item:only-child::after {
+.sk-global div.sk-parallel-item:only-child::after {
   width: 0;
 }
 
 /* Serial-specific style estimator block */
 
-#sk-container-id-2 div.sk-serial {
+.sk-global div.sk-serial {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2068,14 +2365,14 @@ clickable and can be expanded/collapsed.
 
 /* Pipeline and ColumnTransformer style (default) */
 
-#sk-container-id-2 div.sk-toggleable {
+.sk-global div.sk-toggleable {
   /* Default theme specific background. It is overwritten whether we have a
   specific estimator or a Pipeline/ColumnTransformer */
   background-color: var(--sklearn-color-background);
 }
 
 /* Toggleable label */
-#sk-container-id-2 label.sk-toggleable__label {
+.sk-global label.sk-toggleable__label {
   cursor: pointer;
   display: flex;
   width: 100%;
@@ -2088,13 +2385,13 @@ clickable and can be expanded/collapsed.
   gap: 0.5em;
 }
 
-#sk-container-id-2 label.sk-toggleable__label .caption {
+.sk-global label.sk-toggleable__label .caption {
   font-size: 0.6rem;
   font-weight: lighter;
   color: var(--sklearn-color-text-muted);
 }
 
-#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+.sk-global label.sk-toggleable__label-arrow:before {
   /* Arrow on the left of the label */
   content: "▸";
   float: left;
@@ -2102,25 +2399,25 @@ clickable and can be expanded/collapsed.
   color: var(--sklearn-color-icon);
 }
 
-#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+.sk-global label.sk-toggleable__label-arrow:hover:before {
   color: var(--sklearn-color-text);
 }
 
 /* Toggleable content - dropdown */
 
-#sk-container-id-2 div.sk-toggleable__content {
+.sk-global div.sk-toggleable__content {
   display: none;
   text-align: left;
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content.fitted {
+.sk-global div.sk-toggleable__content.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content pre {
+.sk-global div.sk-toggleable__content pre {
   margin: 0.2em;
   border-radius: 0.25em;
   color: var(--sklearn-color-text);
@@ -2128,78 +2425,78 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+.sk-global div.sk-toggleable__content.fitted pre {
   /* unfitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
-#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
   /* Expand drop-down */
   display: block;
   width: 100%;
   overflow: visible;
 }
 
-#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
   content: "▾";
 }
 
 /* Pipeline/ColumnTransformer-specific style */
 
-#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator-specific style */
 
 /* Colorize estimator box */
-#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
-#sk-container-id-2 div.sk-label label.sk-toggleable__label,
-#sk-container-id-2 div.sk-label label {
+.sk-global div.sk-label label.sk-toggleable__label,
+.sk-global div.sk-label label {
   /* The background is the default theme color */
   color: var(--sklearn-color-text-on-default-background);
 }
 
 /* On hover, darken the color of the background */
-#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+.sk-global div.sk-label:hover label.sk-toggleable__label {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
 /* Label box, darken color on hover, fitted */
-#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
   color: var(--sklearn-color-text);
   background-color: var(--sklearn-color-fitted-level-2);
 }
 
 /* Estimator label */
 
-#sk-container-id-2 div.sk-label label {
+.sk-global div.sk-label label {
   font-family: monospace;
   font-weight: bold;
   line-height: 1.2em;
 }
 
-#sk-container-id-2 div.sk-label-container {
+.sk-global div.sk-label-container {
   text-align: center;
 }
 
 /* Estimator-specific */
-#sk-container-id-2 div.sk-estimator {
+.sk-global div.sk-estimator {
   font-family: monospace;
   border: 1px dotted var(--sklearn-color-border-box);
   border-radius: 0.25em;
@@ -2209,18 +2506,18 @@ clickable and can be expanded/collapsed.
   background-color: var(--sklearn-color-unfitted-level-0);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted {
+.sk-global div.sk-estimator.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
 }
 
 /* on hover */
-#sk-container-id-2 div.sk-estimator:hover {
+.sk-global div.sk-estimator:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-2);
 }
 
-#sk-container-id-2 div.sk-estimator.fitted:hover {
+.sk-global div.sk-estimator.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-2);
 }
@@ -2311,7 +2608,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 
 /* "?"-specific style due to the `<a>` HTML tag */
 
-#sk-container-id-2 a.estimator_doc_link {
+.sk-global a.estimator_doc_link {
   float: right;
   font-size: 1rem;
   line-height: 1em;
@@ -2326,7 +2623,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
   border: var(--sklearn-color-unfitted-level-1) 1pt solid;
 }
 
-#sk-container-id-2 a.estimator_doc_link.fitted {
+.sk-global a.estimator_doc_link.fitted {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-0);
   border: var(--sklearn-color-fitted-level-1) 1pt solid;
@@ -2334,16 +2631,24 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 }
 
 /* On hover */
-#sk-container-id-2 a.estimator_doc_link:hover {
+.sk-global a.estimator_doc_link:hover {
   /* unfitted */
   background-color: var(--sklearn-color-unfitted-level-3);
   color: var(--sklearn-color-background);
   text-decoration: none;
 }
 
-#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+.sk-global a.estimator_doc_link.fitted:hover {
   /* fitted */
   background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-top-container.sk-global {
+  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
+   We need to set it to !important and add tabindex="0" in the HTML
+   to allow keyboard-only users to navigate the display. */
+  overflow-x: scroll !important;
+  max-width: 100%;
 }
 
 .estimator-table {
@@ -2379,11 +2684,11 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: #f6f6f6;
 }
 
-.estimator-table .parameters-table tr:hover {
+.estimator-table .parameters-table tr:hover td {
     background-color: #e0e0e0;
 }
 
-.estimator-table table td {
+.estimator-table table :is(td, th) {
     border: 1px solid rgba(106, 105, 104, 0.232);
 }
 
@@ -2407,7 +2712,7 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
     background-color: transparent;
 }
 
-.default td {
+.default td, .estimator-table th {
     color: black;
     text-align: left !important;
 }
@@ -2415,6 +2720,10 @@ div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
 .user-set td i,
 .default td i {
     color: black;
+}
+
+td.fitted-att-type {
+    white-space: preserve nowrap;
 }
 
 /*
@@ -2429,6 +2738,14 @@ a.param-doc-link:visited {
     color: inherit;
     display: block;
     padding: .5em;
+}
+
+@supports(anchor-name: --doc-link) {
+    a.param-doc-link,
+    a.param-doc-link:link,
+    a.param-doc-link:visited {
+    anchor-name: --doc-link;
+    }
 }
 
 /* "hack" to make the entire area of the cell containing the link clickable */
@@ -2457,6 +2774,14 @@ a.param-doc-link::before {
     border: thin solid var(--sklearn-color-unfitted-level-3);
 }
 
+@supports(position-area: center right) {
+    .param-doc-description {
+    position-area: center right;
+    position: fixed;
+    margin-left: 0;
+    }
+}
+
 /* Fitted state for parameter tooltips */
 .fitted .param-doc-description {
     /* fitted */
@@ -2478,7 +2803,128 @@ a.param-doc-link::before {
     height: 14px;
     cursor: pointer;
 }
-</style><body><div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GLMHMM(
+
+.features {
+  font-family: monospace;
+  cursor: pointer;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: .20em;
+  margin-bottom: 0.5em;
+  font-size: inherit; /* Needed for jupyter */
+}
+
+.features.fitted {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features summary {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: .25em;
+}
+
+.features details[open] > summary {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features.fitted details[open] > summary {
+  background-color: var(--sklearn-color-fitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features details > summary .arrow::before {
+  content: "▸";
+  color: grey;
+}
+
+.features details[open] > summary .arrow::before {
+  content: "▾";
+}
+
+.features details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.features.fitted details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.features .features-container {
+  max-width: 15em;
+  max-height: 10em;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: .25em 0.1rem;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 0 0 .5em .5em;
+}
+
+.features.fitted .features-container {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features .image-container {
+  block-size: 1em;
+  inline-size: 1em;
+  padding: 0;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features .copy-paste-icon {
+  background-size: 1em 1em;
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%) opacity(60%);
+}
+
+.features .features-container table {
+  width: 100%;
+  margin: 0.01em;
+}
+
+.features .features-container table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.features .features-container table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.features .features-container table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.features .features-container table {
+  table-layout: inherit;
+}
+
+.features .features-container table td {
+  text-align: left;
+  padding: 0 0.5em;
+  border: 1px solid rgba(106, 105, 104, 0.232);
+  white-space: nowrap;
+  color: var(--sklearn-color-text);
+}
+
+.total_features {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+</style><body><div id="sk-container-id-2" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GLMHMM(
     n_states=3,
     observation_model=BernoulliObservations(),
     inverse_link_function=logistic,
@@ -2487,9 +2933,9 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f28e1a9c720&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f28e1a9c7c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f28d951b100&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f28d951b600&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
-)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f0e20160680&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f0e20160720&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f0e1a70afc0&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f0e1a70b560&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -2522,7 +2968,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f28e167ec00&gt;</td>
+            <td class="value">&lt;function log...x7f0e6832a700&gt;</td>
         </tr>
     
 
@@ -2533,6 +2979,56 @@ a.param-doc-link::before {
             ></i></td>
             <td class="param">regularizer</td>
             <td class="value">Ridge()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_name',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_name</td>
+            <td class="value">&#x27;LBFGS&#x27;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_kwargs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_kwargs</td>
+            <td class="value">{}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('seed',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">seed</td>
+            <td class="value">Array([ 0, 12], dtype=uint32)</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('hmm_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">hmm_initialization_funcs</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f0e20160680&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f0e20160720&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('model_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">model_initialization_funcs</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f0e1a70afc0&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f0e1a70b560&gt;, ...}</td>
         </tr>
     
 
@@ -2566,26 +3062,6 @@ a.param-doc-link::before {
         </tr>
     
 
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('solver_name',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">solver_name</td>
-            <td class="value">&#x27;LBFGS&#x27;</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('solver_kwargs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">solver_kwargs</td>
-            <td class="value">{}</td>
-        </tr>
-    
-
         <tr class="default">
             <td><i class="copy-paste-icon"
                  onclick="copyToClipboard('maxiter',
@@ -2605,41 +3081,95 @@ a.param-doc-link::before {
             <td class="value">1e-08</td>
         </tr>
     
-
-        <tr class="default">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('seed',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">seed</td>
-            <td class="value">Array([  0, 1... dtype=uint32)</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('hmm_initialization_funcs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f28e1a9c720&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f28e1a9c7c0&gt;, ...}</td>
-        </tr>
-    
-
-        <tr class="user-set">
-            <td><i class="copy-paste-icon"
-                 onclick="copyToClipboard('model_initialization_funcs',
-                          this.parentElement.nextElementSibling)"
-            ></i></td>
-            <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f28d951b100&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f28d951b600&gt;, ...}</td>
-        </tr>
-    
                   </tbody>
                 </table>
             </details>
         </div>
-    </div></div></div></div></div><script>function copyToClipboard(text, element) {
+    
+        <div class="estimator-table">
+            <details>
+                <summary>Fitted attributes</summary>
+                <table class="parameters-table">
+                    <tbody>
+                        <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        </tr>
+                        
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">coef_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3, 3)</td>
+           <td>Array([[ 1.59...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">dof_resid_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](1,)</td>
+           <td>Array([5019.], dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">initial_prob_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([0.2341...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">intercept_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([-2.198...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">scale_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([2.7182...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">solver_state_</a></td>
+           <td class="fitted-att-type">EMState</td>
+           <td>EMState(
+  da...erged=bool[]
+)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">transition_prob_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3, 3)</td>
+           <td>Array([[0.956...dtype=float64)</td>
+
+
+       </tr>
+    
+                    </tbody>
+                </table>
+            </details>
+        </div>
+    </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
+ SPDX-License-Identifier: BSD-3-Clause
+*/
+
+function copyToClipboard(text, element) {
     // Get the parameter prefix from the closest toggleable content
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
@@ -2676,6 +3206,13 @@ a.param-doc-link::before {
 document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     const toggleableContent = element.closest('.sk-toggleable__content');
     const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+
+    const parent = element.parentElement;
+    if (!parent || !parent.nextElementSibling) {
+        console.warn('Expected copy-paste icon is missing from the DOM structure');
+        return;
+    }
+
     const paramName = element.parentElement.nextElementSibling
         .textContent.trim().split(' ')[0];
     const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
@@ -2683,7 +3220,51 @@ document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
     element.setAttribute('title', fullParamName);
 });
 
+/**
+ * Copy the list of feature names formatted as a Python list.
+ *
+ * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
+ *   contain a `details` element and a table containing feature named.
+ * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
+ */
+function copyFeatureNamesToClipboard(element) {
+    var detailsElem = element.closest('.features').querySelector('details');
+    var wasOpen = detailsElem.open;
+    detailsElem.open = true;
+    var content = element.closest('.features').querySelector('tbody')
+                  .innerText.trim();
+    if (!wasOpen) detailsElem.open = false;
+    const rows = content.split('\n').map(row => `    "${row}"`);
+    const formattedText = `[\n${rows.join(',\n')},\n]`;
+    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalStyle = element.style;
+    const copyMark = document.createElement('span');
+    copyMark.innerHTML = '✔';
+    copyMark.style.color = 'blue';
+    copyMark.style.fontSize = '1em';
 
+    navigator.clipboard.writeText(formattedText)
+        .then(() => {
+            element.style.display = 'none';
+            element.parentElement.appendChild(copyMark);
+
+            setTimeout(() => {
+                copyMark.remove();
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'orange';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        });
+    return false;
+}
 /**
  * Adapted from Skrub
  * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
@@ -2805,23 +3386,23 @@ forceTheme('sk-container-id-2');</script></body></div></div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLM parameters
 ==============
 glm weights:
-[[ 6.09396318  1.59544694  1.5439195 ]
- [ 0.09837797  0.32663804  0.28090569]
- [ 0.11745451  0.4175974  -0.31344619]]
+[[ 6.09399091  1.5439169   1.59525073]
+ [ 0.09836777  0.28091053  0.32646422]
+ [ 0.11747475 -0.31333297  0.41791669]]
 
 intercept:
-[ 0.0251631  -2.19868753  2.74211934]
+[ 0.02502527  2.74184029 -2.19821672]
 
 
 HMM parameters
 ==============
 transition matrix 
- [[0.98216842 0.00705395 0.01077763]
- [0.04069543 0.9560912  0.00321337]
- [0.03769    0.00951892 0.95279108]]
+ [[0.9821805  0.01077484 0.00704465]
+ [0.03767531 0.95278875 0.00953594]
+ [0.0406587  0.00323314 0.95610817]]
 
 initial probabilities 
- [0.11602849 0.64978187 0.23418964]
+ [0.23419059 0.64974029 0.11606913]
 </pre></div>
 </div>
 </div>
@@ -2841,7 +3422,7 @@ We can plot the GLM weights obtained for our 3-state model.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/39a6a43cd2d12e709c44a040ec130d52d811fde850650a23d3af45a54ce8e74a.png" src="../../_images/39a6a43cd2d12e709c44a040ec130d52d811fde850650a23d3af45a54ce8e74a.png" />
+<img alt="../../_images/deea2cf64db436fbafbac1cfbcb29ca847bf823e22030c505818fed388904cbb.png" src="../../_images/deea2cf64db436fbafbac1cfbcb29ca847bf823e22030c505818fed388904cbb.png" />
 </div>
 </div>
 <p>We can see that the coefficients on state 1 have a large weight on the stimulus and low weight on the other predictors. Conversely, in states 2 and 3, the stimulus coefficient is comparatively lower. State 2 has a large positive weight on bias, while State 3 has a large negative weight on bias. Since the sign of our predictors indicates the side of evidence (&gt;0 : left; &lt;0 : right, see the table of variables in section 01) and their magnitude indicates the strength of such evidence, State 2 coefficients suggest a large bias towards leftward choice, while State 3 coefficients suggest a large bias to a rightward choice. All states have similarly low coefficients for prev. choice and wsls, with State 1 showing the smallest of them.</p>
@@ -2867,7 +3448,7 @@ We can plot the GLM weights obtained for our 3-state model.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2f71fa8ea38bfd68d6e44230410144945dc5bd9c23a708065ad2bdccc1648d7f.png" src="../../_images/2f71fa8ea38bfd68d6e44230410144945dc5bd9c23a708065ad2bdccc1648d7f.png" />
+<img alt="../../_images/aa808437972dcfe6bfedb8eb5b27cf397e3036c77dc133077a907b57cf126eb9.png" src="../../_images/aa808437972dcfe6bfedb8eb5b27cf397e3036c77dc133077a907b57cf126eb9.png" />
 </div>
 </div>
 </section>
@@ -2886,7 +3467,7 @@ We can plot the GLM weights obtained for our 3-state model.
 ```{code-cell} ipython3
 # Compute smooth_proba
 posteriors = 
-print(f"First five osteriors \n{posteriors[:5]} \n")
+print(f"First five posteriors \n{posteriors[:5]} \n")
 # Each (valid) posterior row sums to 1
 valid = ~np.isnan(posteriors).any(axis=1)
 print(
@@ -2902,7 +3483,7 @@ print(
     <span class="n">choices</span><span class="p">,</span>
     <span class="n">session_starts</span><span class="o">=</span><span class="n">new_sess_mouse</span>
 <span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First five osteriors </span><span class="se">\n</span><span class="si">{</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First five posteriors </span><span class="se">\n</span><span class="si">{</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># Each (valid) posterior row sums to 1</span>
 <span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">posteriors</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
@@ -2914,18 +3495,19 @@ print(
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First five osteriors 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First five posteriors 
 [[           nan            nan            nan]
- [2.61492399e-01 7.22858534e-01 1.56490674e-02]
- [3.32871406e-01 6.65243197e-01 1.88539714e-03]
- [3.92465601e-01 6.07309061e-01 2.25338310e-04]
- [4.92055888e-01 5.07868857e-01 7.52558146e-05]] 
+ [7.53779332e-01 6.19965623e-02 1.84224106e-01]
+ [8.15356738e-01 7.34994887e-03 1.77293313e-01]
+ [8.34498446e-01 7.72118170e-04 1.64729436e-01]
+ [8.60963299e-01 1.23540946e-04 1.38913160e-01]] 
 
 Does the posterior sum to one? True
 </pre></div>
 </div>
 </div>
 </div>
+<p>The first trial of each session is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>: the posterior depends on the transition from the previous trial’s state, which doesn’t exist at a session start. Hence we mask out the NaNs before checking that the rows sum to one.</p>
 <div class="render-all">
 Let's plot the first 90 trials, corresponding to the first session.
 </div>
@@ -2942,7 +3524,7 @@ Let's plot the first 90 trials, corresponding to the first session.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/9822330f392f2111cf3ef3692eff20527a7bc0e592bdb11b9531f7defd9b7a39.png" src="../../_images/9822330f392f2111cf3ef3692eff20527a7bc0e592bdb11b9531f7defd9b7a39.png" />
+<img alt="../../_images/4ed329725afa3d087de0c97e4921e737637a98cf4219066a44ec42f3ac72093c.png" src="../../_images/4ed329725afa3d087de0c97e4921e737637a98cf4219066a44ec42f3ac72093c.png" />
 </div>
 </div>
 <div class="render-all">
@@ -2954,15 +3536,15 @@ Let's now use the utility function to plot the three sessions shown in Fig. 3a o
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4a4221c59c8f96fb5cac625f919422952b2c0ac11d427612976dcf0f81b04abd.png" src="../../_images/4a4221c59c8f96fb5cac625f919422952b2c0ac11d427612976dcf0f81b04abd.png" />
+<img alt="../../_images/0e45087b121a075daecbb55a8c03f4b9a66d165ccdc3aa47f1262350f53a76cf.png" src="../../_images/0e45087b121a075daecbb55a8c03f4b9a66d165ccdc3aa47f1262350f53a76cf.png" />
 </div>
 </div>
-<p>In these sessions, the posterior over latent states can be tracked at each trial, revealing strong confidence in state assignments and extended periods where a single state persists across consecutive trials. This pattern is inconsistent with the short, transient lapses assumed in lapse-based models.</p>
+<p>In these sessions, the posterior over latent states can be tracked at each trial, revealing strong confidence in state assignments and extended periods where a single state persists across consecutive trials.</p>
 </section>
-<section id="computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">
-<h3>Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code><a class="headerlink" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state" title="Link to this heading">#</a></h3>
-<p>We may also want to quantify state fractional occupancies (i.e. what proportion of the trials a given animal spent in each state) and accuracies per state. For this, we need the inferred sequence of states, and there are (at least) two ways in which we can obtain it: using <code class="docutils literal notranslate"><span class="pre">decode_state</span></code>.</p>
-<p>This method finds the single most likely sequence of hidden states that best explains the observed data. It uses the Viterbi algorithm to compute the state sequence that maximizes the joint probability of states and observations. It takes three mandatory parameters, a matrix of predictors <code class="docutils literal notranslate"><span class="pre">X</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_timepoints,n_features)</span></code>, a <code class="docutils literal notranslate"><span class="pre">np.array</span></code> or <code class="docutils literal notranslate"><span class="pre">nap.Tsd</span></code> of observations of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code>, and the format of the returned states, either in one-hot encoding format or as an array of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code> containing the decoded state at each timepoint.</p>
+<section id="understanding-mouse-behavior-in-different-states">
+<h3>Understanding mouse behavior in different states<a class="headerlink" href="#understanding-mouse-behavior-in-different-states" title="Link to this heading">#</a></h3>
+<p>We may also want to quantify state fractional occupancies (i.e. what proportion of the trials a given animal spent in each state) and the mouse’s accuracy in each state (i.e. how often it chose the correct side). For this, we need the inferred sequence of states, this can be obtained using the <a class="reference external" href="https://en.wikipedia.org/wiki/Viterbi_algorithm">Viterbi algorithm</a> that you can run by calling the  <code class="docutils literal notranslate"><span class="pre">decode_state</span></code> method.</p>
+<p>This method finds the single most likely sequence of hidden states that best explains the observed data: the state sequence that maximizes the joint probability of states and observations. It takes three mandatory parameters, a matrix of predictors <code class="docutils literal notranslate"><span class="pre">X</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_timepoints,n_features)</span></code>, a <code class="docutils literal notranslate"><span class="pre">np.array</span></code> or <code class="docutils literal notranslate"><span class="pre">nap.Tsd</span></code> of observations of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code>, and the format of the returned states, either in one-hot encoding format or as an array of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code> containing the decoded state at each timepoint.</p>
 <div class="render-presenter, render-user">
 <ul class="simple">
 <li><p>Get the most likely sequence of states given the observation by calling <code class="docutils literal notranslate"><span class="pre">decode_state</span></code>, which runs the Viterbi (also known as max-sum) algorithm.</p></li>
@@ -2993,9 +3575,9 @@ decoded_states
        [ 1.,  0.,  0.],
        [ 1.,  0.,  0.],
        ...,
-       [ 0.,  1.,  0.],
-       [ 0.,  1.,  0.],
-       [ 0.,  1.,  0.]], dtype=float64, weak_type=True)
+       [ 0.,  0.,  1.],
+       [ 0.,  0.,  1.],
+       [ 0.,  0.,  1.]], dtype=float64, weak_type=True)
 </pre></div>
 </div>
 </div>
@@ -3016,17 +3598,17 @@ decoded_states
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of occupancy [0.69775749 0.1482437  0.15399881] 
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of occupancy [0.70569557 0.15399881 0.14030562] 
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we can compute the overall accuracy.</p>
+<p>Now we can compute the mouse’s overall accuracy.</p>
 <div class="render-presenter, render-user">
 <ul class="simple">
 <li><p>Compute the accuracy:</p>
 <ul>
-<li><p>Mask out the 0 contrast stimuli</p></li>
+<li><p>Mask out the 0 contrast stimuli (because there is no correct answer in that case)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">choice==0</span></code>: right choice, <code class="docutils literal notranslate"><span class="pre">choice==1</span></code>: left choice.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>: left stimulus presented, <code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>: right stimulus presented.</p></li>
 <li><p>Use convention above to get the accuracy.</p></li>
@@ -3108,7 +3690,7 @@ accuracies_to_plot_viterbi[1:] = accuracy_per_state
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/11c206568834a4e5d837ee22ac3afb67971677ea43581fe9249d41337e9a7406.png" src="../../_images/11c206568834a4e5d837ee22ac3afb67971677ea43581fe9249d41337e9a7406.png" />
+<img alt="../../_images/f577cd117ace6bb92c0d5520ab88d5649d4e6d1ccb702454837d241289ef8885.png" src="../../_images/f577cd117ace6bb92c0d5520ab88d5649d4e6d1ccb702454837d241289ef8885.png" />
 </div>
 </div>
 <p>According to state occupancy derived with the Viterbi algorithm, this mouse spent the majority of the trials (70%) in the engaged state and a lesser portion of trials in the other two states (30%). We can see that even though this mouse had an overall accuracy of 80.36%, it achieved a higher accuracy of 87.04% in the “engaged” state compared to 66.03% and 63.03% in the “bias left” and “bias right”, respectively.</p>
@@ -3200,7 +3782,7 @@ accuracies_to_plot_viterbi[1:] = accuracy_per_state
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-fraction-of-occupancy-and-accuracy-per-state-with-decode-state">Computing fraction of occupancy and accuracy per state with <code class="docutils literal notranslate"><span class="pre">decode_state</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>

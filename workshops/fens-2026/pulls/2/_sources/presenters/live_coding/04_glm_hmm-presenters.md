@@ -28,6 +28,12 @@ sns.set_theme(style="ticks", palette="colorblind", font_scale=1.5, rc=custom_par
 import workshop_utils
 ```
 
+:::{admonition} Working without pynapple
+:class: note render-all
+
+Unlike the other notebooks in this workshop, here we work directly with `pandas` DataFrames and `numpy` arrays rather than pynapple objects. The IBL trial data is naturally tabular (one row per trial, with no continuous time axis), so we keep it as a DataFrame and show how NeMoS interfaces with plain NumPy. NeMoS also accepts pynapple `Tsd`/`TsdFrame` objects directly, and we point out as we go where that would change the workflow (for example, how session boundaries are handled).
+:::
+
 :::{admonition} Download
 :class: important render-all
 
@@ -49,6 +55,16 @@ This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder)
  while listening to the presenter's explanation. In order to see the fully
  rendered of this notebook, go [here](../../full/live_coding/04_glm_hmm.md)
+
+
+
+In this notebook, we will learn how to model behavioral choices by fitting a GLM-HMM, replicating the main findings of Ashwood et al. (2022) <span id="cite1a"></span><a href="#ref1a">[1a]</a>.
+
+In particular, we will analyze the IBL decision-making task (IBL et al., 2021) <span id="cite2a"></span><a href="#ref2a">[2a]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3a"></span><a href="#ref3a">[3a]</a>).
+
+During this task, a sinusoidal grating with varying contrast [0\%-100\%] appeared either at the right or left side of the screen. The mice indicated this side by turning a small wheel, which moved the stimulus toward the center of the screen (Burgess et al., 2021 <span id="cite3b"></span><a href="#ref3b">[3b]</a>). If the mice chose the side correctly, they would receive a water reward; if not, they would get a noise burst and a 1-second timeout. For the first 90 trials of each session, the stimulus appeared randomly on either side of the screen; after that, it appeared on one side with fixed probability 0.8, alternating randomly every 20–100 trials. 
+
+
 
 ## Dataset
 
@@ -182,14 +198,14 @@ and inspect its contents.
 ```{code-cell} ipython3
 :tags: [render-all]
 
-print(f"choice \nvalues: {trials.choice.unique()}, data type: {trials.choice.dtype}, shape:  \n")
-print(f"contrast left \nvalues: {trials.contrastLeft.unique()}, data type: {trials.contrastLeft.dtype} \n")
+print(f"choice \nvalues: {np.sort(trials.choice.unique())}, data type: {trials.choice.dtype}, shape:  \n")
+print(f"contrast left \nvalues: {np.sort(trials.contrastLeft.unique())}, data type: {trials.contrastLeft.dtype} \n")
 
-print(f"contrast right \nvalues: {trials.contrastRight.unique()}, data type: {trials.contrastRight.dtype} \n")
+print(f"contrast right \nvalues: {np.sort(trials.contrastRight.unique())}, data type: {trials.contrastRight.dtype} \n")
 
-print(f"reward \nvalues: {trials.feedbackType.unique()}, data type: {trials.feedbackType.dtype} \n")
+print(f"reward \nvalues: {np.sort(trials.feedbackType.unique())}, data type: {trials.feedbackType.dtype} \n")
 
-print(f"probability of stimulus on left \nvalues: {trials.probabilityLeft.unique()}, data type: {trials.probabilityLeft.dtype} \n")
+print(f"probability of stimulus on left \nvalues: {np.sort(trials.probabilityLeft.unique())}, data type: {trials.probabilityLeft.dtype} \n")
 
 print(f"session \n(some) values: {trials.session.unique()[:5]}, data type: {trials.session.dtype}\n")
 ```
@@ -225,12 +241,15 @@ plt.axvline(90, color="skyblue", linestyle="--")
 plt.ylabel("P(stimulus on the left)")
 plt.xlabel("Trial number")
 plt.show()
+
+#TODO: add dropdown with original figures.
 ```
 
 
 Let's do some pandas wrangling to keep only the sessions that have:
 
-- The initial 50-50 trial block.
+- Filter to sessions that went through all testing blocks (in particular all 50-50, 20-80 and 80-20 blocks). 
+- Get the initial 50-50 trial block.
 - Fewer than 10 invalid trials in that block. 
 
 
@@ -241,6 +260,7 @@ Let's do some pandas wrangling to keep only the sessions that have:
 # Invalid choice marker
 viol_val = 0
 
+# Selecting the sessions as in the Ashwood at al. paper
 # Boolean mask selecting sessions with 50-50, 20-80 and 80-20 blocks
 has_three_blocks = (
     trials.groupby("session")["probabilityLeft"]
@@ -288,11 +308,11 @@ Now, with the valid sessions, we can compute the design matrix. In our case, we 
 
 # We can select all the necessary values for the design matrix: 
 # choice, contrast of stimuli and reward
-choices = df_trials['choice'].reset_index(drop=True)
-stim_left = df_trials['contrastLeft'].reset_index(drop=True)
-stim_right = df_trials['contrastRight'].reset_index(drop=True)
-rewarded = df_trials['feedbackType'].reset_index(drop=True)
-session = df_trials['session'].reset_index(drop=True).to_numpy()
+choices = df_trials['choice'].values
+stim_left = df_trials['contrastLeft'].values
+stim_right = df_trials['contrastRight'].values
+rewarded = df_trials['feedbackType'].values
+session = df_trials['session'].values
 ```
 
 
@@ -427,18 +447,22 @@ X_unnormalized[:5,:]
 ```{code-cell} ipython3
 # Create an additive basis using our three components
 basis_object = (
-    stimuli_basis +                         # will process one input
-    wsls_basis +                            # will process two inputs (choice & reward)
-    prev_choice_basis                       # will process one input
+    stimuli_basis +      # will process one input
+    wsls_basis +         # will process two inputs (choice & reward)
+    prev_choice_basis    # will process one input
 )
 
 # Compute features
 X_unnormalized = basis_object.compute_features(
-    signed_contrast[valid_choices_idx],     # input 1 : processed with stimuli_basis
-    choices[valid_choices_idx],             # input 2 : wsls input 1: choice
-    rewarded[valid_choices_idx],            # input 3 : wsls input 2: reward
-    choices[valid_choices_idx]              # input 4 : processed with prev_choice
-)        
+    # input 1 : processed with stimuli_basis
+    signed_contrast[valid_choices_idx],
+    # input 2 : wsls input 1: choice
+    choices[valid_choices_idx],
+    # input 3 : wsls input 2: reward
+    rewarded[valid_choices_idx],
+    # input 4 : processed with prev_choice
+    choices[valid_choices_idx],
+)
 
 X_unnormalized[:5,:]
 ```
@@ -458,11 +482,12 @@ X[:, 0] =
 
 
 ```{code-cell} ipython3
-from scipy.stats import zscore
-
 # Copy the array (we'll need the un-normalized later)
 X = np.copy(X_unnormalized)
+```
 
+```{code-cell} ipython3
+from scipy.stats import zscore
 # Apply z-scoring
 X[:, 0] = zscore(X[:, 0])
 ```
@@ -520,8 +545,16 @@ new_sess_mouse =
 new_sess_mouse = np.flatnonzero(session[1:] != session[:-1]) + 1
 ```
 
+:::{admonition} How does this one-liner find the session starts?
+:class: note dropdown render-all
+
+`session` holds one session id per trial. Comparing `session[1:]` (every trial but the first) with `session[:-1]` (every trial but the last) yields a boolean array that is `True` wherever a trial's session id differs from the previous trial's — that is, exactly at the session boundaries. `np.flatnonzero` returns the indices where this is `True`, and we add `1` because the comparison is shifted by one (position `i` in the comparison corresponds to trial `i+1`). The result is the array of indices at which a new session begins.
+:::
+
 
 - Initialize the `GLMHMM` object with 3 states and `regularizer="Ridge"`.
+- Set seed for trying different initial parameters (`jax.random.PRNGKey(number)`).
+- By default, the intercept is set to match the empirical choice probability, and the coefficients are set as random gaussian centered at zero with small standard deviation.
 
 
 
@@ -538,17 +571,12 @@ n_states = 3
 model = nmo.glm_hmm.GLMHMM(
     n_states,
     regularizer="Ridge",
+    # change this to try multiple init
+    seed=jax.random.PRNGKey(12), 
 )
 
 model
 ```
-
-:::{admonition} Importance of initial parameters in GLM-HMMs
-:class: question render-all
-:class: dropdown
-When fitting a GLM-HMMs, the likelihood surface is non-convex, and EM-based fitting can converge to different local optima depending on starting values. As a result, different initializations can lead to qualitatively different parameters. In practice, this makes it necessary to either run multiple random restarts or use informed initializations derived from simpler models (e.g. logistic regression or clustering of behavior).
-
-:::
 
 
 
@@ -658,7 +686,7 @@ workshop_utils.plot_transition_matrix(model);
 ```{code-cell} ipython3
 # Compute smooth_proba
 posteriors = 
-print(f"First five osteriors \n{posteriors[:5]} \n")
+print(f"First five posteriors \n{posteriors[:5]} \n")
 # Each (valid) posterior row sums to 1
 valid = ~np.isnan(posteriors).any(axis=1)
 print(
@@ -675,7 +703,7 @@ posteriors = model.smooth_proba(
     choices,
     session_starts=new_sess_mouse
 )
-print(f"First five osteriors \n{posteriors[:5]} \n")
+print(f"First five posteriors \n{posteriors[:5]} \n")
 
 # Each (valid) posterior row sums to 1
 valid = ~np.isnan(posteriors).any(axis=1)
@@ -711,7 +739,7 @@ Let's now use the utility function to plot the three sessions shown in Fig. 3a o
 workshop_utils.plot_posteriors(posteriors, session);
 ```
 
-### Computing fraction of occupancy and accuracy per state with ```decode_state```
+### Understanding mouse behavior in different states
 
 
 
@@ -757,7 +785,7 @@ print(f"Fraction of occupancy {frac_occupancy_viterbi} \n")
 
 
 - Compute the accuracy:
-  - Mask out the 0 contrast stimuli
+  - Mask out the 0 contrast stimuli (because there is no correct answer in that case)
   - `choice==0`: right choice, `choice==1`: left choice.
   - `signed_contrast < 0`: left stimulus presented, `signed_contrast > 0`: right stimulus presented.
   - Use convention above to get the accuracy.
