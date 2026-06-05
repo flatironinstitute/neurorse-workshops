@@ -304,6 +304,17 @@ Now, with the valid sessions, we can compute the design matrix. In our case, we 
 
 
 
+
+```{code-cell} ipython3
+# Select the necessary columns (and reset_index + drop): 
+# choice, contrast of stimuli and reward
+choices = 
+stim_left = 
+stim_right = 
+rewarded = 
+```
+
+
 ```{code-cell} ipython3
 
 # We can select all the necessary values for the design matrix: 
