@@ -31,25 +31,42 @@ warnings.filterwarnings(
 
 This notebook can be downloaded as **{nb-download}`01_head_direction-users.ipynb`**. See the button at the top right to download as markdown or pdf.
 :::
-# Analyzing head-direction cells with Pynapple
+# Head-direction cells: from pynapple to population GLMs
 This notebook has had all its explanatory text removed and has not been run.
  It is intended to be downloaded and run locally (or on the provided binder),
  working through the questions with your small group.
 
 
-In this tutorial, we will learn how to use pynapple to analyze electrophysiological data.
+In this tutorial, we compare two recording modalities — extracellular electrophysiology and calcium imaging — using the same 
+head-direction system in the mouse as a common reference. Both datasets contain head-direction cells, but the signal properties 
+differ: spikes are discrete and fast, while calcium transients are continuous and slow. This gives us a natural testbed 
+to see how the same analysis workflow adapts to different data types.
 
-We will analyze extracellular recordings of head-direction cells recorded in the 
-anterodorsal thalamic nucleus (ADn) of the mouse. We will use a NWB file containing spike times of neurons and the head-direction of the animal over time.
-We will study the relationship between neurons during wakefulness and sleep with cross-correlograms.
+**Part 1 — Extracellular recordings** uses spike trains from the anterodorsal thalamic nucleus (ADn) recorded with a silicon probe ([Peyrache et al., 2015](https://www.nature.com/articles/nn.3968)).
 
-The pynapple documentation can be found [here](https://pynapple.org).
+With **pynapple** we will:
+1. Load a NWB file and extract spike times and head-direction
+2. Compute head-direction tuning curves
+3. Compute cross-correlograms during wake and sleep
 
-We will use pynapple to do the following tasks:
+With **nemos** we will fit a population GLM to characterize functional connectivity:
+1. Build spike-history features with a raw history window and with a `RaisedCosineLogConv` basis
+2. Fit a single-neuron GLM and compare the two feature representations
+3. Fit a `PopulationGLM` to all neurons simultaneously and visualize the coupling filters
 
-1. Loading a NWB file
-2. Compute tuning curves
-3. Compute cross-correlograms
+**Part 2 — Calcium imaging** uses deconvolved fluorescence traces from head-direction cells in the postsubiculum.
+
+With **pynapple** we will:
+1. Load the calcium NWB file and extract transients and head-direction
+2. Compute tuning curves and visualize them
+3. Decode head-direction from population activity with `nap.decode_template`
+
+With **nemos** we will fit a GLM suited to continuous data:
+1. Select significantly tuned neurons with a Rayleigh test
+2. Fit a `PopulationGLM` with a Gaussian observation model
+3. Re-fit with a feature mask to remove self-coupling and compare the coupling filters
+
+The pynapple documentation can be found [here](https://pynapple.org) and the nemos documentation [here](https://nemos.readthedocs.io/en/latest/).
 
 Let's start by importing all the packages.
 
@@ -61,9 +78,12 @@ import pynapple as nap
 import matplotlib.pyplot as plt
 import numpy as np
 import nemos as nmo
-
-# some helper plotting functions
+import jax
 import workshop_utils
+from nemos import _documentation_utils as doc_plots
+
+# LBFGS works better with float64 precision
+jax.config.update("jax_enable_x64", True)
 
 # configure pynapple to ignore conversion warning
 nap.nap_config.suppress_conversion_warnings = True
@@ -71,15 +91,12 @@ nap.nap_config.suppress_conversion_warnings = True
 # configure some plots
 plt.style.use(nmo.styles.plot_style)
 ```
-## Fetch and load data
+## Part 1: Extracellular recordings
+### Analyzing head-direction cells with Pynapple
+#### Fetch and load data
 
 
-The dataset we will use is from this study : [Peyrache et al., 2015](https://www.nature.com/articles/nn.3968).
-
-If you ran the workshop setup script, you should have this file downloaded already. 
-If not, the function we'll use to fetch it will download it for you. 
-This function is called `fetch_data`, and can be imported from the `workshop_utils` module. 
-This function will give us the file path to where the data is stored. 
+The dataset comes from [Peyrache et al., 2015](https://www.nature.com/articles/nn.3968). If you ran the workshop setup script the file is already on disk; otherwise `fetch_data` from `workshop_utils` will download it and return the local path.
 
 
 ```{code-cell} ipython3
@@ -119,17 +136,15 @@ print(spikes)
 
 
 
-There are a lot of neurons. The neurons that interest us are the neurons labeled `adn`. 
+The recording contains neurons from several brain areas. We want only those labeled `adn` (anterodorsal nucleus) with a firing rate above 2 Hz.
 
-**Question:** Using the slicing method of your choice, can you select only the neurons in `adn` that are above 2 Hz firing rate?
+**Question:** Can you filter `spikes` to keep only ADn neurons above 2 Hz?
 
-There are multiple options here. As a reminder, metadata can be accessed like a dictionary or as attributes. There are also
-functions that can help you filter neurons based on metadata.
+Metadata can be accessed as an attribute or like a dictionary key; you can also use the helper methods below:
 
-1. `spikes.label` returns a pandas Series with the metadata of the neurons.
-2. `spikes['label']` returns a pandas Series with the metadata of the neurons.
-3. Functions like [`spikes.getby_category`](https://pynapple.org/generated/pynapple.TsGroup.getby_category.html#pynapple.TsGroup.getby_category)
-    or [`spikes.getby_threshold`](https://pynapple.org/generated/pynapple.TsGroup.getby_threshold.html#pynapple.TsGroup.getby_threshold) can help you filter neurons based on metadata.
+1. `spikes.location` or `spikes['location']` — returns a pandas Series of brain-area labels.
+2. [`spikes.getby_category`](https://pynapple.org/generated/pynapple.TsGroup.getby_category.html#pynapple.TsGroup.getby_category) — filter by a categorical metadata field.
+3. [`spikes.getby_threshold`](https://pynapple.org/generated/pynapple.TsGroup.getby_threshold.html#pynapple.TsGroup.getby_threshold) — filter by a numeric threshold.
 
 
 
@@ -153,12 +168,7 @@ print(angle)
 
 
 
-But are the data actually loaded or not?
-If you look at the type of `angle`, you will see that it is a `Tsd` object.
-But what about the underlying data array?
-The underlying data array is stored in the property `d` of the `Tsd` object.
-If you print it, you will see that it is an `h5py` array.
-By default, data are lazy-loaded. This can be useful when reading larger-than-memory arrays from disk with memory mapping.
+The data are not fully loaded into memory yet. While `angle` is a `Tsd` object, its underlying array (accessible via `.d`) is still an `h5py` dataset — pynapple lazy-loads NWB data by default, which is efficient for large recordings that would not fit in RAM.
 
 
 ```{code-cell}
@@ -180,9 +190,9 @@ print(epochs)
 
 
 
-NWB file can save intervals with multiple labels. The object `IntervalSet` includes the labels as a metadata object.
+NWB files can store intervals with multiple labels. The `IntervalSet` object exposes those labels as metadata.
 
-**Question:** Using the column `tags`, can you create one `IntervalSet` object for intervals labeled `wake` and one `IntervalSet` object for intervals labeled `sleep`?
+**Question:** Using the `tags` column, can you split `epochs` into two `IntervalSet` objects — one for `wake` and one for `sleep`?
 
 
 
@@ -191,20 +201,12 @@ wake_ep =  # Get wake intervals from epochs
 sleep_ep =  # Get sleep intervals from epochs
 ```
 
-## Compute tuning curves
+#### Compute tuning curves
 
 
-Now we have 
-- spikes
-- a behavioral feature (i.e. head-direction), 
-- epochs corresponding to when the feature is defined (i.e. when the head-direction was recorded).
+We now have spikes, a behavioral feature (head-direction), and the epochs during which that feature was recorded. We can compute **tuning curves** — the mean firing rate of each neuron as a function of head-direction during wakefulness — with a single pynapple call.
 
-We can compute tuning curves, i.e. the firing rate of neurons as a function of head-direction. 
-We want to know how the firing rate of each neuron changes as a function of the head-direction of the animal during wakefulness.
-
-To do this in pynapple, all you need is the call of a single function : `nap.compute_tuning_curves`!
-
-**Question:** can you compute the firing rate of ADn units as a function of heading direction, i.e. a head-direction tuning curve and call the variable `tuning_curves`?
+**Question:** Can you compute the head-direction tuning curves of the ADn units using `nap.compute_tuning_curves` and store the result in `tuning_curves`?
 
 
 
@@ -222,8 +224,7 @@ tuning_curves
 
 
 
-The output is a xarray object indexed by neuron and head\-direction: the first dimension corresponds to neurons, 
-the second to angular bins, and additional metadata fields are included.
+The output is an xarray object with neurons along one dimension and angular bins along the other.
 
 
 ```{code-cell} ipython3
@@ -251,10 +252,9 @@ plt.tight_layout()
 
 
 
-Most of those neurons are head-direction neurons.
+Most of these neurons are sharply tuned to a preferred direction.
 
-The next cell allows us to get a quick estimate of the neurons' preferred direction. 
-Since this is a lot of xarray wrangling, it is given.
+The preferred direction is simply the angle at which firing rate peaks (`idxmax` over the angle dimension).
 
 
 ```{code-cell} ipython3
@@ -266,10 +266,9 @@ print(pref_ang)
 ```
 
 
-The variable `pref_ang` contains the preferred direction of each neuron. 
-This information can be useful to add to the metainformation of the `spikes` object since it is neuron-specific information.
+The variable `pref_ang` maps each neuron to its preferred direction. Attaching it to the `spikes` object as metadata lets us use it for sorting and labelling later.
 
-**Question:** Can you add it to the metainformation of `spikes`? The metadata field should be called `pref_ang`.
+**Question:** Can you add `pref_ang` to the metadata of `spikes` under the field name `pref_ang`?
 
 
 :::{admonition} Hint
@@ -288,9 +287,7 @@ tsgroup.set_info(label=metadata)
 
 
 
-This index maps a neuron to a preferred angular direction between 0 and 2pi. 
-Let's visualize the spiking activity of the neurons based on their preferred direction 
-as well as the head-direction of the animal. To make it easier to see, we will restrict the data to a small epoch.
+Let's visualize the spiking activity of each neuron alongside the animal's head-direction, with neurons ordered by their preferred direction. We restrict to a short window for clarity.
 
 
 ```{code-cell} ipython3
@@ -314,15 +311,12 @@ plt.xlabel("Time (s)")
 ![](../../_static/_check_figs/01-01.png)
 :::
 
-## Compute correlograms
+#### Compute correlograms
 
 
-We see that some neurons have a correlated activity meaning they tend to fire together, while others have an anti-correlated activity meaning when one neuron fires, the other does not.
-Can we quantify this correlation between pairs of neurons? To do this, we can compute cross-correlograms between pairs of neurons.
-A cross-correlogram measures the correlation between the spike trains of two neurons as a function of time lag. It counts how often spikes from one neuron occur at different time lags relative to spikes from another neuron.
-In pynapple, we use the function `nap.compute_crosscorrelogram` to compute cross-correlograms between pairs of neurons.
+The raster shows that some neurons tend to fire together, while others fire at opposite phases. A **cross-correlogram** quantifies this: it measures how often spikes from one neuron occur at each time lag relative to spikes from another, revealing whether pairs are co-active or anti-correlated.
 
-**Question:** Can you compute cross-correlograms during wake for all pairs of neurons and call it `cc_wake`?
+**Question:** Can you compute cross-correlograms during wake for all pairs of neurons using `nap.compute_crosscorrelogram` and call the result `cc_wake`?
 
 
 
@@ -337,16 +331,9 @@ cc_wake = nap.compute_crosscorrelogram(
 
 
 
-The output is a pandas DataFrame where each column is a pair of neurons. All pairs of neurons are computed automatically.
-The index shows the time lag.
-Let's visualize some cross-correlograms. 
-To make things easier, we will focus on two pairs of neurons: one pair that fires for the same direction and one pair that fires for opposite directions.
+The output is a pandas DataFrame where each column is a neuron pair, computed automatically for all combinations, and the index gives the time lag. Let's focus on two pairs: neurons 7 and 20 share a preferred direction, while neurons 7 and 26 prefer opposite directions.
 
-The pair (7, 20) fires for the same direction while the pair (7, 26) fires for opposite directions. 
-
-To index pandas columns, you can do `cc[(7, 20)]`.
-
-To index xarray tuning curves, you can do `tuning_curves.sel(unit=[7,20])`
+Indexing: `cc[(7, 20)]` selects a correlogram column; `tuning_curves.sel(unit=[7, 20])` selects the corresponding tuning curves from the xarray.
 
 
 ```{code-cell} ipython3
@@ -384,12 +371,9 @@ plt.tight_layout()
 
 
 
-As you can see, the pair of neurons that fire for the same direction have a positive correlation at time lag 0, meaning they tend to fire together.
-The pair of neurons that fire for opposite directions have a negative correlation at time lag 0, meaning when one neuron fires, the other does not.
+Neurons with similar preferred directions are positively correlated at lag 0 (they co-fire), while neurons with opposite preferred directions are negatively correlated. The same neurons were also recorded during sleep.
 
-Pairwise correlations were computed during wakefulness. The activity of the neurons was also recorded during sleep.
-
-**Question:** can you compute the cross-correlograms during sleep?
+**Question:** Can you compute cross-correlograms during sleep? Use a shorter bin (20 ms) and window (1 s) to match the faster timescales typical of sleep activity.
 
 
 
@@ -404,8 +388,7 @@ cc_sleep = nap.compute_crosscorrelogram(
 
 
 
-Let's visualize the cross-correlograms during wake and sleep for the pair of neurons that fire for the same direction 
-and the pair of neurons that fire for opposite directions.
+Let's compare the wake and sleep correlograms for the same-direction pair and the opposite-direction pair.
 
 
 ```{code-cell} ipython3
@@ -446,5 +429,1090 @@ plt.tight_layout()
 
 
 
-What does it mean for the relationship between cells here? Remember that during sleep, the animal is not moving and therefore the head-direction is not defined.
+The pairwise relationships are preserved during sleep, even though the animal is not moving and head-direction is undefined. Cells that co-fired during wake continue to do so during sleep, suggesting the coordination is not driven purely by a shared sensory input.
+
+
+### Modelling extracellular spike history effects with GLM
+
+
+The correlograms showed that pairwise coordination is preserved across brain states: co-active pairs during wake remain co-active during sleep, and anti-correlated pairs remain anti-correlated. The goal now is to quantify these functional interactions with a generalized linear model (GLM). Because cells influence each other, the recent spike history of one cell should help predict the activity of another.
+
+
+
+
+**Question:** Can we predict each neuron's spiking from the recent spike history of the population alone — without using the head-direction signal?
+
+To keep fitting times short we restrict the analysis to the first 3 minutes of the wake epoch.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# restrict wake epoch to first 3 minutes
+wake_ep = nap.IntervalSet(
+    start=wake_ep.start[0], end=wake_ep.start[0] + 3 * 60
+)
+```
+
+To use the GLM we first need to discretize the spike trains into time bins using pynapple's `count` method.
+
+**Question:** Can you bin the spike trains into 10 ms bins during `wake_ep` and call the result `count`?
+
+
+
+```{code-cell} ipython3
+bin_size = 0.01
+count =   # Bin spike trains during wake_ep
+print(count.shape)
+```
+
+
+
+We sort the neuron columns by preferred direction so that the population activity plots are easier to interpret.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+count = count[:, np.argsort(pref_ang.values)]
+```
+
+
+Our goal is to estimate pairwise functional interactions: the recent spike history of all neurons is used to predict each neuron's current activity. We start with a single neuron to build intuition before scaling to the full population.
+
+The simplest formulation uses counts in a fixed-length window $y_{t-i}, \dots, y_{t-1}$ to predict the next count $y_t$.
+
+Select neuron 0 from `count` (call it `neuron_count`) and define `epoch_one_spk` as the first 1.2 s of the recording for visualization.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# select a neuron's spike count time series
+neuron_count = count[:, 0]
+
+# restrict to a smaller time interval
+epoch_one_spk = nap.IntervalSet(
+    start=count.time_support.start[0], end=count.time_support.start[0] + 1.2
+)
+```
+#### Features Construction
+
+
+Let's set the spike history window — how far back in time we look to predict the current firing rate.
+
+- Set the window to 800 ms (0.8 s).
+- Visualize it with `doc_plots.plot_history_window`.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# set the size of the spike history window in seconds
+window_size_sec = 0.8
+
+fig = doc_plots.plot_history_window(neuron_count, epoch_one_spk, window_size_sec);
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-01.png)
+:::
+
+
+
+At each time point we slide the window by one bin and stack the spike counts into a matrix. Each row becomes the predictor for the rate in the next bin (the red rectangle in the figure).
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+doc_plots.run_animation(neuron_count, epoch_one_spk.start[0])
+```
+
+
+For time points $t$ smaller than the window size there is no complete history available. Zero-padding would introduce spurious edge artifacts, so instead nemos restricts predictions to $t \geq$ window size and fills earlier entries with NaN.
+
+You can construct this feature matrix with the [`HistoryConv`](https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.HistoryConv.html#nemos.basis.HistoryConv) basis.
+
+**Question: Can you:**
+    - Convert the window size in number of bins (call it `window_size`)
+    - Define an `HistoryConv` basis covering this window size (call it `history_basis`).
+    - Create the feature matrix with `history_basis.compute_features` (call it `input_feature`).
+
+
+
+```{code-cell} ipython3
+# convert the prediction window to bins (by multiplying with the sampling rate)
+window_size = int(window_size_sec * neuron_count.rate)
+# define the history bases
+history_basis = # Parameter indicate the window size in bins
+# create the feature matrix
+input_feature =  # Using history_basis compute features on neuron_count
+```
+
+
+
+NeMoS NaN-pads the first `window_size` time points where a full history is not available.
+ 
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# print the NaN indices along the time axis
+print("NaN indices:\n", np.where(np.isnan(input_feature[:, 0]))[0]) 
+```
+
+
+Let's verify that the feature matrix dimensions match our expectation.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+print(f"Time bins in counts: {neuron_count.shape[0]}")
+print(f"Convolution window size in bins: {window_size}")
+print(f"Feature shape: {input_feature.shape}")
+```
+
+
+Let's visualize the feature matrix over a few time bins to confirm it looks as expected.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+suptitle = "Input feature: Count History"
+neuron_id = 0
+fig = workshop_utils.plot_features(input_feature, count.rate, suptitle)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-02.png)
+:::
+
+
+
+The time axis runs backward because convolution reverses it — this is equivalent, and we can interpret each weight as the influence of a spike at that lag on the future firing rate. With 10 ms bins and a 0.8 s window the feature has 80 dimensions. We will learn these 80 weights by maximum likelihood.
+
+
+#### Fitting a single neuron model
+
+
+When working with real data it is good practice to train on one portion and evaluate on another — a process known as cross-validation. The optimal strategy depends on data structure (continuous time series vs. independent trials). Here we use a simple first-half/second-half split, which is reasonable provided the firing statistics are stationary across the recording.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# construct the train and test epochs
+duration = input_feature.time_support.tot_length("s")
+start = input_feature.time_support["start"]
+end = input_feature.time_support["end"]
+
+# define the interval sets
+first_half = nap.IntervalSet(start, start + duration / 2)
+second_half = nap.IntervalSet(start + duration / 2, end)
+```
+
+
+**Question: Can you fit the glm to the first half of the recording and visualize the maximum likelihood weights?**
+
+The model used should be a `nmo.glm.GLM` with the solver `LBFGS`.
+
+
+
+```{code-cell} ipython3
+# define the GLM object
+model = nmo.glm.GLM() # Parameter is the solver name
+# Fit over the training epochs
+model.fit(
+    input_feature.restrict(), # Parameter is the feature matrix restricted to the first half
+    neuron_count.restrict() # Parameter is the binned spike count time series restricted to the first half
+)
+```
+
+
+
+Each weight represents the influence of a spike at time lag $i$ on the log-rate at time $t$. Let's plot the learned filter.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = plt.figure()
+plt.title("Spike History Weights")
+plt.plot(np.arange(window_size) / count.rate, np.squeeze(model.coef_), lw=2, label="GLM raw history 1st Half")
+plt.axhline(0, color="k", lw=0.5)
+plt.xlabel("Time From Spike (sec)")
+plt.ylabel("Kernel")
+plt.legend()
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-03.png)
+:::
+
+
+
+The filter looks like a decaying exponential buried in noise, suggesting it can be described with far fewer degrees of freedom than 80 raw weights. If the noise reflects over-fitting, the weights should differ substantially between the two halves of the data.
+
+
+
+
+**Question: Can you fit a new model on the second half of the data and call it `model_second_half`?**
+
+
+
+```{code-cell} ipython3
+# fit on the other half of the data
+model_second_half =  # Parameter is the solver name
+model_second_half.fit(
+    , # Parameter is the feature matrix restricted to the second half
+     # Parameter is the binned spike count time series restricted to the second half
+)
+```
+
+
+
+Let's plot the weights learned on the second half of the data and compare them to those learned on the first half.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = plt.figure()
+plt.title("Spike History Weights")
+plt.plot(np.arange(window_size) / count.rate, np.squeeze(model.coef_),
+         label="GLM raw history 1st Half", lw=2)
+plt.plot(np.arange(window_size) / count.rate,  np.squeeze(model_second_half.coef_),
+         color="orange", label="GLM raw history 2nd Half", lw=2)
+plt.axhline(0, color="k", lw=0.5)
+plt.xlabel("Time From Spike (sec)")
+plt.ylabel("Kernel")
+plt.legend()
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-04.png)
+:::
+
+
+
+The high-frequency fluctuations are inconsistent between the two fits, confirming they reflect noise rather than signal — a hallmark of over-fitting. The underlying decaying trend is consistent, but masked by noise. At 1 ms resolution this would be far worse: 800 coefficients instead of 80. We need a way to reduce dimensionality while preserving the smooth structure of the filter.
+
+
+#### Reducing feature dimensionality
+
+NeMoS' `basis` module lets us reparametrize the filter in terms of a small set of smooth basis functions, greatly reducing dimensionality. For spike-history inputs the standard choice is the raised cosine log-stretched basis ([Pillow et al., 2005](https://www.jneurosci.org/content/25/47/11003)), shown below.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = doc_plots.plot_basis()
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-05.png)
+:::
+
+
+
+We initialize `RaisedCosineLogConv` by specifying the number of basis functions and the convolution window size. More basis functions give finer temporal resolution at the cost of additional parameters to estimate.
+
+**Question: Can you define the basis `RaisedCosineLogConv`and name it `basis`?**
+
+Basis parameters:
+- 8 basis functions.
+- Window size of 0.8sec.
+
+
+
+```{code-cell} ipython3
+# a basis object can be instantiated in "conv" mode for convolving the input.
+basis = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs=, # Number of basis functions
+    window_size= # Window size in bins
+)
+```
+
+
+
+The raw history predictor had 80 values per time point — an order of magnitude more than the 8 basis coefficients we use instead. Beyond the memory and speed gain, the compression directly reduces over-fitting by constraining the filter to a smooth subspace. At 1 ms resolution the saving would be two orders of magnitude.
+
+To apply the basis, call `compute_features` — this convolves the counts with the basis kernels without materializing the large raw-history matrix.
+
+**Question: Can you:**
+- Convolve the counts with the basis functions. (Call the output `conv_spk`)
+- Print the shape of `conv_spk` and compare it to `input_feature`.
+
+
+
+```{code-cell} ipython3
+# equivalent to
+# `nmo.convolve.create_convolutional_predictor(basis_kernels, neuron_count)`
+conv_spk = basis.compute_features() # Parameter is the binned spike count time series
+print(f"Raw count history as feature: {input_feature.shape}")
+print(f"Compressed count history as feature: {conv_spk.shape}")
+```
+
+
+
+Let's visualize the convolved features over two short windows — one with a single spike and one with multiple spikes — to see how the basis captures the history.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# Visualize the convolution results
+epoch_one_spk = nap.IntervalSet(8917.5, 8918.5)
+epoch_multi_spk = nap.IntervalSet(8979.2, 8980.2)
+
+fig = doc_plots.plot_convolved_counts(neuron_count, conv_spk, epoch_one_spk, epoch_multi_spk)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-06.png)
+:::
+
+#### Fit a GLM with basis features with reduced dimensionality
+
+
+Now that we have our "compressed" history feature matrix, we can fit the parameters for a new GLM model using these features.
+
+**Question: Can you fit the model using the compressed features? Call it `model_basis`.**
+
+
+
+```{code-cell} ipython3
+# use restrict on interval set training
+model_basis = nmo.glm.GLM() # Parameter is the solver name
+model_basis.fit(
+    , # Parameter is the convolved feature matrix restricted to the first half
+     # Parameter is the binned spike count time series restricted to the first half
+)
+```
+
+
+
+(head-direction-basis-users)=
+
+The model learned 8 coefficients — one per basis function. To recover the full history filter in the original time domain we project them back through the basis kernels.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+print(model_basis.coef_)
+```
+
+
+We reconstruct the history filter by multiplying the basis kernels (from `evaluate_on_grid`) by the learned coefficients using `np.matmul`.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# get the basis function kernels
+_, basis_kernels = basis.evaluate_on_grid(window_size)
+
+# multiply with the weights
+self_connection = np.matmul(basis_kernels, model_basis.coef_)
+
+print(self_connection.shape)
+```
+
+
+To check whether the basis model is more stable than the raw-history model, we refit on the second half and compare the two filter estimates.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# fit on the other half of the data
+model_basis_second_half = nmo.glm.GLM(solver_name="LBFGS").fit(
+    conv_spk.restrict(second_half), neuron_count.restrict(second_half)
+)
+self_connection_second_half = np.matmul(basis_kernels, model_basis_second_half.coef_)
+```
+
+
+Let's plot the weights learned on the second half of the data and compare them to those learned on the first half.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+time = np.arange(window_size) / count.rate
+fig = plt.figure()
+plt.title("Spike History Weights")
+plt.plot(time, np.squeeze(model.coef_), "k", alpha=0.3, label="GLM raw history 1st half")
+plt.plot(time, np.squeeze(model_second_half.coef_), alpha=0.3, color="orange", label="GLM raw history 2nd half")
+plt.plot(time, self_connection, "--k", lw=2, label="GLM basis 1st half")
+plt.plot(time, self_connection_second_half, color="orange", lw=2, ls="--", label="GLM basis 2nd half")
+plt.axhline(0, color="k", lw=0.5)
+plt.xlabel("Time from spike (sec)")
+plt.ylabel("Weight")
+plt.legend()
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-07.png)
+:::
+
+
+
+**Question:** Can you predict the firing rate from both `model` (raw history) and `model_basis` (basis)? Call the outputs `rate_history` and `rate_basis`, converting from spikes/bin to spikes/s.
+
+
+
+```{code-cell} ipython3
+rate_basis = model_basis.predict() # Parameter is the convolved feature matrix
+rate_history = model.predict() # Parameter is the original feature
+# convert the rate from spike/bin to spike/sec by multiplying with neuron_count.rate
+rate_basis = rate_basis * conv_spk.rate
+rate_history = rate_history * conv_spk.rate
+```
+
+
+
+Let's compare predicted and smoothed observed rates over a short test window.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# plot the rates
+fig = doc_plots.plot_rates_and_smoothed_counts(
+    neuron_count,
+    {"Self-connection raw history":rate_history, "Self-connection basis": rate_basis}
+);
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-08.png)
+:::
+
+#### All-to-all Connectivity
+
+
+We now extend the model to the full population: each neuron's firing rate is predicted from the recent spike history of all simultaneously recorded neurons. Convolving the basis with each neuron's counts gives a predictor array of shape `(num_time_points, num_neurons * num_basis_funcs)`.
+
+
+#### Preparing the features
+
+
+**Question:** Can you convolve all neurons and store the result in `convolved_count`?
+
+Because we are now passing a multi-neuron array, call `basis.set_input_shape(count)` first so the basis knows the expected input dimensionality.
+
+
+
+```{code-cell} ipython3
+# reset the input shape by passing the pop. count
+print(count.shape)
+print(152/8)
+basis.set_input_shape(count)
+# convolve all the neurons
+convolved_count = basis.compute_features() # Parameter is the binned spike count time series
+```
+
+
+
+Verify that the output shape is `(n_samples, n_basis_funcs × n_neurons)`.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+print(f"Convolved count shape: {convolved_count.shape}")
+```
+(head-direction-fit-users)=
+#### Fitting the Model
+
+
+We use [`PopulationGLM`](https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.PopulationGLM.html) to fit all neurons at once. Conditioned on past activity, the population log-likelihood is the sum of individual neuron log-likelihoods, so joint fitting is equivalent to fitting each neuron independently — but more convenient.
+
+**Question: Can you:**
+- Fit a `PopulationGLM`? Call the object `model`. Solver should be `LBFGS`.
+- Use Ridge regularization with a `regularizer_strength=0.1`?
+- Print the shape of the estimated coefficients.
+
+
+
+```{code-cell} ipython3
+model = nmo.glm.PopulationGLM(
+    regularizer=, # Regularizer type
+    solver_name=, # Solver name
+    regularizer_strength= # Regularization strength
+    ).fit( , ) # Parameters are the convolved feature matrix and the binned spike count time series
+print(f"Model coefficients shape: {model.coef_.shape}")
+```
+
+#### Comparing model predictions.
+
+
+The neuron columns are sorted by preferred direction.
+
+**Question:** Can you predict the firing rate of each neuron from `convolved_count` (call it `predicted_firing_rate`) and convert from spikes/bin to spikes/s?
+
+
+
+```{code-cell} ipython3
+predicted_firing_rate = model.predict() # Parameter is the convolved feature matrix
+# convert the rate from spike/bin to spike/sec by multiplying with conv_spk.rate
+predicted_firing_rate = predicted_firing_rate * conv_spk.rate
+```
+
+
+
+Let's compare the model-predicted tuning curves against the empirical ones and inspect the predicted firing rate over time.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# use pynapple for time axis for all variables plotted for tick labels in imshow
+fig = workshop_utils.plot_head_direction_tuning_model(tuning_curves, spikes, angle, 
+                                                predicted_firing_rate, threshold_hz=1,
+                                                start=8910, end=8960, cmap_label="hsv");
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-09.png)
+:::
+
+
+
+Let's overlay all three model predictions — raw history, single-neuron basis, and all-to-all basis — on the same neuron to assess the improvement.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = doc_plots.plot_rates_and_smoothed_counts(
+    neuron_count,
+    {"Self-connection: raw history": rate_history,
+     "Self-connection: basis": rate_basis,
+     "All-to-all: basis": predicted_firing_rate[:, 0]}
+)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-10.png)
+:::
+
+#### Visualizing the connectivity
+
+
+Finally, we can extract and visualize the pairwise coupling filters.
+
+**Question:** Can you reshape the coefficient matrix into a `(n_neurons, n_neurons, n_basis_funcs)` array using `basis.split_by_feature`?
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+# original shape of the weights
+print(f"GLM coeff: {model.coef_.shape}")
+```
+
+
+You can use the `split_by_feature` method of `basis` for this. It will reshape the coefficient vector into a 3D array.
+
+![Reshape coefficients](../../_static/coeff_reshape.png)
+
+
+
+```{code-cell} ipython3
+# split the coefficient vector along the feature axis (axis=0)
+weights_dict = basis.split_by_feature() # Parameter is the model coefficients. Axis is 0
+# The output is a dict with key the basis label, 
+# and value the reshaped coefficients
+weights = weights_dict["RaisedCosineLogConv"]
+print(f"Re-shaped coefficients: {weights.shape}")
+```
+
+
+
+The shape is `(sender_neuron, num_basis, receiver_neuron)`. We project back through the basis kernels with `np.einsum` to get the full coupling filters:
+
+`(sender, num_basis, receiver) × (time_lag, num_basis) → (sender, receiver, time_lag)`
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+responses = np.einsum("jki,tk->ijt", weights, basis_kernels)
+
+print(responses.shape)
+```
+
+
+Each entry in the grid shows how strongly neuron *j*'s past activity drives neuron *i*'s firing rate, with both axes sorted by preferred direction.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+predicted_tuning_curves = nap.compute_tuning_curves(
+    data=predicted_firing_rate,
+    features=angle, 
+    bins=61, 
+    epochs = angle.time_support,
+    range=(0, 2 * np.pi),
+    feature_names = ["angle"]
+    )
+
+                                                 
+fig = workshop_utils.plot_coupling_filters(responses, predicted_tuning_curves)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-11.png)
+:::
+
+
+
+These coupling filters capture the functional influence of each neuron on every other, sorted by preferred direction. Neurons with similar preferences show positive coupling; those with opposing preferences show negative coupling. These are functional connections inferred from shared tuning, not direct synaptic contacts.
+
+## Part 2: Calcium imaging
+### Analyzing calcium imaging with Pynapple
+
+
+We will now analyze calcium imaging data of head-direction cells recorded in the postsubiculum of the mouse.
+We will use a NWB file containing deconvolved calcium events of neurons and the head-direction of the animal over time.
+We will study the tuning properties of neurons with tuning curves, decode the head-direction from neural activity,
+and fit a GLM with a Gaussian observation model suited to continuous fluorescence data.
+
+
+#### Load data
+
+
+Similar to the previous section, we will start by loading a NWB file with `nap.load_file`.
+Let's fetch the data first.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+path = workshop_utils.fetch_data("A0670-221213.nwb")
+print(path)
+```
+
+```{code-cell} ipython3
+data =  # Load NWB file
+print(data)
+```
+
+
+
+There are multiple entries in the NWB file. The calcium transients are stored in the `RoiResponseSeries` entry.
+The head-direction of the animal is stored in the `ry` entry. Let's extract them.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+transients = data["RoiResponseSeries"]
+angle = data["ry"]
+print(transients)
+```
+
+
+To get an idea of the data, let's visualize the calcium transients of the first two neurons for the first 100 seconds of the recording.
+Instead of creating a new `IntervalSet` object, we can use the method `transients.get(0, 100)` to get a restricted version of the `Tsd` object.
+Contrary to `restrict`, which takes an `IntervalSet` object as input, `get` can take start and end times directly as input and does not 
+update the time support of the output `Tsd` object.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = plt.figure()
+plt.plot(transients[:,0:2].get(0, 100))
+plt.xlabel("Time (s)")
+plt.ylabel("Fluorescence (a.u.)")
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/01-04.png)
+:::
+
+#### Compute tuning curves
+
+
+We now have calcium transients and a behavioral feature (head-direction). We can compute **tuning curves** — the mean fluorescence of each neuron as a function of head-direction — using the same `nap.compute_tuning_curves` call as in Part 1. Remember to pass `feature_names = ["angle"]` so the output dimension is labelled.
+
+
+
+```{code-cell} ipython3
+tuning_curves = nap.compute_tuning_curves(
+    data=, # The neural activity as a TsdFrame
+    features=, # Which feature? Here the head-direction of the animal
+    bins=, # How many bins of feature space? Here 61 angular bins is a good number
+    range=, # The min and max of the bin array
+    feature_names= # Let's give a name to our feature for better labelling of the output.
+    )
+tuning_curves
+```
+
+#### Visualize tuning curves
+
+
+Let's visualize the tuning curves of the first two neurons.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = plt.figure()
+plt.subplot(221)
+tuning_curves[0].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
+plt.subplot(222, projection='polar')
+plt.plot(tuning_curves.angle, tuning_curves[0].values)
+plt.subplot(223)
+tuning_curves[1].plot()
+plt.ylabel("Mean Fluorescence (a.u.)")
+plt.subplot(224, projection='polar')
+plt.plot(tuning_curves.angle, tuning_curves[1].values)
+plt.tight_layout()
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/01-05.png)
+:::
+
+#### Decode head-direction from neural activity
+
+
+Now that we have the tuning curves, we can use them to decode the head-direction of the animal from the neural activity.
+Pynapple provides two functions to do this: `nap.decode_bayes` for spike counts and `nap.decode_template` for event rates or continuous data.
+Since the data are calcium transients and not spike counts, we will use the template matching method.
+
+**Question:** Can you decode the head-direction of the animal using the function `nap.decode_template` and call the variable `decoded_angle`?
+
+We will use the epoch `epochs = nap.IntervalSet(start=50, end=150)` to restrict the decoding to 100 seconds of the recording.
+
+
+
+```{code-cell} ipython3
+epochs = nap.IntervalSet(start=50, end=150)
+decoded_angle, dist = nap.decode_template(
+    tuning_curves= , # The tuning curves as an xarray object
+    data= , # The neural activity as a TsdFrame
+    bin_size= , # The bin size for decoding. Here I suggest 0.1 second
+    metric= , # The metric to compare neural activity to tuning curves. Here I suggest "correlation"
+    epochs=epochs
+    )
+```
+
+
+
+Let's compare the decoded angle against the true head-direction and inspect the decoder's confidence across angles over time.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig, (ax1, ax2) = plt.subplots(figsize=(8, 8), nrows=2, ncols=1, sharex=True)
+ax1.plot(angle.restrict(epochs), label="True")
+ax1.scatter(decoded_angle.times(), decoded_angle.values, label="Decoded", c="orange")
+ax1.legend(frameon=False, bbox_to_anchor=(1.0, 1.0))
+ax1.set_ylabel("Angle [rad]")
+
+im = ax2.imshow(
+    dist.values.T,
+    aspect="auto",
+    origin="lower",
+    cmap="inferno_r",
+    extent=(epochs.start[0], epochs.end[0], 0.0, 2*np.pi)
+)
+ax2.set_ylabel("Angle [rad]")
+cbar_ax2 = fig.add_axes([0.95, ax2.get_position().y0, 0.015, ax2.get_position().height])
+fig.colorbar(im, cax=cbar_ax2, label="Distance")
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/01-06.png)
+:::
+
+
+
+The top panel overlays the decoded angle on the true head-direction. The bottom panel shows the template-matching distance at each candidate angle over time — the trough tracks the decoded position. Try different `metric` values (`"euclidean"`, `"manhattan"`, `"correlation"`, `"jensenshannon"`, `"cosine"`) to see how the choice affects decoding accuracy.
+
+
+### Modelling calcium imaging data with GLM
+
+
+Calcium imaging data differs from spike data in two key ways: the signal is continuous-valued (fluorescence rather than counts), and its dynamics are slower due to calcium indicator kinetics. These differences call for two model changes: a Gaussian observation model instead of Poisson, and a basis window tuned to the slower temporal structure.
+
+
+#### Preprocessing the data
+
+
+Before fitting the GLM we keep only neurons significantly tuned to head-direction (Rayleigh test, p < 0.01). This reduces dimensionality and speeds up fitting.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+C = np.sum(tuning_curves.values * np.cos(tuning_curves.angle.values), axis=1) / np.sum(tuning_curves.values, axis=1)
+S = np.sum(tuning_curves.values * np.sin(tuning_curves.angle.values), axis=1) / np.sum(tuning_curves.values, axis=1)
+R = np.sqrt(C**2 + S**2)
+Z = tuning_curves.shape[1] * R**2
+p_value = np.exp(-Z)
+
+tokeep_neurons = np.where(p_value < 0.01)[0]
+transients = transients[:, tokeep_neurons]
+tuning_curves = tuning_curves[tokeep_neurons]
+print(f"Number of neurons after tuning selection: {transients.shape[1]}")
+```
+
+
+Finally, we sort the neurons based on their preferred head-direction.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+pref_ang = tuning_curves.idxmax(dim="angle")
+sort_idx = np.argsort(pref_ang.values)
+transients = transients[:, sort_idx]
+tuning_curves = tuning_curves[sort_idx]
+pref_ang = pref_ang[sort_idx]
+transients.set_info(pref_ang=pref_ang)
+print(transients)
+```
+#### Basis functions for calcium data
+
+
+We use the same `RaisedCosineLogConv` basis but with fewer, broader basis functions over a 0.5 s window — appropriate for the slower dynamics of calcium signals compared to spikes.
+
+**Question: Can you define a `RaisedCosineLogConv` basis and name it `calcium_basis`?**
+
+Basis parameters:
+- 4 basis functions.
+- Window size of 0.5 sec.
+
+
+
+```{code-cell} ipython3
+calcium_window_size_sec = 0.5
+calcium_window_size = int(calcium_window_size_sec * transients.rate)
+calcium_basis = nmo.basis.RaisedCosineLogConv(
+    n_basis_funcs= , # Number of basis functions
+    window_size=calcium_window_size
+)
+calcium_basis
+```
+
+#### Preparing the features
+
+
+We can convolve the calcium transients with the basis functions to get the feature matrix.
+
+**Question: Can you convolve all neurons and call the output `calcium_convolved`?**
+
+
+
+```{code-cell} ipython3
+calcium_convolved = calcium_basis.compute_features( ) # Parameter is the calcium transients
+print(f"Convolved calcium shape: {calcium_convolved.shape}")
+```
+
+#### Fitting a Gaussian Population GLM
+
+
+We fit a `PopulationGLM` with a Gaussian observation model, which is appropriate for continuous-valued fluorescence data. As before, we split the recording into a training first-half and a testing second-half.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+duration = calcium_convolved.time_support.tot_length("s")
+start = calcium_convolved.time_support["start"]
+end = calcium_convolved.time_support["end"]
+training_ep = nap.IntervalSet(start, start + duration / 2)
+testing_ep = nap.IntervalSet(start + duration / 2, end)
+```
+
+
+**Question: Can you fit a `PopulationGLM` with a Gaussian observation model, Ridge regularization, strength 0.001, and LBFGS solver? Call it `calcium_model`.**
+
+
+
+```{code-cell} ipython3
+calcium_model = nmo.glm.PopulationGLM(
+    observation_model= , # Observation model type
+    regularizer= , # Regularizer type
+    solver_name= , # Solver name
+    regularizer_strength= , # Regularization strength
+    solver_kwargs={"maxiter": 5000}
+    ).fit( , ) # Parameters are the convolved feature matrix and the calcium transients during training epoch
+print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
+```
+
+#### Predicting and visualizing the results
+
+
+**Question:** Can you predict the calcium signals on the test epoch and call the result `calcium_predicted`?
+
+
+
+```{code-cell} ipython3
+calcium_predicted = calcium_model.predict( ) # Parameter is the convolved feature matrix restricted to the testing epoch
+```
+
+
+
+Let's overlay the predicted and actual fluorescence traces for one neuron to assess how well the model tracks the signal.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+ep_to_plot = nap.IntervalSet(testing_ep.start[0], testing_ep.start[0] + 100)
+
+fig = plt.figure()
+plt.plot(transients.restrict(ep_to_plot)[:,0], label="Actual Calcium")
+plt.plot(calcium_predicted.restrict(ep_to_plot)[:,0], '--', label="Predicted Calcium")
+plt.legend()
+plt.title("Calcium Signal Prediction")
+plt.xlabel("Time (s)")
+plt.ylabel("Fluorescence Intensity")
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-12.png)
+:::
+
+
+
+As in Part 1, we project the coefficients back through the basis kernels to recover the coupling filters.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+calcium_weights_dict = calcium_basis.split_by_feature(calcium_model.coef_, axis=0)
+calcium_weights = calcium_weights_dict["RaisedCosineLogConv"]
+_, basis_kernels = calcium_basis.evaluate_on_grid(calcium_window_size)
+calcium_responses = np.einsum("jki,tk->ijt", calcium_weights, basis_kernels)
+print(calcium_responses.shape)
+```
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = workshop_utils.plot_coupling_filters(calcium_responses, tuning_curves)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-13.png)
+:::
+
+
+
+The self-coupling (diagonal) dominates because the GLM is largely fitting each neuron's own calcium decay. The slow indicator kinetics make past self-activity a very strong predictor of the current value, swamping the between-neuron interactions.
+
+
+#### Fitting a population GLM with masking (no self-coupling)
+
+
+To reveal cross-neuron interactions we need to block self-connections. We do this with a binary feature mask: a matrix of ones with zeros on the diagonal. Each row of the feature matrix is multiplied element-wise by the corresponding mask row, zeroing out the self-history predictors. We then tile the mask across basis functions to match the full feature dimensionality.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+n_neurons = transients.shape[1]
+mask = np.ones((n_neurons, n_neurons))
+mask = mask - np.eye(n_neurons)
+mask = np.repeat(mask, calcium_basis.n_basis_funcs, axis=0)
+
+fig = plt.figure()
+plt.imshow(mask, cmap="gray", aspect="auto", interpolation='none')
+plt.xticks(ticks=np.arange(n_neurons), labels=np.arange(n_neurons))
+plt.yticks(
+    ticks=np.arange(0, n_neurons * calcium_basis.n_basis_funcs, calcium_basis.n_basis_funcs),
+    labels=np.arange(n_neurons)
+)
+plt.title("Feature Mask (No Self-Coupling)")
+plt.xlabel("Neurons")
+plt.ylabel("Neurons x Basis Functions")
+plt.colorbar(label="Mask Value")
+```
+
+
+Now we can fit the `PopulationGLM` again using this feature mask to prevent self-coupling.
+
+**Question: Can you re-fit `calcium_model` adding the `feature_mask` argument?**
+
+
+
+```{code-cell} ipython3
+calcium_model = nmo.glm.PopulationGLM(
+    observation_model= , # Observation model type
+    regularizer= , # Regularizer type
+    solver_name= , # Solver name
+    regularizer_strength= , # Regularization strength
+    feature_mask= , # The feature mask to prevent self-coupling
+    solver_kwargs={"maxiter": 5000}
+    ).fit( , ) # Parameters are the convolved feature matrix and the calcium transients during training epoch
+print(f"Calcium model coefficients shape: {calcium_model.coef_.shape}")
+```
+
+#### Visualizing the coupling filters without self-coupling
+
+
+With self-coupling removed, the between-neuron interactions become visible. Let's extract and plot the filters.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+calcium_weights_dict = calcium_basis.split_by_feature(calcium_model.coef_, axis=0)
+calcium_weights = calcium_weights_dict["RaisedCosineLogConv"]
+_, basis_kernels = calcium_basis.evaluate_on_grid(calcium_window_size)
+calcium_responses_noself = np.einsum("jki,tk->ijt", calcium_weights, basis_kernels)
+print(calcium_responses_noself.shape)
+```
+```{code-cell} ipython3
+:tags: [render-all]
+
+fig = workshop_utils.plot_coupling_filters(calcium_responses_noself, tuning_curves)
+```
+
+:::{admonition} Figure check
+:class: dropdown
+![](../../_static/_check_figs/02-14.png)
+:::
+
+#### Conclusion
+
+
+You have applied the same modelling framework — pynapple for data handling and nemos for GLM fitting — to two very different recording modalities. The core workflow is identical; what changes is the observation model and the basis parameterization.
+
+**Things to explore:**
+- Vary `regularizer_strength` or switch to Lasso regularization and observe how the coupling filters change.
+- Add the head-direction signal as an external covariate alongside the spike history and compare the two models' predictions.
+- Downsample the calcium traces with `transients.bin_average(bin_size)` and re-fit to see how temporal resolution affects the results.
+- Replace `RaisedCosineLogConv` with `RaisedCosineLinearConv` and compare the filter shapes.
 

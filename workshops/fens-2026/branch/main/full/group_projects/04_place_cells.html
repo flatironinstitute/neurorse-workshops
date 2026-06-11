@@ -217,9 +217,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_calcium_imaging_analysis-users.html">Calcium imaging analysis of head-direction cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Head-direction cells: from pynapple to population GLMs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
@@ -399,15 +397,15 @@
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-data-wrangling">Part 1: Data wrangling</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-data-wrangling">Part 1: Data wrangling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#units">units</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rem-nrem-and-forward-ep">rem, nrem, and forward_ep</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#eeg">eeg</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#position">position</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-the-data-computing-speed-and-visualization">Restricting the data, computing speed, and visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-the-data-computing-speed-and-visualization">Restricting the data, computing speed, and visualization</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-position-to-forward-ep-and-confirm-that-there-are-no-nan-values-in-the-restricted-data-set">1.1 Restrict <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and confirm that there are no <code class="docutils literal notranslate"><span class="pre">nan</span></code> values in the restricted data set.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-velocity-using-the-derivative-method-on-position-during-forward-runs-use-np-abs-to-convert-the-velocity-into-speed">1.2 Calculate velocity using the <code class="docutils literal notranslate"><span class="pre">derivative</span></code> method on position during forward runs. Use <code class="docutils literal notranslate"><span class="pre">np.abs</span></code> to convert the velocity into speed.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">1.3 Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to this epoch.</a></li>
@@ -415,14 +413,14 @@
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-1d-neural-tuning-and-model-fitting">Part 2: 1D neural tuning and model fitting</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-1d-neural-tuning-and-model-fitting">Part 2: 1D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz">2.1 Restrict <code class="docutils literal notranslate"><span class="pre">spikes</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and select for units whose rate is at least 1 Hz and at most 10 Hz</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-with-respect-to-position-for-units-in-good-spikes">2.2 Compute tuning curves with respect to <code class="docutils literal notranslate"><span class="pre">position</span></code> for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-with-respect-to-speed-for-units-in-good-spikes">2.3 Compute tuning curves with respect to <code class="docutils literal notranslate"><span class="pre">speed</span></code> for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-tuning-curves-using-a-population-glm">Estimating tuning curves using a population GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-tuning-curves-using-a-population-glm">Estimating tuning curves using a population GLM</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-observations-by-counting-spikes-using-the-pynapple-method-count-on-our-tsgroup-of-spike-times-good-spikes">2.4 Compute observations by counting spikes, using the pynapple method <code class="docutils literal notranslate"><span class="pre">count</span></code>, on our <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> of spike times, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upsample-position-and-speed-using-the-pynapple-method-interpolate-with-the-time-stamps-from-counts">2.5 Upsample <code class="docutils literal notranslate"><span class="pre">position</span></code> and <code class="docutils literal notranslate"><span class="pre">speed</span></code> using the pynapple method <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> with the time stamps from <code class="docutils literal notranslate"><span class="pre">counts</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-the-basis-by-doing-the-following">2.6 Instantiate the basis by doing the following:</a></li>
@@ -434,19 +432,19 @@
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-signal-processing">Part 3: Signal processing</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-signal-processing">Part 3: Signal processing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">3.1 Define 100 log-spaced samples between 5 and 200 Hz using <code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above">3.2 Compute the wavelet transform of <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> using <code class="docutils literal notranslate"><span class="pre">freqs</span></code> defined above.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-lfp-to-forward-ep">3.3 Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range">3.4 Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter <code class="docutils literal notranslate"><span class="pre">lfp</span></code> for theta within a 6-12 Hz range.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">3.5 Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code>, using <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-pynapple-object-method-value-from-to-find-the-value-of-theta-band-corresponding-to-each-spike-time-from-unit-177">3.6 Use the pynapple object method <code class="docutils literal notranslate"><span class="pre">value_from</span></code> to find the value of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code> corresponding to each spike time from unit 177.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-value-of-theta-phase-corresponding-to-each-spike-time-from-unit-177">3.7 Compute the value of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> corresponding to each spike time from unit 177.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-position-corresponding-to-each-spike-for-example-unit-177">3.8 Compute the position corresponding to each spike for example unit 177.</a></li>
@@ -454,14 +452,14 @@
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">4.1 Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">4.2 Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes">4.3 Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> with <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions">4.4 Instantiate a <code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code> basis object for phase, using 10 basis functions.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis">4.5 Create the full basis by multiplying <code class="docutils literal notranslate"><span class="pre">position_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_basis</span></code> and adding <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s">4.6 Downsample <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> and a bin size of 0.01 s.</a></li>
@@ -473,8 +471,8 @@
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-neural-decoding">Part 5: Neural decoding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-neural-decoding">Part 5: Neural decoding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep">5.1 Use <code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-the-same-run-as-above-now-using-sliding-window-size-of-5-bins">5.2 Decode the same run as above, now using sliding window size of 5 bins.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins">5.3 Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span> and sliding window size of 5 bins.</a></li>
@@ -894,7 +892,7 @@ shape: (1, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f89251d2780&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f05a34d24e0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/d01c334aa224138c1b26a6ad0f5ff4b4f2b00195c5b5741a7e5202eec689b15f.png" src="../../_images/d01c334aa224138c1b26a6ad0f5ff4b4f2b00195c5b5741a7e5202eec689b15f.png" />
@@ -1009,7 +1007,7 @@ ex_speed =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f8926ad9d90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f05a1293bf0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/63cd27c2fbaad96b6f5c6c40b36d100930e8425df8d9bc7434d8b4fc26099cd1.png" src="../../_images/63cd27c2fbaad96b6f5c6c40b36d100930e8425df8d9bc7434d8b4fc26099cd1.png" />
@@ -2125,7 +2123,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f891b63c5e0&gt;</td>
+            <td class="value">&lt;function exp...x7f05900d1c60&gt;</td>
         </tr>
     
 
@@ -2578,7 +2576,7 @@ ex_cwt =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f89048a1d90&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f05831e2390&gt;
 </pre></div>
 </div>
 <img alt="../../_images/e5d02a4e147077e169e1ca53a6ec083737585203df1b24efe00da35e90459ade.png" src="../../_images/e5d02a4e147077e169e1ca53a6ec083737585203df1b24efe00da35e90459ade.png" />
@@ -2766,7 +2764,7 @@ dtype: float64, shape: (240384,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f88f4f60710&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f0582ea7dd0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/15ae7cdb51c36eb755364bf999bdc1f3003805f774eef542b356ba77c9f9d513.png" src="../../_images/15ae7cdb51c36eb755364bf999bdc1f3003805f774eef542b356ba77c9f9d513.png" />
@@ -2832,7 +2830,7 @@ spike_theta =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f88fc9c2c60&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f0582ed26c0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/1e8843d6d87de4846f7e3862c5adb7676aa297781a4086631d19b538a0077091.png" src="../../_images/1e8843d6d87de4846f7e3862c5adb7676aa297781a4086631d19b538a0077091.png" />
@@ -2898,7 +2896,7 @@ spike_phase =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f88fc9a62d0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7f0582e8a600&gt;
 </pre></div>
 </div>
 <img alt="../../_images/afaa41156f391ca37470e1876347cd56de9e7da8bf88794dd88312e4368d9839.png" src="../../_images/afaa41156f391ca37470e1876347cd56de9e7da8bf88794dd88312e4368d9839.png" />
@@ -5052,7 +5050,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7f891b63c5e0&gt;</td>
+            <td class="value">&lt;function exp...x7f05900d1c60&gt;</td>
         </tr>
     
 
@@ -5788,42 +5786,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_img417e5b626cea4492aec4de9362db7799">
+  <img id="_anim_img52340b3e4bc54caba180573ec647fee3">
   <div class="anim-controls">
-    <input id="_anim_slider417e5b626cea4492aec4de9362db7799" type="range" class="anim-slider"
+    <input id="_anim_slider52340b3e4bc54caba180573ec647fee3" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anim417e5b626cea4492aec4de9362db7799.set_frame(parseInt(this.value));">
+           oninput="anim52340b3e4bc54caba180573ec647fee3.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim417e5b626cea4492aec4de9362db7799.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim52340b3e4bc54caba180573ec647fee3.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anim417e5b626cea4492aec4de9362db7799.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim52340b3e4bc54caba180573ec647fee3.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anim417e5b626cea4492aec4de9362db7799.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim52340b3e4bc54caba180573ec647fee3.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anim417e5b626cea4492aec4de9362db7799.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim52340b3e4bc54caba180573ec647fee3.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anim417e5b626cea4492aec4de9362db7799.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim52340b3e4bc54caba180573ec647fee3.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anim417e5b626cea4492aec4de9362db7799.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim52340b3e4bc54caba180573ec647fee3.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anim417e5b626cea4492aec4de9362db7799.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim52340b3e4bc54caba180573ec647fee3.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anim417e5b626cea4492aec4de9362db7799.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim52340b3e4bc54caba180573ec647fee3.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anim417e5b626cea4492aec4de9362db7799.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim52340b3e4bc54caba180573ec647fee3.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select417e5b626cea4492aec4de9362db7799"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select52340b3e4bc54caba180573ec647fee3"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_417e5b626cea4492aec4de9362db7799"
+      <input type="radio" name="state" value="once" id="_anim_radio1_52340b3e4bc54caba180573ec647fee3"
              >
-      <label for="_anim_radio1_417e5b626cea4492aec4de9362db7799">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_417e5b626cea4492aec4de9362db7799"
+      <label for="_anim_radio1_52340b3e4bc54caba180573ec647fee3">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_52340b3e4bc54caba180573ec647fee3"
              checked>
-      <label for="_anim_radio2_417e5b626cea4492aec4de9362db7799">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_417e5b626cea4492aec4de9362db7799"
+      <label for="_anim_radio2_52340b3e4bc54caba180573ec647fee3">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_52340b3e4bc54caba180573ec647fee3"
              >
-      <label for="_anim_radio3_417e5b626cea4492aec4de9362db7799">Reflect</label>
+      <label for="_anim_radio3_52340b3e4bc54caba180573ec647fee3">Reflect</label>
     </form>
   </div>
 </div>
@@ -5833,9 +5831,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_img417e5b626cea4492aec4de9362db7799";
-    var slider_id = "_anim_slider417e5b626cea4492aec4de9362db7799";
-    var loop_select_id = "_anim_loop_select417e5b626cea4492aec4de9362db7799";
+    var img_id = "_anim_img52340b3e4bc54caba180573ec647fee3";
+    var slider_id = "_anim_slider52340b3e4bc54caba180573ec647fee3";
+    var loop_select_id = "_anim_loop_select52340b3e4bc54caba180573ec647fee3";
     var frames = new Array(54);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAEsCAYAAABQRZlvAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -29900,7 +29898,7 @@ iIiIiIgdUIEuIiIiIiIiYgf+H9o2XYpoPiu0AAAAAElFTkSuQmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anim417e5b626cea4492aec4de9362db7799 = new Animation(frames, img_id, slider_id, 100.0,
+        anim52340b3e4bc54caba180573ec647fee3 = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -30088,15 +30086,15 @@ smth_decoded_position, smth_decoded_prob =
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-data-wrangling">Part 1: Data wrangling</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-data-wrangling">Part 1: Data wrangling</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fetching-the-data">Fetching the data</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#units">units</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#rem-nrem-and-forward-ep">rem, nrem, and forward_ep</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#eeg">eeg</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#position">position</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-the-data-computing-speed-and-visualization">Restricting the data, computing speed, and visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#restricting-the-data-computing-speed-and-visualization">Restricting the data, computing speed, and visualization</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-position-to-forward-ep-and-confirm-that-there-are-no-nan-values-in-the-restricted-data-set">1.1 Restrict <code class="docutils literal notranslate"><span class="pre">position</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and confirm that there are no <code class="docutils literal notranslate"><span class="pre">nan</span></code> values in the restricted data set.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#calculate-velocity-using-the-derivative-method-on-position-during-forward-runs-use-np-abs-to-convert-the-velocity-into-speed">1.2 Calculate velocity using the <code class="docutils literal notranslate"><span class="pre">derivative</span></code> method on position during forward runs. Use <code class="docutils literal notranslate"><span class="pre">np.abs</span></code> to convert the velocity into speed.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-an-interval-set-for-forward-run-index-9-adding-2-seconds-to-the-end-of-the-interval-restrict-lfp-and-position-to-this-epoch">1.3 Create an interval set for forward run index 9, adding 2 seconds to the end of the interval. Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> and <code class="docutils literal notranslate"><span class="pre">position</span></code> to this epoch.</a></li>
@@ -30104,14 +30102,14 @@ smth_decoded_position, smth_decoded_prob =
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-1d-neural-tuning-and-model-fitting">Part 2: 1D neural tuning and model fitting</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-1d-neural-tuning-and-model-fitting">Part 2: 1D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-1d-tuning-curves-place-fields">Computing 1D tuning curves: place fields</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-spikes-to-forward-ep-and-select-for-units-whose-rate-is-at-least-1-hz-and-at-most-10-hz">2.1 Restrict <code class="docutils literal notranslate"><span class="pre">spikes</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code> and select for units whose rate is at least 1 Hz and at most 10 Hz</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-with-respect-to-position-for-units-in-good-spikes">2.2 Compute tuning curves with respect to <code class="docutils literal notranslate"><span class="pre">position</span></code> for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-tuning-curves-with-respect-to-speed-for-units-in-good-spikes">2.3 Compute tuning curves with respect to <code class="docutils literal notranslate"><span class="pre">speed</span></code> for units in <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-tuning-curves-using-a-population-glm">Estimating tuning curves using a population GLM</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-tuning-curves-using-a-population-glm">Estimating tuning curves using a population GLM</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-observations-by-counting-spikes-using-the-pynapple-method-count-on-our-tsgroup-of-spike-times-good-spikes">2.4 Compute observations by counting spikes, using the pynapple method <code class="docutils literal notranslate"><span class="pre">count</span></code>, on our <code class="docutils literal notranslate"><span class="pre">TsGroup</span></code> of spike times, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#upsample-position-and-speed-using-the-pynapple-method-interpolate-with-the-time-stamps-from-counts">2.5 Upsample <code class="docutils literal notranslate"><span class="pre">position</span></code> and <code class="docutils literal notranslate"><span class="pre">speed</span></code> using the pynapple method <code class="docutils literal notranslate"><span class="pre">interpolate</span></code> with the time stamps from <code class="docutils literal notranslate"><span class="pre">counts</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-the-basis-by-doing-the-following">2.6 Instantiate the basis by doing the following:</a></li>
@@ -30123,19 +30121,19 @@ smth_decoded_position, smth_decoded_prob =
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-signal-processing">Part 3: Signal processing</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-3-signal-processing">Part 3: Signal processing</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#getting-the-wavelet-decomposition">Getting the Wavelet Decomposition</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#define-100-log-spaced-samples-between-5-and-200-hz-using-np-geomspace">3.1 Define 100 log-spaced samples between 5 and 200 Hz using <code class="docutils literal notranslate"><span class="pre">np.geomspace</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-wavelet-transform-of-ex-lfp-using-freqs-defined-above">3.2 Compute the wavelet transform of <code class="docutils literal notranslate"><span class="pre">ex_lfp</span></code> using <code class="docutils literal notranslate"><span class="pre">freqs</span></code> defined above.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-theta-phase">Computing theta phase</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#restrict-lfp-to-forward-ep">3.3 Restrict <code class="docutils literal notranslate"><span class="pre">lfp</span></code> to <code class="docutils literal notranslate"><span class="pre">forward_ep</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-nap-apply-bandpass-filter-filter-lfp-for-theta-within-a-6-12-hz-range">3.4 Using <code class="docutils literal notranslate"><span class="pre">nap.apply_bandpass_filter</span></code>, filter <code class="docutils literal notranslate"><span class="pre">lfp</span></code> for theta within a 6-12 Hz range.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-sp-signal-hilbert-to-perform-the-hilbert-transform-of-theta-band-using-np-angle-to-extract-the-angle-convert-the-output-angle-to-a-0-2pi-range-and-store-the-result-in-a-tsd-object">3.5 Use <code class="docutils literal notranslate"><span class="pre">sp.signal.hilbert</span></code> to perform the Hilbert transform of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code>, using <code class="docutils literal notranslate"><span class="pre">np.angle</span></code> to extract the angle. Convert the output angle to a [0, 2pi] range, and store the result in a <code class="docutils literal notranslate"><span class="pre">Tsd</span></code> object.</a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-phase-precession-within-a-single-unit">Visualizing phase precession within a single unit</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-the-pynapple-object-method-value-from-to-find-the-value-of-theta-band-corresponding-to-each-spike-time-from-unit-177">3.6 Use the pynapple object method <code class="docutils literal notranslate"><span class="pre">value_from</span></code> to find the value of <code class="docutils literal notranslate"><span class="pre">theta_band</span></code> corresponding to each spike time from unit 177.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-value-of-theta-phase-corresponding-to-each-spike-time-from-unit-177">3.7 Compute the value of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> corresponding to each spike time from unit 177.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#compute-the-position-corresponding-to-each-spike-for-example-unit-177">3.8 Compute the position corresponding to each spike for example unit 177.</a></li>
@@ -30143,14 +30141,14 @@ smth_decoded_position, smth_decoded_prob =
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">4.1 Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">4.2 Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#apply-nap-compute-tuning-curves-with-features-on-our-subselected-group-of-units-good-spikes">4.3 Apply <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> with <code class="docutils literal notranslate"><span class="pre">features</span></code> on our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions">4.4 Instantiate a <code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code> basis object for phase, using 10 basis functions.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis">4.5 Create the full basis by multiplying <code class="docutils literal notranslate"><span class="pre">position_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_basis</span></code> and adding <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s">4.6 Downsample <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> and a bin size of 0.01 s.</a></li>
@@ -30162,8 +30160,8 @@ smth_decoded_position, smth_decoded_prob =
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-neural-decoding">Part 5: Neural decoding</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-5-neural-decoding">Part 5: Neural decoding</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decoding-position-from-spiking-activity">Decoding position from spiking activity</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-decode-bayes-to-decode-position-during-ex-run-ep">5.1 Use <code class="docutils literal notranslate"><span class="pre">nap.decode_bayes</span></code> to decode position during <code class="docutils literal notranslate"><span class="pre">ex_run_ep</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-the-same-run-as-above-now-using-sliding-window-size-of-5-bins">5.2 Decode the same run as above, now using sliding window size of 5 bins.</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#decode-again-using-a-smaller-bin-size-of-10-ms-and-sliding-window-size-of-5-bins">5.3 Decode again using a smaller bin size of <span class="math notranslate nohighlight">\(10 ms\)</span> and sliding window size of 5 bins.</a></li>

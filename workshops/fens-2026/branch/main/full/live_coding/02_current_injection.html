@@ -219,9 +219,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Analyzing head-direction cells with Pynapple</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/02_population_analysis_with_nemos-users.html">Fitting a population GLM model with Nemos</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/03_calcium_imaging_analysis-users.html">Calcium imaging analysis of head-direction cells</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Head-direction cells: from pynapple to population GLMs</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
@@ -403,19 +401,19 @@
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-and-preparation">Data structures and preparation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-analyses">Basic analyses</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data">Preparing data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-model-to-use-injection-history">Extending the model to use injection history</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing up</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-citation">Data citation</a></li>
 </ul>
 </li>
@@ -1611,11 +1609,11 @@ Attributes:
     occupancy:  [380400.   1467.  20091.  33549.  13764.  14193.  20199.  227...
     bin_edges:  [array([  0.        ,   9.27500021,  18.55000042,  27.8250006...
     fs:         20000.00000499643
-    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-6c5ddac4-b35e-4f56-8830-17c811ffce2c' class='xr-array-in' type='checkbox' checked><label for='section-6c5ddac4-b35e-4f56-8830-17c811ffce2c' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
+    rates:      [1.42755175]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 1</li><li><span class='xr-has-index'>current</span>: 15</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-d8210841-494d-48e1-b1a0-d1a8ea6eec0d' class='xr-array-in' type='checkbox' checked><label for='section-d8210841-494d-48e1-b1a0-d1a8ea6eec0d' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.0 0.0 0.0 0.0 3.961 ... 10.99 12.5 10.28 33.48 61.59 24.07</span></div><div class='xr-array-data'><pre>array([[ 0.        ,  0.        ,  0.        ,  0.        ,  0.        ,
          0.        ,  3.96059211,  1.75530981,  4.29461027, 10.99332548,
-        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-d63a59cc-89e9-4c07-bcff-f316fa87fa9f' class='xr-section-summary-in' type='checkbox' checked /><label for='section-d63a59cc-89e9-4c07-bcff-f316fa87fa9f' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-26d923ee-ec8c-4860-9d44-773b3f472852' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-26d923ee-ec8c-4860-9d44-773b3f472852' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9917b31e-7f52-4083-82b1-46822d9050e5' class='xr-var-data-in' type='checkbox'><label for='data-9917b31e-7f52-4083-82b1-46822d9050e5' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-bfa8950b-8e79-433e-8514-b05004a6b8d9' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-bfa8950b-8e79-433e-8514-b05004a6b8d9' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-4f34f6ca-02d2-4c98-bfa7-d3b6a0c6de96' class='xr-var-data-in' type='checkbox'><label for='data-4f34f6ca-02d2-4c98-bfa7-d3b6a0c6de96' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
+        12.50111617, 10.27538019, 33.47680536, 61.58583527, 24.06738869]])</pre></div></div></li><li class='xr-section-item'><input id='section-5ed7ef82-8ae4-4f26-9a7d-7fa7b7a37564' class='xr-section-summary-in' type='checkbox' checked /><label for='section-5ed7ef82-8ae4-4f26-9a7d-7fa7b7a37564' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0</div><input id='attrs-2d72aac4-af37-4f6a-9f83-9bb3f16fd5ad' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-2d72aac4-af37-4f6a-9f83-9bb3f16fd5ad' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-88543b0f-9cee-40c2-86c4-f7817f1b49ba' class='xr-var-data-in' type='checkbox'><label for='data-88543b0f-9cee-40c2-86c4-f7817f1b49ba' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>current</span></div><div class='xr-var-dims'>(current)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>4.638 13.91 23.19 ... 125.2 134.5</div><input id='attrs-fc33aef6-6415-4c5d-9ea6-d3c5b77d451b' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-fc33aef6-6415-4c5d-9ea6-d3c5b77d451b' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-43f5b7e3-75a7-470c-b2de-1055b371962a' class='xr-var-data-in' type='checkbox'><label for='data-43f5b7e3-75a7-470c-b2de-1055b371962a' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([  4.6375  ,  13.9125  ,  23.187501,  32.462501,  41.737501,  51.012501,
         60.287501,  69.562502,  78.837502,  88.112502,  97.387502, 106.662502,
-       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-71bb4e3d-ba21-48f1-b1d8-2a8688b7da47' class='xr-section-summary-in' type='checkbox' checked /><label for='section-71bb4e3d-ba21-48f1-b1d8-2a8688b7da47' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
+       115.937503, 125.212503, 134.487503])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-c84bdd7b-8c4d-4011-9d26-9e60ab80cca5' class='xr-section-summary-in' type='checkbox' checked /><label for='section-c84bdd7b-8c4d-4011-9d26-9e60ab80cca5' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[380400.   1467.  20091.  33549.  13764.  14193.  20199.  22788.  13971.
   12735.  11199.   9732.   4182.   1299.    831.]</dd><dt><span>bin_edges :</span></dt><dd>[array([  0.        ,   9.27500021,  18.55000042,  27.82500064,
         37.10000085,  46.37500106,  55.65000127,  64.92500149,
         74.2000017 ,  83.47500191,  92.75000212, 102.02500234,
@@ -2562,7 +2560,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7fe68b921620&gt;</td>
+            <td class="value">&lt;function exp...x7fbb95945800&gt;</td>
         </tr>
     
 
@@ -2976,7 +2974,7 @@ beginning of this notebook. Pynapple can help us again with this:</p>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe66f6f7c80&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbb797df7d0&gt;
 </pre></div>
 </div>
 <img alt="../../_images/b9aef767f8036b76c8803ffbfefe3c1a87da30c1e7d7c4f5143c8dabda10b946.png" src="../../_images/b9aef767f8036b76c8803ffbfefe3c1a87da30c1e7d7c4f5143c8dabda10b946.png" />
@@ -3948,7 +3946,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function exp...x7fe68b921620&gt;</td>
+            <td class="value">&lt;function exp...x7fbb95945800&gt;</td>
         </tr>
     
 
@@ -4353,7 +4351,7 @@ Predicted mean firing rate (current history): 1.4377416945860757 Hz
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fe66eb91310&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x7fbb94048d70&gt;
 </pre></div>
 </div>
 <img alt="../../_images/067cc1fb10566ce82725bc3b7076189936c1c00bc3b4325d565b720cc7e9347b.png" src="../../_images/067cc1fb10566ce82725bc3b7076189936c1c00bc3b4325d565b720cc7e9347b.png" />
@@ -4548,19 +4546,19 @@ with a probabilistic spiking model. Journal of Neuroscience, 25(47),
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#learning-objectives">Learning objectives</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pynapple">Pynapple</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures-and-preparation">Data structures and preparation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-analyses">Basic analyses</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nemos">NeMoS</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preparing-data">Preparing data</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fitting-the-model">Fitting the model</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#extending-the-model-to-use-injection-history">Extending the model to use injection history</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finishing-up">Finishing up</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exercises">Further Exercises</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-citation">Data citation</a></li>
 </ul>
 </li>
