@@ -539,10 +539,10 @@ First, let's download the data using  <a href="https://docs.internationalbrainla
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   0%|          | 0.00/4.96M [00:00&lt;?, ?B/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:03, 1.45MB/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:02, 1.57MB/s]
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 22.8MB/s]
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 23.4MB/s]
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;intervals_0&#39;, &#39;intervals_1&#39;, &#39;goCue_times&#39;, &#39;response_times&#39;, &#39;choice&#39;,
@@ -686,7 +686,7 @@ Finally, let's focus our analysis on one example session.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/2c6ad66fb068d0e092f489dc3748e6ca089f86e8a80289e7823a46ba6ef45ba7.png" src="../../_images/2c6ad66fb068d0e092f489dc3748e6ca089f86e8a80289e7823a46ba6ef45ba7.png" />
+<img alt="../../_images/c2ff0775fa28537cfecf1d3170af908313fde9e53c6e832710c1524bb7a92782.png" src="../../_images/c2ff0775fa28537cfecf1d3170af908313fde9e53c6e832710c1524bb7a92782.png" />
 </div>
 </div>
 <p>In Ashwood et al. (2022) <span id="cite1c"></span><a href="#ref1c">[1c]</a>, only sessions with fewer than 10 violations were used. To follow this work, we will now count the number of violations — trials where the animal made no choice (i.e. <code class="docutils literal notranslate"><span class="pre">choice</span> <span class="pre">==</span> <span class="pre">0</span></code>) — during the 50-50 trials. For this, we will:</p>
@@ -1019,7 +1019,7 @@ X[:, 0] =
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/45a251463a1744af1f353de3b8054ee76508ca8fddfb6448e4f19babc6ccad48.png" src="../../_images/45a251463a1744af1f353de3b8054ee76508ca8fddfb6448e4f19babc6ccad48.png" />
+<img alt="../../_images/1be978569866811796c04070a38d389eb176f43ddcea9d30bfd1409a61c10e69.png" src="../../_images/1be978569866811796c04070a38d389eb176f43ddcea9d30bfd1409a61c10e69.png" />
 </div>
 </div>
 </section>
@@ -1804,8 +1804,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f8708f81e40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f8708f81ee0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f8708e487c0&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f8708e48d60&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f360b46c720&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f360b46c7c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f360b3f3060&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f360b3f3600&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1839,7 +1839,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f87102d7e20&gt;</td>
+            <td class="value">&lt;function log...x7f360acba0c0&gt;</td>
         </tr>
     
 
@@ -1889,7 +1889,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f8708f81e40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f8708f81ee0&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f360b46c720&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f360b46c7c0&gt;, ...}</td>
         </tr>
     
 
@@ -1899,7 +1899,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f8708e487c0&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f8708e48d60&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f360b3f3060&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f360b3f3600&gt;, ...}</td>
         </tr>
     
 
@@ -2929,8 +2929,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f8708f81e40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f8708f81ee0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f8708e487c0&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f8708e48d60&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f360b46c720&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f360b46c7c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f360b3f3060&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f360b3f3600&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2964,7 +2964,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f87102d7e20&gt;</td>
+            <td class="value">&lt;function log...x7f360acba0c0&gt;</td>
         </tr>
     
 
@@ -3014,7 +3014,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f8708f81e40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f8708f81ee0&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f360b46c720&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f360b46c7c0&gt;, ...}</td>
         </tr>
     
 
@@ -3024,7 +3024,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f8708e487c0&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f8708e48d60&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f360b3f3060&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f360b3f3600&gt;, ...}</td>
         </tr>
     
 
@@ -3418,7 +3418,7 @@ We can plot the GLM weights obtained for our 3-state model.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/deea2cf64db436fbafbac1cfbcb29ca847bf823e22030c505818fed388904cbb.png" src="../../_images/deea2cf64db436fbafbac1cfbcb29ca847bf823e22030c505818fed388904cbb.png" />
+<img alt="../../_images/934613c0f1ea34964382e6d4ac536c5ec642aaf9e5f69631790560b93eb57503.png" src="../../_images/934613c0f1ea34964382e6d4ac536c5ec642aaf9e5f69631790560b93eb57503.png" />
 </div>
 </div>
 <p>We can see that the coefficients on state 1 have a large weight on the stimulus and low weight on the other predictors. Conversely, in states 2 and 3, the stimulus coefficient is comparatively lower. State 2 has a large positive weight on bias, while State 3 has a large negative weight on bias. Since the sign of our predictors indicates the side of evidence (&gt;0 : left; &lt;0 : right, see the table of variables in section 01) and their magnitude indicates the strength of such evidence, State 2 coefficients suggest a large bias towards leftward choice, while State 3 coefficients suggest a large bias to a rightward choice. All states have similarly low coefficients for prev. choice and wsls, with State 1 showing the smallest of them.</p>
@@ -3444,7 +3444,7 @@ We can plot the GLM weights obtained for our 3-state model.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/aa808437972dcfe6bfedb8eb5b27cf397e3036c77dc133077a907b57cf126eb9.png" src="../../_images/aa808437972dcfe6bfedb8eb5b27cf397e3036c77dc133077a907b57cf126eb9.png" />
+<img alt="../../_images/08eb0b4640ee0870f46493ad5dd0649eb6081c905420234a9729cea57b480c3f.png" src="../../_images/08eb0b4640ee0870f46493ad5dd0649eb6081c905420234a9729cea57b480c3f.png" />
 </div>
 </div>
 </section>
@@ -3520,7 +3520,7 @@ Let's plot the first 90 trials, corresponding to the first session.
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/4ed329725afa3d087de0c97e4921e737637a98cf4219066a44ec42f3ac72093c.png" src="../../_images/4ed329725afa3d087de0c97e4921e737637a98cf4219066a44ec42f3ac72093c.png" />
+<img alt="../../_images/0ded5bc8cdf896de4349d138e4aa4245c2b0b052c4ad1446591c09cdc2491e79.png" src="../../_images/0ded5bc8cdf896de4349d138e4aa4245c2b0b052c4ad1446591c09cdc2491e79.png" />
 </div>
 </div>
 <div class="render-all">
@@ -3532,7 +3532,7 @@ Let's now use the utility function to plot the three sessions shown in Fig. 3a o
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/0e45087b121a075daecbb55a8c03f4b9a66d165ccdc3aa47f1262350f53a76cf.png" src="../../_images/0e45087b121a075daecbb55a8c03f4b9a66d165ccdc3aa47f1262350f53a76cf.png" />
+<img alt="../../_images/45b5e7329c47598f8e041e52336d619f52d73beeb1163001564182ce77a2f2c2.png" src="../../_images/45b5e7329c47598f8e041e52336d619f52d73beeb1163001564182ce77a2f2c2.png" />
 </div>
 </div>
 <p>In these sessions, the posterior over latent states can be tracked at each trial, revealing strong confidence in state assignments and extended periods where a single state persists across consecutive trials.</p>
@@ -3686,7 +3686,7 @@ accuracies_to_plot_viterbi[1:] = accuracy_per_state
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/f577cd117ace6bb92c0d5520ab88d5649d4e6d1ccb702454837d241289ef8885.png" src="../../_images/f577cd117ace6bb92c0d5520ab88d5649d4e6d1ccb702454837d241289ef8885.png" />
+<img alt="../../_images/c7ecc2b2b3e8a4b3ae2364fc4180e304f27d5d656c950e50fa42cb43c43dde2a.png" src="../../_images/c7ecc2b2b3e8a4b3ae2364fc4180e304f27d5d656c950e50fa42cb43c43dde2a.png" />
 </div>
 </div>
 <p>According to state occupancy derived with the Viterbi algorithm, this mouse spent the majority of the trials (70%) in the engaged state and a lesser portion of trials in the other two states (30%). We can see that even though this mouse had an overall accuracy of 80.36%, it achieved a higher accuracy of 87.04% in the “engaged” state compared to 66.03% and 63.03% in the “bias left” and “bias right”, respectively.</p>
