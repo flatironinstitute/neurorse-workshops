@@ -212,7 +212,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../full/live_coding/04_glm_hmm.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
@@ -226,14 +225,12 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/04_glm_hmm-users.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../live_coding/04_glm_hmm-presenters.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 </details></li>
@@ -805,7 +802,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <h2>Avoiding overfitting<a class="headerlink" href="#avoiding-overfitting" title="Link to this heading">#</a></h2>
 <div class="render-all">
 <p>As we’ve seen throughout this workshop, it is important to avoid overfitting your model. We’ve covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.</p>
-<p>You might find it helpful to refer back to the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">advanced nemos (“How to know when to regularize” header)</span></a> notebook and / or to use the following pynapple functions: <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html">IntervalSet.set_diff</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.union.html">IntervalSet.union</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.restrict.html">TsGroup.restrict</a> (see <a class="reference internal" href="../../users/group_projects/04_place_cells-users.html#phase-precess-cv-users"><span class="std std-ref">phase precession notebook (“Aside: Cross-validation” admonition)</span></a>).</p>
+<p>You might find it helpful to use the following pynapple functions: <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html">IntervalSet.set_diff</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.IntervalSet.union.html">IntervalSet.union</a>, <a class="reference external" href="https://pynapple.org/generated/pynapple.TsGroup.restrict.html">TsGroup.restrict</a>.</p>
 <div class="hint admonition">
 <p class="admonition-title">Hints</p>
 <p>Throughout the rest of the notebook we’ll include hints. They’ll either be links back to earlier notebooks from this workshop that show an example of how to do the step in question, or a hint like this, which you can expand to get a hint.</p>
@@ -828,7 +825,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 </section>
 <section id="fit-a-glm">
 <span id="visual-glm-presenters"></span><h2>Fit a GLM<a class="headerlink" href="#fit-a-glm" title="Link to this heading">#</a></h2>
-<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-feature-selection-full"><span class="std std-ref">the advanced nemos notebook (“Feature selection” header)</span></a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
+<p>In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks covered in <a class="reference external" href="https://nemos.readthedocs.io/en/latest/how_to_guide/variable_selection_zero_basis.html">nemos documentation</a> or <a class="reference external" href="https://flatironinstitute.github.io/neurorse-workshops/workshops/feb-2026/branch/main/full/live_coding/03_nemos_advanced.html">this example</a> to evaluate whether which predictors are necessary for your model, which are the most important.</p>
 <p>You don’t have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.</p>
 <p>Good luck and we look forward to seeing what you come up with!</p>
 <section id="prepare-data">
@@ -855,7 +852,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <li><p>You can use this, but you may also want to perform additional computations on <code class="docutils literal notranslate"><span class="pre">stim</span></code> to construct other features.</p></li>
 </ul>
 </li>
-<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basis-full"><span class="std std-ref">current injection (“Extending the model to use injection history”)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-basis-full"><span class="std std-ref">place cell (“Select basis” header)</span></a> notebooks.)</p>
+<li><p>Decide on basis. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-basis-full"><span class="std std-ref">current injection (“Extending the model to use injection history”)</span></a> notebook or <a class="reference external" href="https://nemos.readthedocs.io/en/latest/how_to_guide/plot_06_sklearn_pipeline_cv_demo.html">nemos documentation</a>.)</p>
 <ul>
 <li><p>If you set the <code class="docutils literal notranslate"><span class="pre">label</span></code> argument for your basis objects, interpreting the output will be easier.</p></li>
 </ul>
@@ -1012,9 +1009,9 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <section id="construct-and-fit-your-model">
 <h3>Construct and fit your model<a class="headerlink" href="#construct-and-fit-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Decide on regularization. (Hint: review <a class="reference external" href="https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf">Edoardo’s presentation</a> and the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebook.)</p></li>
-<li><p>Initialize GLM. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebooks.)</p></li>
-<li><p>Call fit.  (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a> or <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebooks.)</p></li>
+<li><p>Decide on regularization. (Hint: review <a class="reference external" href="https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf">Edoardo’s presentation</a>.)</p></li>
+<li><p>Initialize GLM. (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a>.)</p></li>
+<li><p>Call fit.  (Hint: review the <a class="reference internal" href="../../full/live_coding/02_current_injection.html#current-inj-glm-full"><span class="std std-ref">current injection (“Fitting the model” header)</span></a>.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1240,7 +1237,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <h3>Score your model<a class="headerlink" href="#score-your-model" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>We trained on the train set, so now we score on the test set. (Or use cross-validation.)</p></li>
-<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a> notebook.)</p></li>
+<li><p>Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer to <a class="reference external" href="https://flatironinstitute.github.io/neurorse-workshops/workshops/feb-2026/branch/main/full/live_coding/03_nemos_advanced.html#how-to-know-when-to-regularize">this</a> notebook.)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1264,7 +1261,7 @@ rendered of this notebook, go <a class="reference internal" href="../../full/gro
 <li><p>Go back to the beginning of <a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html#visual-glm-users"><span class="std std-ref">this section</span></a> and try to improve your model’s performance (as reflected by increased score).</p></li>
 <li><p>Keep track of what you’ve tried and their respective scores.</p>
 <ul>
-<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a>, as we’ve seen in the <a class="reference internal" href="../../full/live_coding/03_nemos_advanced.html#sklearn-cv-full"><span class="std std-ref">place cell (“How to know when to regularize?” header)</span></a>, is useful:</p></li>
+<li><p>You can do this by hand, but constructing a <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html">pandas DataFrame</a> is useful:</p></li>
 </ul>
 </li>
 </ul>
