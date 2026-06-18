@@ -1,0 +1,3844 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Infer behavioral strategies during decision making with GLM-HMMs &#8212; CCN software workshop, FENS 2026  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'full/live_coding/04_glm_hmm';</script>
+    <link rel="icon" href="../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Head-direction cells: from pynapple to nemos GLM" href="../group_projects/01_head_direction/index.html" />
+    <link rel="prev" title="NeMoS Advanced: Cross-Validation and Model Selection" href="03_nemos_advanced.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <img src="../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark pst-js-only" alt="Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-fens-2026" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/fens2026?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../jupyter.html">Intro to Jupyter Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_current_injection.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../group_projects/01_head_direction/index.html">Head-direction cells: from pynapple to nemos GLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../group_projects/01_head_direction/part1_extracellular.html">Head-direction cells: Part 1 — Extracellular recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../group_projects/01_head_direction/part2_calcium_imaging.html">Head-direction cells: Part 2 — Calcium imaging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/04_glm_hmm-users.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/04_glm_hmm-presenters.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-fens-2026" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/full/live_coding/04_glm_hmm.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Infer behavioral strategies during decision making with GLM-HMMs</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-matrix">Design matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-fitting">Model fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-interpretation">Results interpretation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-visualize-the-fitted-parameters">How to visualize the fitted parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">jax</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s2">&quot;jax_enable_x64&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">65</span><span class="p">)</span>
+<span class="n">custom_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;axes.spines.right&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;axes.spines.top&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="n">style</span><span class="o">=</span><span class="s2">&quot;ticks&quot;</span><span class="p">,</span> <span class="n">palette</span><span class="o">=</span><span class="s2">&quot;colorblind&quot;</span><span class="p">,</span> <span class="n">font_scale</span><span class="o">=</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">rc</span><span class="o">=</span><span class="n">custom_params</span><span class="p">)</span><span class="c1">#, context=&quot;notebook&quot;)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/.venv/lib/python3.12/site-packages/nemos/_documentation_utils/plotting.py:39: UserWarning: plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation. Feel free to use them, but they will probably not work as intended with other datasets / in other contexts.
+  warnings.warn(
+</pre></div>
+</div>
+</div>
+</div>
+<div class="note render-all admonition">
+<p class="admonition-title">Working without pynapple</p>
+<p>Unlike the other notebooks in this workshop, here we work directly with <code class="docutils literal notranslate"><span class="pre">pandas</span></code> DataFrames and <code class="docutils literal notranslate"><span class="pre">numpy</span></code> arrays rather than pynapple objects. The IBL trial data is naturally tabular (one row per trial, with no continuous time axis), so we keep it as a DataFrame and show how NeMoS interfaces with plain NumPy. NeMoS also accepts pynapple <code class="docutils literal notranslate"><span class="pre">Tsd</span></code>/<code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> objects directly, and we point out as we go where that would change the workflow (for example, how session boundaries are handled).</p>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../_downloads/6dc37d01917fd8de3ecc5b013943d19b/04_glm_hmm.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">04_glm_hmm.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Jupyter Lab Reminders</p>
+<p>Reminder to presenter: Go to <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">&gt;</span> <span class="pre">Appearance</span></code>, select <code class="docutils literal notranslate"><span class="pre">Simple</span> <span class="pre">Interface</span></code> and turn off everything else to hide as many bars as possible. And maybe activate <code class="docutils literal notranslate"><span class="pre">Presentation</span> <span class="pre">Mode</span></code>.</p>
+<p>And turn on <code class="docutils literal notranslate"><span class="pre">View</span> <span class="pre">&gt;</span> <span class="pre">Render</span> <span class="pre">side-by-side</span></code> (shortcut <code class="docutils literal notranslate"><span class="pre">Shift+R</span></code>).</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="infer-behavioral-strategies-during-decision-making-with-glm-hmms">
+<h1>Infer behavioral strategies during decision making with GLM-HMMs<a class="headerlink" href="#infer-behavioral-strategies-during-decision-making-with-glm-hmms" title="Link to this heading">#</a></h1>
+<div class="render-all">
+<p>In this notebook, we will learn how to model behavioral choices by fitting a GLM-HMM, replicating the main findings of Ashwood et al. (2022) <span id="cite1a"></span><a href="#ref1a">[1a]</a>.</p>
+<p>In particular, we will analyze the IBL decision-making task (IBL et al., 2021) <span id="cite2a"></span><a href="#ref2a">[2a]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3a"></span><a href="#ref3a">[3a]</a>).</p>
+<p>During this task, a sinusoidal grating with varying contrast [0%-100%] appeared either at the right or left side of the screen. The mice indicated this side by turning a small wheel, which moved the stimulus toward the center of the screen (Burgess et al., 2021 <span id="cite3b"></span><a href="#ref3b">[3b]</a>). If the mice chose the side correctly, they would receive a water reward; if not, they would get a noise burst and a 1-second timeout. For the first 90 trials of each session, the stimulus appeared randomly on either side of the screen; after that, it appeared on one side with fixed probability 0.8, alternating randomly every 20–100 trials.</p>
+</div>
+<section id="dataset">
+<h2>Dataset<a class="headerlink" href="#dataset" title="Link to this heading">#</a></h2>
+<div class="render-all">
+Data for this notebook comes from the IBL decision-making task (IBL et al., 2021) <span id="cite2c"></span><a href="#ref2c">[2c]</a>, a variation of the two-alternative forced-choice perceptual detection task (Burgess et al., 2021 <span id="cite3c"></span><a href="#ref3c">[3c]</a>).
+</div>
+<div class="render-all">
+<p><img alt="Task illustration" src="../../_images/IBL_edited.png" /></p>
+<p><em>Task illustration. Modified from IBL et al. (2021)</em> <span id="cite2b"></span><a href="#ref2b">[2b]</a>.</p>
+</div>
+<div class="render-all">
+Each stimulus is presented either to the left or to the right, with a probability that varies over time.
+</div>
+<div class="render-all">
+<p><img alt="Probability Left Stimulus" src="../../_images/prob_left.svg" /></p>
+<p><em>Probability of left stimulus presentation over trials.</em></p>
+</div>
+</section>
+<section id="data-streaming">
+<h2>Data Streaming<a class="headerlink" href="#data-streaming" title="Link to this heading">#</a></h2>
+<div class="render-all">
+First, let's download the data using  <a href="https://docs.internationalbrainlab.org/notebooks_external/one_quickstart.html">Open Neurophysiology Environment (ONE)</a>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">jax.numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">jnp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">one.api</span><span class="w"> </span><span class="kn">import</span> <span class="n">ONE</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">nemos.glm_hmm.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">compute_rate_per_state</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+
+<span class="c1"># Instantiate the ONE object</span>
+<span class="n">data_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;NEMOS_DATA_DIR&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;IBL data dir:&quot;</span><span class="p">,</span> <span class="n">data_dir</span><span class="p">)</span>
+<span class="n">ONE</span><span class="o">.</span><span class="n">setup</span><span class="p">(</span><span class="n">base_url</span><span class="o">=</span><span class="s1">&#39;https://openalyx.internationalbrainlab.org&#39;</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">one</span> <span class="o">=</span> <span class="n">ONE</span><span class="p">(</span><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;international&#39;</span><span class="p">,</span> <span class="n">cache_dir</span><span class="o">=</span><span class="n">data_dir</span><span class="p">)</span>
+
+
+<span class="c1"># Then we need to choose our subject and run load_aggregate</span>
+<span class="n">subject</span> <span class="o">=</span> <span class="s2">&quot;CSHL_008&quot;</span>
+<span class="n">trials</span> <span class="o">=</span> <span class="n">one</span><span class="o">.</span><span class="n">load_aggregate</span><span class="p">(</span><span class="s1">&#39;subjects&#39;</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="s1">&#39;_ibl_subjectTrials.table&#39;</span><span class="p">)</span>
+
+<span class="c1"># We can see the information we get by printing the columns</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>IBL data dir: /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connected to https://openalyx.internationalbrainlab.org as user &quot;intbrainlab&quot;
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/.venv/lib/python3.12/site-packages/one/util.py:442: ALFWarning: No default revision for dataset aggregates/Subjects/churchlandlab/CSHL_008/_ibl_subjectTrials.table.pqt; using most recent
+  warnings.warn(
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   0%|          | 0.00/4.96M [00:00&lt;?, ?B/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:04, 1.11MB/s]
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 18.0MB/s]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;intervals_0&#39;, &#39;intervals_1&#39;, &#39;goCue_times&#39;, &#39;response_times&#39;, &#39;choice&#39;,
+       &#39;stimOn_times&#39;, &#39;contrastLeft&#39;, &#39;contrastRight&#39;, &#39;feedback_times&#39;,
+       &#39;feedbackType&#39;, &#39;rewardVolume&#39;, &#39;probabilityLeft&#39;,
+       &#39;firstMovement_times&#39;, &#39;goCueTrigger_times&#39;, &#39;stimOnTrigger_times&#39;,
+       &#39;stimOffTrigger_times&#39;, &#39;stimFreezeTrigger_times&#39;, &#39;stimOff_times&#39;,
+       &#39;stimFreeze_times&#39;, &#39;phase&#39;, &#39;position&#39;, &#39;quiescence&#39;, &#39;session&#39;,
+       &#39;task_protocol&#39;, &#39;protocol_number&#39;, &#39;session_start_time&#39;],
+      dtype=&#39;object&#39;)
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">trials</span></code> is a pandas DataFrame, with one row per trial and one column per measured variable. We can take a subset of those columns to keep only the relevant sources of information. We are modeling choice as result of observables and behavioral state, so we need choice, stimuli presented and reward obtained. Additionally, we want to keep the information of the probability of the stimulus appearing in a given position since this changes within a session, and the session id to know when sessions start and end.</p>
+<div class="render-users, render-presenter">
+We only need a subset of those columns, in particular we will work with:
+</div>
+<div class="render-all">
+<table style="border-collapse: collapse; width: 100%; font-size: 0.95em;">
+  <thead>
+    <tr style="background-color: #2c3e50; color: #ffffff;">
+      <th style="padding: 8px 12px; text-align: left; border: 1px solid #ccc; white-space: nowrap; width: 180px;">Variable</th>
+      <th style="padding: 8px 12px; text-align: left; border: 1px solid #ccc;">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="background-color: #f6f8fa;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">choice</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">mouse choice: 1 = choice left, -1 = choice right, 0 = violation (no response within the trial period). Since we are going to use a Bernoulli GLM, we will remap the variables to 1 = choice left and 0 = choice right at the end of preprocessing.</td>
+    </tr>
+    <tr style="background-color: #ffffff;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">contrastLeft</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">contrast of stimulus presented on the left</td>
+    </tr>
+    <tr style="background-color: #f6f8fa;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">contrastRight</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">contrast of stimulus presented on the right</td>
+    </tr>
+    <tr style="background-color: #ffffff;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">feedbackType</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">reward obtained: 1 = success, -1 = failure</td>
+    </tr>
+    <tr style="background-color: #f6f8fa;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">probabilityLeft</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">probability of stimulus being presented on the left of the screen</td>
+    </tr>
+    <tr style="background-color: #ffffff;">
+      <td style="padding: 8px 12px; border: 1px solid #ccc; font-family: monospace; font-weight: bold; color: #2c3e50; text-align: left; white-space: nowrap; width: 180px;">session</td>
+      <td style="padding: 8px 12px; border: 1px solid #ccc; text-align: left;">id of session</td>
+    </tr>
+  </tbody>
+</table>
+<p>Let’s extract what we need,</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">trials</span> <span class="o">=</span> <span class="n">trials</span><span class="p">[</span>
+    <span class="p">[</span>
+        <span class="s2">&quot;choice&quot;</span><span class="p">,</span> <span class="s2">&quot;contrastLeft&quot;</span><span class="p">,</span> <span class="s2">&quot;contrastRight&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;feedbackType&quot;</span><span class="p">,</span> <span class="s2">&quot;probabilityLeft&quot;</span><span class="p">,</span> <span class="s2">&quot;session&quot;</span>
+    <span class="p">]</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+and inspect its contents.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;choice </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">choice</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">, shape:  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;contrast right </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">contrastRight</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;reward </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">feedbackType</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;probability of stimulus on left </span><span class="se">\n</span><span class="s2">values: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">probabilityLeft</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;session </span><span class="se">\n</span><span class="s2">(some) values: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">unique</span><span class="p">()[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2">, data type: </span><span class="si">{</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>choice 
+values: [-1  0  1], data type: int64, shape:  
+
+contrast left 
+values: [0.     0.0625 0.125  0.25   0.5    1.        nan], data type: float64 
+
+contrast right 
+values: [0.     0.0625 0.125  0.25   0.5    1.        nan], data type: float64 
+
+reward 
+values: [-1  1], data type: int64 
+
+probability of stimulus on left 
+values: [0.  0.1 0.2 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1. ], data type: float64 
+
+session 
+(some) values: [&#39;e572b45a-34de-453a-b13e-4d90f0374f1e&#39;
+ &#39;deee6460-d6e6-4fbf-b7ce-72bc4825d21f&#39;
+ &#39;f511e37e-43be-4333-bc1a-2820d1863b30&#39;
+ &#39;f6824e3a-54c1-4cf3-a567-a559bf970d19&#39;
+ &#39;e3bdbfc1-75e9-4afd-996b-8bed6b8a4a3e&#39;], data type: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+Finally, let's focus our analysis on one example session.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Choose example session</span>
+<span class="n">sess_ex</span> <span class="o">=</span> <span class="s1">&#39;726b6915-e7de-4b55-a38e-ff4c461211d3&#39;</span>
+<span class="c1"># Subset session trials</span>
+<span class="n">trials_sess</span> <span class="o">=</span> <span class="n">trials</span><span class="p">[</span><span class="n">trials</span><span class="o">.</span><span class="n">session</span> <span class="o">==</span> <span class="n">sess_ex</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we will restrict the analysis to the first 90 trials of each session to match the work of Ashwood et al. (2022) <span id="cite1b"></span><a href="#ref1b">[1b]</a>. In this segment, the stimulus appears on the left and right with equal probability (0.5/0.5), and thus choices should be driven primarily by sensory evidence rather than learned expectations about stimulus probability.</p>
+<div class="render-user, render-presenter">
+<p>To match Ashwood et al. (2022) <a href="#ref1b">[1b]</a>, we will focus our analysis on the first 90 trials, in which the stimulus appears on the left and right with equal probability (50-50).</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">trials_sess</span><span class="p">[</span><span class="s2">&quot;probabilityLeft&quot;</span><span class="p">][:</span><span class="mi">300</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvspan</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;first 90 trials&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;skyblue&quot;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;P(stimulus on the left)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Trial number&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#TODO: add dropdown with original figures.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c2ff0775fa28537cfecf1d3170af908313fde9e53c6e832710c1524bb7a92782.png" src="../../_images/c2ff0775fa28537cfecf1d3170af908313fde9e53c6e832710c1524bb7a92782.png" />
+</div>
+</div>
+<p>In Ashwood et al. (2022) <span id="cite1c"></span><a href="#ref1c">[1c]</a>, only sessions with fewer than 10 violations were used. To follow this work, we will now count the number of violations — trials where the animal made no choice (i.e. <code class="docutils literal notranslate"><span class="pre">choice</span> <span class="pre">==</span> <span class="pre">0</span></code>) — during the 50-50 trials. For this, we will:</p>
+<ol class="arabic simple">
+<li><p>Subset sessions which include 50-50 trials</p></li>
+<li><p>Exclude sessions with &gt;10 violation trials</p></li>
+</ol>
+<div class="render-user, render-presenter">
+Let's do some pandas wrangling to keep only the sessions that have:
+<ul class="simple">
+<li><p>Filter to sessions that went through all testing blocks (in particular all 50-50, 20-80 and 80-20 blocks).</p></li>
+<li><p>Get the initial 50-50 trial block.</p></li>
+<li><p>Fewer than 10 invalid trials in that block.</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Invalid choice marker</span>
+<span class="n">viol_val</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="c1"># Selecting the sessions as in the Ashwood at al. paper</span>
+<span class="c1"># Boolean mask selecting sessions with 50-50, 20-80 and 80-20 blocks</span>
+<span class="n">has_three_blocks</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">trials</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;session&quot;</span><span class="p">)[</span><span class="s2">&quot;probabilityLeft&quot;</span><span class="p">]</span>
+          <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">==</span> <span class="p">{</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">})</span>
+<span class="p">)</span>
+
+<span class="c1"># Boolean mask selecing sessions with &lt; 10 invalid trials in the 50-50 block</span>
+<span class="n">violations</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">trials</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;probabilityLeft == 0.5&quot;</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;session&quot;</span><span class="p">)[</span><span class="s2">&quot;choice&quot;</span><span class="p">]</span>
+          <span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">viol_val</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+<span class="p">)</span>
+
+<span class="n">valid_sessions</span> <span class="o">=</span> <span class="n">has_three_blocks</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">has_three_blocks</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">violations</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">)]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# of sessions before restrictions </span><span class="si">{</span><span class="n">trials</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Keep only the 50/50 trials from valid sessions (row order preserved by the filter)</span>
+<span class="n">df_trials</span> <span class="o">=</span> <span class="n">trials</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;session in @valid_sessions and probabilityLeft == 0.5&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;# of sessions after restrictions </span><span class="si">{</span><span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># of sessions before restrictions 73
+# of sessions after restrictions 56
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="design-matrix">
+<h2>Design matrix<a class="headerlink" href="#design-matrix" title="Link to this heading">#</a></h2>
+<div class="render-all">
+Now, with the valid sessions, we can compute the design matrix. In our case, we are interested in building a design matrix with three predictors: signed contrast, previous choice and win stay lose shift.
+</div>
+<div class="render-all">
+<p><img alt="Design matrix" src="../../_images/design_matrix_table.svg" /></p>
+</div>
+<p>The first predictor, signed contrast, encodes sensory evidence in 1D. Within this predictor, magnitude reflects strength of evidence and sign encodes direction. The second predictor, previous choice, is a lagged version of current choice, and it reflects serial dependence on decisions. The third predictor, win-stay lose-shift, reflects the interaction between past choice and outcome. If a choice was rewarded on the previous trial, the predictor signals to “stay” (repeat that choice); if it was not rewarded, it signals to “switch” to the other alternative.</p>
+<p>Let’s go through the process of building the design matrix.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Extract the columns we need for the design: <code class="docutils literal notranslate"><span class="pre">choice</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastLeft</span></code>, <code class="docutils literal notranslate"><span class="pre">contrastRight</span></code> and <code class="docutils literal notranslate"><span class="pre">feedbackType</span></code> (reward).</p></li>
+</ul>
+</div>
+<div class="render-user render-presenter">
+```{code-cell} ipython3
+# Select the necessary columns (and reset_index + drop): 
+# choice, contrast of stimuli and reward
+choices = 
+stim_left = 
+stim_right = 
+rewarded = 
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We can select all the necessary values for the design matrix: </span>
+<span class="c1"># choice, contrast of stimuli and reward</span>
+<span class="n">choices</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;choice&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">stim_left</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastLeft&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">stim_right</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;contrastRight&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">rewarded</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;feedbackType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+<span class="n">session</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For the first predictor: signed contrast.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Replace <code class="docutils literal notranslate"><span class="pre">NaN</span></code> contrast values with <code class="docutils literal notranslate"><span class="pre">0</span></code> using <code class="docutils literal notranslate"><span class="pre">np.nan_to_num</span></code>.</p></li>
+<li><p>Compute the signed contrast (difference between left and right)</p></li>
+</ul>
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+# Replace nans with 0s
+stim_left = 
+stim_right = 
+# Compute the signed contrast (left - right)
+signed_contrast = 
+print(signed_contrast)
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replace nans with 0s</span>
+<span class="n">stim_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">stim_left</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">stim_right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">stim_right</span><span class="p">,</span> <span class="n">nan</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Compute the signed contrast</span>
+<span class="n">signed_contrast</span> <span class="o">=</span> <span class="n">stim_left</span> <span class="o">-</span> <span class="n">stim_right</span>
+
+<span class="c1"># print the design for the first valid session</span>
+<span class="n">select_session</span> <span class="o">=</span> <span class="n">df_trials</span><span class="p">[</span><span class="s2">&quot;session&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">valid_sessions</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">signed_contrast</span><span class="p">[</span><span class="n">select_session</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([ 0.125 ,  0.25  , -1.    , -1.    , -0.25  ,  0.25  ,  0.    ,
+        1.    ,  0.25  ,  1.    , -0.0625, -0.0625, -0.25  , -1.    ,
+       -0.25  ,  0.    ,  0.25  , -1.    , -0.25  ,  0.25  ,  0.125 ,
+        0.0625, -1.    ,  0.125 ,  0.    , -1.    ,  0.25  ,  0.25  ,
+       -1.    , -0.25  ,  1.    ,  1.    , -1.    ,  0.    ,  0.0625,
+       -0.25  ,  0.    , -1.    , -0.25  , -1.    ,  1.    ,  0.125 ,
+        0.0625, -0.0625,  0.0625, -0.25  , -1.    ,  1.    , -0.0625,
+        0.125 ,  1.    ,  1.    , -0.25  ,  0.125 ,  0.0625, -1.    ,
+       -0.25  ,  0.125 ,  0.125 ,  0.25  ,  0.    , -0.25  ,  0.125 ,
+        0.0625, -0.125 ,  1.    , -0.125 , -1.    ,  1.    ,  0.125 ,
+        0.25  , -0.25  ,  0.0625,  0.125 ,  0.    , -0.0625, -0.0625,
+       -0.125 ,  0.125 , -0.125 , -0.0625, -1.    ,  0.25  ,  1.    ,
+        0.125 ,  0.0625,  1.    , -0.25  ,  0.    ,  0.25  ])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Get the index of the valid trials with <code class="docutils literal notranslate"><span class="pre">np.flatnonzero</span></code></p></li>
+</ul>
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+valid_choices_idx =
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">valid_choices_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">choices</span> <span class="o">!=</span> <span class="n">viol_val</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With those two elements we can compute our design matrix for this session, we can do this using nemos basis objects:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> includes the past values of a sample as predictors (raw history). You choose how far back to go; here we only need one trial in the past. We use this to create the previous-choice predictor.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">IdentityEval</span></code> uses the samples themselves as predictors; its purpose is simply to wrap them as a NeMoS object. We use this for the stimuli predictor.</p></li>
+</ul>
+<p>It is very easy to declare our basis objects:</p>
+<div class="render-user, render-presenter">
+Let's use the `basis` module from  NeMoS to define the design matrix. 
+<p>What we need is:</p>
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">HistoryConv</span></code> basis to capture the choice history. We need a <code class="docutils literal notranslate"><span class="pre">window_size=1</span></code> to include the previous 1 choice as predictor.</p></li>
+</ul>
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+# Prev history with history of 1
+prev_choice_basis = nmo.basis.HistoryConv(1)
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Prev history with history of 1</span>
+<span class="n">prev_choice_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">HistoryConv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-user, render-presenter">
+<ul class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">IdentityEval</span></code> basis to include the signed contrast as is. This may seem pointless, but will allow us to add the basis and form the full design matrix in one go.</p></li>
+</ul>
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+# Identity basis for stimuli
+stimuli_basis = nmo.basis.IdentityEval()
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identity basis for stimuli</span>
+<span class="n">stimuli_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">IdentityEval</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>However, we are still missing one predictor: win-stay lose-shift. This is an interaction of previous choice with previous reward. To capture interaction between variables, we can use a <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html#n-dimensional-basis">multiplicative basis object</a>, which takes the outer product of the elements that compose it.</p>
+<div class="render-user, render-presenter">
+<ul class="simple">
+<li><p>Win-stay lose-shift is the product of previous choice and previous reward, <span class="math notranslate nohighlight">\(WSLS_t = c_{t-1} \cdot r_{t-1}\)</span>.</p></li>
+<li><p>We can use <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html#n-dimensional-basis">basis multiplication</a> to construct that predictor.</p></li>
+</ul>
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+# Create lagged reward basis
+prev_reward_basis = 
+# Multiply lagged reward basis with the lagged choice basis
+wsls_basis = 
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create lagged reward basis</span>
+<span class="n">prev_reward_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">HistoryConv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Multiply lagged reward basis with the lagged choice basis</span>
+<span class="n">wsls_basis</span> <span class="o">=</span> <span class="n">prev_choice_basis</span><span class="o">*</span><span class="n">prev_reward_basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now that we have all our bases, we can combine them into an additive basis and apply the transformation to the input data using <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>. This method is a high-level interface for transforming input data with the basis functions.</p>
+<p>Even though we need just a few lines of code, there is a lot going on. Here’s a breakdown of what is happening:</p>
+<ol class="arabic simple">
+<li><p>We will create an additive basis <code class="docutils literal notranslate"><span class="pre">basis_object</span></code> with our bases <code class="docutils literal notranslate"><span class="pre">stimuli_basis</span></code>, <code class="docutils literal notranslate"><span class="pre">wsls_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">prev_choice_basis</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">wsls_basis</span></code> is a multiplicative basis that takes two inputs.</p></li>
+<li><p>We will compute the features for our <code class="docutils literal notranslate"><span class="pre">basis_object</span></code> using <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>. Since the bases in our composite basis take a total of 4 inputs (<code class="docutils literal notranslate"><span class="pre">stimuli_basis</span></code> takes 1 input, <code class="docutils literal notranslate"><span class="pre">wsls_basis</span></code> takes 2 inputs and <code class="docutils literal notranslate"><span class="pre">prev_choice_basis</span></code> takes 1 input), we need to pass 4 features to <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>.</p></li>
+</ol>
+<div class="render-user, render-presenter">
+<ul class="simple">
+<li><p>Use <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html#additive-basis-object">basis addition</a> to define a basis which concatenates predictor.</p></li>
+<li><p>Create the design matrix by calling <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>. Select the valid trials by applying the <code class="docutils literal notranslate"><span class="pre">valid_choices_idx</span></code> boolean mask.</p></li>
+</ul>
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+# Create an additive basis using our three components
+basis_object =
+# Call compute features to get the raw model design
+X_unnormalized = 
+X_unnormalized[:5,:]
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an additive basis using our three components</span>
+<span class="n">basis_object</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">stimuli_basis</span> <span class="o">+</span>      <span class="c1"># will process one input</span>
+    <span class="n">wsls_basis</span> <span class="o">+</span>         <span class="c1"># will process two inputs (choice &amp; reward)</span>
+    <span class="n">prev_choice_basis</span>    <span class="c1"># will process one input</span>
+<span class="p">)</span>
+
+<span class="c1"># Compute features</span>
+<span class="n">X_unnormalized</span> <span class="o">=</span> <span class="n">basis_object</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span>
+    <span class="c1"># input 1 : processed with stimuli_basis</span>
+    <span class="n">signed_contrast</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 2 : wsls input 1: choice</span>
+    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 3 : wsls input 2: reward</span>
+    <span class="n">rewarded</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+    <span class="c1"># input 4 : processed with prev_choice</span>
+    <span class="n">choices</span><span class="p">[</span><span class="n">valid_choices_idx</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">X_unnormalized</span><span class="p">[:</span><span class="mi">5</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>An NVIDIA GPU may be present on this machine, but a CUDA-enabled jaxlib is not installed. Falling back to cpu.
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 1.   ,    nan,    nan],
+       [-1.   ,  1.   ,  1.   ],
+       [-0.25 , -1.   , -1.   ],
+       [ 0.   , -1.   , -1.   ],
+       [-0.125, -1.   , -1.   ]])
+</pre></div>
+</div>
+</div>
+</div>
+<p>And that’s it! We have our unnormalized design matrix with signed contrast, win-stay lose-shift and previous choice as predictors.</p>
+<p>As a last step, we normalize the signed-contrast predictor.</p>
+<div class="render-presenter, render-user">
+- Z-score the contrast values.
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+from scipy.stats import zscore
+# Copy the array (we'll need the un-normalized later)
+X = np.copy(X_unnormalized)
+# Apply z-scoring
+X[:, 0] = 
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Copy the array (we&#39;ll need the un-normalized later)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">X_unnormalized</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We z-score only the signed-contrast predictor (column 0), leaving the previous-choice and WSLS columns untouched since they are already on a unit scale. See the dropdown below for why this matters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">scipy.stats</span><span class="w"> </span><span class="kn">import</span> <span class="n">zscore</span>
+<span class="c1"># Apply z-scoring</span>
+<span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">zscore</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="dropdown admonition">
+<p class="admonition-title">Why do we normalize our stimuli predictor?</p>
+<p>When fitting a GLM-HMM, we are fitting a separate weight for each feature. However, if the features are on different numerical scales for reasons that are not related to the actual influence of each predictor, that renders the weights incomparable. Here we have three predictors:</p>
+<ul class="simple">
+<li><p>(1) Previous choice and (2) WSLS are always exactly −1 or +1. Their values are discrete and bounded, and they already share the same scale.</p></li>
+<li><p>(3) Stimuli contrast is continuous. While it can reach −1 or +1 (full contrast), this value rarely occurs.</p></li>
+</ul>
+<p>Because the contrast values are typically much smaller in magnitude than ±1, the model compensates by assigning them a larger weight to match the output scale — purely because the values are numerically smaller. In practice, this is an artifact of scale that does not reflect the true influence of the predictor.</p>
+<p>By normalizing, we rescale the predictor to have mean 0 and standard deviation 1. Previous choice and WSLS are already on a unit scale by construction — their values are symmetric around zero and their spread is naturally 1. This is why we only normalize signed contrast.</p>
+</div>
+<p>and see our design matrix.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot an heatmap showing the model design</span>
+<span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_design_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">choices</span><span class="p">,</span> <span class="n">valid_choices_idx</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1be978569866811796c04070a38d389eb176f43ddcea9d30bfd1409a61c10e69.png" src="../../_images/1be978569866811796c04070a38d389eb176f43ddcea9d30bfd1409a61c10e69.png" />
+</div>
+</div>
+</section>
+<section id="model-fitting">
+<h2>Model fitting<a class="headerlink" href="#model-fitting" title="Link to this heading">#</a></h2>
+<p>We are going to fit a Bernoulli GLM-HMM to model binary choices. For this reason, we must convert choices from the original <span class="math notranslate nohighlight">\(\{-1, 1\}\)</span> encoding to <span class="math notranslate nohighlight">\(\{0, 1\}\)</span>.</p>
+<div class="render-presenter, render-user">
+- For a Bernoulli GLM-HMM, observations must take values of 0 or 1.
+- Convert choices to 0s and 1s. 1: Left and 0: Right. You can use `np.where`.
+</div>
+<div class="render-user, render-presenter">
+```{code-cell} ipython3
+choices = 
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">choices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">choices</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">choices</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Importantly, we don’t fit all 3000 trials as one continuous block. The data come as separate sessions of 100–300 trials, and we fit the model on all of them together. For our model to be accurate, we need to tell it when our session boundaries are: we don’t want it to compute all sessions as if they were one.</p>
+<p>In NeMoS we have two ways of indicating the beginning of a new session. You can use a Pynapple Tsd or TsdFrame to demarcate sessions, in which case session demarcations are inherited from the pynapple objects. Alternatively, when using a design matrix and a choice vector that are Numpy objects, it is necessary to pass a session indicator. This can be:</p>
+<ul class="simple">
+<li><p>a boolean array or integer array of 1s and 0s indicating session starts, shape <code class="docutils literal notranslate"><span class="pre">(n_samples,)</span></code></p></li>
+<li><p>an integer array of indices marking session starts, shape <code class="docutils literal notranslate"><span class="pre">(n_sessions,)</span></code></p></li>
+<li><p>a pynapple.IntervalSet marking session epochs (requires either X or y to be a pynapple Tsd or TsdFrame to get timestamps)</p></li>
+</ul>
+<div class="render-presenter, render-user">
+- Create a vector containing the indices of each session start.
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+# Mark where session changes
+new_sess_mouse = 
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Mark where session changes</span>
+<span class="n">new_sess_mouse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flatnonzero</span><span class="p">(</span><span class="n">session</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">session</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="note dropdown render-all admonition">
+<p class="admonition-title">How does this one-liner find the session starts?</p>
+<p><code class="docutils literal notranslate"><span class="pre">session</span></code> holds one session id per trial. Comparing <code class="docutils literal notranslate"><span class="pre">session[1:]</span></code> (every trial but the first) with <code class="docutils literal notranslate"><span class="pre">session[:-1]</span></code> (every trial but the last) yields a boolean array that is <code class="docutils literal notranslate"><span class="pre">True</span></code> wherever a trial’s session id differs from the previous trial’s — that is, exactly at the session boundaries. <code class="docutils literal notranslate"><span class="pre">np.flatnonzero</span></code> returns the indices where this is <code class="docutils literal notranslate"><span class="pre">True</span></code>, and we add <code class="docutils literal notranslate"><span class="pre">1</span></code> because the comparison is shifted by one (position <code class="docutils literal notranslate"><span class="pre">i</span></code> in the comparison corresponds to trial <code class="docutils literal notranslate"><span class="pre">i+1</span></code>). The result is the array of indices at which a new session begins.</p>
+</div>
+<p>Let’s initialize the <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object. The only required parameter is the number of states. Ashwood et al. (2022) <span id="cite1d"></span><a href="#ref1d">[1d]</a> found that most mice used 3 decision-making states when performing this task. Following that work, we will initialize our <code class="docutils literal notranslate"><span class="pre">GLMHMM</span></code> object with 3 states.</p>
+<p>The likelihood of a GLM-HMM is non-convex, so the EM algorithm used to fit it can converge to different local optima depending on the starting parameters. NeMoS initializes the model for you: by default, the per-state intercepts are set to match the empirical choice probability, and the GLM coefficients are drawn from a Gaussian centered at zero with a small standard deviation. The <code class="docutils literal notranslate"><span class="pre">seed</span></code> argument controls this random draw, so in practice you should refit the model with several seeds and keep the solution with the highest log-likelihood.</p>
+<div class="render-presenter, render-user">
+- Initialize the `GLMHMM` object with 3 states and `regularizer="Ridge"`.
+- Set seed for trying different initial parameters (`jax.random.PRNGKey(number)`).
+- By default, the intercept is set to match the empirical choice probability, and the coefficients are set as random gaussian centered at zero with small standard deviation.
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+n_states = 3
+model = nmo.glm_hmm.GLMHMM(
+model
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_states</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm_hmm</span><span class="o">.</span><span class="n">GLMHMM</span><span class="p">(</span>
+    <span class="n">n_states</span><span class="p">,</span>
+    <span class="n">regularizer</span><span class="o">=</span><span class="s2">&quot;Ridge&quot;</span><span class="p">,</span>
+    <span class="c1"># change this to try multiple init</span>
+    <span class="n">seed</span><span class="o">=</span><span class="n">jax</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">PRNGKey</span><span class="p">(</span><span class="mi">12</span><span class="p">),</span> 
+<span class="p">)</span>
+
+<span class="n">model</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>.sk-global {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+.sk-global.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+.sk-global.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+.sk-global {
+  color: var(--sklearn-color-text);
+}
+
+.sk-global pre {
+  padding: 0;
+}
+
+.sk-global input.sk-hidden--visually {
+  border: 0;
+  clip-path: inset(100%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.sk-global div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+.sk-global div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+.sk-global div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+.sk-global div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+.sk-global div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+.sk-global div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.sk-global div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+.sk-global div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+.sk-global div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+.sk-global div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+.sk-global div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+.sk-global label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.sk-global label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+.sk-global label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+.sk-global label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+.sk-global div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.sk-global div.sk-label label.sk-toggleable__label,
+.sk-global div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+.sk-global div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+.sk-global div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+.sk-global div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+.sk-global div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+.sk-global div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+.sk-global a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+.sk-global a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+.sk-global a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+.sk-global a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-top-container.sk-global {
+  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
+   We need to set it to !important and add tabindex="0" in the HTML
+   to allow keyboard-only users to navigate the display. */
+  overflow-x: scroll !important;
+  max-width: 100%;
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover td {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table :is(td, th) {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td, .estimator-table th {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+td.fitted-att-type {
+    white-space: preserve nowrap;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+@supports(anchor-name: --doc-link) {
+    a.param-doc-link,
+    a.param-doc-link:link,
+    a.param-doc-link:visited {
+    anchor-name: --doc-link;
+    }
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+@supports(position-area: center right) {
+    .param-doc-description {
+    position-area: center right;
+    position: fixed;
+    margin-left: 0;
+    }
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.features {
+  font-family: monospace;
+  cursor: pointer;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: .20em;
+  margin-bottom: 0.5em;
+  font-size: inherit; /* Needed for jupyter */
+}
+
+.features.fitted {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features summary {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: .25em;
+}
+
+.features details[open] > summary {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features.fitted details[open] > summary {
+  background-color: var(--sklearn-color-fitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features details > summary .arrow::before {
+  content: "▸";
+  color: grey;
+}
+
+.features details[open] > summary .arrow::before {
+  content: "▾";
+}
+
+.features details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.features.fitted details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.features .features-container {
+  max-width: 15em;
+  max-height: 10em;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: .25em 0.1rem;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 0 0 .5em .5em;
+}
+
+.features.fitted .features-container {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features .image-container {
+  block-size: 1em;
+  inline-size: 1em;
+  padding: 0;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features .copy-paste-icon {
+  background-size: 1em 1em;
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%) opacity(60%);
+}
+
+.features .features-container table {
+  width: 100%;
+  margin: 0.01em;
+}
+
+.features .features-container table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.features .features-container table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.features .features-container table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.features .features-container table {
+  table-layout: inherit;
+}
+
+.features .features-container table td {
+  text-align: left;
+  padding: 0 0.5em;
+  border: 1px solid rgba(106, 105, 104, 0.232);
+  white-space: nowrap;
+  color: var(--sklearn-color-text);
+}
+
+.total_features {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+</style><body><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GLMHMM(
+    n_states=3,
+    observation_model=BernoulliObservations(),
+    inverse_link_function=logistic,
+    regularizer=Ridge(),
+    regularizer_strength=1.0,
+    solver_name=&#x27;LBFGS&#x27;,
+    maxiter=1000,
+    tol=1e-08,
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7fc656d8ca40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7fc656d8cae0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7fc656fe7380&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7fc656fe7920&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+                    
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('n_states',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">n_states</td>
+            <td class="value">3</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('observation_model',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">observation_model</td>
+            <td class="value">BernoulliObservations()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('inverse_link_function',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">inverse_link_function</td>
+            <td class="value">&lt;function log...x7fc6565ce3e0&gt;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('regularizer',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">regularizer</td>
+            <td class="value">Ridge()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_name',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_name</td>
+            <td class="value">&#x27;LBFGS&#x27;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_kwargs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_kwargs</td>
+            <td class="value">{}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('seed',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">seed</td>
+            <td class="value">Array([ 0, 12], dtype=uint32)</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('hmm_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">hmm_initialization_funcs</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7fc656d8ca40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7fc656d8cae0&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('model_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">model_initialization_funcs</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7fc656fe7380&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7fc656fe7920&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('regularizer_strength',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">regularizer_strength</td>
+            <td class="value">1.0</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('dirichlet_initial_proba',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">dirichlet_initial_proba</td>
+            <td class="value">None</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('dirichlet_transition_proba',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">dirichlet_transition_proba</td>
+            <td class="value">None</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('maxiter',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">maxiter</td>
+            <td class="value">1000</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('tol',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">tol</td>
+            <td class="value">1e-08</td>
+        </tr>
+    
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    
+        <div class="estimator-table">
+            <details>
+                <summary>Fitted attributes</summary>
+                <table class="parameters-table">
+                    <tbody>
+                        <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        </tr>
+                        
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">coef_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">dof_resid_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">initial_prob_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">intercept_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">scale_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">solver_state_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">transition_prob_</a></td>
+           <td class="fitted-att-type">NoneType</td>
+           <td>None</td>
+
+
+       </tr>
+    
+                    </tbody>
+                </table>
+            </details>
+        </div>
+    </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
+ SPDX-License-Identifier: BSD-3-Clause
+*/
+
+function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+
+    const parent = element.parentElement;
+    if (!parent || !parent.nextElementSibling) {
+        console.warn('Expected copy-paste icon is missing from the DOM structure');
+        return;
+    }
+
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+/**
+ * Copy the list of feature names formatted as a Python list.
+ *
+ * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
+ *   contain a `details` element and a table containing feature named.
+ * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
+ */
+function copyFeatureNamesToClipboard(element) {
+    var detailsElem = element.closest('.features').querySelector('details');
+    var wasOpen = detailsElem.open;
+    detailsElem.open = true;
+    var content = element.closest('.features').querySelector('tbody')
+                  .innerText.trim();
+    if (!wasOpen) detailsElem.open = false;
+    const rows = content.split('\n').map(row => `    "${row}"`);
+    const formattedText = `[\n${rows.join(',\n')},\n]`;
+    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalStyle = element.style;
+    const copyMark = document.createElement('span');
+    copyMark.innerHTML = '✔';
+    copyMark.style.color = 'blue';
+    copyMark.style.fontSize = '1em';
+
+    navigator.clipboard.writeText(formattedText)
+        .then(() => {
+            element.style.display = 'none';
+            element.parentElement.appendChild(copyMark);
+
+            setTimeout(() => {
+                copyMark.remove();
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'orange';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        });
+    return false;
+}
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script></body></div></div>
+</div>
+<p>Once we created our object, we can fit our model. The fit function takes two mandatory arguments: the design matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> we created above and the <code class="docutils literal notranslate"><span class="pre">choices</span></code>. Additionally, we will also include <code class="docutils literal notranslate"><span class="pre">new_sess_mouse</span></code>, the new session indicator.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Fit the model providing the <code class="docutils literal notranslate"><span class="pre">new_sess_mouse</span></code> markers as the <code class="docutils literal notranslate"><span class="pre">session_starts</span></code> argument of <code class="docutils literal notranslate"><span class="pre">model.fit</span></code>.</p></li>
+</ul>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> 
+    <span class="n">choices</span><span class="p">,</span>
+    <span class="n">session_starts</span><span class="o">=</span><span class="n">new_sess_mouse</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>.sk-global {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+.sk-global.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+.sk-global.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+.sk-global {
+  color: var(--sklearn-color-text);
+}
+
+.sk-global pre {
+  padding: 0;
+}
+
+.sk-global input.sk-hidden--visually {
+  border: 0;
+  clip-path: inset(100%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.sk-global div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+.sk-global div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+.sk-global div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+.sk-global div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+.sk-global div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+.sk-global div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.sk-global div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+.sk-global div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+.sk-global div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+.sk-global div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+.sk-global div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+.sk-global label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+.sk-global label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+.sk-global label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+.sk-global label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+.sk-global div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.sk-global input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.sk-global input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+.sk-global div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+.sk-global div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.sk-global div.sk-label label.sk-toggleable__label,
+.sk-global div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+.sk-global div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+.sk-global div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+.sk-global div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+.sk-global div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+.sk-global div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+.sk-global div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+.sk-global div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.sk-global div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+.sk-global a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+.sk-global a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+.sk-global a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+.sk-global a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-top-container.sk-global {
+  /* pydata-sphinx-theme hides overflow, so scrolling is disabled.
+   We need to set it to !important and add tabindex="0" in the HTML
+   to allow keyboard-only users to navigate the display. */
+  overflow-x: scroll !important;
+  max-width: 100%;
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover td {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table :is(td, th) {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td, .estimator-table th {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+td.fitted-att-type {
+    white-space: preserve nowrap;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+@supports(anchor-name: --doc-link) {
+    a.param-doc-link,
+    a.param-doc-link:link,
+    a.param-doc-link:visited {
+    anchor-name: --doc-link;
+    }
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+@supports(position-area: center right) {
+    .param-doc-description {
+    position-area: center right;
+    position: fixed;
+    margin-left: 0;
+    }
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.features {
+  font-family: monospace;
+  cursor: pointer;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: .20em;
+  margin-bottom: 0.5em;
+  font-size: inherit; /* Needed for jupyter */
+}
+
+.features.fitted {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features summary {
+  cursor: pointer;
+  display: flex;
+  margin-bottom: 0;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  padding: .25em;
+}
+
+.features details[open] > summary {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features.fitted details[open] > summary {
+  background-color: var(--sklearn-color-fitted-level-2);
+  border-radius: .20em 0 0 0;
+}
+
+.features details > summary .arrow::before {
+  content: "▸";
+  color: grey;
+}
+
+.features details[open] > summary .arrow::before {
+  content: "▾";
+}
+
+.features details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+.features.fitted details:hover > summary {
+  margin: 0;
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+.features .features-container {
+  max-width: 15em;
+  max-height: 10em;
+  overflow: auto;
+  scrollbar-width: thin;
+  padding: .25em 0.1rem;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 0 0 .5em .5em;
+}
+
+.features.fitted .features-container {
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+.features .image-container {
+  block-size: 1em;
+  inline-size: 1em;
+  padding: 0;
+  margin: 0%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.features .copy-paste-icon {
+  background-size: 1em 1em;
+  width: 1em;
+  height: 1em;
+  filter: grayscale(100%) opacity(60%);
+}
+
+.features .features-container table {
+  width: 100%;
+  margin: 0.01em;
+}
+
+.features .features-container table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.features .features-container table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.features .features-container table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.features .features-container table {
+  table-layout: inherit;
+}
+
+.features .features-container table td {
+  text-align: left;
+  padding: 0 0.5em;
+  border: 1px solid rgba(106, 105, 104, 0.232);
+  white-space: nowrap;
+  color: var(--sklearn-color-text);
+}
+
+.total_features {
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+</style><body><div id="sk-container-id-2" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>GLMHMM(
+    n_states=3,
+    observation_model=BernoulliObservations(),
+    inverse_link_function=logistic,
+    regularizer=Ridge(),
+    regularizer_strength=1.0,
+    solver_name=&#x27;LBFGS&#x27;,
+    maxiter=1000,
+    tol=1e-08,
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7fc656d8ca40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7fc656d8cae0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7fc656fe7380&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7fc656fe7920&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+                    
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('n_states',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">n_states</td>
+            <td class="value">3</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('observation_model',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">observation_model</td>
+            <td class="value">BernoulliObservations()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('inverse_link_function',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">inverse_link_function</td>
+            <td class="value">&lt;function log...x7fc6565ce3e0&gt;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('regularizer',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">regularizer</td>
+            <td class="value">Ridge()</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_name',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_name</td>
+            <td class="value">&#x27;LBFGS&#x27;</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('solver_kwargs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">solver_kwargs</td>
+            <td class="value">{}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('seed',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">seed</td>
+            <td class="value">Array([ 0, 12], dtype=uint32)</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('hmm_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">hmm_initialization_funcs</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7fc656d8ca40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7fc656d8cae0&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('model_initialization_funcs',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">model_initialization_funcs</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7fc656fe7380&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7fc656fe7920&gt;, ...}</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('regularizer_strength',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">regularizer_strength</td>
+            <td class="value">1.0</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('dirichlet_initial_proba',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">dirichlet_initial_proba</td>
+            <td class="value">None</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('dirichlet_transition_proba',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">dirichlet_transition_proba</td>
+            <td class="value">None</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('maxiter',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">maxiter</td>
+            <td class="value">1000</td>
+        </tr>
+    
+
+        <tr class="default">
+            <td><i class="copy-paste-icon"
+                 onclick="copyToClipboard('tol',
+                          this.parentElement.nextElementSibling)"
+            ></i></td>
+            <td class="param">tol</td>
+            <td class="value">1e-08</td>
+        </tr>
+    
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    
+        <div class="estimator-table">
+            <details>
+                <summary>Fitted attributes</summary>
+                <table class="parameters-table">
+                    <tbody>
+                        <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Value</th>
+                        </tr>
+                        
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">coef_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3, 3)</td>
+           <td>Array([[ 1.59...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">dof_resid_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](1,)</td>
+           <td>Array([5019.], dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">initial_prob_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([0.2341...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">intercept_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([-2.198...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">scale_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3,)</td>
+           <td>Array([2.7182...dtype=float64)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">solver_state_</a></td>
+           <td class="fitted-att-type">EMState</td>
+           <td>EMState(
+  da...erged=bool[]
+)</td>
+
+
+       </tr>
+    
+
+       <tr class="default">
+           <td class="param"><a class="param-doc-link" style="text-decoration:none;">transition_prob_</a></td>
+           <td class="fitted-att-type">ArrayImpl[float64](3, 3)</td>
+           <td>Array([[0.956...dtype=float64)</td>
+
+
+       </tr>
+    
+                    </tbody>
+                </table>
+            </details>
+        </div>
+    </div></div></div></div></div><script>/*  Authors: The scikit-learn developers
+ SPDX-License-Identifier: BSD-3-Clause
+*/
+
+function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+
+    const parent = element.parentElement;
+    if (!parent || !parent.nextElementSibling) {
+        console.warn('Expected copy-paste icon is missing from the DOM structure');
+        return;
+    }
+
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+/**
+ * Copy the list of feature names formatted as a Python list.
+ *
+ * @param {HTMLElement} element - The copy button inside a `.features` block; its siblings
+ *   contain a `details` element and a table containing feature named.
+ * @returns {boolean} Always returns `false` so callers can prevent the default click behavior.
+ */
+function copyFeatureNamesToClipboard(element) {
+    var detailsElem = element.closest('.features').querySelector('details');
+    var wasOpen = detailsElem.open;
+    detailsElem.open = true;
+    var content = element.closest('.features').querySelector('tbody')
+                  .innerText.trim();
+    if (!wasOpen) detailsElem.open = false;
+    const rows = content.split('\n').map(row => `    "${row}"`);
+    const formattedText = `[\n${rows.join(',\n')},\n]`;
+    const originalHTML = element.innerHTML.replace('✔', '');
+    const originalStyle = element.style;
+    const copyMark = document.createElement('span');
+    copyMark.innerHTML = '✔';
+    copyMark.style.color = 'blue';
+    copyMark.style.fontSize = '1em';
+
+    navigator.clipboard.writeText(formattedText)
+        .then(() => {
+            element.style.display = 'none';
+            element.parentElement.appendChild(copyMark);
+
+            setTimeout(() => {
+                copyMark.remove();
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'orange';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 1000);
+        });
+    return false;
+}
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-2');</script></body></div></div>
+</div>
+<p>That’s all it takes!</p>
+</section>
+<section id="results-interpretation">
+<h2>Results interpretation<a class="headerlink" href="#results-interpretation" title="Link to this heading">#</a></h2>
+<section id="how-to-visualize-the-fitted-parameters">
+<h3>How to visualize the fitted parameters<a class="headerlink" href="#how-to-visualize-the-fitted-parameters" title="Link to this heading">#</a></h3>
+<div class="render-presenter, render-user">
+<p>Latent state labels are arbitrary. Below we permute those labels to match that of the reference paper.</p>
+</div><div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">permutation</span> <span class="o">=</span> <span class="n">jnp</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">model</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[:,</span> <span class="n">permutation</span><span class="p">]</span>
+<span class="n">model</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="n">permutation</span><span class="p">]</span>
+<span class="n">model</span><span class="o">.</span><span class="n">transition_prob_</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">transition_prob_</span><span class="p">[</span><span class="n">permutation</span><span class="p">][:,</span> <span class="n">permutation</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="render-all">
+<p>The GLM coefficients and intercept, and the HMM initial and transition probabilities are stored in the following attributes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">model.coef_</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.intercept_</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.initial_prob_</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">model.transition_prob_</span></code></p></li>
+</ul>
+<p>Let’s print them</p>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;GLM parameters</span><span class="se">\n</span><span class="s2">==============&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;glm weights:</span><span class="se">\n</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;intercept:</span><span class="se">\n</span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">HMM parameters</span><span class="se">\n</span><span class="s2">==============&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;transition matrix </span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">transition_prob_</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;initial probabilities </span><span class="se">\n</span><span class="s2"> </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">initial_prob_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>GLM parameters
+==============
+glm weights:
+[[ 6.09399091  1.5439169   1.59525073]
+ [ 0.09836777  0.28091053  0.32646422]
+ [ 0.11747475 -0.31333297  0.41791669]]
+
+intercept:
+[ 0.02502527  2.74184029 -2.19821672]
+
+
+HMM parameters
+==============
+transition matrix 
+ [[0.9821805  0.01077484 0.00704465]
+ [0.03767531 0.95278875 0.00953594]
+ [0.0406587  0.00323314 0.95610817]]
+
+initial probabilities 
+ [0.23419059 0.64974029 0.11606913]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="render-all">
+Let's see what type of information we can gather.
+</div>
+</section>
+<section id="interpreting-the-glm-weights">
+<h3>Interpreting the GLM weights<a class="headerlink" href="#interpreting-the-glm-weights" title="Link to this heading">#</a></h3>
+<div class="render-all">
+We can plot the GLM weights obtained for our 3-state model.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_glm_weights</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/934613c0f1ea34964382e6d4ac536c5ec642aaf9e5f69631790560b93eb57503.png" src="../../_images/934613c0f1ea34964382e6d4ac536c5ec642aaf9e5f69631790560b93eb57503.png" />
+</div>
+</div>
+<p>We can see that the coefficients on state 1 have a large weight on the stimulus and low weight on the other predictors. Conversely, in states 2 and 3, the stimulus coefficient is comparatively lower. State 2 has a large positive weight on bias, while State 3 has a large negative weight on bias. Since the sign of our predictors indicates the side of evidence (&gt;0 : left; &lt;0 : right, see the table of variables in section 01) and their magnitude indicates the strength of such evidence, State 2 coefficients suggest a large bias towards leftward choice, while State 3 coefficients suggest a large bias to a rightward choice. All states have similarly low coefficients for prev. choice and wsls, with State 1 showing the smallest of them.</p>
+<p>As a reminder, the task required indicating whether the stimulus was on the right or the left of the screen, using the stimulus contrast. The optimal strategy is therefore to rely on stimulus contrast as much as possible, rather than on bias, previous choice, or WSLS.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>State 1 have larger weight on the stimulus and low on the other predictors.</p></li>
+<li><p>The bias weight is larger in absolute value for state 2 and 3, but of opposite sign. (&gt;0 : left; &lt;0 : right)</p></li>
+</ul>
+</div>
+</section>
+<section id="interpreting-the-transition-matrix">
+<h3>Interpreting the transition matrix<a class="headerlink" href="#interpreting-the-transition-matrix" title="Link to this heading">#</a></h3>
+<p>We can also see the fitted transition matrix for our three-state model. This describes the transition probabilities among the different states, each corresponding to a different decision-making strategy. Large entries in the diagonal indicate a high probability of remaining in the same state for multiple trials in a row.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Let’s visualize the transition matrix. The utility function below plots the heatmap.</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_transition_matrix</span><span class="p">(</span><span class="n">model</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/08eb0b4640ee0870f46493ad5dd0649eb6081c905420234a9729cea57b480c3f.png" src="../../_images/08eb0b4640ee0870f46493ad5dd0649eb6081c905420234a9729cea57b480c3f.png" />
+</div>
+</div>
+</section>
+<section id="using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities<a class="headerlink" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities" title="Link to this heading">#</a></h3>
+<p>To better understand the temporal structure of decision making behavior, we can compute the probability of being in each state at each trial, conditioned on the entire observed sequence. For this, we can use <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code>. This method uses the forward-backward algorithm to incorporate information from past and future observations. It answers the question: “Given all observations, what is the probability that the system was in state <span class="math notranslate nohighlight">\(k\)</span> at time <span class="math notranslate nohighlight">\(t\)</span>?”</p>
+<p><code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> takes two arguments: a design matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> the observed choices. The output is either a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> or an array of  posterior probabilities, shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,</span> <span class="pre">n_states)</span></code>. Each row sums to 1 and represents the probability distribution over states at that time point.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Call <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to compute the smoothing posterior probabilities of the latent states.</p></li>
+<li><p>Remember to provide the <code class="docutils literal notranslate"><span class="pre">session_starts=new_sess_mouse</span></code> parameter to mark the beginning of each session.</p></li>
+<li><p>Filter non-nan entries and check that the posterior sums to 1 over the states.</p></li>
+</ul>
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+# Compute smooth_proba
+posteriors = 
+print(f"First five posteriors \n{posteriors[:5]} \n")
+# Each (valid) posterior row sums to 1
+valid = ~np.isnan(posteriors).any(axis=1)
+print(
+    "Does the posterior sum to one?", 
+    np.allclose( , 1)
+)
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute smooth_proba</span>
+<span class="n">posteriors</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">smooth_proba</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span> 
+    <span class="n">choices</span><span class="p">,</span>
+    <span class="n">session_starts</span><span class="o">=</span><span class="n">new_sess_mouse</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;First five posteriors </span><span class="se">\n</span><span class="si">{</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Each (valid) posterior row sums to 1</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">posteriors</span><span class="p">)</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="s2">&quot;Does the posterior sum to one?&quot;</span><span class="p">,</span> 
+    <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">posteriors</span><span class="p">[</span><span class="n">valid</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>First five posteriors 
+[[           nan            nan            nan]
+ [7.53779332e-01 6.19965623e-02 1.84224106e-01]
+ [8.15356738e-01 7.34994887e-03 1.77293313e-01]
+ [8.34498446e-01 7.72118170e-04 1.64729436e-01]
+ [8.60963299e-01 1.23540946e-04 1.38913160e-01]] 
+
+Does the posterior sum to one? True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The first trial of each session is <code class="docutils literal notranslate"><span class="pre">NaN</span></code>: the posterior depends on the transition from the previous trial’s state, which doesn’t exist at a session start. Hence we mask out the NaNs before checking that the rows sum to one.</p>
+<div class="render-all">
+Let's plot the first 90 trials, corresponding to the first session.
+</div>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">color=[&quot;#ff7f00&quot;,</span> <span class="pre">&quot;#4daf4a&quot;,</span> <span class="pre">&quot;#377eb8&quot;]</span></code> for a matching color code.</p></li>
+</ul>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;#ff7f00&quot;</span><span class="p">,</span> <span class="s2">&quot;#4daf4a&quot;</span><span class="p">,</span> <span class="s2">&quot;#377eb8&quot;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colors</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">posteriors</span><span class="p">[:</span><span class="mi">90</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/0ded5bc8cdf896de4349d138e4aa4245c2b0b052c4ad1446591c09cdc2491e79.png" src="../../_images/0ded5bc8cdf896de4349d138e4aa4245c2b0b052c4ad1446591c09cdc2491e79.png" />
+</div>
+</div>
+<div class="render-all">
+Let's now use the utility function to plot the three sessions shown in Fig. 3a of <span id="cite1e"></span><a href="#ref1e">[1e]</a>.
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_posteriors</span><span class="p">(</span><span class="n">posteriors</span><span class="p">,</span> <span class="n">session</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/45b5e7329c47598f8e041e52336d619f52d73beeb1163001564182ce77a2f2c2.png" src="../../_images/45b5e7329c47598f8e041e52336d619f52d73beeb1163001564182ce77a2f2c2.png" />
+</div>
+</div>
+<p>In these sessions, the posterior over latent states can be tracked at each trial, revealing strong confidence in state assignments and extended periods where a single state persists across consecutive trials.</p>
+</section>
+<section id="understanding-mouse-behavior-in-different-states">
+<h3>Understanding mouse behavior in different states<a class="headerlink" href="#understanding-mouse-behavior-in-different-states" title="Link to this heading">#</a></h3>
+<p>We may also want to quantify state fractional occupancies (i.e. what proportion of the trials a given animal spent in each state) and the mouse’s accuracy in each state (i.e. how often it chose the correct side). For this, we need the inferred sequence of states, this can be obtained using the <a class="reference external" href="https://en.wikipedia.org/wiki/Viterbi_algorithm">Viterbi algorithm</a> that you can run by calling the  <code class="docutils literal notranslate"><span class="pre">decode_state</span></code> method.</p>
+<p>This method finds the single most likely sequence of hidden states that best explains the observed data: the state sequence that maximizes the joint probability of states and observations. It takes three mandatory parameters, a matrix of predictors <code class="docutils literal notranslate"><span class="pre">X</span></code> of shape <code class="docutils literal notranslate"><span class="pre">(n_timepoints,n_features)</span></code>, a <code class="docutils literal notranslate"><span class="pre">np.array</span></code> or <code class="docutils literal notranslate"><span class="pre">nap.Tsd</span></code> of observations of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code>, and the format of the returned states, either in one-hot encoding format or as an array of shape <code class="docutils literal notranslate"><span class="pre">(n_time_points,)</span></code> containing the decoded state at each timepoint.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Get the most likely sequence of states given the observation by calling <code class="docutils literal notranslate"><span class="pre">decode_state</span></code>, which runs the Viterbi (also known as max-sum) algorithm.</p></li>
+<li><p>Remember to provide the <code class="docutils literal notranslate"><span class="pre">session_starts=new_sess_mouse</span></code></p></li>
+</ul>
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+# get output of viterbi in one-hot encoding
+decoded_states = 
+decoded_states
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get output of viterbi in one-hot encoding</span>
+<span class="n">decoded_states</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decode_state</span><span class="p">(</span>
+    <span class="n">X</span><span class="p">,</span>
+    <span class="n">choices</span><span class="p">,</span>
+    <span class="n">session_starts</span><span class="o">=</span><span class="n">new_sess_mouse</span><span class="p">,</span>
+    <span class="n">state_format</span> <span class="o">=</span> <span class="s2">&quot;one-hot&quot;</span>
+<span class="p">)</span>
+<span class="n">decoded_states</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Array([[nan, nan, nan],
+       [ 1.,  0.,  0.],
+       [ 1.,  0.,  0.],
+       ...,
+       [ 0.,  0.,  1.],
+       [ 0.,  0.,  1.],
+       [ 0.,  0.,  1.]], dtype=float64, weak_type=True)
+</pre></div>
+</div>
+</div>
+</div>
+<p>From this we can compute the fractional occupancy, while correctly filtering out the NaNs.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Compute the fractional occupancy for each state.</p></li>
+<li><p>Remember that the decoded states may contain NaNs.</p></li>
+</ul>
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate occupancy</span>
+<span class="n">valid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">decoded_states</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">frac_occupancy_viterbi</span><span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">decoded_states</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">valid</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Fraction of occupancy </span><span class="si">{</span><span class="n">frac_occupancy_viterbi</span><span class="si">}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Fraction of occupancy [0.70569557 0.15399881 0.14030562] 
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can compute the mouse’s overall accuracy.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Compute the accuracy:</p>
+<ul>
+<li><p>Mask out the 0 contrast stimuli (because there is no correct answer in that case)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">choice==0</span></code>: right choice, <code class="docutils literal notranslate"><span class="pre">choice==1</span></code>: left choice.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>: left stimulus presented, <code class="docutils literal notranslate"><span class="pre">signed_contrast</span> <span class="pre">&gt;</span> <span class="pre">0</span></code>: right stimulus presented.</p></li>
+<li><p>Use convention above to get the accuracy.</p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+# mask out the 0 contrast stimuli
+mask =
+# compute stimulus and chocie side applying the mask
+stim_side =
+# compute the accuracy
+total_accuracy = 
+# store in an array of dim 4
+accuracies_to_plot_viterbi = np.zeros(4)
+accuracies_to_plot_viterbi[0] = total_accuracy
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># mask out the 0 contrast stimuli</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">signed_contrast</span> <span class="o">!=</span> <span class="mi">0</span>
+
+<span class="c1"># compute stimulus and chocie side</span>
+<span class="n">stim_side</span> <span class="o">=</span> <span class="n">signed_contrast</span> <span class="o">&gt;</span> <span class="mi">0</span>
+
+<span class="c1"># get the correct choices boolean</span>
+<span class="n">correct_choices</span> <span class="o">=</span> <span class="n">choices</span> <span class="o">==</span> <span class="n">stim_side</span>
+
+<span class="c1"># compute the total accuracy applying the mask</span>
+<span class="n">total_accuracy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">correct_choices</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
+<span class="c1"># store in an array of dim 4</span>
+<span class="n">accuracies_to_plot_viterbi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">accuracies_to_plot_viterbi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_accuracy</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And then we can use our output of <code class="docutils literal notranslate"><span class="pre">decode_state</span></code> to segment the trials into the estimated states and compute the accuracy within each state.</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Loop over the states and apply the same calculation to get the accuracy per state.</p></li>
+</ul>
+</div>
+<div class="render-presenter, render-user">
+```{code-cell} ipython3
+accuracy_per_state = np.zeros(n_states)
+for s in range(n_states):
+  in_state =
+  accuracy_per_state[s] =
+accuracies_to_plot_viterbi[1:] = accuracy_per_state
+```
+</div><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">accuracy_per_state</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_states</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_states</span><span class="p">):</span>
+  <span class="n">in_state</span> <span class="o">=</span> <span class="p">(</span><span class="n">decoded_states</span><span class="p">[:,</span> <span class="n">s</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="n">mask</span>
+  <span class="n">accuracy_per_state</span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="o">=</span> <span class="n">correct_choices</span><span class="p">[</span><span class="n">in_state</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+
+<span class="n">accuracies_to_plot_viterbi</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">=</span> <span class="n">accuracy_per_state</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And we can plot this :)</p>
+<div class="render-presenter, render-user">
+<ul class="simple">
+<li><p>Plot the output.</p></li>
+</ul>
+</div><div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">workshop_utils</span><span class="o">.</span><span class="n">plot_accuracy_and_occupancy</span><span class="p">(</span>
+    <span class="n">frac_occupancy_viterbi</span><span class="p">,</span> 
+    <span class="n">accuracies_to_plot_viterbi</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/c7ecc2b2b3e8a4b3ae2364fc4180e304f27d5d656c950e50fa42cb43c43dde2a.png" src="../../_images/c7ecc2b2b3e8a4b3ae2364fc4180e304f27d5d656c950e50fa42cb43c43dde2a.png" />
+</div>
+</div>
+<p>According to state occupancy derived with the Viterbi algorithm, this mouse spent the majority of the trials (70%) in the engaged state and a lesser portion of trials in the other two states (30%). We can see that even though this mouse had an overall accuracy of 80.36%, it achieved a higher accuracy of 87.04% in the “engaged” state compared to 66.03% and 63.03% in the “bias left” and “bias right”, respectively.</p>
+</section>
+</section>
+<section id="additional-exercises">
+<h2>Additional Exercises<a class="headerlink" href="#additional-exercises" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<ul class="simple">
+<li><p>Compute the accuracy by segmenting the trials according to the smoothing posterior, as was done in the original paper. Restrict the analysis to trials in which the model is highly confident about the state assignment — for example, keep only trials where the smoothing posterior assigns a state more than 90% probability. Compare the results with the procedure shown here.</p></li>
+<li><p>Try varying the regularization strength and see what happens to the learned GLM parameters. Do the results still hold as you decrease the regularization strength? What happens to the model predictions? Try cross-validating the regularization strength and see how the optimal regularizer compares with the one used here (the nemos default, which is 1).</p></li>
+<li><p>What happens when you add or remove states? Can you cross-validate the number of states? Which number seems optimal according to your cross-validation procedure? Can you get a better cross-validated likelihood with more states?</p></li>
+</ul>
+</div>
+</section>
+<section id="additional-resources">
+<h2>Additional resources<a class="headerlink" href="#additional-resources" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.microsoft.com/en-us/research/wp-content/uploads/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">Bishop (2006) Chapter 13 “Sequential Data”</a>: Specially section 13.2, “Hidden Markov Models”, provides an overview of MLE for HMMs, the forward-backward algorithm and the viterbi algorithm.</p></li>
+<li><p><a class="reference external" href="https://github.com/zashwood/ssm/blob/master/notebooks/2b%20Input%20Driven%20Observations%20(GLM-HMM).ipynb">Zoe Ashwood’s SSM tutorial on GLM-HMMs</a>: this educational notebook explains GLM-HMMs and fitting with MLE and MAP.</p></li>
+<li><p><a class="reference external" href="https://anneurai.net/2024/01/26/a-glm-hmm-deep-dive/">GLM-HMMs blogpost by Camila Ucheoma</a>: this blogpost provides a summary of Ashwood et al. (2022) work and a brief explanation of GLM-HMMs</p></li>
+</ul>
+</div>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
+<div class="render-all">
+<p><a id="ref1a"><a href="#cite1a">[1a]</a> <a id="ref1b"><a href="#cite1b">[1b]</a> <a id="ref1c"><a href="#cite1c">[1c]</a> <a id="ref1d"><a href="#cite1d">[1d]</a> <a id="ref1e"><a href="#cite1e">[1e]</a> <a class="reference external" href="https://doi.org/10.1038/s41593-021-01007-z">Ashwood, Z. C., Roy, N. A., Stone, I. R., Laboratory, I. B., Urai, A. E., Churchland, A. K., Pouget, A., &amp; Pillow, J. W. (2022). Mice alternate between discrete strategies during perceptual decision-making. Nature Neuroscience, 25(2), 201–212.</a></p>
+<p><a id="ref2a"><a href="#cite2a">[2a]</a> <a id="ref2b"><a href="#cite2b">[2b]</a> <a id="ref2c"><a href="#cite2c">[2c]</a> <a class="reference external" href="https://doi.org/10.7554/eLife.63711">The International Brain Laboratory, Aguillon-Rodriguez, V., Angelaki, D., Bayer, H., Bonacchi, N., Carandini, M., Cazettes, F., Chapuis, G., Churchland, A. K., Dan, Y., Dewitt, E., Faulkner, M., Forrest, H., Haetzel, L., Häusser, M., Hofer, S. B., Hu, F., Khanal, A., Krasniak, C., … Zador, A. M. (2021). Standardized and reproducible measurement of decision-making in mice. eLife, 10, e63711.</a></p>
+<p><a id="ref3a"><a href="#cite3a">[3a]</a> <a id="ref3b"><a href="#cite3b">[3b]</a> <a id="ref3c"><a href="#cite3c">[3c]</a> <a class="reference external" href="https://doi.org/10.1016/j.celrep.2017.08.047">Burgess, C. P., Lak, A., Steinmetz, N. A., Zatka-Haas, P., Bai Reddy, C., Jacobs, E. A. K., Linden, J. F., Paton, J. J., Ranson, A., Schröder, S., Soares, S., Wells, M. J., Wool, L. E., Harris, K. D., &amp; Carandini, M. (2017). High-Yield Methods for Accurate Two-Alternative Visual Psychophysics in Head-Fixed Mice. Cell Reports, 20(10), 2513–2524.</a></p>
+<p><a id="ref4"><a href="#cite4">[4]</a> <a class="reference external" href="https://doi.org/10.1162/NECO_a_00118">Escola, S., Fontanini, A., Katz, D., &amp; Paninski, L. (2011). Hidden Markov models for the stimulus-response relationships of multistate neural systems. Neural Computation, 23(5), 1071–1132.</a></p>
+</div></section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_nemos_advanced.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">NeMoS Advanced: Cross-Validation and Model Selection</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../group_projects/01_head_direction/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Head-direction cells: from pynapple to nemos GLM</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-streaming">Data Streaming</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#design-matrix">Design matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-fitting">Model fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#results-interpretation">Results interpretation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-visualize-the-fitted-parameters">How to visualize the fitted parameters</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-glm-weights">Interpreting the GLM weights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpreting-the-transition-matrix">Interpreting the transition matrix</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-smooth-proba-to-visualize-and-interpret-posterior-state-probabilities">Using <code class="docutils literal notranslate"><span class="pre">smooth_proba</span></code> to visualize and interpret posterior state probabilities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-mouse-behavior-in-different-states">Understanding mouse behavior in different states</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-exercises">Additional Exercises</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#references">References</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
