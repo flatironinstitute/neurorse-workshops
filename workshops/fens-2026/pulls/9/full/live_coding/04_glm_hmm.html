@@ -62,8 +62,8 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Head-direction cells: from pynapple to nemos GLM" href="../group_projects/01_head_direction/index.html" />
-    <link rel="prev" title="NeMoS Advanced: Cross-Validation and Model Selection" href="03_nemos_advanced.html" />
+    <link rel="next" title="Head-direction cells: from pynapple to nemos GLM" href="../../users/group_projects/01_head_direction/landing-users.html" />
+    <link rel="prev" title="Introduction to GLM and NeMoS" href="02_current_injection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -214,14 +214,13 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_current_injection.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_nemos_advanced.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../group_projects/01_head_direction/index.html">Head-direction cells: from pynapple to nemos GLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../group_projects/01_head_direction/part1_extracellular.html">Head-direction cells: Part 1 — Extracellular recordings</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../group_projects/01_head_direction/part2_calcium_imaging.html">Head-direction cells: Part 2 — Calcium imaging</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/group_projects/01_head_direction/landing-users.html">Head-direction cells: from pynapple to nemos GLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/group_projects/01_head_direction/part1_extracellular-users.html">Head-direction cells: Part 1 — Extracellular recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/group_projects/01_head_direction/part2_calcium_imaging-users.html">Head-direction cells: Part 2 — Calcium imaging</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
@@ -232,14 +231,12 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/03_nemos_advanced-users.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../users/live_coding/04_glm_hmm-users.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../presenters/index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/03_nemos_advanced-presenters.html">NeMoS Advanced: Cross-Validation and Model Selection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../presenters/live_coding/04_glm_hmm-presenters.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
 </ul>
 </details></li>
@@ -535,19 +532,6 @@ First, let's download the data using  <a href="https://docs.internationalbrainla
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Connected to https://openalyx.internationalbrainlab.org as user &quot;intbrainlab&quot;
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/.venv/lib/python3.12/site-packages/one/util.py:442: ALFWarning: No default revision for dataset aggregates/Subjects/churchlandlab/CSHL_008/_ibl_subjectTrials.table.pqt; using most recent
-  warnings.warn(
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   0%|          | 0.00/4.96M [00:00&lt;?, ?B/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt:   5%|▌         | 262k/4.96M [00:00&lt;00:04, 1.11MB/s]
-</pre></div>
-</div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(S3) /home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/data/aggregates/Subjects/churchlandlab/CSHL_008/#2024-08-21#/_ibl_subjectTrials.table.pqt: 100%|██████████| 4.96M/4.96M [00:00&lt;00:00, 18.0MB/s]
-</pre></div>
-</div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Index([&#39;intervals_0&#39;, &#39;intervals_1&#39;, &#39;goCue_times&#39;, &#39;response_times&#39;, &#39;choice&#39;,
        &#39;stimOn_times&#39;, &#39;contrastLeft&#39;, &#39;contrastRight&#39;, &#39;feedback_times&#39;,
        &#39;feedbackType&#39;, &#39;rewardVolume&#39;, &#39;probabilityLeft&#39;,
@@ -558,7 +542,8 @@ First, let's download the data using  <a href="https://docs.internationalbrainla
       dtype=&#39;object&#39;)
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jenkins/agent/workspace/orse_ccn-software-fens-2026_PR-9/.venv/lib/python3.12/site-packages/one/util.py:442: ALFWarning: No default revision for dataset aggregates/Subjects/churchlandlab/CSHL_008/_ibl_subjectTrials.table.pqt; using most recent
+  warnings.warn(
 </pre></div>
 </div>
 </div>
@@ -1807,8 +1792,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7fc656d8ca40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7fc656d8cae0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7fc656fe7380&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7fc656fe7920&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f69641edb20&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f69641ed760&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f691d394220&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f691d3947c0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1842,7 +1827,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7fc6565ce3e0&gt;</td>
+            <td class="value">&lt;function log...x7f69676f4680&gt;</td>
         </tr>
     
 
@@ -1892,7 +1877,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7fc656d8ca40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7fc656d8cae0&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f69641edb20&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f69641ed760&gt;, ...}</td>
         </tr>
     
 
@@ -1902,7 +1887,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7fc656fe7380&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7fc656fe7920&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f691d394220&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f691d3947c0&gt;, ...}</td>
         </tr>
     
 
@@ -2932,8 +2917,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7fc656d8ca40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7fc656d8cae0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7fc656fe7380&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7fc656fe7920&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f69641edb20&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f69641ed760&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f691d394220&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f691d3947c0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2967,7 +2952,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7fc6565ce3e0&gt;</td>
+            <td class="value">&lt;function log...x7f69676f4680&gt;</td>
         </tr>
     
 
@@ -3017,7 +3002,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7fc656d8ca40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7fc656d8cae0&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f69641edb20&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f69641ed760&gt;, ...}</td>
         </tr>
     
 
@@ -3027,7 +3012,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7fc656fe7380&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7fc656fe7920&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f691d394220&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f691d3947c0&gt;, ...}</td>
         </tr>
     
 
@@ -3737,16 +3722,16 @@ accuracies_to_plot_viterbi[1:] = accuracy_per_state
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="03_nemos_advanced.html"
+       href="02_current_injection.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">NeMoS Advanced: Cross-Validation and Model Selection</p>
+        <p class="prev-next-title">Introduction to GLM and NeMoS</p>
       </div>
     </a>
     <a class="right-next"
-       href="../group_projects/01_head_direction/index.html"
+       href="../../users/group_projects/01_head_direction/landing-users.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>

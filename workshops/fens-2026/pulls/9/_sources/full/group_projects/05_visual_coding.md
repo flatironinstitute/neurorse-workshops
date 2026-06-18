@@ -474,7 +474,7 @@ plot_raster_psth(peri_white, selected_units, "white", n_units=len(peri_white))
 
 As we've seen throughout this workshop, it is important to avoid overfitting your model. We've covered two strategies for doing so: either separate your dataset into train and test subsets or set up a cross-validation scheme. Pick one of these approaches and use it when fitting your GLM model in the next section.
 
-You might find it helpful to refer back to the [advanced nemos ("How to know when to regularize" header)](sklearn-cv-full) notebook and / or to use the following pynapple functions: [IntervalSet.set_diff](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html), [IntervalSet.union](https://pynapple.org/generated/pynapple.IntervalSet.union.html), [TsGroup.restrict](https://pynapple.org/generated/pynapple.TsGroup.restrict.html) (see [phase precession notebook ("Aside: Cross-validation" admonition)](phase-precess-cv-users)).
+You might find it helpful to use the following pynapple functions: [IntervalSet.set_diff](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html), [IntervalSet.union](https://pynapple.org/generated/pynapple.IntervalSet.union.html), [TsGroup.restrict](https://pynapple.org/generated/pynapple.TsGroup.restrict.html).
 
 :::{admonition} Hints
 :class: hint
@@ -504,7 +504,7 @@ flashes_train = flashes_train_white.union(flashes_train_black)
 
 <div class="render-all">
 
-In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks we covered in [the advanced nemos notebook ("Feature selection" header)](sklearn-feature-selection-full) to evaluate whether which predictors are necessary for your model, which are the most important.
+In this section, you will use nemos to build a GLM. There are a lot of scientific decisions to be made here, so we suggest starting simple and then adding complexity. Construct a design matrix with a single predictor, using a basis of your choice, then construct, fit, and score your model to a single neuron (remembering to either use your train/test or cross-validation to avoid overfitting). Then add regularization to your GLM. Then return to the beginning and add more predictors. Then fit all the neurons. Then evaluate what basis functions and parameters are best for your predictors. Then use the tricks covered in [nemos documentation](https://nemos.readthedocs.io/en/latest/how_to_guide/variable_selection_zero_basis.html) or [this example](https://flatironinstitute.github.io/neurorse-workshops/workshops/feb-2026/branch/main/full/live_coding/03_nemos_advanced.html) to evaluate whether which predictors are necessary for your model, which are the most important.
 
 You don't have to exactly follow those steps, but make sure you can go from beginning to end before getting too complex.
 
@@ -542,7 +542,7 @@ units_counts = selected_units.count(bin_size, ep=extended_flashes)
 - Decide on feature(s).
     - The code block below constructs `stim`, a `TsdFrame` containing 1s whenever the stimulus is being presented (in separate columns for white and black).
     - You can use this, but you may also want to perform additional computations on `stim` to construct other features.
-- Decide on basis. (Hint: review the [current injection ("Extending the model to use injection history")](current-inj-basis-full) or [place cell ("Select basis" header)](sklearn-basis-full) notebooks.)
+- Decide on basis. (Hint: review the [current injection ("Extending the model to use injection history")](current-inj-basis-full) notebook or [nemos documentation](https://nemos.readthedocs.io/en/latest/how_to_guide/plot_06_sklearn_pipeline_cv_demo.html).)
     - If you set the `label` argument for your basis objects, interpreting the output will be easier.
 - Construct design matrix. (Hint: review the [place cell ("Basis evaluation" header)](basis-eval-place-cells-users) notebook.)
 
@@ -553,7 +553,7 @@ If you're having trouble coming up with features to include, here are some possi
 - Stimulus, using `stim`. (Review the [current injection ("Preparing data" header)](current-inj-prep-full) notebook.)
 - Stimulus onset. (Hint: you can use [numpy.diff](https://numpy.org/doc/stable/reference/generated/numpy.diff.html) to find when the stimulus transitions from off to on.)
 - Stimulus offset. (Hint: you can use [numpy.diff](https://numpy.org/doc/stable/reference/generated/numpy.diff.html) to find when the stimulus transitions from on to off.)
-- For multiple neurons: neuron-to-neuron coupling, using `units_counts`. (Refer back to the [the head direction notebook from the first day ("Fitting the Model" header)](head-direction-fit-full) to see an example of fitting coupling filters.)
+- For multiple neurons: neuron-to-neuron coupling, using `units_counts`. (Refer back to the [the head direction notebook from the first day ("Fitting the Model" header)](head-direction-fit-users) to see an example of fitting coupling filters.)
 
 For the stimuli predictors, you probably want to model white and black separately.
 
@@ -700,9 +700,9 @@ X_train = additive_basis.compute_features(
 
 <div class="render-all">
 
-- Decide on regularization. (Hint: review [Edoardo's presentation](https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf) and the [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebook.)
-- Initialize GLM. (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full) or [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebooks.)
-- Call fit.  (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full) or [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebooks.)
+- Decide on regularization. (Hint: review [Edoardo's presentation](https://users.flatironinstitute.org/~wbroderick/presentations/sfn-2025/model_selection.pdf).)
+- Initialize GLM. (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full).)
+- Call fit.  (Hint: review the [current injection ("Fitting the model" header)](current-inj-glm-full).)
 
 </div>
 
@@ -872,7 +872,7 @@ plot_pop_psth(peri_black[unit_id], "black", predictions=("red", peri_black_pred_
 - "Expand" model coefficients into filters.
 - Visualize these filters.
 
-When using basis functions, GLM coefficients are hard to interpret directly. Recall in the [current injection (search for "Visualize the current history model's learned filter")](visualize-filter-full) and [head direction (search for "We can plot the resluting response,")](head-direction-basis-full) notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using [numpy.matmul](https://numpy.org/doc/stable/reference/generated/numpy.matmul.html) or [numpy.einsum](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html).
+When using basis functions, GLM coefficients are hard to interpret directly. Recall in the [current injection (search for "Visualize the current history model's learned filter")](visualize-filter-full) and [head direction (search for "We can plot the resluting response,")](head-direction-basis-users) notebooks; we can multiply these coefficients by the basis functions to create the filter for visualization. This can be done using [numpy.matmul](https://numpy.org/doc/stable/reference/generated/numpy.matmul.html) or [numpy.einsum](https://numpy.org/doc/stable/reference/generated/numpy.einsum.html).
 
 If you get stuck here, you can expand the following dropdown to see a hint and then expand the one after that to see a possible way of doing this.
 
@@ -929,7 +929,7 @@ for ax, (k, v)  in zip(axes, filters.items()):
 <div class="render-all">
 
 - We trained on the train set, so now we score on the test set. (Or use cross-validation.)
-- Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer back to the [place cell ("How to know when to regularize?" header)](sklearn-cv-full) notebook.)
+- Get a score for your model that you can use to compare across the modeling choices outlined above. (Hint: refer to [this](https://flatironinstitute.github.io/neurorse-workshops/workshops/feb-2026/branch/main/full/live_coding/03_nemos_advanced.html#how-to-know-when-to-regularize) notebook.)
 
 </div>
 
@@ -951,7 +951,7 @@ print(score)
 
 - Go back to the beginning of [this section](visual-glm-users) and try to improve your model's performance (as reflected by increased score).
 - Keep track of what you've tried and their respective scores. 
-    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html), as we've seen in the [place cell ("How to know when to regularize?" header)](sklearn-cv-full), is useful:
+    - You can do this by hand, but constructing a [pandas DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html) is useful:
 
 </div>
 
