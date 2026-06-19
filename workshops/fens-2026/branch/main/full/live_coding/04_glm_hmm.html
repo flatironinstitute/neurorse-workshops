@@ -62,7 +62,7 @@
     <link rel="icon" href="../../_static/ccn_small.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Head-direction cells: from pynapple to population GLMs" href="../../users/group_projects/01_head_direction-users.html" />
+    <link rel="next" title="Head-direction cells: from pynapple to nemos GLM" href="../../users/group_projects/01_head_direction/landing-users.html" />
     <link rel="prev" title="Introduction to GLM and NeMoS" href="02_current_injection.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -218,7 +218,11 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/01_head_direction-users.html">Head-direction cells: from pynapple to population GLMs</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../users/group_projects/01_head_direction/landing-users.html">Head-direction cells: from pynapple to nemos GLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../users/group_projects/01_head_direction/part1_extracellular-users.html">Head-direction cells: Part 1 — Extracellular recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../users/group_projects/01_head_direction/part2_calcium_imaging-users.html">Head-direction cells: Part 2 — Calcium imaging</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/04_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../users/group_projects/05_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
 </ul>
@@ -1788,8 +1792,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f0a543c5940&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f0a543c5580&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f0a54278040&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f0a542785e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f06f4215a80&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f06f42156c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f06f40c8180&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f06f40c8720&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -1823,7 +1827,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f0aa405c680&gt;</td>
+            <td class="value">&lt;function log...x7f07041545e0&gt;</td>
         </tr>
     
 
@@ -1873,7 +1877,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f0a543c5940&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f0a543c5580&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f06f4215a80&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f06f42156c0&gt;, ...}</td>
         </tr>
     
 
@@ -1883,7 +1887,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f0a54278040&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f0a542785e0&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f06f40c8180&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f06f40c8720&gt;, ...}</td>
         </tr>
     
 
@@ -2913,8 +2917,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f0a543c5940&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f0a543c5580&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f0a54278040&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f0a542785e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f06f4215a80&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f06f42156c0&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f06f40c8180&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f06f40c8720&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2948,7 +2952,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f0aa405c680&gt;</td>
+            <td class="value">&lt;function log...x7f07041545e0&gt;</td>
         </tr>
     
 
@@ -2998,7 +3002,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f0a543c5940&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f0a543c5580&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f06f4215a80&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f06f42156c0&gt;, ...}</td>
         </tr>
     
 
@@ -3008,7 +3012,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f0a54278040&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f0a542785e0&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f06f40c8180&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f06f40c8720&gt;, ...}</td>
         </tr>
     
 
@@ -3727,11 +3731,11 @@ accuracies_to_plot_viterbi[1:] = accuracy_per_state
       </div>
     </a>
     <a class="right-next"
-       href="../../users/group_projects/01_head_direction-users.html"
+       href="../../users/group_projects/01_head_direction/landing-users.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Head-direction cells: from pynapple to population GLMs</p>
+        <p class="prev-next-title">Head-direction cells: from pynapple to nemos GLM</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
