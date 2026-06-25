@@ -1,0 +1,869 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2D neural tuning and model fitting &#8212; CCN software workshop, FENS 2026  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=f4437bd1" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'presenters/group_projects/02_place_cells/02_03_place_cells_2d_neural_tuning-presenters';</script>
+    <link rel="icon" href="../../../_static/ccn_small.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/01-FI-primary-logo-color.png" class="logo__image only-light" alt="Home"/>
+    <img src="../../../_static/03-FI-primary-logo-white.png" class="logo__image only-dark pst-js-only" alt="Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/flatironinstitute/ccn-software-fens-2026" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://flatironinstitute.github.io/neurorse-workshops/" title="Workshops home" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-house fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Workshops home</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://binder.flatironinstitute.org/v2/user/wbroderick/fens2026?labpath=notebooks/" title="Binder" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><img src="https://mybinder.org/badge_logo.svg" class="icon-link-image" alt="Binder"/></a>
+        </li>
+</ul></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../index.html">
+                    Welcome!
+                </a>
+            </li>
+        </ul>
+        <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../jupyter.html">Intro to Jupyter Lab</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cheatsheet.html">Cheatsheet and reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../can_you_read.html">Are You Sitting Too Far?</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Full notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../full/live_coding/01_fundamentals_of_pynapple.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../full/live_coding/02_current_injection.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../full/live_coding/04_glm_hmm.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Group projects</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../users/group_projects/01_head_direction-users.html">Head-direction cells: from pynapple to nemos GLM</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/01_head_direction/part1_extracellular-users.html">Head-direction cells: Part 1 — Extracellular recordings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/01_head_direction/part2_calcium_imaging-users.html">Head-direction cells: Part 2 — Calcium imaging</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../users/group_projects/02_place_cells-users.html">Analyzing hippocampal place cells with Pynapple and NeMoS</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/02_place_cells/02_01_place_cells_1d_neural_tuning-users.html">Data wrangling, 1D neural tuning, and model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/02_place_cells/02_02_place_cells_signal_processing-users.html">Signal processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/02_place_cells/02_03_place_cells_2d_neural_tuning-users.html">2D neural tuning and model fitting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/group_projects/02_place_cells/02_04_place_cells_decoding-users.html">Neural decoding</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../users/group_projects/03_visual_coding-users.html">Exploring the Allen Institute’s Visual Coding dataset</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Limited live coding notebooks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../users/index.html">For users (some code, some text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/live_coding/01_fundamentals_of_pynapple-users.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/live_coding/02_current_injection-users.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../users/live_coding/04_glm_hmm-users.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../index.html">For presenter reference (all code, no text)</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../live_coding/01_fundamentals_of_pynapple-presenters.html">Learning the fundamentals of pynapple</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../live_coding/02_current_injection-presenters.html">Introduction to GLM and NeMoS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../live_coding/04_glm_hmm-presenters.html">Infer behavioral strategies during decision making with GLM-HMMs</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+<a href="https://github.com/flatironinstitute/ccn-software-fens-2026" target="_blank"
+   class="btn btn-sm btn-source-repository-button"
+   title="Source repository"
+   data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+
+</a>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../../_sources/presenters/group_projects/02_place_cells/02_03_place_cells_2d_neural_tuning-presenters.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2D neural tuning and model fitting</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">1. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">2. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-compute-tuning-curves-to-compute-2d-tuning-curves-for-our-subselected-group-of-units-good-spikes-over-position-and-phase-stored-in-features">3. Use <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> to compute 2D tuning curves for our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, over position and phase stored in <code class="docutils literal notranslate"><span class="pre">features</span></code>.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions">4. Instantiate a <code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code> basis object for phase, using 10 basis functions.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis">5. Create the full basis by multiplying <code class="docutils literal notranslate"><span class="pre">position_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_basis</span></code> and adding <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s">6. Downsample <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> and a bin size of 0.01 s.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-design-matrix-by-calling-compute-features-on-full-basis-using-up-position-bin-theta-and-up-speed">7. Create a design matrix by calling <code class="docutils literal notranslate"><span class="pre">compute_features</span></code> on <code class="docutils literal notranslate"><span class="pre">full_basis</span></code> using <code class="docutils literal notranslate"><span class="pre">up_position</span></code>, <code class="docutils literal notranslate"><span class="pre">bin_theta</span></code>, and <code class="docutils literal notranslate"><span class="pre">up_speed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-by-doing-the-following">8. Fit a GLM by doing the following:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-predict-to-calculated-the-predicted-firing-rate-of-our-model-use-the-predicted-rate-to-compute-predicted-tuning-curves-using-nap-compute-tuning-curves">9. Use <code class="docutils literal notranslate"><span class="pre">predict</span></code> to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <div class="cell tag_hide-input tag_render-all docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">autoreload</span>
+<span class="o">%</span><span class="n">autoreload</span> <span class="mi">2</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span>
+    <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+    <span class="n">message</span><span class="o">=</span><span class="s2">&quot;plotting functions contained within `_documentation_utils` are intended for nemos&#39;s documentation.&quot;</span><span class="p">,</span>
+    <span class="n">category</span><span class="o">=</span><span class="ne">UserWarning</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<div class="important render-all admonition">
+<p class="admonition-title">Download</p>
+<p>This notebook can be downloaded as <strong><a class="reference download internal" download="" href="../../../_downloads/d3de0cd1845ea07344f016fd55301460/02_03_place_cells_2d_neural_tuning-presenters.ipynb"><code class="xref download myst-nb docutils literal notranslate"><span class="pre">02_03_place_cells_2d_neural_tuning-presenters.ipynb</span></code></a></strong>. See the button at the top right to download as markdown or pdf.</p>
+</div>
+<section class="tex2jax_ignore mathjax_ignore" id="d-neural-tuning-and-model-fitting">
+<h1>2D neural tuning and model fitting<a class="headerlink" href="#d-neural-tuning-and-model-fitting" title="Link to this heading">#</a></h1>
+<p>This notebook has had all its explanatory text removed and has not been run.
+It is intended to be downloaded and run locally (or on the provided binder)
+while listening to the presenter’s explanation. In order to see the fully
+rendered of this notebook, go <a class="reference internal" href="../../../full/group_projects/02_place_cells/02_03_place_cells_2d_neural_tuning.html"><span class="std std-doc">here</span></a></p>
+<p>In this series of notebooks, we will review more advanced applications of pynapple; tuning curves, signal processing, and decoding; as well as fitting GLMs to the data using NeMoS. We’ll apply these methods to demonstrate and visualize some well-known physiological properties of hippocampal activity, specifically phase presession of place cells and sequential coordination of place cell activity during theta oscillations.</p>
+<p>This series is split into 4 notebooks:</p>
+<ol class="arabic simple">
+<li><p>Data wrangling, 1D neural tuning, and model fitting</p></li>
+<li><p>Signal processing</p></li>
+<li><p>(This notebook) 2D neural tuning and model fitting</p></li>
+<li><p>Neural decoding</p></li>
+</ol>
+<p>This notebook assumes you have already gone through the first notebook to explore the data. We’ll reinitialize variables created in the first notebook that will be used here.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">workshop_utils</span>
+<span class="c1"># imports</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scipy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sp</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">tqdm</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pynapple</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nap</span>
+
+<span class="c1"># necessary for animation</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nmo</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="n">nmo</span><span class="o">.</span><span class="n">styles</span><span class="o">.</span><span class="n">plot_style</span><span class="p">)</span>
+
+<span class="c1"># configure pynapple to ignore conversion warning</span>
+<span class="n">nap</span><span class="o">.</span><span class="n">nap_config</span><span class="o">.</span><span class="n">suppress_conversion_warnings</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1"># code needed from first notebook</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">workshop_utils</span><span class="o">.</span><span class="n">fetch_data</span><span class="p">(</span><span class="s2">&quot;Achilles_10252013_EEG.nwb&quot;</span><span class="p">)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">load_file</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">forward_ep</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;forward_ep&quot;</span><span class="p">]</span>
+<span class="n">position</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">forward_ep</span><span class="p">)</span>
+<span class="n">lfp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;eeg&quot;</span><span class="p">][:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">forward_ep</span><span class="p">)</span>
+<span class="n">spikes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;units&quot;</span><span class="p">]</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">position</span><span class="o">.</span><span class="n">derivative</span><span class="p">())</span>
+<span class="n">good_spikes</span> <span class="o">=</span> <span class="n">spikes</span><span class="p">[(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">forward_ep</span><span class="p">)</span><span class="o">.</span><span class="n">rate</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">spikes</span><span class="o">.</span><span class="n">restrict</span><span class="p">(</span><span class="n">forward_ep</span><span class="p">)</span><span class="o">.</span><span class="n">rate</span> <span class="o">&lt;=</span> <span class="mi">10</span><span class="p">)]</span>
+<span class="n">place_fields</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">good_spikes</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+<span class="n">speed_fields</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">spikes</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">epochs</span><span class="o">=</span><span class="n">speed</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+<span class="n">bin_size</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">neurons</span> <span class="o">=</span> <span class="p">[</span><span class="mi">82</span><span class="p">,</span> <span class="mi">92</span><span class="p">,</span> <span class="mi">220</span><span class="p">]</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="n">good_spikes</span><span class="p">[</span><span class="n">neurons</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">bin_size</span><span class="p">,</span> <span class="n">ep</span><span class="o">=</span><span class="n">forward_ep</span><span class="p">)</span>
+<span class="n">up_position</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+<span class="n">up_speed</span> <span class="o">=</span> <span class="n">speed</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+<span class="n">position_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">BSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">)</span>
+<span class="n">speed_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">BSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;speed&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="part-4-2d-neural-tuning-and-model-fitting">
+<h2>Part 4: 2D neural tuning and model fitting<a class="headerlink" href="#part-4-2d-neural-tuning-and-model-fitting" title="Link to this heading">#</a></h2>
+<section id="computing-2d-tuning-curves-position-vs-phase">
+<h3>Computing 2D tuning curves: position vs. phase<a class="headerlink" href="#computing-2d-tuning-curves-position-vs-phase" title="Link to this heading">#</a></h3>
+<p>We can visualize phase precession as a 2D tuning curve over position and phase. We can compute this using the same function as the first notebook, <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a>, but now passing <code class="docutils literal notranslate"><span class="pre">features</span></code> as a 2-column <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> containing the two target features.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sample_rate</span> <span class="o">=</span> <span class="mi">1250</span>
+<span class="n">theta_band</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">apply_bandpass_filter</span><span class="p">(</span><span class="n">lfp</span><span class="p">,</span> <span class="p">(</span><span class="mf">6.0</span><span class="p">,</span> <span class="mf">12.0</span><span class="p">),</span> <span class="n">fs</span><span class="o">=</span><span class="n">sample_rate</span><span class="p">)</span>
+<span class="n">theta_phase</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_hilbert_phase</span><span class="p">(</span><span class="n">theta_band</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we need to combine <code class="docutils literal notranslate"><span class="pre">position</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> into a <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code>. For this to work, both variables must have the same length. We can achieve this by upsampling <code class="docutils literal notranslate"><span class="pre">position</span></code> to the length of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using the pynapple object method <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.interpolate.html"><code class="docutils literal notranslate"><span class="pre">interpolate</span></code></a>.</p>
+<section id="interpolate-position-to-the-time-points-of-theta-phase">
+<h4>1. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.<a class="headerlink" href="#interpolate-position-to-the-time-points-of-theta-phase" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">upsampled_pos</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">interpolate</span><span class="p">(</span><span class="n">theta_phase</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we can combine <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code>. However, since comparing and merging time axes is nontrivial problem, pynapple does not allow us to do this directly. Instead, we need to extract the values from <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> and stack them together using <code class="docutils literal notranslate"><span class="pre">numpy</span></code>. Then we can define a new <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> using the 2D feature array which we can use to compute 2D tuning curves.</p>
+</section>
+<section id="stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">
+<h4>2. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <a class="reference external" href="https://pynapple.org/generated/pynapple.TsdFrame.html"><code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a><a class="headerlink" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>For stacking arrays, you can use a numpy function like <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.stack.html"><code class="docutils literal notranslate"><span class="pre">np.stack</span></code></a>.</p>
+<ul>
+<li><p>Tip: you may need to transpose to make sure time is in the first dimension of the stacked array</p></li>
+</ul>
+</li>
+<li><p>Make sure to name your <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code> columns <code class="docutils literal notranslate"><span class="pre">&quot;position&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;phase&quot;</span></code></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">((</span><span class="n">upsampled_pos</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">theta_phase</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">TsdFrame</span><span class="p">(</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">theta_phase</span><span class="o">.</span><span class="n">t</span><span class="p">,</span>
+    <span class="n">d</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">feats</span><span class="p">),</span>
+    <span class="n">time_support</span><span class="o">=</span><span class="n">upsampled_pos</span><span class="o">.</span><span class="n">time_support</span><span class="p">,</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="s2">&quot;phase&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">features</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-nap-compute-tuning-curves-to-compute-2d-tuning-curves-for-our-subselected-group-of-units-good-spikes-over-position-and-phase-stored-in-features">
+<h4>3. Use <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a> to compute 2D tuning curves for our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, over position and phase stored in <code class="docutils literal notranslate"><span class="pre">features</span></code>.<a class="headerlink" href="#use-nap-compute-tuning-curves-to-compute-2d-tuning-curves-for-our-subselected-group-of-units-good-spikes-over-position-and-phase-stored-in-features" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Use 50 bins for position and 30 bins for theta phase</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">tuning_curves</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">good_spikes</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="p">[</span><span class="mi">50</span><span class="p">,</span><span class="mi">30</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can plot 2D tuning curves for each unit and phase precession in some example units.</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">neurons</span> <span class="o">=</span> <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">33</span><span class="p">,</span> <span class="mi">82</span><span class="p">,</span> <span class="mi">175</span><span class="p">,</span> <span class="mi">177</span><span class="p">,</span> <span class="mi">220</span><span class="p">]</span>
+<span class="n">tc_norm</span> <span class="o">=</span> <span class="n">tuning_curves</span> <span class="o">/</span> <span class="n">tuning_curves</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">tc_norm</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">neurons</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;position&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;unit&quot;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../../_static/_check_figs/pc-12.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+<p>You should be able to notice a negative relationship between position and phase, characteristic of phase precession.</p>
+</section>
+</section>
+<section id="estimating-2d-tuning-curves-using-2d-basis-functions">
+<h3>Estimating 2D tuning curves using 2D basis functions<a class="headerlink" href="#estimating-2d-tuning-curves-using-2d-basis-functions" title="Link to this heading">#</a></h3>
+<p>How can we model 2D tuning curves in a GLM? Similar the first notebook, we can define a 2D basis by using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/background/basis/plot_02_ND_basis_function.html">NeMoS basis composition</a>, but instead <em>multiplying</em> two basis objects. In fact, we can use both addition and multiplication together to create arbitrarily complex, multidimensional basis objects.</p>
+<p>First, we’ll create a basis object for theta phase, specifically using <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval"><code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code></a>. We use this instead of <code class="docutils literal notranslate"><span class="pre">BSplineBasis</span></code> because the phase angle is a circular variable.</p>
+<section id="instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions">
+<h4>4. Instantiate a <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/basis/nemos.basis.CyclicBSplineEval.html#nemos.basis.BSplineEval"><code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code></a> basis object for phase, using 10 basis functions.<a class="headerlink" href="#instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Provide the label <code class="docutils literal notranslate"><span class="pre">&quot;phase&quot;</span></code> for the basis.</p></li>
+<li><p>If necessary, reinstantiate the basis objects for position, <code class="docutils literal notranslate"><span class="pre">position_basis</span></code>, and speed, <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>, as you did in <strong>2.6</strong>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">phase_basis</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">basis</span><span class="o">.</span><span class="n">CyclicBSplineEval</span><span class="p">(</span><span class="n">n_basis_funcs</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;phase&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis">
+<h4>5. Create the full basis by multiplying <code class="docutils literal notranslate"><span class="pre">position_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_basis</span></code> and adding <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>.<a class="headerlink" href="#create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">full_basis</span> <span class="o">=</span> <span class="n">position_basis</span> <span class="o">*</span> <span class="n">phase_basis</span> <span class="o">+</span> <span class="n">speed_basis</span>
+<span class="n">full_basis</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Before we can call <code class="docutils literal notranslate"><span class="pre">compute_features</span></code>, we need to make sure <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> has the same number of time points as <code class="docutils literal notranslate"><span class="pre">counts</span></code>. Since <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> has <em>more</em> time points than counts, we’ll need to <em>downsample</em> the number of time points. We can do this using the pynapple object method <a class="reference external" href="https://pynapple.org/generated/pynapple.Tsd.bin_average.html"><code class="docutils literal notranslate"><span class="pre">bin_average</span></code></a>. This function will average values within a specified bin size. We can achieve the same sampling rate by using the same bin size as we used for our spike counts.</p>
+</section>
+<section id="downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s">
+<h4>6. Downsample <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> and a bin size of 0.01 s.<a class="headerlink" href="#downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">bin_theta</span> <span class="o">=</span> <span class="n">theta_phase</span><span class="o">.</span><span class="n">bin_average</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="create-a-design-matrix-by-calling-compute-features-on-full-basis-using-up-position-bin-theta-and-up-speed">
+<h4>7. Create a design matrix by calling <code class="docutils literal notranslate"><span class="pre">compute_features</span></code> on <code class="docutils literal notranslate"><span class="pre">full_basis</span></code> using <code class="docutils literal notranslate"><span class="pre">up_position</span></code>, <code class="docutils literal notranslate"><span class="pre">bin_theta</span></code>, and <code class="docutils literal notranslate"><span class="pre">up_speed</span></code><a class="headerlink" href="#create-a-design-matrix-by-calling-compute-features-on-full-basis-using-up-position-bin-theta-and-up-speed" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Note: <code class="docutils literal notranslate"><span class="pre">up_position</span></code> and <code class="docutils literal notranslate"><span class="pre">up_speed</span></code> were computed in the first notebook and have been redefined above.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">full_basis</span><span class="o">.</span><span class="n">compute_features</span><span class="p">(</span><span class="n">up_position</span><span class="p">,</span> <span class="n">bin_theta</span><span class="p">,</span> <span class="n">up_speed</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have everything we need to fit a GLM and predict the 2D tuning curves from our model.</p>
+</section>
+<section id="fit-a-glm-by-doing-the-following">
+<h4>8. Fit a GLM by doing the following:<a class="headerlink" href="#fit-a-glm-by-doing-the-following" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Initialize <code class="docutils literal notranslate"><span class="pre">PopulationGLM</span></code></p></li>
+<li><p>Use the “LBFGS” solver and pass <code class="docutils literal notranslate"><span class="pre">{&quot;tol&quot;:</span> <span class="pre">1e-12}</span></code> to <code class="docutils literal notranslate"><span class="pre">solver_kwargs</span></code>.</p></li>
+<li><p>Fit the data, passing the design matrix <code class="docutils literal notranslate"><span class="pre">X</span></code> and spike counts <code class="docutils literal notranslate"><span class="pre">counts</span></code> to the glm object.</p>
+<ul>
+<li><p>Note: <code class="docutils literal notranslate"><span class="pre">counts</span></code> was computed in the first notebook and has been redefined above.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">glm</span> <span class="o">=</span> <span class="n">nmo</span><span class="o">.</span><span class="n">glm</span><span class="o">.</span><span class="n">PopulationGLM</span><span class="p">(</span>
+    <span class="n">solver_kwargs</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">tol</span><span class="o">=</span><span class="mi">10</span><span class="o">**-</span><span class="mi">12</span><span class="p">),</span>
+    <span class="n">solver_name</span><span class="o">=</span><span class="s2">&quot;LBFGS&quot;</span>
+<span class="p">)</span>
+
+<span class="n">glm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">counts</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="use-predict-to-calculated-the-predicted-firing-rate-of-our-model-use-the-predicted-rate-to-compute-predicted-tuning-curves-using-nap-compute-tuning-curves">
+<h4>9. Use <a class="reference external" href="https://nemos.readthedocs.io/en/latest/generated/glm/nemos.glm.GLM.predict.html#nemos.glm.GLM.predict"><code class="docutils literal notranslate"><span class="pre">predict</span></code></a> to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using <a class="reference external" href="https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves"><code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code></a>.<a class="headerlink" href="#use-predict-to-calculated-the-predicted-firing-rate-of-our-model-use-the-predicted-rate-to-compute-predicted-tuning-curves-using-nap-compute-tuning-curves" title="Link to this heading">#</a></h4>
+<ul class="simple">
+<li><p>Remember to convert the predicted firing rate to spikes per second!</p></li>
+<li><p>Compute 1D tuning curves for position, using 50 and naming the feature <code class="docutils literal notranslate"><span class="pre">&quot;position&quot;</span></code>.</p></li>
+<li><p>Compute 1D tuning curves for speed, using 30 bins and naming the feature <code class="docutils literal notranslate"><span class="pre">&quot;speed&quot;</span></code>.</p></li>
+<li><p>Compute 2D tuning curves for position x phase using <code class="docutils literal notranslate"><span class="pre">predicted_rate</span></code> and the TsdFrame <code class="docutils literal notranslate"><span class="pre">features</span></code>, using 50 bins for position and 30 bins for phase.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predicted_rate</span> <span class="o">=</span> <span class="n">glm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span> <span class="o">/</span> <span class="n">bin_size</span>
+
+<span class="n">glm_pf</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_rate</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;position&quot;</span><span class="p">])</span>
+<span class="n">glm_speed</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span><span class="n">predicted_rate</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;speed&quot;</span><span class="p">])</span>
+<span class="n">glm_pos_theta</span> <span class="o">=</span> <span class="n">nap</span><span class="o">.</span><span class="n">compute_tuning_curves</span><span class="p">(</span>
+    <span class="n">predicted_rate</span><span class="p">,</span> <span class="n">features</span><span class="p">,</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span> <span class="n">epochs</span><span class="o">=</span><span class="n">forward_ep</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We’ll use a helper function from NeMoS to compare the predicted tuning curves to those computed from the data</p>
+<div class="cell tag_render-all docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">nemos</span><span class="w"> </span><span class="kn">import</span> <span class="n">_documentation_utils</span> <span class="k">as</span> <span class="n">doc_plots</span>
+<span class="n">neuron</span> <span class="o">=</span> <span class="mi">82</span>
+<span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">glm_pf</span><span class="o">.</span><span class="n">unit</span> <span class="o">==</span> <span class="n">neuron</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">doc_plots</span><span class="o">.</span><span class="n">plot_position_phase_speed_tuning</span><span class="p">(</span>
+    <span class="n">place_fields</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">neuron</span><span class="p">),</span>
+    <span class="n">glm_pf</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+    <span class="n">speed_fields</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">neuron</span><span class="p">),</span>
+    <span class="n">glm_speed</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+    <span class="n">tuning_curves</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="n">unit</span><span class="o">=</span><span class="n">neuron</span><span class="p">),</span>
+    <span class="n">glm_pos_theta</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;../../../_static/_check_figs/pc-13.png&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+</section>
+<section id="bonus-exercise">
+<h3>Bonus Exercise<a class="headerlink" href="#bonus-exercise" title="Link to this heading">#</a></h3>
+<p>As an bonus, more open-ended exercise, we can investigate all the scientific decisions that we swept under the rug: should we regularize the model? What basis should we use? Do we need all inputs? If you’re feeling ambitious, here are some suggestions to answer these questions:</p>
+<ul class="simple">
+<li><p>Try to fit and compare the results we just obtained with different models:</p>
+<ul>
+<li><p>A model with position as the only predictor.</p></li>
+<li><p>A model with speed as the only predictor.</p></li>
+<li><p>A model with phase as the only predictor</p></li>
+</ul>
+</li>
+<li><p>Introduce L1 (Lasso) regularization and fit models with increasingly large penalty strengths (<span class="math notranslate nohighlight">\(\lambda\)</span>). Plot the regularization path showing how each coefficient changes with <span class="math notranslate nohighlight">\(\lambda\)</span>. Identify which coefficients remain non-zero longest as <span class="math notranslate nohighlight">\(\lambda\)</span> increases - these correspond to the most informative predictors.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># bonus exercise</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-4-2d-neural-tuning-and-model-fitting">Part 4: 2D neural tuning and model fitting</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#computing-2d-tuning-curves-position-vs-phase">Computing 2D tuning curves: position vs. phase</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#interpolate-position-to-the-time-points-of-theta-phase">1. Interpolate <code class="docutils literal notranslate"><span class="pre">position</span></code> to the time points of <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#stack-upsampled-pos-and-theta-phase-together-into-a-single-tsdframe">2. Stack <code class="docutils literal notranslate"><span class="pre">upsampled_pos</span></code> and <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> together into a single <code class="docutils literal notranslate"><span class="pre">TsdFrame</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-nap-compute-tuning-curves-to-compute-2d-tuning-curves-for-our-subselected-group-of-units-good-spikes-over-position-and-phase-stored-in-features">3. Use <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code> to compute 2D tuning curves for our subselected group of units, <code class="docutils literal notranslate"><span class="pre">good_spikes</span></code>, over position and phase stored in <code class="docutils literal notranslate"><span class="pre">features</span></code>.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-2d-tuning-curves-using-2d-basis-functions">Estimating 2D tuning curves using 2D basis functions</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#instantiate-a-cyclicbsplineeval-basis-object-for-phase-using-10-basis-functions">4. Instantiate a <code class="docutils literal notranslate"><span class="pre">CyclicBSplineEval</span></code> basis object for phase, using 10 basis functions.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-the-full-basis-by-multiplying-position-basis-and-phase-basis-and-adding-speed-basis">5. Create the full basis by multiplying <code class="docutils literal notranslate"><span class="pre">position_basis</span></code> and <code class="docutils literal notranslate"><span class="pre">phase_basis</span></code> and adding <code class="docutils literal notranslate"><span class="pre">speed_basis</span></code>.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#downsample-theta-phase-using-bin-average-and-a-bin-size-of-0-01-s">6. Downsample <code class="docutils literal notranslate"><span class="pre">theta_phase</span></code> using <code class="docutils literal notranslate"><span class="pre">bin_average</span></code> and a bin size of 0.01 s.</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#create-a-design-matrix-by-calling-compute-features-on-full-basis-using-up-position-bin-theta-and-up-speed">7. Create a design matrix by calling <code class="docutils literal notranslate"><span class="pre">compute_features</span></code> on <code class="docutils literal notranslate"><span class="pre">full_basis</span></code> using <code class="docutils literal notranslate"><span class="pre">up_position</span></code>, <code class="docutils literal notranslate"><span class="pre">bin_theta</span></code>, and <code class="docutils literal notranslate"><span class="pre">up_speed</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#fit-a-glm-by-doing-the-following">8. Fit a GLM by doing the following:</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#use-predict-to-calculated-the-predicted-firing-rate-of-our-model-use-the-predicted-rate-to-compute-predicted-tuning-curves-using-nap-compute-tuning-curves">9. Use <code class="docutils literal notranslate"><span class="pre">predict</span></code> to calculated the predicted firing rate of our model. Use the predicted rate to compute predicted tuning curves using <code class="docutils literal notranslate"><span class="pre">nap.compute_tuning_curves</span></code>.</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bonus-exercise">Bonus Exercise</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Edoardo Balzani, Billy Broderick, Sarah Jo Venditto, Guillaume Viejo.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
