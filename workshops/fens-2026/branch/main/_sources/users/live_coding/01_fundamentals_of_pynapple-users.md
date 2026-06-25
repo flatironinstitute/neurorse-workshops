@@ -4,7 +4,7 @@ jupytext:
     extension: .md
     format_name: myst
     format_version: 0.13
-    jupytext_version: 1.18.1
+    jupytext_version: 1.19.3
 kernelspec:
   display_name: Python 3 (ipykernel)
   language: python
@@ -52,119 +52,138 @@ This notebook has had all its explanatory text removed and has not been run.
 - [API reference for objects and methods](https://pynapple.org/api.html)
 
 
-Let's start by importing the pynapple package and matplotlib to see if everything is correctly installed.
-If an import fails, you can do `!pip install pynapple matplotlib` in a cell to fix it.
+Let's start by importing the pynapple package and other packages we'll need, as well as generate some fake data that we'll use throughout the notebook.
 
 
 ```{code-cell} ipython3
 :tags: [render-all]
 
+%matplotlib inline
 import workshop_utils
 import pynapple as nap
 import matplotlib.pyplot as plt
 import numpy as np
-```
-```{code-cell} ipython3
-:tags: [render-all]
+import scipy.stats as stats
+import nemos as nmo
+plt.style.use(nmo.styles.plot_style)
 
-var1 = np.random.randn(100) # Variable 1
-tsp1 = np.arange(100) # The timesteps of variable 1
+cos_ts = np.arange(0,100,0.1)
+cos_data = np.cos(1/4*cos_ts)
 
-var2 = np.random.randn(100, 3) # Variable 2
-tsp2 = np.arange(0, 100, 1) # The timesteps of variable 2
-col2 = ['pineapple', 'banana', 'tomato'] # The name of each columns of var2
+rng = np.random.default_rng(1)
+rand_ts = np.arange(0,100)
+rand_data = rng.standard_normal((100,3))
+rand_col = ['pineapple', 'banana', 'tomato']
 
-var3 = np.random.randn(1000, 4, 5) # Variable 3
-tsp3 = np.arange(0, 100, 0.1) # The timesteps of variable 3
+spiral_ts = np.arange(0, 100, 0.5)
+d = np.linspace(-10,10,100)
+spiral_data = np.zeros((len(spiral_ts),len(d),len(d)))
+for i,t in enumerate(spiral_ts):
+    rv = stats.multivariate_normal([t/10*np.cos(t),t/10*np.sin(t)])
+    pos = np.dstack(np.meshgrid(d,d))
+    spiral_data[i] = rv.pdf(pos)
 
-random_times_1 = np.array([3.14, 37.0, 42.0])
-random_times_2 = np.array([10, 25, 50, 70])
-random_times_3 = np.sort(np.random.uniform(10, 80, 100))
-
-starts_1 = np.array([10000, 60000, 90000]) # starts of an epoch in `ms`
-ends_1 = np.array([20000, 80000, 95000]) # ends in `ms`
+rng = np.random.default_rng(2)
+t = np.arange(0,100,0.1)
+p = np.cos(1/4*t)/5
+p = np.where(p>0,p,0)
+burst_times = t[np.where(rng.binomial(n=1, p=p))[0]]
+random_times = np.sort(rng.uniform(0, 100, 100))
+slow_times = np.arange(0,100,10)
 ```
 ## Instantiate pynapple objects 
 
 
-**Question:** Can you instantiate the right pynapple objects for `var1`, `var2` and `var3`? Objects should be named respectively `tsd1`, `tsd2` and `tsd3`. Don't forget the column name for `var2`.
+Suppose we have and experiment that generated the following data.
 
 
-```{code-cell}
-# enter code here
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure()
+plt.plot(cos_ts, cos_data)
+plt.title("Cosine Wave")
+
+plt.figure()
+plt.plot(rand_ts, rand_data, label=rand_col)
+plt.title("Random Data")
+plt.legend()
+
+anim = workshop_utils.animate_2d_movie(spiral_data)
+plt.title("Spiral Data")
+anim.run()
+```
+### Tsd, TsdFrame, TsdTensor
+
+
+**Question:** Can you instantiate the correct pynapple objects ([`Tsd`](https://pynapple.org/generated/pynapple.Tsd.html#pynapple.Tsd), [`TsdFrame`](https://pynapple.org/generated/pynapple.TsdFrame.html#pynapple.TsdFrame), and [`TsdTensor`](https://pynapple.org/generated/pynapple.TsdTensor.html#pynapple.TsdTensor)) for each of the data sets above? **NOTE**: Make sure to pass column names to the `TsdFrame` data.
+
+
+
+```{code-cell} ipython3
+cos_tsd = 
+rand_tsd = 
+spiral_tsd = 
+```
+
+### IntervalSet
+
+
+**Question:** Can you create and print an [`IntervalSet`](https://pynapple.org/generated/pynapple.IntervalSet.html#pynapple.IntervalSet) called `epochs` out of `starts` and `ends`? Be careful, times given above are in `ms`.
+
+
+
+```{code-cell} ipython3
+starts = np.array([10000, 60000, 90000]) # starts of an epoch in `ms`
+ends = np.array([20000, 80000, 95000])   # ends in `ms`
+epochs = 
+```
+
+### Ts
+
+    
+Suppose we record spike times from three different neurons, plotted below.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure(figsize=(8,3))
+plt.plot(burst_times,np.zeros_like(burst_times),'|',markersize=50)
+plt.plot(random_times,np.ones_like(random_times),'|',markersize=50)
+plt.plot(slow_times,1+np.ones_like(slow_times),'|',markersize=50)
+plt.yticks([0,1,2],labels=['burst_times','random_times','slow_times']);
 ```
 
 
+**Question:** Can you instantiate [`Ts`](https://pynapple.org/generated/pynapple.Ts.html#pynapple.Ts) objects for each set of spike times above?
 
-**Question:** Can you print `tsd1`?
 
 
-```{code-cell}
-# enter code here
+```{code-cell} ipython3
+burst_neuron = 
+random_neuron = 
+slow_neuron = 
 ```
 
+### TsGroup
 
 
-**Question:** Can you print `tsd2`?
-
-
-```{code-cell}
-# enter code here
-```
+**Question:** Can you instantiate a [`TsGroup`](https://pynapple.org/generated/pynapple.TsGroup.html#pynapple.TsGroup) to group together the `Ts` objects defined above and print the result?
 
 
 
-**Question:** Can you print `tsd3`?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you create an `IntervalSet` called `ep` out of `starts_1` and `ends_1` and print it? Be careful, times given above are in `ms`.
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-The experiment generated a set of timestamps from 3 different channels.
-
-**Question:** Can you instantiate the corresponding pynapple object (`ts1`, `ts2`, `ts3`) for each one of them?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-This is a lot of timestamps to carry around as well.
-
-**Question:** Can you instantiate the right pynapple object (call it `tsgroup`) to group them together?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you print the result?
-
-
-```{code-cell}
-# enter code here
+```{code-cell} ipython3
+all_neurons =
 ```
 
 ## Interaction between pynapple objects 
+### time_support
 
 
-**Question:** Can you print the `time_support` of `tsgroup`?
+The [`time_support`](https://pynapple.org/generated/pynapple.TsGroup.html#pynapple.TsGroup.time_support) attribute is an `IntervalSet` associated with every pynapple object that specifys the time interval(s) over which the data is defined. This is inferred from the data or can be set directly during object initialization.
+
+**Question:** Can you print the time support of `all_neurons`?
 
 
 ```{code-cell}
@@ -173,11 +192,12 @@ This is a lot of timestamps to carry around as well.
 
 
 
-**Question:** can you recreate the `tsgroup` object passing the right `time_support` during initialisation?
+**Question:** can you recreate the `all_neurons` object passing the true `time_support` during initialisation?
 
 
-```{code-cell}
-# enter code here
+
+```{code-cell} ipython3
+all_neurons =
 ```
 
 
@@ -189,74 +209,157 @@ This is a lot of timestamps to carry around as well.
 # enter code here
 ```
 
+### restrict
 
 
-Now you notice that variable `tsd1` has some noise. The good signal is between 10 and 30 seconds and  50 and 100.
+What if we want to limit our data to intervals of interest? We can restrict any pynapple timeseries object to a set of intervals defined by an `IntervalSet` using the object method [`restrict`](https://pynapple.org/generated/pynapple.Tsd.restrict.html#pynapple.Tsd.restrict).
 
-**Question:** Can you create an `IntervalSet` object called `ep_signal` and use it to restrict the variable `tsd1`?
+**Question:** Can you create an `IntervalSet` object called `ep_signal` and use it to restrict the variable `cos_tsd`? Include two intervals: from 10s to 30s and from 50s to 100s. 
+
+
+
+```{code-cell} ipython3
+ep_signal =
+cos_tsd_signal =
+```
+
+
+    
+We can print `cos_tsd_signal` to check that the timestamps are within `ep_signal`. Additionally, 
+printing the `time_support` shows that it has been updated to match `ep_signal`.
 
 
 ```{code-cell}
 # enter code here
 ```
 
+### intersect
 
-You can print `tsd1` to check that the timestamps are in fact within `ep`.
-You can also check the `time_support` of `tsd1` to see that it has been updated.
+    
+Pynapple `IntervalSet` objects can be intersected to create a new `IntervalSet` using the [`intersect`](https://pynapple.org/generated/pynapple.IntervalSet.intersect.html#pynapple.IntervalSet.intersect) method.
 
-```{code-cell}
-# enter code here
-```
 
 ```{code-cell} ipython3
 :tags: [render-all]
 
-ep_tmp = nap.IntervalSet(np.sort(np.random.uniform(0, 100, 20)))
-print(ep_tmp)
+# random intervals
+rng = np.random.default_rng(3)
+ep_random = nap.IntervalSet(np.sort(rng.uniform(0, 100, 20)))
+print(ep_random)
 ```
 
 
-**Question:** Can you do the intersection of `ep_signal` and `ep_tmp`?
+**Question:** Can you intersect `ep_signal` with `ep_random`?
 
-```{code-cell}
-# enter code here
+
+
+```{code-cell} ipython3
+ep_intersect = 
 ```
 
 
-You can visualize IntervalSet using the function `workshop_utils.visualize_intervals` we provide.
+    
+We can visualize the result using the provided function `workshop_utils.visualize_intervals`
+
 
 ```{code-cell} ipython3
 :tags: [render-all]
 
-workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.intersect(ep_tmp)])
+workshop_utils.visualize_intervals([ep_signal, ep_random, ep_intersect])
+plt.yticks([0.25,0.5,0.75],["ep_signal","ep_random","ep_intersect"]);
 ```
+### union
 
 
-**Question:** Can you do the union of `ep_signal` and `ep_tmp`?
+Pynapple `IntervalSet` objects can be joined using the [`union`](https://pynapple.org/generated/pynapple.IntervalSet.union.html#pynapple.IntervalSet.union) method.
 
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you visualize it?
-
-```{code-cell}
-# enter code here
-```
+**Question:** Can you take the union of `ep_signal` and `ep_random`?
 
 
 
-**Question:** Can you do the difference of `ep_signal` and `ep_tmp`?
-
-```{code-cell}
-# enter code here
+```{code-cell} ipython3
+ep_union = 
 ```
 
 
 
-**Question:** Can you visualize it?
+Let's visualize the results.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+workshop_utils.visualize_intervals([ep_signal, ep_random, ep_union])
+plt.yticks([0.25,0.5,0.75],["ep_signal","ep_random","ep_union"]);
+```
+### set_diff
+
+
+We can also subtract one `IntervalSet` from another using the [`set_diff`](https://pynapple.org/generated/pynapple.IntervalSet.set_diff.html#pynapple.IntervalSet.set_diff) method.
+
+**Question:** Can you take the set difference between `ep_signal` and `ep_random`? Do this twice, with each object acting as the base object. Do you expect the results to be the same?
+
+
+
+```{code-cell} ipython3
+ep_signal_diff = 
+ep_random_diff =
+```
+
+
+
+Visualizing the results makes it clear that order matters when using `set_diff`.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+workshop_utils.visualize_intervals([ep_signal, ep_random, ep_signal_diff, ep_random_diff])
+plt.yticks([0.2,0.4,0.6,0.8],["ep_signal","ep_random","ep_signal_diff","ep_random_diff"]);
+```
+### value_from
+
+
+We can map a set of timepoints to their nearest value from a different timeseries data object by using the method [`value_from`](https://pynapple.org/generated/pynapple.Ts.value_from.html#pynapple.Ts.value_from).
+
+**Question:** Using the function `value_from`, can you assign values to `burst_neuron` from the `cos_tsd` time series into a new object called `burst_cos`?
+
+
+
+```{code-cell} ipython3
+burst_cos = 
+```
+
+
+
+Let's plot these objects together.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure()
+plt.plot(cos_tsd)
+plt.plot(burst_cos, 'o-')
+plt.plot(burst_neuron.fillna(0), 'o')
+```
+### interpolate
+
+
+We can resample or upsample one pynapple object to the timepoints of another pynapple object using the [`interpolate`](https://pynapple.org/generated/pynapple.TsdFrame.interpolate.html#pynapple.TsdFrame.interpolate) method. This is useful for matching the sampling rate between two pynapple objects.
+
+**Question:** Can you upsample `rand_tsd` to the sampling rate of `cos_tsd` using the `interpolate` method?
+
+
+
+```{code-cell} ipython3
+rand_tsd_interp = 
+```
+
+
+
+Let's visualize the results below.
+
 
 ```{code-cell}
 # enter code here
@@ -265,17 +368,17 @@ workshop_utils.visualize_intervals([ep_signal, ep_tmp, ep_signal.intersect(ep_tm
 ## Numpy & pynapple
 
 
-Pynapple objects behave similarly to numpy arrays. They can be sliced with the following syntax :
+Pynapple timeseries objects (`Tsd`, `TsdFrame`, and `TsdTensor`) behave similarly to numpy arrays. They can be sliced using similar syntax, e.g.:
 
   `tsd[0:10] # First 10 elements`
 
-Arithmetical operations are available as well :
+Arithmetic operations also behave like numpy:
 
   `tsd = tsd + 1`
 
-Finally numpy functions works directly. Let's imagine `tsd3` is a movie with frame size (4,5).
+Finally, numpy functions are compatible with pynapple objects, and in many cases will return a pynapple object when the time axis is preserved.
 
-**Question:** Can you compute the average frame along the time axis using `np.mean` and print the result?
+**Question:** Can you compute the average of `rand_tsd` across columns using `np.mean` and print the result?
 
 
 ```{code-cell}
@@ -284,7 +387,8 @@ Finally numpy functions works directly. Let's imagine `tsd3` is a movie with fra
 
 
 
-**Question:** can you compute the average of `tsd2` for each timestamps and print it?
+**Question:** Can you compute the average frame of `spiral_tsd` along the time axis using `np.mean` and print the result?
+
 
 ```{code-cell}
 # enter code here
@@ -293,7 +397,28 @@ Finally numpy functions works directly. Let's imagine `tsd3` is a movie with fra
 ## Slicing pynapple objects 
 
 
-**Question:** Can you extract the first and last epoch of `ep` in a new `IntervalSet`?
+**Question:** `IntervalSet` objects also behave similarly to numpy arrays. Using numpy-like indexing, can you extract the first and last epoch of `epochs`?
+
+```{code-cell}
+# enter code here
+```
+
+### special case of slicing : `TsdFrame`
+
+
+For `TsdFrame` objects with integer column labels, the column labels are ignored when using numpy-like indexing.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+tsdframe = nap.TsdFrame(t=np.arange(4), d=np.random.randn(4,3), columns = [12, 0, 1])
+print(tsdframe)
+```
+
+
+**Question:** What happens when you do `tsdframe[0]` vs `tsdframe[:,0]` vs `tsdframe[[12,1]]`?
+
 
 ```{code-cell}
 # enter code here
@@ -301,9 +426,38 @@ Finally numpy functions works directly. Let's imagine `tsd3` is a movie with fra
 
 
 
-Sometimes you want to get a data point as close as possible in time to another timestamps.
+To access `TsdFrame` objects by integer column names, index using the `loc` method.
 
-**Question:** Using the `get` method, can you get the data point from `tsd3` as close as possible to the time 50.1 seconds?
+**Question:** What happen when you do `tsdframe.loc[0]` and `tsdframe.loc[[0,1]]`?
+
+
+```{code-cell}
+# enter code here
+```
+
+### get
+
+
+**Question:** Using the [`get`](https://pynapple.org/generated/pynapple.TsdTensor.get.html#pynapple.TsdTensor.get) method, can you get the data point from `spiral_tsd` as close as possible to the time 50.1 seconds?
+
+
+```{code-cell}
+# enter code here
+```
+
+
+
+**Question:** Using the `get` method, can you get the data point from `spiral_tsd` that occur between 50.1 and 52.1 seconds? **NOTE:** The time support is not updated using `get`.
+
+
+```{code-cell}
+# enter code here
+```
+
+### get_slice
+
+
+**Question:** Using the `get_slice` method, can you get the index of [`spiral_tsd`](https://pynapple.org/generated/pynapple.TsdTensor.get_slice.html#pynapple.TsdTensor.get_slice) as close as possible to the time 50.1 seconds?
 
 
 ```{code-cell}
@@ -313,91 +467,95 @@ Sometimes you want to get a data point as close as possible in time to another t
 ## Metadata
 
 
-Metadata allow you to attach labels and additional information to your data objects. They are ubiquitous in neuroscience. They can be added to 3 pynapple objects :
+Using metadata, we can attach additional info, such as experimental labels, to some of our pynapple objects. Specifically, the following three objects support metadata:
 
-- `TsGroup` : to label neurons in electrophysiology
-- `IntervalSet` : to label intervals
-- `TsdFrame` : to label neurons in calcium imaging
+- `TsGroup` : to label each set of time stamps, e.g. neuron region
+- `IntervalSet` : to label each interval, e.g. stimulus identity
+- `TsdFrame` : to label each column, e.g. neurons in calcium imaging
 
-
-**Question:** Can you run the following command `tsgroup['planet'] = ['mars', 'venus', 'saturn']`
-
-```{code-cell}
-# enter code here
-```
+Metadata can be any data type, and there are a few ways to add/access metadata to/from pynapple objects. 
 
 
-
-**Question:** Can you print the result?
-
-```{code-cell}
-# enter code here
-```
+### setting metadata
+#### item assignment
 
 
+Metadata can be added to an object using dictionary-like item assignment.
 
-The object `ep` has 3 epochs labelled `['left', 'right', 'left']`. 
-
-**Question:** Can you add them as a metadata column called `direction`?
+**Question:** Can you add the metadata labels `["burst","random","slow"]` using item assignment to `all_neurons["label"]` and print the result?
 
 
 ```{code-cell}
 # enter code here
 ```
 
+#### attribute assignment
 
 
-The object `tsd2` has 3 columns. Each column correspond to the rgb colors `[(0,0,1), (0.5, 0.5, 1), (0.1, 0.2, 0.3)]`. 
+Metadata can also be set directly as an attribute to the object.
 
-**Question:** Can you add them as metadata of `tsd2`?
+**Question:** Can you add the values `[1, -1, 1]` to `epochs` as the attribute `epochs.direction`?
+
 
 ```{code-cell}
 # enter code here
 ```
 
+#### set_info
+
+    
+Each object also has the method [`set_info`](https://pynapple.org/generated/pynapple.TsdFrame.set_info.html#pynapple.TsdFrame.set_info) which allows you to set metadata using keyword arguments to the method.
+
+**Question:** Can you add the rgb colors `[(0,0,1), (0.5, 0.5, 1), (0.1, 0.2, 0.3)]` as metadata of `rand_tsd` using the `set_info` method?
+
+
+```{code-cell}
+# enter code here
+```
+
+#### at initialization
 
 
 You can also add metadata at initialization as a dictionary using the keyword argument `metadata`: 
 
+
 ```{code-cell} ipython3
 :tags: [render-all]
 
-tsgroup = nap.TsGroup({0:ts1, 1:ts2, 2:ts3}, metadata={'planet':['mars','venus', 'saturn']})
-
-print(tsgroup)
+rand_tsd = nap.TsdFrame(
+    t = rand_ts,d = rand_data,columns=rand_col,
+    metadata={'color':['orange','yellow', 'red']}
+)
+print(rand_tsd)
 ```
+### accessing metadata
 
 
-Metadata are accessible either as attributes (i.e. `tsgroup.planet`) or as dictionary-like keys (i.e. `ep['direction']`).
-
-They can be used to slice objects. 
-
-**Question:** Can you select only the elements of `tsgroup` with rate below 1Hz?
-
-```{code-cell}
-# enter code here
-```
+Similar to setting metadata, we can retrieve metadata as an attribute (i.e. `all_neurons.label`) or using item access (i.e. `all_neurons['label']`). Additionally we can use [`get_info`](https://pynapple.org/generated/pynapple.TsGroup.get_info.html#pynapple.TsGroup.get_info), a complementary method to `set_info`, to access metadata.
 
 
-
-**Question:** Can you select the intervals in `ep` labelled as `'left'`?
-
-```{code-cell}
-# enter code here
-```
-
-### Special case of slicing : `TsdFrame`
 ```{code-cell} ipython3
 :tags: [render-all]
 
-tsdframe = nap.TsdFrame(t=np.arange(4), d=np.random.randn(4,3),
-  columns = [12, 0, 1], metadata={'alpha':[2,1,0]})
-
-print(tsdframe)
+all_neurons.get_info('label')
 ```
 
 
-**Question:** What happen when you do `tsdframe[0]` vs `tsdframe[:,0]` vs `tsdframe[[12,1]]`
+We can also access the metadata as a pandas DataFrame using the `metadata` attribute.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+all_neurons.metadata
+```
+### slicing with metadata
+
+
+Metadata can be used to slice pynapple objects by indexing or, for numeric metadata, by the method [`getby_threshold`](https://pynapple.org/generated/pynapple.TsGroup.getby_threshold.html#pynapple.TsGroup.getby_threshold).
+
+**Question:** Can you select only the elements of `all_neurons` with rate below 1Hz?
+
 
 ```{code-cell}
 # enter code here
@@ -405,15 +563,18 @@ print(tsdframe)
 
 
 
-**Question:** What happen when you do `tsdframe.loc[0]` and `tsdframe.loc[[0,1]]`
+**Question:** Can you select the intervals in `epochs` with a direction of "left"?
 
 ```{code-cell}
 # enter code here
 ```
 
+#### special case of slicing : `TsdFrame`
 
 
-**Question:** What happen when you do `tsdframe[:,tsdframe.alpha==2]`
+Where metadata of `TsGroup` and `IntervalSet` objects are associated with each *row*, metadata of `TsdFrame` objects instead is associated with each *column*. This means slicing with metadata must be done on the second axis.
+
+**Question:** Can you select the columns of `rand_tsd` where the color is orange?
 
 
 ```{code-cell}
@@ -421,11 +582,119 @@ print(tsdframe)
 ```
 
 ## Core functions of pynapple 
+### count
 
 
-This part focuses on the most important core functions of pynapple.
+The [`count`](https://pynapple.org/generated/pynapple.TsGroup.count.html#pynapple.TsGroup.count) methods allows us to count or bin the number of time points that fall within each window of a given bin size. 
 
-**Question:** Using the `count` function, can you count the number of events within 1 second bins for `tsgroup` over the `ep_signal` intervals?
+**Question:** Using the `count` method, can you count the number of events within 1 second bins for `all_neurons` over the `ep_signal` intervals?
+
+
+```{code-cell} ipython3
+count =
+```
+
+
+
+Let's visulize the results. **TIP**: Pynapple works directly with matplotlib. Passing a time series object to `plt.plot` will display the figure with the correct time axis.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure()
+ax = plt.subplot(211)
+plt.plot(count, 'o-')
+plt.subplot(212, sharex=ax)
+plt.plot(all_neurons.restrict(ep_signal).to_tsd(), '|')
+```
+### bin_average
+
+
+Oftentimes we need to match the sampling rates between different sets of data. Pynapple provides the [`bin_average`](https://pynapple.org/generated/pynapple.TsdFrame.bin_average.html#pynapple.TsdFrame.bin_average) method to downsample data.
+
+**Question:** Can you downsample `rand_tsd` to one time point every 5 seconds?
+
+
+
+```{code-cell} ipython3
+rand_downsamp = 
+```
+
+
+
+Let's plot the column for "tomato" and it's downsampled version.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure()
+plt.plot(rand_tsd['tomato'])
+plt.plot(rand_downsamp['tomato'], 'o-')
+```
+### threshold
+
+
+We may want to find all the intervals where our timeseries data exceeds some value. For 1-dimensional `Tsd` objects, Pynapple provides the [`threshold`](https://pynapple.org/generated/pynapple.Tsd.threshold.html#pynapple.Tsd.threshold) method to limit the `Tsd` above or below a certain value.
+
+**Question**: Can you threshold `cos_tsd` for values above 0.0? Can you get the intervals of this thresholded data?
+
+
+
+```{code-cell} ipython3
+cos_thresh =
+ep_above = 
+```
+
+
+
+Let's visualize the resulting `Tsd` and `IntervalSet`.
+
+
+```{code-cell} ipython3
+:tags: [render-all]
+
+plt.figure()
+plt.plot(cos_tsd)
+plt.plot(cos_thresh, 'o-')
+[plt.axvspan(s, e, alpha=0.2) for s,e in ep_above.values];
+```
+### to_trial_tensor
+
+
+We can reshape a `Tsd`, `TsdFrame`, or `TsdTensor` object into a trial-based tensor using the method [`to_trial_tensor`](https://pynapple.org/generated/pynapple.Tsd.to_trial_tensor.html#pynapple.Tsd.to_trial_tensor), where trials are defined by an `IntervalSet`. The resulting tensor is returned as a numpy array, since pynapple objects do not support 2D time axes.
+
+**Question:** Can you create a trial-based tensor of `cos_tsd` using `trials` provided below? Print the resulting shape.
+
+
+
+```{code-cell} ipython3
+trials = nap.IntervalSet(start=np.arange(0,100,20),end=np.arange(19.9,100,20))
+# compute trial tensor
+```
+
+### trial_count
+
+
+A similar function to `to_trial_tensor` exists for `Ts` and `TsGroup` objects: [`trial_count`](https://pynapple.org/generated/pynapple.TsGroup.trial_count.html#pynapple.TsGroup.trial_count). Instead of reshaping the time points, however, it counts the number of time points into a trial-based array, akin to a 2D `count`. Similar to `count`, this method requires you to specify a `bin_size`.
+
+**Question:** Can you compute a trial-based count of the spikes in `all_neurons` using `trials` set above and `bin_size=0.1`? Print the resulting shape.
+
+
+```{code-cell}
+# enter code here
+```
+
+## First high-level function: compute_tuning_curves
+
+
+Pynapple provides functions for standard analysis in systems neuroscience. The first function we will try is [`compute_tuning_curves`](https://pynapple.org/generated/pynapple.process.tuning_curves.html#pynapple.process.tuning_curves.compute_tuning_curves) that calculates the response of a cell to a particular feature. 
+
+A good practice when using a function for the first time is to check the docstrings to learn how to pass the arguments.
+
+**Question**: Can you examine the docstring of `nap.compute_tuning_curves`?
+
 
 ```{code-cell}
 # enter code here
@@ -433,7 +702,21 @@ This part focuses on the most important core functions of pynapple.
 
 
 
-**Question:** In two subplots, can you show the count and events over time?
+**Question**: Can you compute the response (i.e. firing rate) of the units in `all_neurons` as function of the feature `cos_tsd` using the function `nap.compute_tuning_curves`? Label the feature as `"cosine"`
+
+
+
+```{code-cell} ipython3
+tuning_curves =
+```
+
+
+
+The output is an [xarray](https://docs.xarray.dev/en/stable/) object, which acts as a wrapper to numpy arrays with extra utilities. It allows us to specify the coordinates of each dimension as well as attach additional attributes. By labeling our feature(s), we can make the output more readable.
+
+All coordinates can be accessed with the `coords` attribute, which contains the unit number and any feature's values (i.e. center of the feature bins). Each coordinate can also be accessed individually as an attribute.
+
+**Question**: Can you print the underlying the units number, feature value, and bin edges from `tuning_curves`?
 
 
 ```{code-cell}
@@ -441,102 +724,10 @@ This part focuses on the most important core functions of pynapple.
 ```
 
 
+    
+Xarray objects also supply convenient methods for quickly plotting data.
 
-From a set of timestamps, you want to assign them a set of values with the closest point in time of another time series.
-
-**Question:** Using the function `value_from`, can you assign values to `ts2` from the `tsd1` time series and call the output `new_tsd`?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you plot together `tsd1`, `ts2` and `new_tsd`?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-One important aspect of data analysis is to bring data to the same size. Pynapple provides the `bin_average` function to downsample data.
-
-**Question:** Can you downsample `tsd2` to one time point every 5 seconds?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question:** Can you plot the `tomato` column from `tsd2` as well as the downsampled version?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-For `tsd1`, you want to find all the epochs for which the value is above 0.0. Pynapple provides the function `threshold` to get 1 dimensional time series above or below a certain value.
-
-**Question**: Can you print the epochs for which `tsd1` is above 0.0?
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question**: can you plot `tsd1` as well as the epochs for which `tsd1` is above 0.0?
-
-```{code-cell}
-# enter code here
-```
-
-## First high level function : `compute_tuning_curves`
-
-
-Pynapple provides functions for standard analysis in systems neuroscience. The first function we will try is `compute_tuning_curves` that calculate the response of a cell to a particular feature. 
-
-A good practice when using a function for the first time is to check the docstrings to learn how to pass the argument.
-
-**Question**: can you examine the docstring of `nap.compute_tuning_curves`?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question**: Can you compute the response (i.e. firing rate) of the units in `tsgroup` as function of the feature `tsd1` using the function `nap.compute_tuning_curves`?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-The output is an [xarray](https://docs.xarray.dev/en/stable/) object. It is a wrapper of numpy array with extra attributes. It allows to give coordinates to each dimensions as well as attaching attributes. We can make the output look better by labelling the feature we used.
-
-The coordinates can be accessed with the `coords` attribute. The feature position (i.e. center of the bin) can be accessed with the attribute.
-
-**Question**: Can you print the underlying the units number, bin center and bin edges of the tuning curve xarray object?
-
-
-```{code-cell}
-# enter code here
-```
-
-
-
-**Question**: Can you plot the tuning curves for all units?
+**Question**: Can you plot the tuning curve of each unit using the `plot` method?
 
 
 ```{code-cell}
