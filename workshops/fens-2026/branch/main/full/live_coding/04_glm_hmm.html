@@ -704,7 +704,7 @@ one = # Complete
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.DataFrame&#39;&gt;
 </pre></div>
 </div>
 <div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/jenkins/agent/workspace/orse_ccn-software-fens-2026_main/.venv/lib/python3.12/site-packages/one/util.py:442: ALFWarning: No default revision for dataset aggregates/Subjects/churchlandlab/CSHL_008/_ibl_subjectTrials.table.pqt; using most recent
@@ -917,7 +917,7 @@ one = # Complete
        &#39;stimOffTrigger_times&#39;, &#39;stimFreezeTrigger_times&#39;, &#39;stimOff_times&#39;,
        &#39;stimFreeze_times&#39;, &#39;phase&#39;, &#39;position&#39;, &#39;quiescence&#39;, &#39;session&#39;,
        &#39;task_protocol&#39;, &#39;protocol_number&#39;, &#39;session_start_time&#39;],
-      dtype=&#39;object&#39;)
+      dtype=&#39;str&#39;)
 </pre></div>
 </div>
 </div>
@@ -976,11 +976,13 @@ probability of stimulus on left
 values: [0.  0.1 0.2 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1. ], data type: float64 
 
 session 
-(some) values: [&#39;e572b45a-34de-453a-b13e-4d90f0374f1e&#39;
- &#39;deee6460-d6e6-4fbf-b7ce-72bc4825d21f&#39;
- &#39;f511e37e-43be-4333-bc1a-2820d1863b30&#39;
- &#39;f6824e3a-54c1-4cf3-a567-a559bf970d19&#39;
- &#39;e3bdbfc1-75e9-4afd-996b-8bed6b8a4a3e&#39;], data type: object
+(some) values: &lt;ArrowStringArray&gt;
+[&#39;e572b45a-34de-453a-b13e-4d90f0374f1e&#39;,
+ &#39;deee6460-d6e6-4fbf-b7ce-72bc4825d21f&#39;,
+ &#39;f511e37e-43be-4333-bc1a-2820d1863b30&#39;,
+ &#39;f6824e3a-54c1-4cf3-a567-a559bf970d19&#39;,
+ &#39;e3bdbfc1-75e9-4afd-996b-8bed6b8a4a3e&#39;]
+Length: 5, dtype: str, data type: str
 </pre></div>
 </div>
 </div>
@@ -1722,10 +1724,12 @@ Importantly, we don't fit all the trials as one continuous block. The data come 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;0aed6875-9a5c-42d6-89b0-2c759ec76c00&#39;,
-       &#39;0aed6875-9a5c-42d6-89b0-2c759ec76c00&#39;,
-       &#39;fddc0f18-1403-4f4a-b632-91c85be2b8e1&#39;,
-       &#39;fddc0f18-1403-4f4a-b632-91c85be2b8e1&#39;], dtype=object)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;ArrowStringArray&gt;
+[&#39;0aed6875-9a5c-42d6-89b0-2c759ec76c00&#39;,
+ &#39;0aed6875-9a5c-42d6-89b0-2c759ec76c00&#39;,
+ &#39;fddc0f18-1403-4f4a-b632-91c85be2b8e1&#39;,
+ &#39;fddc0f18-1403-4f4a-b632-91c85be2b8e1&#39;]
+Length: 4, dtype: str
 </pre></div>
 </div>
 </div>
@@ -2562,8 +2566,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f2be4153240&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f2be4152e80&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f2bde31de40&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f2bde31e3e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f452665cf40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f452665cb80&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f45266fbb00&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f452650c0e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -2597,7 +2601,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f2be47df380&gt;</td>
+            <td class="value">&lt;function log...x7f45301d9080&gt;</td>
         </tr>
     
 
@@ -2647,7 +2651,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f2be4153240&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f2be4152e80&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f452665cf40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f452665cb80&gt;, ...}</td>
         </tr>
     
 
@@ -2657,7 +2661,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f2bde31de40&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f2bde31e3e0&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f45266fbb00&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f452650c0e0&gt;, ...}</td>
         </tr>
     
 
@@ -3689,8 +3693,8 @@ a.param-doc-link::before {
     solver_name=&#x27;LBFGS&#x27;,
     maxiter=1000,
     tol=1e-08,
-    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f2be4153240&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f2be4152e80&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
-    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f2bde31de40&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f2bde31e3e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
+    hmm_initialization_funcs={&#x27;initial_proba_init&#x27;: &lt;function uniform_initial_proba_init at 0x7f452665cf40&gt;, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;initial_proba_init_custom&#x27;: False, &#x27;transition_proba_init&#x27;: &lt;function sticky_transition_proba_init at 0x7f452665cb80&gt;, &#x27;transition_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init_custom&#x27;: False},
+    model_initialization_funcs={&#x27;glm_params_init&#x27;: &lt;function random_glm_params_init at 0x7f45266fbb00&gt;, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;glm_params_init_custom&#x27;: False, &#x27;scale_init&#x27;: &lt;function constant_scale_init at 0x7f452650c0e0&gt;, &#x27;scale_init_kwargs&#x27;: {}, &#x27;scale_init_custom&#x27;: False}
 )</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>GLMHMM</div></div><div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
         <div class="estimator-table">
             <details>
@@ -3724,7 +3728,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">inverse_link_function</td>
-            <td class="value">&lt;function log...x7f2be47df380&gt;</td>
+            <td class="value">&lt;function log...x7f45301d9080&gt;</td>
         </tr>
     
 
@@ -3774,7 +3778,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">hmm_initialization_funcs</td>
-            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f2be4153240&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f2be4152e80&gt;, ...}</td>
+            <td class="value">{&#x27;initial_proba_init&#x27;: &lt;function uni...x7f452665cf40&gt;, &#x27;initial_proba_init_custom&#x27;: False, &#x27;initial_proba_init_kwargs&#x27;: {}, &#x27;transition_proba_init&#x27;: &lt;function sti...x7f452665cb80&gt;, ...}</td>
         </tr>
     
 
@@ -3784,7 +3788,7 @@ a.param-doc-link::before {
                           this.parentElement.nextElementSibling)"
             ></i></td>
             <td class="param">model_initialization_funcs</td>
-            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f2bde31de40&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f2bde31e3e0&gt;, ...}</td>
+            <td class="value">{&#x27;glm_params_init&#x27;: &lt;function ran...x7f45266fbb00&gt;, &#x27;glm_params_init_custom&#x27;: False, &#x27;glm_params_init_kwargs&#x27;: {}, &#x27;scale_init&#x27;: &lt;function con...x7f452650c0e0&gt;, ...}</td>
         </tr>
     
 
