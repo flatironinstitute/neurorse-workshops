@@ -490,7 +490,7 @@ print(basis_object)
 
 
 
-- Create the design matrix by calling `compute_features`. Select the valid trials by applying the `valid_choices_idx` boolean mask.
+- Create the design matrix by calling `compute_features`.
 
 
 

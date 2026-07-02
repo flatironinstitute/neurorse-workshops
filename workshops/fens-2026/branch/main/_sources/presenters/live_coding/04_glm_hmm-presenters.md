@@ -783,7 +783,7 @@ print(basis_object)
 
 
 
-- Create the design matrix by calling `compute_features`. Select the valid trials by applying the `valid_choices_idx` boolean mask.
+- Create the design matrix by calling `compute_features`.
 
 
 
@@ -1485,11 +1485,11 @@ Now we can compute the mouse's overall accuracy. For this:
 
 # Compute boolean mask for nonzero signed contrast
 mask = signed_contrast != 0
-
 ```
 
 ```{code-cell} ipython3
 :tags: [render-presenter]
+
 # Compute correct choices
 correct_choices = rewards == 1
 correct_choices
@@ -1497,6 +1497,7 @@ correct_choices
 
 ```{code-cell} ipython3
 :tags: [render-presenter]
+
 # Compute the total accuracy applying the mask
 total_accuracy = np.mean(correct_choices[mask])
 total_accuracy
@@ -1504,11 +1505,11 @@ total_accuracy
 
 ```{code-cell} ipython3
 :tags: [render-presenter]
+
 # Store in an array of dim 4
 accuracies_to_plot_viterbi = np.zeros(4)
 accuracies_to_plot_viterbi[0] = total_accuracy
 accuracies_to_plot_viterbi
-
 ```
 
 
