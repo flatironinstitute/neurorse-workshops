@@ -754,42 +754,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imge65a870a8b9e49e3b23a47a5c2bf9bf5">
+  <img id="_anim_img7260707e0ba54767885b78a90b64eff2">
   <div class="anim-controls">
-    <input id="_anim_slidere65a870a8b9e49e3b23a47a5c2bf9bf5" type="range" class="anim-slider"
+    <input id="_anim_slider7260707e0ba54767885b78a90b64eff2" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="anime65a870a8b9e49e3b23a47a5c2bf9bf5.set_frame(parseInt(this.value));">
+           oninput="anim7260707e0ba54767885b78a90b64eff2.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="anim7260707e0ba54767885b78a90b64eff2.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="anim7260707e0ba54767885b78a90b64eff2.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="anim7260707e0ba54767885b78a90b64eff2.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="anim7260707e0ba54767885b78a90b64eff2.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="anim7260707e0ba54767885b78a90b64eff2.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.play_animation()">
+      <button title="Play" aria-label="Play" onclick="anim7260707e0ba54767885b78a90b64eff2.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="anim7260707e0ba54767885b78a90b64eff2.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="anim7260707e0ba54767885b78a90b64eff2.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="anime65a870a8b9e49e3b23a47a5c2bf9bf5.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="anim7260707e0ba54767885b78a90b64eff2.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selecte65a870a8b9e49e3b23a47a5c2bf9bf5"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_select7260707e0ba54767885b78a90b64eff2"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_e65a870a8b9e49e3b23a47a5c2bf9bf5"
+      <input type="radio" name="state" value="once" id="_anim_radio1_7260707e0ba54767885b78a90b64eff2"
              >
-      <label for="_anim_radio1_e65a870a8b9e49e3b23a47a5c2bf9bf5">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_e65a870a8b9e49e3b23a47a5c2bf9bf5"
+      <label for="_anim_radio1_7260707e0ba54767885b78a90b64eff2">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_7260707e0ba54767885b78a90b64eff2"
              checked>
-      <label for="_anim_radio2_e65a870a8b9e49e3b23a47a5c2bf9bf5">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_e65a870a8b9e49e3b23a47a5c2bf9bf5"
+      <label for="_anim_radio2_7260707e0ba54767885b78a90b64eff2">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_7260707e0ba54767885b78a90b64eff2"
              >
-      <label for="_anim_radio3_e65a870a8b9e49e3b23a47a5c2bf9bf5">Reflect</label>
+      <label for="_anim_radio3_7260707e0ba54767885b78a90b64eff2">Reflect</label>
     </form>
   </div>
 </div>
@@ -799,9 +799,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imge65a870a8b9e49e3b23a47a5c2bf9bf5";
-    var slider_id = "_anim_slidere65a870a8b9e49e3b23a47a5c2bf9bf5";
-    var loop_select_id = "_anim_loop_selecte65a870a8b9e49e3b23a47a5c2bf9bf5";
+    var img_id = "_anim_img7260707e0ba54767885b78a90b64eff2";
+    var slider_id = "_anim_slider7260707e0ba54767885b78a90b64eff2";
+    var loop_select_id = "_anim_loop_select7260707e0ba54767885b78a90b64eff2";
     var frames = new Array(200);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -44149,7 +44149,7 @@ QmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        anime65a870a8b9e49e3b23a47a5c2bf9bf5 = new Animation(frames, img_id, slider_id, 100.0,
+        anim7260707e0ba54767885b78a90b64eff2 = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -44650,7 +44650,7 @@ dtype: float64, shape: (64,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd7c6a64410&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fee38634530&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/acff51563423448ec6c0b91bab40621bd7b9b3bb6d19483740baf12e33ff9c42.png" src="../../_images/acff51563423448ec6c0b91bab40621bd7b9b3bb6d19483740baf12e33ff9c42.png" />
@@ -44796,10 +44796,10 @@ shape: (2, 2), time unit: sec.
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)           12          0           1
 ----------  ---------  ---------  ----------
-0            0.222007   0.4907     0.540482
-1            0.555886  -1.09149   -0.158397
-2            0.777763   0.218174  -0.822788
-3           -0.14028    1.2644     0.0781649
+0            0.758674  -0.39566    0.0196708
+1            0.115445  -1.12078   -2.30527
+2            0.373133  -0.809581   2.25732
+3           -0.585249  -2.24448    0.433724
 dtype: float64, shape: (4, 3)
 </pre></div>
 </div>
@@ -44819,13 +44819,13 @@ dtype: float64, shape: (4, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[0.22200661 0.49069974 0.54048179]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 0.75867413 -0.39566002  0.01967084]
 Time (s)
 ----------  ---------
-0            0.222007
-1            0.555886
-2            0.777763
-3           -0.14028
+0            0.758674
+1            0.115445
+2            0.373133
+3           -0.585249
 dtype: float64, shape: (4,)
 index 12 is out of bounds for axis 0 with size 4
 </pre></div>
@@ -44845,17 +44845,17 @@ index 12 is out of bounds for axis 0 with size 4
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ---------
-0            0.4907
-1           -1.09149
-2            0.218174
-3            1.2644
+0           -0.39566
+1           -1.12078
+2           -0.809581
+3           -2.24448
 dtype: float64, shape: (4,)
 Time (s)
 ----------  ---------
-0            0.222007
-1            0.555886
-2            0.777763
-3           -0.14028
+0            0.758674
+1            0.115445
+2            0.373133
+3           -0.585249
 dtype: float64, shape: (4,)
 </pre></div>
 </div>
@@ -45290,7 +45290,7 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd7c67e93a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fee383c1220&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/337ddbcef94e85547231587b85e7c485693267ffc567a1294728796ed69ecf29.png" src="../../_images/337ddbcef94e85547231587b85e7c485693267ffc567a1294728796ed69ecf29.png" />
@@ -45325,7 +45325,7 @@ rand_downsamp =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fd7c67350a0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fee33d91c10&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/c2724a92f398406359e08e39541d8fed215a37a5d548788d2c35616cb9fb7327.png" src="../../_images/c2724a92f398406359e08e39541d8fed215a37a5d548788d2c35616cb9fb7327.png" />
@@ -46166,10 +46166,10 @@ Attributes:
     occupancy:  [297. 142. 128. 141. 292.]
     bin_edges:  [array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  ...
     fs:         10.0
-    rates:      [0.64064064 1.001001   0.1001001 ]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>cosine</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-6ab82af0-2080-44ca-bd4d-0f92bc2a2c83' class='xr-array-in' type='checkbox' checked><label for='section-6ab82af0-2080-44ca-bd4d-0f92bc2a2c83' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.07812 0.6383 1.849 0.9091 ... 0.1347 0.0 0.0 0.2837 0.06849</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.078125  , 0.63829787, 1.84931507],
+    rates:      [0.64064064 1.001001   0.1001001 ]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>cosine</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-fbb9961a-7613-4b60-9d71-8ab5d371853e' class='xr-array-in' type='checkbox' checked><label for='section-fbb9961a-7613-4b60-9d71-8ab5d371853e' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.07812 0.6383 1.849 0.9091 ... 0.1347 0.0 0.0 0.2837 0.06849</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.078125  , 0.63829787, 1.84931507],
        [0.90909091, 1.12676056, 1.5625    , 0.85106383, 0.85616438],
-       [0.13468013, 0.        , 0.        , 0.28368794, 0.06849315]])</pre></div></div></li><li class='xr-section-item'><input id='section-4006c07f-db36-42ed-9fb8-76dabe75de1f' class='xr-section-summary-in' type='checkbox' checked /><label for='section-4006c07f-db36-42ed-9fb8-76dabe75de1f' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-567042e5-3ecb-4912-83f1-cba4144514c1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-567042e5-3ecb-4912-83f1-cba4144514c1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-aa6064fc-fb25-4285-94e9-9497f4d62841' class='xr-var-data-in' type='checkbox'><label for='data-aa6064fc-fb25-4285-94e9-9497f4d62841' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cosine</span></div><div class='xr-var-dims'>(cosine)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.8 -0.4 1.233e-08 0.4 0.8</div><input id='attrs-7f47654a-4434-4fad-802e-15937eb25172' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7f47654a-4434-4fad-802e-15937eb25172' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2ba9e1e2-dd0f-4267-817c-5045c5dc8b40' class='xr-var-data-in' type='checkbox'><label for='data-2ba9e1e2-dd0f-4267-817c-5045c5dc8b40' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-8.000000e-01, -4.000000e-01,  1.232535e-08,  4.000000e-01,
-        8.000000e-01])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-1779530a-c8cb-4ebb-b3ca-b9cd8072d798' class='xr-section-summary-in' type='checkbox' checked /><label for='section-1779530a-c8cb-4ebb-b3ca-b9cd8072d798' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[297. 142. 128. 141. 292.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  0.6       ,
+       [0.13468013, 0.        , 0.        , 0.28368794, 0.06849315]])</pre></div></div></li><li class='xr-section-item'><input id='section-51599c9a-dd2f-4da5-b142-4433236bac72' class='xr-section-summary-in' type='checkbox' checked /><label for='section-51599c9a-dd2f-4da5-b142-4433236bac72' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-acb951a7-b56f-4033-b398-525a9bf7ad86' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-acb951a7-b56f-4033-b398-525a9bf7ad86' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-a572e4ca-f85c-4856-bdd0-f416b2bf2909' class='xr-var-data-in' type='checkbox'><label for='data-a572e4ca-f85c-4856-bdd0-f416b2bf2909' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cosine</span></div><div class='xr-var-dims'>(cosine)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.8 -0.4 1.233e-08 0.4 0.8</div><input id='attrs-adb898fe-574f-4486-90c4-149d5868d050' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-adb898fe-574f-4486-90c4-149d5868d050' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-ad7387cb-93ac-4d26-9bc1-a6c183689c75' class='xr-var-data-in' type='checkbox'><label for='data-ad7387cb-93ac-4d26-9bc1-a6c183689c75' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-8.000000e-01, -4.000000e-01,  1.232535e-08,  4.000000e-01,
+        8.000000e-01])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-dbfa3b59-b234-4858-8e66-b05463b61b92' class='xr-section-summary-in' type='checkbox' checked /><label for='section-dbfa3b59-b234-4858-8e66-b05463b61b92' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[297. 142. 128. 141. 292.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  0.6       ,
         1.        ])]</dd><dt><span>fs :</span></dt><dd>10.0</dd><dt><span>rates :</span></dt><dd>[0.64064064 1.001001   0.1001001 ]</dd></dl></div></li></ul></div></div></div></div>
 </div>
 <div class="render-all">
