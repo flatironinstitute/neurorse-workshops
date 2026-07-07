@@ -754,42 +754,42 @@ input[type=range].anim-slider {
 </style>
 
 <div class="animation">
-  <img id="_anim_imgec030987fa134647a777a383c9f78e2e">
+  <img id="_anim_imgc33d49be38de435cada76efcd047dd67">
   <div class="anim-controls">
-    <input id="_anim_sliderec030987fa134647a777a383c9f78e2e" type="range" class="anim-slider"
+    <input id="_anim_sliderc33d49be38de435cada76efcd047dd67" type="range" class="anim-slider"
            name="points" min="0" max="1" step="1" value="0"
-           oninput="animec030987fa134647a777a383c9f78e2e.set_frame(parseInt(this.value));">
+           oninput="animc33d49be38de435cada76efcd047dd67.set_frame(parseInt(this.value));">
     <div class="anim-buttons">
-      <button title="Decrease speed" aria-label="Decrease speed" onclick="animec030987fa134647a777a383c9f78e2e.slower()">
+      <button title="Decrease speed" aria-label="Decrease speed" onclick="animc33d49be38de435cada76efcd047dd67.slower()">
           <i class="fa fa-minus"></i></button>
-      <button title="First frame" aria-label="First frame" onclick="animec030987fa134647a777a383c9f78e2e.first_frame()">
+      <button title="First frame" aria-label="First frame" onclick="animc33d49be38de435cada76efcd047dd67.first_frame()">
         <i class="fa fa-fast-backward"></i></button>
-      <button title="Previous frame" aria-label="Previous frame" onclick="animec030987fa134647a777a383c9f78e2e.previous_frame()">
+      <button title="Previous frame" aria-label="Previous frame" onclick="animc33d49be38de435cada76efcd047dd67.previous_frame()">
           <i class="fa fa-step-backward"></i></button>
-      <button title="Play backwards" aria-label="Play backwards" onclick="animec030987fa134647a777a383c9f78e2e.reverse_animation()">
+      <button title="Play backwards" aria-label="Play backwards" onclick="animc33d49be38de435cada76efcd047dd67.reverse_animation()">
           <i class="fa fa-play fa-flip-horizontal"></i></button>
-      <button title="Pause" aria-label="Pause" onclick="animec030987fa134647a777a383c9f78e2e.pause_animation()">
+      <button title="Pause" aria-label="Pause" onclick="animc33d49be38de435cada76efcd047dd67.pause_animation()">
           <i class="fa fa-pause"></i></button>
-      <button title="Play" aria-label="Play" onclick="animec030987fa134647a777a383c9f78e2e.play_animation()">
+      <button title="Play" aria-label="Play" onclick="animc33d49be38de435cada76efcd047dd67.play_animation()">
           <i class="fa fa-play"></i></button>
-      <button title="Next frame" aria-label="Next frame" onclick="animec030987fa134647a777a383c9f78e2e.next_frame()">
+      <button title="Next frame" aria-label="Next frame" onclick="animc33d49be38de435cada76efcd047dd67.next_frame()">
           <i class="fa fa-step-forward"></i></button>
-      <button title="Last frame" aria-label="Last frame" onclick="animec030987fa134647a777a383c9f78e2e.last_frame()">
+      <button title="Last frame" aria-label="Last frame" onclick="animc33d49be38de435cada76efcd047dd67.last_frame()">
           <i class="fa fa-fast-forward"></i></button>
-      <button title="Increase speed" aria-label="Increase speed" onclick="animec030987fa134647a777a383c9f78e2e.faster()">
+      <button title="Increase speed" aria-label="Increase speed" onclick="animc33d49be38de435cada76efcd047dd67.faster()">
           <i class="fa fa-plus"></i></button>
     </div>
-    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectec030987fa134647a777a383c9f78e2e"
+    <form title="Repetition mode" aria-label="Repetition mode" action="#n" name="_anim_loop_selectc33d49be38de435cada76efcd047dd67"
           class="anim-state">
-      <input type="radio" name="state" value="once" id="_anim_radio1_ec030987fa134647a777a383c9f78e2e"
+      <input type="radio" name="state" value="once" id="_anim_radio1_c33d49be38de435cada76efcd047dd67"
              >
-      <label for="_anim_radio1_ec030987fa134647a777a383c9f78e2e">Once</label>
-      <input type="radio" name="state" value="loop" id="_anim_radio2_ec030987fa134647a777a383c9f78e2e"
+      <label for="_anim_radio1_c33d49be38de435cada76efcd047dd67">Once</label>
+      <input type="radio" name="state" value="loop" id="_anim_radio2_c33d49be38de435cada76efcd047dd67"
              checked>
-      <label for="_anim_radio2_ec030987fa134647a777a383c9f78e2e">Loop</label>
-      <input type="radio" name="state" value="reflect" id="_anim_radio3_ec030987fa134647a777a383c9f78e2e"
+      <label for="_anim_radio2_c33d49be38de435cada76efcd047dd67">Loop</label>
+      <input type="radio" name="state" value="reflect" id="_anim_radio3_c33d49be38de435cada76efcd047dd67"
              >
-      <label for="_anim_radio3_ec030987fa134647a777a383c9f78e2e">Reflect</label>
+      <label for="_anim_radio3_c33d49be38de435cada76efcd047dd67">Reflect</label>
     </form>
   </div>
 </div>
@@ -799,9 +799,9 @@ input[type=range].anim-slider {
   /* Instantiate the Animation class. */
   /* The IDs given should match those used in the template above. */
   (function() {
-    var img_id = "_anim_imgec030987fa134647a777a383c9f78e2e";
-    var slider_id = "_anim_sliderec030987fa134647a777a383c9f78e2e";
-    var loop_select_id = "_anim_loop_selectec030987fa134647a777a383c9f78e2e";
+    var img_id = "_anim_imgc33d49be38de435cada76efcd047dd67";
+    var slider_id = "_anim_sliderc33d49be38de435cada76efcd047dd67";
+    var loop_select_id = "_anim_loop_selectc33d49be38de435cada76efcd047dd67";
     var frames = new Array(200);
     
   frames[0] = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlgAAAJYCAYAAAC+ZpjcAAAAOnRFWHRTb2Z0d2FyZQBNYXRwbG90\
@@ -44149,7 +44149,7 @@ QmCC\
     /* set a timeout to make sure all the above elements are created before
        the object is initialized. */
     setTimeout(function() {
-        animec030987fa134647a777a383c9f78e2e = new Animation(frames, img_id, slider_id, 100.0,
+        animc33d49be38de435cada76efcd047dd67 = new Animation(frames, img_id, slider_id, 100.0,
                                  loop_select_id);
     }, 0);
   })()
@@ -44650,7 +44650,7 @@ dtype: float64, shape: (64,)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fa4af4c8d70&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f706094c3b0&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/acff51563423448ec6c0b91bab40621bd7b9b3bb6d19483740baf12e33ff9c42.png" src="../../_images/acff51563423448ec6c0b91bab40621bd7b9b3bb6d19483740baf12e33ff9c42.png" />
@@ -44794,12 +44794,12 @@ shape: (2, 2), time unit: sec.
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)           12          0             1
-----------  ---------  ---------  ------------
-0           -0.593098   0.118725   0.000291908
-1            0.529087   0.410923   1.05247
-2           -1.35962   -0.148466  -0.851481
-3            0.311218  -0.310301  -0.735091
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)           12          0          1
+----------  ---------  ---------  ---------
+0            2.37731   -0.714937  -1.33538
+1           -0.040732  -1.18925    0.819929
+2           -0.293188   0.66796    0.328446
+3           -1.61037    0.207083   1.12372
 dtype: float64, shape: (4, 3)
 </pre></div>
 </div>
@@ -44819,13 +44819,13 @@ dtype: float64, shape: (4, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-5.93098093e-01  1.18725245e-01  2.91908095e-04]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 2.37731347 -0.7149365  -1.33537687]
 Time (s)
 ----------  ---------
-0           -0.593098
-1            0.529087
-2           -1.35962
-3            0.311218
+0            2.37731
+1           -0.040732
+2           -0.293188
+3           -1.61037
 dtype: float64, shape: (4,)
 index 12 is out of bounds for axis 0 with size 4
 </pre></div>
@@ -44845,17 +44845,17 @@ index 12 is out of bounds for axis 0 with size 4
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Time (s)
 ----------  ---------
-0            0.118725
-1            0.410923
-2           -0.148466
-3           -0.310301
+0           -0.714937
+1           -1.18925
+2            0.66796
+3            0.207083
 dtype: float64, shape: (4,)
 Time (s)
 ----------  ---------
-0           -0.593098
-1            0.529087
-2           -1.35962
-3            0.311218
+0            2.37731
+1           -0.040732
+2           -0.293188
+3           -1.61037
 dtype: float64, shape: (4,)
 </pre></div>
 </div>
@@ -45290,7 +45290,7 @@ dtype: int64, shape: (70, 3)
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fa4af249be0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f70606c97f0&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/337ddbcef94e85547231587b85e7c485693267ffc567a1294728796ed69ecf29.png" src="../../_images/337ddbcef94e85547231587b85e7c485693267ffc567a1294728796ed69ecf29.png" />
@@ -45325,7 +45325,7 @@ rand_downsamp =
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7fa4af11f8c0&gt;]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x7f706013e450&gt;]
 </pre></div>
 </div>
 <img alt="../../_images/c2724a92f398406359e08e39541d8fed215a37a5d548788d2c35616cb9fb7327.png" src="../../_images/c2724a92f398406359e08e39541d8fed215a37a5d548788d2c35616cb9fb7327.png" />
@@ -46166,10 +46166,10 @@ Attributes:
     occupancy:  [297. 142. 128. 141. 292.]
     bin_edges:  [array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  ...
     fs:         10.0
-    rates:      [0.64064064 1.001001   0.1001001 ]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>cosine</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-b55249ec-4284-4aa2-b7a8-aee6c59cb598' class='xr-array-in' type='checkbox' checked><label for='section-b55249ec-4284-4aa2-b7a8-aee6c59cb598' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.07812 0.6383 1.849 0.9091 ... 0.1347 0.0 0.0 0.2837 0.06849</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.078125  , 0.63829787, 1.84931507],
+    rates:      [0.64064064 1.001001   0.1001001 ]</pre><div class='xr-wrap' style='display:none'><div class='xr-header'><div class='xr-obj-type'>xarray.DataArray</div><div class='xr-obj-name'></div><ul class='xr-dim-list'><li><span class='xr-has-index'>unit</span>: 3</li><li><span class='xr-has-index'>cosine</span>: 5</li></ul></div><ul class='xr-sections'><li class='xr-section-item'><div class='xr-array-wrap'><input id='section-95d44e85-a5bf-4eec-b508-5c1cbbe376ef' class='xr-array-in' type='checkbox' checked><label for='section-95d44e85-a5bf-4eec-b508-5c1cbbe376ef' title='Show/hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-array-preview xr-preview'><span>0.0 0.0 0.07812 0.6383 1.849 0.9091 ... 0.1347 0.0 0.0 0.2837 0.06849</span></div><div class='xr-array-data'><pre>array([[0.        , 0.        , 0.078125  , 0.63829787, 1.84931507],
        [0.90909091, 1.12676056, 1.5625    , 0.85106383, 0.85616438],
-       [0.13468013, 0.        , 0.        , 0.28368794, 0.06849315]])</pre></div></div></li><li class='xr-section-item'><input id='section-aef8ceae-56d8-4c5c-bc0b-0e51eb5c1b07' class='xr-section-summary-in' type='checkbox' checked /><label for='section-aef8ceae-56d8-4c5c-bc0b-0e51eb5c1b07' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-9a498fca-aa9f-4681-86a3-a35e252a67d1' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-9a498fca-aa9f-4681-86a3-a35e252a67d1' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-e454b0f0-3427-4fb4-b23e-477a5867b859' class='xr-var-data-in' type='checkbox'><label for='data-e454b0f0-3427-4fb4-b23e-477a5867b859' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cosine</span></div><div class='xr-var-dims'>(cosine)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.8 -0.4 1.233e-08 0.4 0.8</div><input id='attrs-677ed4f3-143f-412b-b2b9-98601b6caf9a' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-677ed4f3-143f-412b-b2b9-98601b6caf9a' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-d851e130-6241-488e-b2cd-489b63783449' class='xr-var-data-in' type='checkbox'><label for='data-d851e130-6241-488e-b2cd-489b63783449' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-8.000000e-01, -4.000000e-01,  1.232535e-08,  4.000000e-01,
-        8.000000e-01])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-a2620fcf-3699-4052-a87a-8a6a6474218d' class='xr-section-summary-in' type='checkbox' checked /><label for='section-a2620fcf-3699-4052-a87a-8a6a6474218d' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[297. 142. 128. 141. 292.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  0.6       ,
+       [0.13468013, 0.        , 0.        , 0.28368794, 0.06849315]])</pre></div></div></li><li class='xr-section-item'><input id='section-23be2aec-6fbf-40b9-bee4-c4580d955f67' class='xr-section-summary-in' type='checkbox' checked /><label for='section-23be2aec-6fbf-40b9-bee4-c4580d955f67' class='xr-section-summary' title='Expand/collapse section'>Coordinates: <span>(2)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><ul class='xr-var-list'><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>unit</span></div><div class='xr-var-dims'>(unit)</div><div class='xr-var-dtype'>int64</div><div class='xr-var-preview xr-preview'>0 1 2</div><input id='attrs-7cdcf2ac-38f3-40c9-9ada-c44798fe63ba' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-7cdcf2ac-38f3-40c9-9ada-c44798fe63ba' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-9c6f9426-5ba8-4382-b44e-1d13cfeb5b2b' class='xr-var-data-in' type='checkbox'><label for='data-9c6f9426-5ba8-4382-b44e-1d13cfeb5b2b' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([0, 1, 2])</pre></div></li><li class='xr-var-item'><div class='xr-var-name'><span class='xr-has-index'>cosine</span></div><div class='xr-var-dims'>(cosine)</div><div class='xr-var-dtype'>float64</div><div class='xr-var-preview xr-preview'>-0.8 -0.4 1.233e-08 0.4 0.8</div><input id='attrs-c232c533-5018-47af-8932-14d9f8801826' class='xr-var-attrs-in' type='checkbox' disabled><label for='attrs-c232c533-5018-47af-8932-14d9f8801826' title='Show/Hide attributes'><svg class='icon xr-icon-file-text2'><use xlink:href='#icon-file-text2'></use></svg></label><input id='data-2772bd71-9b3e-463e-9466-83e2f8188eb9' class='xr-var-data-in' type='checkbox'><label for='data-2772bd71-9b3e-463e-9466-83e2f8188eb9' title='Show/Hide data repr'><svg class='icon xr-icon-database'><use xlink:href='#icon-database'></use></svg></label><div class='xr-var-attrs'><dl class='xr-attrs'></dl></div><div class='xr-var-data'><pre>array([-8.000000e-01, -4.000000e-01,  1.232535e-08,  4.000000e-01,
+        8.000000e-01])</pre></div></li></ul></div></li><li class='xr-section-item'><input id='section-6c98bc86-3375-4aa1-8c90-cdeccaf11ecb' class='xr-section-summary-in' type='checkbox' checked /><label for='section-6c98bc86-3375-4aa1-8c90-cdeccaf11ecb' class='xr-section-summary' title='Expand/collapse section'>Attributes: <span>(4)</span></label><div class='xr-section-inline-details'></div><div class='xr-section-details'><dl class='xr-attrs'><dt><span>occupancy :</span></dt><dd>[297. 142. 128. 141. 292.]</dd><dt><span>bin_edges :</span></dt><dd>[array([-0.99999998, -0.59999998, -0.19999999,  0.20000001,  0.6       ,
         1.        ])]</dd><dt><span>fs :</span></dt><dd>10.0</dd><dt><span>rates :</span></dt><dd>[0.64064064 1.001001   0.1001001 ]</dd></dl></div></li></ul></div></div></div></div>
 </div>
 <div class="render-all">
